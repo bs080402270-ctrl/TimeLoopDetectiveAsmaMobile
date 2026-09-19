@@ -1,25 +1,9 @@
-# Godot
-.godot/
-.import/
-export.cfg
-export_credentials.cfg
-
-# Builds
-build/
-dist/
-
-# Android signing
-*.keystore
-*.jks
-
-# OS/editor
+# OS/editor files
 .DS_Store
 Thumbs.db
 .vscode/
 .idea/
 
-# Legacy Unity files should not be reintroduced
-Library/
-Temp/
-Logs/
-obj/
+# Build output
+build/
+dist/
