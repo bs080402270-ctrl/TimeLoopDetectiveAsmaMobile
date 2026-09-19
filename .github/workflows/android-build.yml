@@ -37,6 +37,9 @@ jobs:
           yes | sdkmanager --licenses >/dev/null || true
           sdkmanager             "platform-tools"             "platforms;android-${ANDROID_PLATFORM}"             "build-tools;${ANDROID_BUILD_TOOLS}"             "ndk;${ANDROID_NDK}"             "cmake;${ANDROID_CMAKE}"
 
+      - name: Validate case data
+        run: python3 tools/validate_cases.py
+
       - name: Setup Godot
         uses: chickensoft-games/setup-godot@v2
         with:
