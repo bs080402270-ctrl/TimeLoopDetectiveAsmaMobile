@@ -197,6 +197,7 @@ func _make_suspect_card(suspect: String) -> Button:
 func _make_clue_button(clue: String) -> Button:
 	var button := Button.new()
 	button.name = clue.replace(" ", "")
+	button.set_meta("clue_name", clue)
 	button.custom_minimum_size = Vector2(185, 92)
 	button.text = clue
 	if ResourceLoader.exists(ART[clue]):
@@ -276,10 +277,9 @@ func _refresh_all() -> void:
 	status_label.text = "TIME LOOP DETECTIVE    Loop %d/3    Clues %d/5" % [loop_number, found_clues.size()]
 	_refresh_notebook()
 	for child in clues_box.get_children():
-		var label := child.text
-		child.disabled = label in found_clues
-		if child.disabled:
-			child.text = "✓ " + label.trim_prefix("✓ ")
+		var clue_name: String = str(child.get_meta("clue_name", child.text))
+		child.disabled = clue_name in found_clues
+		child.text = ("✓ " + clue_name) if child.disabled else clue_name
 
 func _refresh_notebook() -> void:
 	var out := "[font_size=30][b]CASE NOTEBOOK[/b][/font_size]\n\n"
