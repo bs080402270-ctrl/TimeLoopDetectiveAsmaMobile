@@ -1,33 +1,56 @@
-# TimeLoopDetectiveAsmaMobile
+# Time Loop Detective
 
-A Unity Android starter for **Time Loop Detective**.
+A mobile mystery game built with **Godot 4.7.2**.
 
-## What is included
+## Current playable slice
 
-- Unity 2022.3 LTS project scaffold
-- Android build workflow using GitHub Actions
-- Manual workflow dispatch for on-demand APK builds
-- A minimal playable bootstrap scene placeholder
+The first case is designed around:
 
-## Getting started
+- The Daily Bean café
+- Three suspects: Maya, Omar, and Lina
+- Five collectible clues
+- Three repeating time loops
+- Dialogue that changes based on discovered evidence
+- A persistent case notebook
+- Two ending paths
+- Local save progress
+- Mobile-friendly point-and-click controls
 
-1. Install Unity Hub and Unity 2022.3 LTS with Android Build Support.
-2. Clone this repository and open it in Unity.
-3. Open `Assets/Scenes/Main.unity`.
-4. Press Play to run the starter scene.
+## Project structure
 
-## Android build automation
+- `project.godot` — Godot project configuration
+- `scenes/main.tscn` — main scene
+- `scripts/game.gd` — gameplay, dialogue, clues, loops, saves, and UI
+- `art/` — phase 1 and phase 2 game art
+- `export_presets.cfg` — Android export configuration
+- `.github/workflows/android-build.yml` — automated Android APK build
 
-The workflow at `.github/workflows/android-build.yml` builds a debug APK on pushes to `main` and can also be started manually.
+## Art
 
-For a real Unity build, add these repository secrets:
+The game automatically loads polished artwork when the PNG files listed in `art/ASSET_MANIFEST.md` are present. The UI remains functional if an optional art file is missing, which makes development and CI more robust.
 
-- `UNITY_EMAIL`
-- `UNITY_PASSWORD`
-- `UNITY_LICENSE` (recommended for a serial-less activation setup)
+## Android build
 
-Then use **Actions > Build Android APK > Run workflow**. The APK is uploaded as a workflow artifact.
+GitHub Actions uses Godot export templates and Android tooling. **No Unity license, Unity serial, UNITY_EMAIL, UNITY_PASSWORD, or UNITY_LICENSE secrets are required.**
 
-## Next milestone
+You can also build locally with Godot:
 
-Build the first 15-minute vertical slice: one cafe, three suspects, three loops, five clues, and two endings.
+```bash
+godot --headless --path . --export-debug "Android" build/TimeLoopDetective.apk
+```
+
+For a signed Play Store release, configure an Android release keystore separately.
+
+## Controls
+
+On mobile, tap suspect and clue cards.
+
+Desktop development shortcuts:
+
+- `E` — interaction hint
+- `N` — case notebook
+- `R` — reset the current loop
+
+## Next phase
+
+Phase 2 expands beyond the café into the rainy street exterior, hidden back room, riverside walkway, and investigation desk scenes while keeping the same mystery progression and art direction.
