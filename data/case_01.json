@@ -1,0 +1,57 @@
+{
+  "title": "Case 01: The Last Cup",
+  "subtitle": "The Daily Bean, 8:15 PM. At 8:47 the lights fail. At 8:49 Daniel Rowan is dead. You have three loops to learn why.",
+  "locations": {
+    "cafe": {"name": "The Daily Bean", "art": "res://art/backgrounds/cafe.svg"},
+    "office": {"name": "Manager's Office", "art": "res://art/backgrounds/office.svg"},
+    "alley": {"name": "Rear Alley", "art": "res://art/backgrounds/alley.svg"},
+    "riverside": {"name": "Riverside Walk", "art": "res://art/backgrounds/riverside.svg"}
+  },
+  "suspects": {
+    "maya": {
+      "name": "Maya Cole",
+      "role": "Cafe manager",
+      "art": "res://art/characters/maya.svg",
+      "secret": "Daniel planned to sell the cafe and dismiss the staff."
+    },
+    "omar": {
+      "name": "Omar Hale",
+      "role": "Investigative journalist",
+      "art": "res://art/characters/omar.svg",
+      "secret": "He was secretly recording Daniel over a corruption story."
+    },
+    "lina": {
+      "name": "Lina Vale",
+      "role": "Daniel's business partner",
+      "art": "res://art/characters/lina.svg",
+      "secret": "Daniel discovered Lina had diverted company money."
+    },
+    "theo": {
+      "name": "Theo Marsh",
+      "role": "Barista",
+      "art": "res://art/characters/theo.svg",
+      "secret": "He borrowed the office spare key earlier that evening."
+    }
+  },
+  "clues": {
+    "receipt": {"name": "Altered Receipt", "art": "res://art/evidence/receipt.svg", "location": "cafe", "description": "Daniel's usual black coffee was changed to an almond syrup drink at 8:31."},
+    "watch": {"name": "Broken Watch", "art": "res://art/evidence/watch.svg", "location": "cafe", "description": "The watch stopped at exactly 8:47, matching the blackout."},
+    "umbrella": {"name": "Wet Umbrella", "art": "res://art/evidence/umbrella.svg", "location": "alley", "description": "Fresh rainwater and a violet fiber place someone in the rear alley."},
+    "thread": {"name": "Violet Thread", "art": "res://art/evidence/thread.svg", "location": "alley", "description": "A violet thread is caught on the rear latch. Lina wears the same fabric."},
+    "voicemail": {"name": "Recorded Argument", "art": "res://art/evidence/phone.svg", "location": "riverside", "description": "Omar's recording catches Daniel telling Lina: 'Tomorrow the auditors see everything.'"},
+    "breaker": {"name": "Breaker Dust", "art": "res://art/evidence/breaker.svg", "location": "office", "description": "Fresh graphite dust shows the breaker was deliberately bridged for a timed failure."},
+    "ledger": {"name": "Missing Ledger Page", "art": "res://art/evidence/ledger.svg", "location": "office", "description": "A torn page documents transfers approved by Lina to a shell account."},
+    "key": {"name": "Spare Office Key", "art": "res://art/evidence/key.svg", "location": "cafe", "description": "Theo returned the spare key before the blackout. His access does not match the murder window."}
+  },
+  "timeline": [
+    "8:15 PM — You enter The Daily Bean.",
+    "8:23 PM — Omar begins a secret recording.",
+    "8:31 PM — Daniel's drink order is altered.",
+    "8:39 PM — Lina leaves her table for the rear corridor.",
+    "8:43 PM — Someone accesses the office breaker.",
+    "8:47 PM — The cafe loses power.",
+    "8:49 PM — Daniel collapses.",
+    "8:52 PM — The loop resets."
+  ],
+  "truth": "Lina altered Daniel's drink with an ingredient she knew could trigger his severe allergy, then arranged the 8:47 blackout to retrieve the financial ledger during the panic. The rear-latch thread, altered receipt, recorded argument and ledger establish means, opportunity and motive."
+}
