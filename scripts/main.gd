@@ -210,8 +210,8 @@ func _show_game() -> void:
 	var loc_key := str(state.location)
 	var loc: Dictionary = case_data.get("locations",{}).get(loc_key,{})
 	title_label.text = str(loc.get("name","Investigation"))
-	var total_clues := case_data.get("clues",{}).size()
-	var max_actions := int(case_data.get("max_actions",8))
+	var total_clues: int = case_data.get("clues",{}).size()
+	var max_actions: int = int(case_data.get("max_actions",8))
 	status_label.text = "Loop %d/3 • Actions %d/%d • Evidence %d/%d" % [int(state.loop),int(state.action),max_actions,state.clues.size(),total_clues]
 	_set_background(str(loc.get("art","")))
 	_show_location(loc_key)
@@ -314,7 +314,7 @@ func _press_suspect(id: String) -> void:
 	var data: Dictionary = case_data.suspects[id]
 	var rule: Dictionary = data.get("contradiction",{})
 	var needs: Array = rule.get("needs",[])
-	var complete := true
+	var complete: bool = true
 	for clue in needs:
 		if str(clue) not in state.clues:
 			complete = false
@@ -406,7 +406,7 @@ func _show_deduction() -> void:
 	overlay.visible = true
 
 func _accuse(id: String) -> void:
-	var count := 0
+	var count: int = 0
 	for clue in case_data.get("strong_clues",[]):
 		if str(clue) in state.clues:
 			count += 1
