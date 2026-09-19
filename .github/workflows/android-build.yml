@@ -79,6 +79,16 @@ jobs:
       - name: Validate Godot project
         run: godot --headless --path . --editor --quit
 
+      - name: Runtime startup smoke test
+        shell: bash
+        run: |
+          set -o pipefail
+          godot --headless --path . --quit-after 3 2>&1 | tee runtime.log
+          if grep -E "SCRIPT ERROR|Parse Error|Invalid call|ERROR:" runtime.log; then
+            echo "Godot runtime startup test found errors."
+            exit 1
+          fi
+
       - name: Build Android APK
         shell: bash
         run: |
