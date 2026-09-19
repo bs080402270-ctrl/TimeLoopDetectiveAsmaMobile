@@ -1,9 +1,19 @@
-# OS/editor files
-.DS_Store
-Thumbs.db
-.vscode/
-.idea/
+# Godot generated data
+.godot/
+.import/
 
-# Build output
+# Export/build output
 build/
 dist/
+
+# Android signing secrets
+*.keystore
+*.jks
+*.p12
+export_credentials.cfg
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
