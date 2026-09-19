@@ -1,0 +1,84 @@
+name: Build Time Loop Detective
+
+on:
+  push:
+    branches: [main, feature/case-one-rebuild]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  android:
+    runs-on: ubuntu-24.04
+    env:
+      ANDROID_PLATFORM: "36"
+      ANDROID_BUILD_TOOLS: "36.1.0"
+      ANDROID_NDK: "29.0.14206865"
+      ANDROID_CMAKE: "3.22.1"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          packages: "platform-tools"
+
+      - name: Install Android packages
+        shell: bash
+        run: |
+          yes | sdkmanager --licenses >/dev/null || true
+          sdkmanager             "platform-tools"             "platforms;android-${ANDROID_PLATFORM}"             "build-tools;${ANDROID_BUILD_TOOLS}"             "ndk;${ANDROID_NDK}"             "cmake;${ANDROID_CMAKE}"
+
+      - name: Setup Godot
+        uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.7.2
+          use-dotnet: false
+          include-templates: true
+
+      - name: Configure Android paths
+        shell: bash
+        run: |
+          mkdir -p ~/.config/godot
+          godot --headless --editor --quit --path . --editor-settings-path ~/.config/godot
+          SETTINGS_FILE=$(find ~/.config/godot -type f -name "editor_settings-*.tres" | head -n 1)
+          if [ -n "$SETTINGS_FILE" ]; then
+            sed -i '/export\/android\/android_sdk_path/d' "$SETTINGS_FILE"
+            sed -i '/export\/android\/java_sdk_path/d' "$SETTINGS_FILE"
+            sed -i '$i export/android/android_sdk_path = "'"${ANDROID_SDK_ROOT}"'"' "$SETTINGS_FILE"
+            sed -i '$i export/android/java_sdk_path = "'"${JAVA_HOME}"'"' "$SETTINGS_FILE"
+          fi
+
+      - name: Import project
+        run: godot --headless --editor --path . --quit
+
+      - name: Runtime smoke test
+        shell: bash
+        run: |
+          set -o pipefail
+          godot --headless --path . --quit-after 4 2>&1 | tee runtime.log
+          if grep -E "SCRIPT ERROR|Parse Error|Invalid call|ERROR:" runtime.log; then
+            echo "Runtime smoke test detected an error."
+            exit 1
+          fi
+
+      - name: Export Android APK
+        shell: bash
+        run: |
+          mkdir -p build
+          godot --headless --path . --export-debug "Android Debug" build/TimeLoopDetective.apk
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: TimeLoopDetective-Android
+          path: build/TimeLoopDetective.apk
+          if-no-files-found: error
