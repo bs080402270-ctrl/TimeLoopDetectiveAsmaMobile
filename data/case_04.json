@@ -1,0 +1,48 @@
+{
+  "id":"case_04",
+  "title":"Case 04: The Midnight Train",
+  "subtitle":"A judge vanishes from a sleeper train. A body is found in the baggage carriage, but it is not the judge.",
+  "start_location":"lounge",
+  "max_actions":10,
+  "loop_reset_text":"The train enters the mountain tunnel. Midnight strikes. The rails scream backward to 11:25 PM.",
+  "locations":{
+    "lounge":{"name":"Observation Lounge","art":"res://art/cases/case04_lounge.svg","description":"Dark mountains slide beyond the glass. Every passenger watches everyone else without admitting it.","people":["clara","selene"]},
+    "sleeper":{"name":"Sleeper Car","art":"res://art/cases/case04_sleeper.svg","description":"Compartment doors, tea trays and two room keys that should never have been exchanged.","people":["anton","gabriel"]},
+    "baggage":{"name":"Baggage Car","art":"res://art/cases/case04_baggage.svg","description":"A dead passenger lies among trunks. The murderer believed this was Judge Hale.","people":["nikolai"]},
+    "service":{"name":"Maintenance Passage","art":"res://art/cases/case04_service.svg","description":"A narrow corridor beneath the sleeper section hides access panels and a concealed compartment.","people":["rowan"]}
+  },
+  "suspects":{
+    "clara":{"name":"Clara Hale","role":"Judge's daughter","art":"res://art/cases/case04_clara.svg","dialogue":["My father was in compartment 6.","He switched rooms after receiving a coded note.","I begged him to leave the train at the last station."],"contradiction":{"needs":["keys","message"],"id":"clara_switch","result":"Clara knew about the compartment switch and concealed it to protect her father."}},
+    "anton":{"name":"Anton Voss","role":"Businessman under investigation","art":"res://art/cases/case04_anton.svg","dialogue":["I have nothing to gain from killing a judge.","Hale was ruining my company.","I paid for information about his carriage. I did not order a murder."],"contradiction":{"needs":["paper","claim"],"id":"anton_info","result":"Anton financed surveillance of Hale, but the baggage claim trail points to someone with official access."}},
+    "gabriel":{"name":"Father Gabriel","role":"Priest","art":"res://art/cases/case04_gabriel.svg","dialogue":["The package is confidential.","It contains documents the judge asked me to carry.","Those documents name a compromised police officer."],"contradiction":{"needs":["package"],"id":"gabriel_package","result":"Gabriel's sealed package contains backup evidence, not a weapon."}},
+    "rowan":{"name":"Inspector Rowan","role":"Police escort","art":"res://art/cases/case04_rowan.svg","dialogue":["Judge Hale never left his compartment.","I checked on him personally.","The conductor's master key is the only way into the service passage."],"contradiction":{"needs":["masterkey","message","tea"],"id":"rowan_compromised","result":"The master-key access, coded message and drugged tea show Rowan knew about the room switch and targeted the wrong passenger."}},
+    "selene":{"name":"Selene Marr","role":"Journalist","art":"res://art/cases/case04_selene.svg","dialogue":["I was interviewing Clara.","I knew Hale had evidence but not where he hid it.","I saw Rowan carry tea toward compartment 6 after the switch."],"contradiction":{"needs":["tea"],"id":"selene_witness","result":"The drugged tea supports Selene's account and places Rowan at the false target compartment."}},
+    "nikolai":{"name":"Nikolai Finch","role":"Train conductor","art":"res://art/cases/case04_nikolai.svg","dialogue":["My master key never leaves me.","Someone copied its magnetic signature.","The service compartment can hide a person for hours."],"contradiction":{"needs":["masterkey","compartment"],"id":"nikolai_key","result":"The copied key signature clears Nikolai of direct access while revealing the judge's hiding place."}}
+  },
+  "clues":{
+    "keys":{"name":"Swapped Compartment Keys","art":"res://art/evidence/key.svg","location":"sleeper","description":"Two passenger keys were exchanged shortly before the murder."},
+    "paper":{"name":"Torn Legal Document","art":"res://art/evidence/ledger.svg","location":"lounge","description":"A document names Anton's company but also references a police leak."},
+    "claim":{"name":"Baggage Claim Ticket","art":"res://art/evidence/receipt.svg","location":"baggage","description":"The dead passenger's trunk was redirected using an escort credential."},
+    "masterkey":{"name":"Copied Master-Key Signature","art":"res://art/evidence/key.svg","location":"service","description":"A copied conductor credential opened the service passage."},
+    "tea":{"name":"Drugged Tea","art":"res://art/evidence/receipt.svg","location":"sleeper","description":"A sedative was delivered to the compartment the murderer believed belonged to Hale."},
+    "compartment":{"name":"Hidden Maintenance Compartment","art":"res://art/evidence/breaker.svg","location":"service","description":"Judge Hale is alive, hiding beneath the sleeper car."},
+    "message":{"name":"Coded Newspaper Message","art":"res://art/evidence/phone.svg","location":"lounge","description":"The message reveals the room switch to someone using a police cipher."},
+    "package":{"name":"Sealed Evidence Package","art":"res://art/evidence/ledger.svg","location":"baggage","description":"Documents identify a compromised escort officer and duplicate Hale's evidence."}
+  },
+  "timeline":[
+    "11:25 PM — Hale boards under police escort.",
+    "11:34 PM — Clara receives a coded warning.",
+    "11:41 PM — Hale swaps compartments.",
+    "11:48 PM — Drugged tea is delivered to the wrong room.",
+    "11:53 PM — Copied master key opens service access.",
+    "11:57 PM — Wrong passenger is moved to baggage car.",
+    "12:00 AM — Train enters tunnel and loop resets."
+  ],
+  "culprit":"rowan",
+  "strong_clues":["keys","masterkey","tea","message","compartment"],
+  "required_contradiction":"rowan_compromised",
+  "deduction_prompt":"Who knew about the compartment switch and killed the wrong passenger while trying to reach Judge Hale?",
+  "truth":"Inspector Rowan was the compromised escort. He learned of Hale's compartment switch through a police cipher, copied the conductor's master-key signature and drugged the wrong passenger, believing him to be the judge. Hale survived by hiding in the maintenance compartment.",
+  "partial":"You expose Rowan but fail to prove Hale survived or how the wrong victim was selected.",
+  "wrong":"Your theory cannot explain the swapped keys, the drugged tea and the hidden judge. Midnight returns."
+}
