@@ -1,8 +1,8 @@
-name: Build Android APK
+name: Build Godot Android APK
 
 on:
   push:
-    branches: [main, feature/playable-vertical-slice]
+    branches: [main, feature/godot-migration]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -15,21 +15,33 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build with Unity
-        uses: game-ci/unity-builder@v4
-        env:
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+      - name: Setup Java
+        uses: actions/setup-java@v4
         with:
-          unityVersion: 2022.3.39f1
-          targetPlatform: Android
-          buildMethod: BuildAndroid.Build
-          versioning: Semantic
+          distribution: temurin
+          java-version: "17"
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Setup Godot
+        uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.7.2
+          use-dotnet: false
+          include-templates: true
+
+      - name: Verify Godot project
+        run: godot --headless --path . --editor --quit
+
+      - name: Build Android APK
+        run: |
+          mkdir -p build
+          godot --headless --path . --export-debug "Android" build/TimeLoopDetective.apk
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: time-loop-detective-android
-          path: Builds/Android/*.apk
+          path: build/TimeLoopDetective.apk
           if-no-files-found: error

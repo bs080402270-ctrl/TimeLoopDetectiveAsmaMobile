@@ -1,15 +1,25 @@
-[Ll]ibrary/
-[Tt]emp/
-[Oo]bj/
-[Bb]uild/
-[Bb]uilds/
-[Ll]ogs/
-[Uu]ser[Ss]ettings/
+# Godot
+.godot/
+.import/
+export.cfg
+export_credentials.cfg
 
-*.csproj
-*.sln
-*.user
-*.userprefs
-*.pidb
-*.booproj
+# Builds
+build/
+dist/
+
+# Android signing
+*.keystore
+*.jks
+
+# OS/editor
 .DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Legacy Unity files should not be reintroduced
+Library/
+Temp/
+Logs/
+obj/
