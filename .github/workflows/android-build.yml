@@ -2,7 +2,7 @@ name: Build Time Loop Detective
 
 on:
   push:
-    branches: [main, feature/case-one-rebuild]
+    branches: [main, feature/case-one-rebuild, feature/cases-2-to-5]
   pull_request:
     branches: [main]
   workflow_dispatch:
