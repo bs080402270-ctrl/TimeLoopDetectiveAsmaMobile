@@ -38,6 +38,6 @@ func _tone(freq: float, duration: float, amp: float) -> void:
 	var frames := int(generator.mix_rate * duration)
 	for i in frames:
 		var t := float(i) / generator.mix_rate
-		var env := 1.0 - float(i) / max(1.0, float(frames))
-		var s := sin(TAU * freq * t) * amp * env
+		var env: float = 1.0 - float(i) / max(1.0, float(frames))
+		var s: float = sin(TAU * freq * t) * amp * env
 		playback.push_frame(Vector2(s, s))
