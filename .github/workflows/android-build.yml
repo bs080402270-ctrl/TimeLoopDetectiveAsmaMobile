@@ -2,6 +2,8 @@ name: Build Android APK
 
 on:
   push:
+    branches: [main, feature/playable-vertical-slice]
+  pull_request:
     branches: [main]
   workflow_dispatch:
 
@@ -22,12 +24,12 @@ jobs:
         with:
           unityVersion: 2022.3.39f1
           targetPlatform: Android
-          buildMethod: UnityEditor.BuildPipeline.BuildPlayer
+          buildMethod: BuildAndroid.Build
           versioning: Semantic
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: time-loop-detective-android
-          path: build/**/*.apk
+          path: Builds/Android/*.apk
           if-no-files-found: error
