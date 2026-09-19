@@ -2,6 +2,16 @@
 
 A mobile-first detective mystery built with **Godot 4.7.2**.
 
+## Five playable cases
+
+1. **The Last Cup** — café murder and blackout.
+2. **The Missing Passenger** — a passenger vanishes inside a tunnel.
+3. **Room 417** — an impossible locked-room hotel death.
+4. **The Midnight Train** — a judge disappears and the wrong passenger is killed.
+5. **The Vanishing Witness** — a protected witness escapes a compromised safe house.
+
+Each case has its own suspects, locations, clues, timeline, contradiction rules, three-loop progression, autosave, and endings.
+
 ## Case 01 — The Last Cup
 
 At 8:47 PM the lights fail inside The Daily Bean. At 8:49 PM Daniel Rowan collapses. At 8:52 PM the night resets.
