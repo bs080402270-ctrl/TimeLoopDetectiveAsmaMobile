@@ -2,7 +2,7 @@ name: Build Godot Android APK
 
 on:
   push:
-    branches: [main, feature/godot-migration]
+    branches: [main]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -11,11 +11,18 @@ jobs:
   build:
     name: Build Android APK
     runs-on: ubuntu-latest
+    env:
+      GODOT_VERSION: "4.7.2"
+      ANDROID_PLATFORM: "36"
+      ANDROID_BUILD_TOOLS: "36.1.0"
+      ANDROID_NDK: "29.0.14206865"
+      ANDROID_CMAKE: "3.22.1"
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Java
+      - name: Setup Java 17
         uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -24,6 +31,20 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
+      - name: Install current Android toolchain
+        shell: bash
+        run: |
+          yes | sdkmanager --licenses >/dev/null || true
+          sdkmanager --update
+          sdkmanager             "platform-tools"             "cmdline-tools;latest"             "platforms;android-${ANDROID_PLATFORM}"             "build-tools;${ANDROID_BUILD_TOOLS}"             "ndk;${ANDROID_NDK}"             "cmake;${ANDROID_CMAKE}"
+
+      - name: Export Android environment
+        shell: bash
+        run: |
+          echo "ANDROID_HOME=${ANDROID_SDK_ROOT}" >> "${GITHUB_ENV}"
+          echo "ANDROID_SDK_ROOT=${ANDROID_SDK_ROOT}" >> "${GITHUB_ENV}"
+          echo "JAVA_HOME=${JAVA_HOME}" >> "${GITHUB_ENV}"
+
       - name: Setup Godot
         uses: chickensoft-games/setup-godot@v2
         with:
@@ -31,10 +52,33 @@ jobs:
           use-dotnet: false
           include-templates: true
 
-      - name: Verify Godot project
+      - name: Configure Godot Android SDK paths
+        shell: bash
+        run: |
+          mkdir -p ~/.config/godot
+          godot --headless --editor --quit             --path .             --editor-settings-path ~/.config/godot
+          GODOT_CONFIG_DIR=~/.config/godot
+          SETTINGS_FILE=$(find "$GODOT_CONFIG_DIR" -type f -name "editor_settings-*.tres" | head -n 1)
+          if [ -n "$SETTINGS_FILE" ]; then
+            sed -i '/export\/android\/android_sdk_path/d' "$SETTINGS_FILE"
+            sed -i '/export\/android\/java_sdk_path/d' "$SETTINGS_FILE"
+            sed -i '$i export/android/android_sdk_path = "'"${ANDROID_SDK_ROOT}"'"' "$SETTINGS_FILE"
+            sed -i '$i export/android/java_sdk_path = "'"${JAVA_HOME}"'"' "$SETTINGS_FILE"
+          fi
+
+      - name: Verify installed SDK packages
+        shell: bash
+        run: |
+          sdkmanager --list_installed
+          test -d "${ANDROID_SDK_ROOT}/platforms/android-${ANDROID_PLATFORM}"
+          test -d "${ANDROID_SDK_ROOT}/build-tools/${ANDROID_BUILD_TOOLS}"
+          test -d "${ANDROID_SDK_ROOT}/ndk/${ANDROID_NDK}"
+
+      - name: Validate Godot project
         run: godot --headless --path . --editor --quit
 
       - name: Build Android APK
+        shell: bash
         run: |
           mkdir -p build
           godot --headless --path . --export-debug "Android" build/TimeLoopDetective.apk
