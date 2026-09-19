@@ -357,7 +357,7 @@ func _press_suspect(id: String) -> void:
 		_add_unique(state.contradictions, contradiction)
 	_save()
 	overlay_body.text = result
-	_spend_action()
+	_spend_action(false)
 	audio.evidence()
 
 func _collect_clue(id: String) -> void:
@@ -412,7 +412,9 @@ func _build_nav() -> void:
 		["ALLEY","alley"],
 		["RIVER","riverside"]
 	]:
-		nav.add_child(_button(item[0], func(): _travel(item[1])))
+		var label_text: String = str(item[0])
+		var destination: String = str(item[1])
+		nav.add_child(_button(label_text, func(): _travel(destination)))
 	nav.add_child(_button("CASE", func(): _show_casebook()))
 
 func _travel(loc: String) -> void:
@@ -442,8 +444,9 @@ func _show_deduction() -> void:
 	overlay_body.text = "Who engineered Daniel Rowan's death and the 8:47 blackout?\n\nChoose carefully. Your evidence determines whether the loop breaks."
 	_clear(overlay_actions)
 	for id in ["maya","omar","lina","theo"]:
-		var data: Dictionary = case_data.suspects[id]
-		overlay_actions.add_child(_button(str(data.name), func(): _accuse(id)))
+		var suspect_id: String = str(id)
+		var data: Dictionary = case_data.suspects[suspect_id]
+		overlay_actions.add_child(_button(str(data.name), func(): _accuse(suspect_id)))
 	overlay_actions.add_child(_button("NOT YET", func(): overlay.visible = false))
 	overlay.visible = true
 
