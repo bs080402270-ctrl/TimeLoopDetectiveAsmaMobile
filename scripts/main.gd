@@ -268,7 +268,7 @@ func _person_card(id: String) -> Control:
 
 func _clue_card(id: String) -> Control:
 	var data: Dictionary = case_data.clues[id]
-	var found := id in state.clues
+	var found: bool = id in state.clues
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 12)
 	var icon := TextureRect.new()
