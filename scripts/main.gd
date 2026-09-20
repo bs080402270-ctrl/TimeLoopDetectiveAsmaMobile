@@ -19,7 +19,7 @@ var background: TextureRect
 var title_label: Label
 var status_label: Label
 var body: VBoxContainer
-var nav: HBoxContainer
+var nav: GridContainer
 var overlay: PanelContainer
 var overlay_title: Label
 var overlay_body: RichTextLabel
@@ -66,26 +66,26 @@ func _build_shell() -> void:
 
 	var margin := MarginContainer.new()
 	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	margin.add_theme_constant_override("margin_left",24)
-	margin.add_theme_constant_override("margin_right",24)
-	margin.add_theme_constant_override("margin_top",26)
-	margin.add_theme_constant_override("margin_bottom",24)
+	margin.add_theme_constant_override("margin_left",36)
+	margin.add_theme_constant_override("margin_right",36)
+	margin.add_theme_constant_override("margin_top",38)
+	margin.add_theme_constant_override("margin_bottom",34)
 	add_child(margin)
 
 	var root := VBoxContainer.new()
-	root.add_theme_constant_override("separation",14)
+	root.add_theme_constant_override("separation",24)
 	margin.add_child(root)
 
 	title_label = Label.new()
 	title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title_label.add_theme_font_size_override("font_size",34)
+	title_label.add_theme_font_size_override("font_size",52)
 	title_label.add_theme_color_override("font_color",Color("#f0c46c"))
 	root.add_child(title_label)
 
 	status_label = Label.new()
 	status_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	status_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	status_label.add_theme_font_size_override("font_size",18)
+	status_label.add_theme_font_size_override("font_size",30)
 	root.add_child(status_label)
 
 	var scroll := ScrollContainer.new()
@@ -95,12 +95,14 @@ func _build_shell() -> void:
 
 	body = VBoxContainer.new()
 	body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	body.add_theme_constant_override("separation",14)
+	body.add_theme_constant_override("separation",24)
 	scroll.add_child(body)
 
-	nav = HBoxContainer.new()
-	nav.alignment = BoxContainer.ALIGNMENT_CENTER
-	nav.add_theme_constant_override("separation",6)
+	nav = GridContainer.new()
+	nav.columns = 3
+	nav.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	nav.add_theme_constant_override("h_separation",10)
+	nav.add_theme_constant_override("v_separation",10)
 	root.add_child(nav)
 
 	overlay = PanelContainer.new()
@@ -121,16 +123,16 @@ func _build_shell() -> void:
 	ov.add_theme_constant_override("separation",12)
 	overlay.add_child(ov)
 	overlay_title = Label.new()
-	overlay_title.add_theme_font_size_override("font_size",30)
+	overlay_title.add_theme_font_size_override("font_size",42)
 	overlay_title.add_theme_color_override("font_color",Color("#f0c46c"))
 	ov.add_child(overlay_title)
 	overlay_body = RichTextLabel.new()
 	overlay_body.bbcode_enabled = true
 	overlay_body.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	overlay_body.add_theme_font_size_override("normal_font_size",20)
+	overlay_body.add_theme_font_size_override("normal_font_size",30)
 	ov.add_child(overlay_body)
 	overlay_actions = VBoxContainer.new()
-	overlay_actions.add_theme_constant_override("separation",8)
+	overlay_actions.add_theme_constant_override("separation",14)
 	ov.add_child(overlay_actions)
 	overlay.visible = false
 
@@ -144,7 +146,7 @@ func _show_main_menu() -> void:
 
 	var hero := TextureRect.new()
 	hero.texture = _load_tex("res://art/ui/keyart.svg")
-	hero.custom_minimum_size = Vector2(0,360)
+	hero.custom_minimum_size = Vector2(0,500)
 	hero.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	hero.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	body.add_child(hero)
@@ -169,11 +171,12 @@ func _show_case_select() -> void:
 		box.add_child(vb)
 		var t := Label.new()
 		t.text = str(data.get("title","Untitled Case"))
-		t.add_theme_font_size_override("font_size",24)
+		t.add_theme_font_size_override("font_size",34)
 		t.add_theme_color_override("font_color",Color("#f0c46c"))
 		vb.add_child(t)
 		var d := Label.new()
 		d.text = str(data.get("subtitle",""))
+		d.add_theme_font_size_override("font_size",26)
 		d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		vb.add_child(d)
 		var cid: String = case_id
@@ -221,7 +224,7 @@ func _show_location(loc_key: String) -> void:
 	var intro := Label.new()
 	intro.text = str(loc.get("description","Search carefully."))
 	intro.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	intro.add_theme_font_size_override("font_size",20)
+	intro.add_theme_font_size_override("font_size",30)
 	body.add_child(intro)
 
 	var people: Array = loc.get("people",[])
@@ -249,7 +252,7 @@ func _person_card(id: String) -> Control:
 	row.add_theme_constant_override("separation",12)
 	var portrait := TextureRect.new()
 	portrait.texture = _load_tex(str(data.get("art","")))
-	portrait.custom_minimum_size = Vector2(120,160)
+	portrait.custom_minimum_size = Vector2(240,300)
 	portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	row.add_child(portrait)
@@ -258,10 +261,11 @@ func _person_card(id: String) -> Control:
 	row.add_child(vb)
 	var n := Label.new()
 	n.text = str(data.get("name",id))
-	n.add_theme_font_size_override("font_size",23)
+	n.add_theme_font_size_override("font_size",34)
 	vb.add_child(n)
 	var role := Label.new()
 	role.text = str(data.get("role",""))
+	role.add_theme_font_size_override("font_size",26)
 	role.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vb.add_child(role)
 	var sid: String = id
@@ -275,7 +279,7 @@ func _clue_card(id: String) -> Control:
 	row.add_theme_constant_override("separation",12)
 	var icon := TextureRect.new()
 	icon.texture = _load_tex(str(data.get("art","")))
-	icon.custom_minimum_size = Vector2(82,82)
+	icon.custom_minimum_size = Vector2(128,128)
 	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	row.add_child(icon)
@@ -284,10 +288,11 @@ func _clue_card(id: String) -> Control:
 	row.add_child(vb)
 	var n := Label.new()
 	n.text = ("✓ " if found else "") + str(data.get("name",id))
-	n.add_theme_font_size_override("font_size",20)
+	n.add_theme_font_size_override("font_size",30)
 	vb.add_child(n)
 	var d := Label.new()
 	d.text = str(data.get("description","")) if found else "Inspect this area for evidence."
+	d.add_theme_font_size_override("font_size",25)
 	d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vb.add_child(d)
 	var cid: String = id
@@ -363,7 +368,7 @@ func _build_nav() -> void:
 	for loc_id in case_data.get("locations",{}).keys():
 		var lid: String = str(loc_id)
 		var name := str(case_data.locations[loc_id].get("name",lid))
-		var label := name.substr(0,min(6,name.length())).to_upper()
+		var label := name.substr(0,min(10,name.length())).to_upper()
 		nav.add_child(_button(label,func(): _travel(lid)))
 	nav.add_child(_button("CASE",func(): _show_casebook()))
 
@@ -479,8 +484,8 @@ func _load_tex(path: String) -> Texture2D:
 func _button(text: String,action: Callable) -> Button:
 	var b := Button.new()
 	b.text = text
-	b.custom_minimum_size = Vector2(0,52)
-	b.add_theme_font_size_override("font_size",17)
+	b.custom_minimum_size = Vector2(0,88)
+	b.add_theme_font_size_override("font_size",28)
 	b.pressed.connect(func():
 		audio.click()
 		action.call()
@@ -490,7 +495,7 @@ func _button(text: String,action: Callable) -> Button:
 func _add_section_title(text: String) -> void:
 	var l := Label.new()
 	l.text = text
-	l.add_theme_font_size_override("font_size",26)
+	l.add_theme_font_size_override("font_size",38)
 	l.add_theme_color_override("font_color",Color("#f0c46c"))
 	body.add_child(l)
 
@@ -501,4 +506,5 @@ func _add_unique(arr: Array,value) -> void:
 
 func _clear(node: Node) -> void:
 	for child in node.get_children():
-		child.queue_free()
+		node.remove_child(child)
+		child.free()
