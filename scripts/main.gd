@@ -18,6 +18,12 @@ const C_RED := Color("#e32636")
 const C_RED_DARK := Color("#a51220")
 const C_GOLD := Color("#e6b85c")
 const C_BLUE := Color("#2c8cff")
+const ART_MENU := "res://art/polished/menu.svg"
+const ART_CASES := "res://art/polished/cases.svg"
+const ART_INTERROGATION := "res://art/polished/interrogation.svg"
+const ART_CASEBOOK := "res://art/polished/casebook.svg"
+const ART_RESET := "res://art/polished/reset.svg"
+const ART_DEDUCTION := "res://art/polished/deduction.svg"
 
 var case_catalog: Array[Dictionary] = []
 var case_data: Dictionary = {}
@@ -164,7 +170,7 @@ func _show_main_menu() -> void:
 	_clear(body)
 	_clear(nav)
 	overlay.visible = false
-	background.texture = null
+	_set_polished_background(ART_MENU,0.46)
 	title_label.text = "TIME LOOP DETECTIVE"
 	title_label.add_theme_color_override("font_color",C_TEXT)
 	status_label.text = "SAME TIME. DIFFERENT TRUTHS. BREAK THE LOOP."
@@ -208,7 +214,7 @@ func _show_case_select() -> void:
 	_clear(body)
 	_clear(nav)
 	overlay.visible = false
-	background.texture = null
+	_set_polished_background(ART_CASES,0.40)
 	title_label.text = "SELECT A CASE"
 	status_label.text = "Each case is a loop. Each truth changes everything."
 
@@ -229,6 +235,15 @@ func _case_card(data: Dictionary,index: int) -> Control:
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation",14)
 	card.add_child(row)
+
+	var start_id := str(data.get("start_location",""))
+	var thumb_path := str(data.get("locations",{}).get(start_id,{}).get("art",""))
+	var thumb := TextureRect.new()
+	thumb.texture = _load_tex(thumb_path)
+	thumb.custom_minimum_size = Vector2(130,104)
+	thumb.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	thumb.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	row.add_child(thumb)
 
 	var badge := PanelContainer.new()
 	badge.custom_minimum_size = Vector2(92,92)
@@ -310,6 +325,13 @@ func _show_game() -> void:
 
 func _show_location(loc_key: String) -> void:
 	var loc: Dictionary = case_data.get("locations",{}).get(loc_key,{})
+
+	var hero := TextureRect.new()
+	hero.texture = _load_tex(str(loc.get("art","")))
+	hero.custom_minimum_size = Vector2(0,250)
+	hero.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	hero.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	body.add_child(hero)
 
 	var location_card := PanelContainer.new()
 	location_card.add_theme_stylebox_override("panel",_panel_style(Color(0.02,0.07,0.12,0.86),18,Color("#245f91"),2,18))
@@ -443,6 +465,7 @@ func _clue_card(id: String) -> Control:
 	return card
 
 func _interrogate(id: String) -> void:
+	_set_polished_background(ART_INTERROGATION,0.34)
 	var data: Dictionary = case_data.suspects[id]
 	var lines: Array = data.get("dialogue",[])
 	var idx := clampi(int(state.loop)-1,0,maxi(0,lines.size()-1))
@@ -451,7 +474,7 @@ func _interrogate(id: String) -> void:
 	_clear(overlay_actions)
 	var sid: String = id
 	overlay_actions.add_child(_button("THIS DOESN'T ADD UP...  →",func(): _press_suspect(sid),true))
-	overlay_actions.add_child(_button("CLOSE",func(): overlay.visible=false,false))
+	overlay_actions.add_child(_button("CLOSE",func(): _close_and_refresh(),false))
 	overlay.visible = true
 	_add_unique(state.talked,id)
 	_spend_action(false)
@@ -487,6 +510,7 @@ func _collect_clue(id: String) -> void:
 
 func _reset_loop() -> void:
 	_play_loop_reset()
+	_set_polished_background(ART_RESET,0.38)
 	if int(state.loop) >= 3:
 		_show_deduction()
 		return
@@ -529,6 +553,7 @@ func _travel(loc: String) -> void:
 	_show_game()
 
 func _show_casebook() -> void:
+	_set_polished_background(ART_CASEBOOK,0.36)
 	overlay_title.text = "CASEBOOK / EVIDENCE"
 	var text := "[color=#9db1c7]COLLECTED EVIDENCE %d/%d[/color]\n\n" % [state.clues.size(),case_data.clues.size()]
 	for id in case_data.clues.keys():
@@ -545,18 +570,19 @@ func _show_casebook() -> void:
 	_clear(overlay_actions)
 	overlay_actions.add_child(_button("MAKE A DEDUCTION  →",func(): _show_deduction(),true))
 	overlay_actions.add_child(_button("CASE SELECT",func(): _show_case_select_from_overlay(),false))
-	overlay_actions.add_child(_button("CLOSE",func(): overlay.visible=false,false))
+	overlay_actions.add_child(_button("CLOSE",func(): _close_and_refresh(),false))
 	overlay.visible = true
 
 func _show_deduction() -> void:
 	_play_deduction()
+	_set_polished_background(ART_DEDUCTION,0.40)
 	overlay_title.text = "FINAL DEDUCTION"
 	overlay_body.text = "[center][color=#e32636][font_size=34][b]WHO IS RESPONSIBLE?[/b][/font_size][/color][/center]\n\n" + str(case_data.get("deduction_prompt","Choose carefully. Your evidence decides the ending."))
 	_clear(overlay_actions)
 	for id in case_data.suspects.keys():
 		var sid: String = str(id)
 		overlay_actions.add_child(_button(str(case_data.suspects[id].get("name",id)),func(): _accuse(sid),false))
-	overlay_actions.add_child(_button("NOT YET",func(): overlay.visible=false,false))
+	overlay_actions.add_child(_button("NOT YET",func(): _close_and_refresh(),false))
 	overlay.visible = true
 
 func _accuse(id: String) -> void:
@@ -599,10 +625,11 @@ func _show_case_select_from_overlay() -> void:
 	_show_case_select()
 
 func _show_help() -> void:
+	_set_polished_background(ART_MENU,0.42)
 	overlay_title.text = "HOW TO PLAY"
 	overlay_body.text = "[color=#e6b85c][b]1. INVESTIGATE[/b][/color]\nMove between locations and inspect the scene.\n\n[color=#e6b85c][b]2. INTERROGATE[/b][/color]\nQuestion suspects. Their stories can change between loops.\n\n[color=#e6b85c][b]3. COLLECT CLUES[/b][/color]\nEvidence survives the reset.\n\n[color=#e6b85c][b]4. FIND CONTRADICTIONS[/b][/color]\nUse evidence to break false stories.\n\n[color=#e32636][b]5. BREAK THE LOOP[/b][/color]\nAfter three loops, make the final deduction."
 	_clear(overlay_actions)
-	overlay_actions.add_child(_button("CLOSE",func(): overlay.visible=false,true))
+	overlay_actions.add_child(_button("CLOSE",func(): _show_main_menu(),true))
 	overlay.visible = true
 
 func _close_and_refresh() -> void:
@@ -620,6 +647,11 @@ func _save() -> void:
 
 func _set_background(path: String) -> void:
 	background.texture = _load_tex(path)
+	background.modulate = Color(0.82,0.88,0.96,0.58)
+
+func _set_polished_background(path: String,alpha := 0.40) -> void:
+	background.texture = _load_tex(path)
+	background.modulate = Color(0.82,0.88,0.96,alpha)
 
 func _load_tex(path: String) -> Texture2D:
 	if path != "" and ResourceLoader.exists(path):
