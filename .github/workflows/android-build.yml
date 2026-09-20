@@ -74,6 +74,10 @@ jobs:
             exit 1
           fi
 
+      - name: Gameplay flow self-test
+        shell: bash
+        run: godot --headless --path . --script res://tools/game_flow_test.gd
+
       - name: Export Android APK
         shell: bash
         run: |
