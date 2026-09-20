@@ -8,6 +8,17 @@ const CASE_FILES := [
 	"res://data/case_05.json"
 ]
 
+const C_BG := Color("#07111f")
+const C_PANEL := Color("#0b1a2c")
+const C_PANEL_2 := Color("#10243b")
+const C_LINE := Color("#1f5b8f")
+const C_TEXT := Color("#f4f7fb")
+const C_MUTED := Color("#9db1c7")
+const C_RED := Color("#e32636")
+const C_RED_DARK := Color("#a51220")
+const C_GOLD := Color("#e6b85c")
+const C_BLUE := Color("#2c8cff")
+
 var case_catalog: Array[Dictionary] = []
 var case_data: Dictionary = {}
 var state: Dictionary = {}
@@ -55,36 +66,51 @@ func _build_shell() -> void:
 	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	background.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	background.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	background.modulate = Color(0.70,0.78,0.88,1.0)
 	add_child(background)
+
+	var base := ColorRect.new()
+	base.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	base.color = C_BG
+	base.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(base)
+	move_child(base,0)
 
 	var shade := ColorRect.new()
 	shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	shade.color = Color(0.015,0.012,0.022,0.44)
+	shade.color = Color(0.01,0.03,0.07,0.42)
+	shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(shade)
 
 	var margin := MarginContainer.new()
 	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	margin.add_theme_constant_override("margin_left",36)
-	margin.add_theme_constant_override("margin_right",36)
-	margin.add_theme_constant_override("margin_top",38)
-	margin.add_theme_constant_override("margin_bottom",34)
+	margin.add_theme_constant_override("margin_left",28)
+	margin.add_theme_constant_override("margin_right",28)
+	margin.add_theme_constant_override("margin_top",30)
+	margin.add_theme_constant_override("margin_bottom",24)
 	add_child(margin)
 
 	var root := VBoxContainer.new()
-	root.add_theme_constant_override("separation",24)
+	root.add_theme_constant_override("separation",14)
 	margin.add_child(root)
 
 	title_label = Label.new()
 	title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title_label.add_theme_font_size_override("font_size",52)
-	title_label.add_theme_color_override("font_color",Color("#f0c46c"))
+	title_label.add_theme_font_size_override("font_size",42)
+	title_label.add_theme_color_override("font_color",C_TEXT)
 	root.add_child(title_label)
 
 	status_label = Label.new()
 	status_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	status_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	status_label.add_theme_font_size_override("font_size",30)
+	status_label.add_theme_font_size_override("font_size",20)
+	status_label.add_theme_color_override("font_color",C_MUTED)
 	root.add_child(status_label)
+
+	var divider := ColorRect.new()
+	divider.custom_minimum_size = Vector2(0,2)
+	divider.color = Color(0.10,0.31,0.49,0.65)
+	root.add_child(divider)
 
 	var scroll := ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -93,44 +119,44 @@ func _build_shell() -> void:
 
 	body = VBoxContainer.new()
 	body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	body.add_theme_constant_override("separation",24)
+	body.add_theme_constant_override("separation",16)
 	scroll.add_child(body)
 
 	nav = GridContainer.new()
-	nav.columns = 3
+	nav.columns = 4
 	nav.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	nav.add_theme_constant_override("h_separation",10)
-	nav.add_theme_constant_override("v_separation",10)
+	nav.add_theme_constant_override("h_separation",8)
+	nav.add_theme_constant_override("v_separation",8)
 	root.add_child(nav)
 
 	overlay = PanelContainer.new()
-	overlay.anchor_left = 0.05
-	overlay.anchor_top = 0.12
-	overlay.anchor_right = 0.95
-	overlay.anchor_bottom = 0.9
-	var style := StyleBoxFlat.new()
-	style.bg_color = Color(0.035,0.03,0.05,0.98)
-	style.border_color = Color("#c79a4a")
-	style.set_border_width_all(2)
-	style.set_corner_radius_all(20)
-	style.set_content_margin_all(22)
-	overlay.add_theme_stylebox_override("panel",style)
+	overlay.anchor_left = 0.045
+	overlay.anchor_top = 0.10
+	overlay.anchor_right = 0.955
+	overlay.anchor_bottom = 0.92
+	overlay.add_theme_stylebox_override("panel",_panel_style(C_PANEL,20,C_LINE,2,22))
 	add_child(overlay)
 
 	var ov := VBoxContainer.new()
-	ov.add_theme_constant_override("separation",12)
+	ov.add_theme_constant_override("separation",14)
 	overlay.add_child(ov)
+
 	overlay_title = Label.new()
-	overlay_title.add_theme_font_size_override("font_size",42)
-	overlay_title.add_theme_color_override("font_color",Color("#f0c46c"))
+	overlay_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	overlay_title.add_theme_font_size_override("font_size",38)
+	overlay_title.add_theme_color_override("font_color",C_TEXT)
 	ov.add_child(overlay_title)
+
 	overlay_body = RichTextLabel.new()
 	overlay_body.bbcode_enabled = true
+	overlay_body.fit_content = false
 	overlay_body.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	overlay_body.add_theme_font_size_override("normal_font_size",30)
+	overlay_body.add_theme_font_size_override("normal_font_size",25)
+	overlay_body.add_theme_color_override("default_color",C_TEXT)
 	ov.add_child(overlay_body)
+
 	overlay_actions = VBoxContainer.new()
-	overlay_actions.add_theme_constant_override("separation",14)
+	overlay_actions.add_theme_constant_override("separation",10)
 	ov.add_child(overlay_actions)
 	overlay.visible = false
 
@@ -138,52 +164,113 @@ func _show_main_menu() -> void:
 	_clear(body)
 	_clear(nav)
 	overlay.visible = false
-	title_label.text = "TIME LOOP DETECTIVE"
-	status_label.text = "Five mysteries. Five loops in time. One detective who remembers."
 	background.texture = null
+	title_label.text = "TIME LOOP DETECTIVE"
+	title_label.add_theme_color_override("font_color",C_TEXT)
+	status_label.text = "SAME TIME. DIFFERENT TRUTHS. BREAK THE LOOP."
 
-	var welcome := Label.new()
-	welcome.text = "FIVE MYSTERIES\nTHREE LOOPS EACH\nONE DETECTIVE WHO REMEMBERS"
-	welcome.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	welcome.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	welcome.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	welcome.custom_minimum_size = Vector2(0,500)
-	welcome.add_theme_font_size_override("font_size",42)
-	welcome.add_theme_color_override("font_color",Color("#f0c46c"))
-	body.add_child(welcome)
+	var hero := PanelContainer.new()
+	hero.custom_minimum_size = Vector2(0,470)
+	hero.add_theme_stylebox_override("panel",_panel_style(Color("#09182a"),24,Color("#163f65"),2,24))
+	var hv := VBoxContainer.new()
+	hv.alignment = BoxContainer.ALIGNMENT_CENTER
+	hv.add_theme_constant_override("separation",16)
+	hero.add_child(hv)
 
-	body.add_child(_button("CASE SELECT",func(): _show_case_select()))
-	body.add_child(_button("HOW TO PLAY",func(): _show_help()))
+	var mark := Label.new()
+	mark.text = "∞"
+	mark.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	mark.add_theme_font_size_override("font_size",104)
+	mark.add_theme_color_override("font_color",C_RED)
+	hv.add_child(mark)
+
+	var big := Label.new()
+	big.text = "INVESTIGATE. UNCOVER.\nBREAK THE LOOP."
+	big.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	big.add_theme_font_size_override("font_size",34)
+	big.add_theme_color_override("font_color",C_TEXT)
+	hv.add_child(big)
+
+	var sub := Label.new()
+	sub.text = "Five mysteries. Three loops each.\nYou are the only one who remembers."
+	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	sub.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	sub.add_theme_font_size_override("font_size",23)
+	sub.add_theme_color_override("font_color",C_MUTED)
+	hv.add_child(sub)
+	body.add_child(hero)
+
+	body.add_child(_button("START INVESTIGATION  →",func(): _show_case_select(),true))
+	body.add_child(_button("HOW TO PLAY",func(): _show_help(),false))
+	_build_home_nav("HOME")
 
 func _show_case_select() -> void:
 	_clear(body)
 	_clear(nav)
-	title_label.text = "CASE SELECT"
-	status_label.text = "Choose an investigation."
+	overlay.visible = false
+	background.texture = null
+	title_label.text = "SELECT A CASE"
+	status_label.text = "Each case is a loop. Each truth changes everything."
+
+	var index := 1
 	for data in case_catalog:
 		var case_id := str(data.get("id",""))
-		var box := PanelContainer.new()
-		var s := StyleBoxFlat.new()
-		s.bg_color = Color(0.07,0.055,0.09,0.94)
-		s.set_corner_radius_all(16)
-		s.set_content_margin_all(16)
-		box.add_theme_stylebox_override("panel",s)
-		var vb := VBoxContainer.new()
-		box.add_child(vb)
-		var t := Label.new()
-		t.text = str(data.get("title","Untitled Case"))
-		t.add_theme_font_size_override("font_size",34)
-		t.add_theme_color_override("font_color",Color("#f0c46c"))
-		vb.add_child(t)
-		var d := Label.new()
-		d.text = str(data.get("subtitle",""))
-		d.add_theme_font_size_override("font_size",26)
-		d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		vb.add_child(d)
-		var cid: String = case_id
-		vb.add_child(_button("CONTINUE" if save_manager.has_save(cid) else "START CASE",func(): _open_case(cid)))
-		body.add_child(box)
-	body.add_child(_button("BACK",func(): _show_main_menu()))
+		body.add_child(_case_card(data,index))
+		index += 1
+
+	body.add_child(_button("BACK",func(): _show_main_menu(),false))
+	_build_home_nav("CASES")
+
+func _case_card(data: Dictionary,index: int) -> Control:
+	var case_id := str(data.get("id",""))
+	var card := PanelContainer.new()
+	card.add_theme_stylebox_override("panel",_panel_style(C_PANEL,16,Color("#174b78"),2,14))
+
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation",14)
+	card.add_child(row)
+
+	var badge := PanelContainer.new()
+	badge.custom_minimum_size = Vector2(92,92)
+	badge.add_theme_stylebox_override("panel",_panel_style(Color("#122943"),14,C_GOLD,2,10))
+	var num := Label.new()
+	num.text = "%02d" % index
+	num.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	num.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	num.add_theme_font_size_override("font_size",34)
+	num.add_theme_color_override("font_color",C_GOLD)
+	badge.add_child(num)
+	row.add_child(badge)
+
+	var vb := VBoxContainer.new()
+	vb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	vb.add_theme_constant_override("separation",4)
+	row.add_child(vb)
+
+	var t := Label.new()
+	t.text = str(data.get("title","Untitled Case"))
+	t.add_theme_font_size_override("font_size",29)
+	t.add_theme_color_override("font_color",C_TEXT)
+	vb.add_child(t)
+
+	var d := Label.new()
+	d.text = str(data.get("subtitle",""))
+	d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	d.add_theme_font_size_override("font_size",20)
+	d.add_theme_color_override("font_color",C_MUTED)
+	vb.add_child(d)
+
+	var state_text := Label.new()
+	state_text.text = "CONTINUE INVESTIGATION" if save_manager.has_save(case_id) else "NEW INVESTIGATION"
+	state_text.add_theme_font_size_override("font_size",17)
+	state_text.add_theme_color_override("font_color",C_RED if save_manager.has_save(case_id) else C_GOLD)
+	vb.add_child(state_text)
+
+	var cid: String = case_id
+	var open := _button("OPEN  →",func(): _open_case(cid),false)
+	open.custom_minimum_size = Vector2(130,74)
+	row.add_child(open)
+	return card
 
 func _open_case(case_id: String) -> void:
 	if not _load_case(case_id):
@@ -211,107 +298,160 @@ func _show_game() -> void:
 	overlay.visible = false
 	_clear(body)
 	_build_nav()
+
 	var loc_key := str(state.location)
 	var loc: Dictionary = case_data.get("locations",{}).get(loc_key,{})
-	title_label.text = str(loc.get("name","Investigation"))
+	title_label.text = str(case_data.get("title","Investigation"))
 	var total_clues: int = case_data.get("clues",{}).size()
 	var max_actions: int = int(case_data.get("max_actions",8))
-	status_label.text = "Loop %d/3 • Actions %d/%d • Evidence %d/%d" % [int(state.loop),int(state.action),max_actions,state.clues.size(),total_clues]
+	status_label.text = "LOOP %d OF 3   •   ACTIONS %d/%d   •   CLUES %d/%d" % [int(state.loop),int(state.action),max_actions,state.clues.size(),total_clues]
 	_set_background(str(loc.get("art","")))
 	_show_location(loc_key)
 
 func _show_location(loc_key: String) -> void:
 	var loc: Dictionary = case_data.get("locations",{}).get(loc_key,{})
+
+	var location_card := PanelContainer.new()
+	location_card.add_theme_stylebox_override("panel",_panel_style(Color(0.02,0.07,0.12,0.86),18,Color("#245f91"),2,18))
+	var lv := VBoxContainer.new()
+	lv.add_theme_constant_override("separation",8)
+	location_card.add_child(lv)
+
+	var place := Label.new()
+	place.text = str(loc.get("name","Investigation"))
+	place.add_theme_font_size_override("font_size",34)
+	place.add_theme_color_override("font_color",C_GOLD)
+	lv.add_child(place)
+
 	var intro := Label.new()
 	intro.text = str(loc.get("description","Search carefully."))
 	intro.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	intro.add_theme_font_size_override("font_size",30)
-	body.add_child(intro)
+	intro.add_theme_font_size_override("font_size",23)
+	intro.add_theme_color_override("font_color",C_TEXT)
+	lv.add_child(intro)
+	body.add_child(location_card)
 
 	var people: Array = loc.get("people",[])
 	if people.size() > 0:
-		_add_section_title("People")
+		_add_section_title("PEOPLE OF INTEREST")
 		for person in people:
 			body.add_child(_person_card(str(person)))
 
-	_add_section_title("Search")
+	_add_section_title("SEARCH FOR EVIDENCE")
 	for clue_id in case_data.get("clues",{}).keys():
 		var clue: Dictionary = case_data.clues[clue_id]
 		if str(clue.get("location","")) == loc_key:
 			body.add_child(_clue_card(str(clue_id)))
 
 	if int(state.action) >= int(case_data.get("max_actions",8)):
+		var warning := PanelContainer.new()
+		warning.add_theme_stylebox_override("panel",_panel_style(Color("#31111a"),16,C_RED,2,16))
+		var wv := VBoxContainer.new()
+		warning.add_child(wv)
 		var w := Label.new()
-		w.text = "The loop is collapsing..."
-		w.add_theme_color_override("font_color",Color("#ffb467"))
-		body.add_child(w)
-		body.add_child(_button("LET THE LOOP RESET",func(): _reset_loop()))
+		w.text = "THE LOOP IS COLLAPSING"
+		w.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		w.add_theme_font_size_override("font_size",27)
+		w.add_theme_color_override("font_color",C_RED)
+		wv.add_child(w)
+		wv.add_child(_button("RESET THE TIMELINE  ↻",func(): _reset_loop(),true))
+		body.add_child(warning)
 
 func _person_card(id: String) -> Control:
 	var data: Dictionary = case_data.suspects[id]
+	var card := PanelContainer.new()
+	card.add_theme_stylebox_override("panel",_panel_style(Color(0.035,0.095,0.155,0.94),16,Color("#194d78"),2,12))
+
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation",12)
+	row.add_theme_constant_override("separation",14)
+	card.add_child(row)
+
 	var portrait := TextureRect.new()
 	portrait.texture = _load_tex(str(data.get("art","")))
-	portrait.custom_minimum_size = Vector2(240,300)
+	portrait.custom_minimum_size = Vector2(180,220)
 	portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	row.add_child(portrait)
+
 	var vb := VBoxContainer.new()
 	vb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	vb.add_theme_constant_override("separation",5)
 	row.add_child(vb)
+
 	var n := Label.new()
 	n.text = str(data.get("name",id))
-	n.add_theme_font_size_override("font_size",34)
+	n.add_theme_font_size_override("font_size",30)
+	n.add_theme_color_override("font_color",C_TEXT)
 	vb.add_child(n)
+
 	var role := Label.new()
 	role.text = str(data.get("role",""))
-	role.add_theme_font_size_override("font_size",26)
+	role.add_theme_font_size_override("font_size",20)
+	role.add_theme_color_override("font_color",C_MUTED)
 	role.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vb.add_child(role)
+
+	var memory := Label.new()
+	memory.text = "INTERVIEWED" if id in state.talked else "NOT YET INTERVIEWED"
+	memory.add_theme_font_size_override("font_size",16)
+	memory.add_theme_color_override("font_color",C_GOLD if id in state.talked else C_MUTED)
+	vb.add_child(memory)
+
 	var sid: String = id
-	vb.add_child(_button("INTERROGATE",func(): _interrogate(sid)))
-	return row
+	vb.add_child(_button("INTERROGATE  →",func(): _interrogate(sid),true))
+	return card
 
 func _clue_card(id: String) -> Control:
 	var data: Dictionary = case_data.clues[id]
 	var found: bool = id in state.clues
+	var card := PanelContainer.new()
+	card.add_theme_stylebox_override("panel",_panel_style(C_PANEL,14,C_GOLD if found else Color("#174b78"),2,12))
+
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation",12)
+	card.add_child(row)
+
 	var icon := TextureRect.new()
 	icon.texture = _load_tex(str(data.get("art","")))
-	icon.custom_minimum_size = Vector2(128,128)
+	icon.custom_minimum_size = Vector2(110,110)
 	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	row.add_child(icon)
+
 	var vb := VBoxContainer.new()
 	vb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	row.add_child(vb)
+
 	var n := Label.new()
-	n.text = ("✓ " if found else "") + str(data.get("name",id))
-	n.add_theme_font_size_override("font_size",30)
+	n.text = ("RECORDED • " if found else "") + str(data.get("name",id))
+	n.add_theme_font_size_override("font_size",25)
+	n.add_theme_color_override("font_color",C_GOLD if found else C_TEXT)
 	vb.add_child(n)
+
 	var d := Label.new()
 	d.text = str(data.get("description","")) if found else "Inspect this area for evidence."
-	d.add_theme_font_size_override("font_size",25)
+	d.add_theme_font_size_override("font_size",19)
+	d.add_theme_color_override("font_color",C_MUTED)
 	d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vb.add_child(d)
+
 	var cid: String = id
-	var b := _button("RECORDED" if found else "INSPECT",func(): _collect_clue(cid))
+	var b := _button("RECORDED" if found else "INSPECT",func(): _collect_clue(cid),false)
 	b.disabled = found
+	b.custom_minimum_size = Vector2(145,72)
 	row.add_child(b)
-	return row
+	return card
 
 func _interrogate(id: String) -> void:
 	var data: Dictionary = case_data.suspects[id]
 	var lines: Array = data.get("dialogue",[])
 	var idx := clampi(int(state.loop)-1,0,maxi(0,lines.size()-1))
-	overlay_title.text = str(data.get("name",id))
-	overlay_body.text = str(lines[idx]) if lines.size() > 0 else "They watch you carefully."
+	overlay_title.text = str(data.get("name",id)) + " • INTERROGATION"
+	overlay_body.text = "[color=#9db1c7]%s[/color]\n\n%s" % [str(data.get("role","Person of interest")), str(lines[idx]) if lines.size() > 0 else "They watch you carefully."]
 	_clear(overlay_actions)
 	var sid: String = id
-	overlay_actions.add_child(_button("PRESS ON THEIR STORY",func(): _press_suspect(sid)))
-	overlay_actions.add_child(_button("CLOSE",func(): overlay.visible=false))
+	overlay_actions.add_child(_button("THIS DOESN'T ADD UP...  →",func(): _press_suspect(sid),true))
+	overlay_actions.add_child(_button("CLOSE",func(): overlay.visible=false,false))
 	overlay.visible = true
 	_add_unique(state.talked,id)
 	_spend_action(false)
@@ -326,12 +466,10 @@ func _press_suspect(id: String) -> void:
 			complete = false
 	if complete and needs.size() > 0:
 		_add_unique(state.contradictions,str(rule.get("id","")))
-		overlay_body.text = "[color=#f0c46c][b]CONTRADICTION / TRUTH UNLOCKED[/b][/color]
-
-" + str(rule.get("result",""))
+		overlay_body.text = "[center][color=#e6b85c][font_size=30][b]CONTRADICTION FOUND[/b][/font_size][/color][/center]\n\n" + str(rule.get("result",""))
 		_play_evidence()
 	else:
-		overlay_body.text = "You do not yet have enough evidence to break this story."
+		overlay_body.text = "[color=#9db1c7]You need more evidence before this story can be broken.[/color]"
 	_spend_action(false)
 
 func _collect_clue(id: String) -> void:
@@ -339,12 +477,10 @@ func _collect_clue(id: String) -> void:
 		return
 	_add_unique(state.clues,id)
 	var data: Dictionary = case_data.clues[id]
-	overlay_title.text = "Evidence Found"
-	overlay_body.text = "[b]%s[/b]
-
-%s" % [str(data.get("name",id)),str(data.get("description",""))]
+	overlay_title.text = "EVIDENCE FOUND"
+	overlay_body.text = "[center][color=#e6b85c][font_size=30][b]%s[/b][/font_size][/color][/center]\n\n%s" % [str(data.get("name",id)),str(data.get("description",""))]
 	_clear(overlay_actions)
-	overlay_actions.add_child(_button("ADD TO CASEBOOK",func(): _close_and_refresh()))
+	overlay_actions.add_child(_button("ADD TO CASEBOOK  →",func(): _close_and_refresh(),true))
 	overlay.visible = true
 	_play_evidence()
 	_spend_action(false)
@@ -358,20 +494,34 @@ func _reset_loop() -> void:
 	state.action = 0
 	state.location = str(case_data.get("start_location",""))
 	_save()
-	overlay_title.text = "THE LOOP REWINDS"
-	overlay_body.text = str(case_data.get("loop_reset_text","Time folds backward. You remember."))
+	overlay_title.text = "↻  TIME LOOP RESET"
+	overlay_body.text = "[center][font_size=28][color=#2c8cff]YOU KEEP THE KNOWLEDGE.\nTHE WORLD RESETS.[/color][/font_size][/center]\n\n" + str(case_data.get("loop_reset_text","Time folds backward. You remember."))
 	_clear(overlay_actions)
-	overlay_actions.add_child(_button("BEGIN LOOP %d" % int(state.loop),func(): _close_and_refresh()))
+	overlay_actions.add_child(_button("START LOOP %d  →" % int(state.loop),func(): _close_and_refresh(),true))
 	overlay.visible = true
 
 func _build_nav() -> void:
 	_clear(nav)
-	for loc_id in case_data.get("locations",{}).keys():
+	nav.columns = 4
+	var locs: Array = case_data.get("locations",{}).keys()
+	var shown := 0
+	for loc_id in locs:
+		if shown >= 3:
+			break
 		var lid: String = str(loc_id)
 		var name := str(case_data.locations[loc_id].get("name",lid))
-		var label := name.substr(0,min(10,name.length())).to_upper()
-		nav.add_child(_button(label,func(): _travel(lid)))
-	nav.add_child(_button("CASE",func(): _show_casebook()))
+		var label := name.substr(0,min(9,name.length())).to_upper()
+		nav.add_child(_nav_button(label,func(): _travel(lid),lid == str(state.location)))
+		shown += 1
+	nav.add_child(_nav_button("CASEBOOK",func(): _show_casebook(),false))
+
+func _build_home_nav(active: String) -> void:
+	_clear(nav)
+	nav.columns = 4
+	nav.add_child(_nav_button("HOME",func(): _show_main_menu(),active=="HOME"))
+	nav.add_child(_nav_button("CASES",func(): _show_case_select(),active=="CASES"))
+	nav.add_child(_nav_button("CASEBOOK",func(): _show_help(),false))
+	nav.add_child(_nav_button("HELP",func(): _show_help(),false))
 
 func _travel(loc: String) -> void:
 	state.location = loc
@@ -379,36 +529,34 @@ func _travel(loc: String) -> void:
 	_show_game()
 
 func _show_casebook() -> void:
-	overlay_title.text = "CASEBOOK"
-	var text := "[b]Evidence[/b]
-"
+	overlay_title.text = "CASEBOOK / EVIDENCE"
+	var text := "[color=#9db1c7]COLLECTED EVIDENCE %d/%d[/color]\n\n" % [state.clues.size(),case_data.clues.size()]
 	for id in case_data.clues.keys():
-		text += ("✓ " if id in state.clues else "? ") + str(case_data.clues[id].get("name",id)) + "
-"
-	text += "
-[b]Contradictions[/b]
-%d found
-
-[b]Timeline[/b]
-" % state.contradictions.size()
+		var found: bool = id in state.clues
+		text += ("[color=#e6b85c]■[/color] " if found else "[color=#44627f]□[/color] ") + str(case_data.clues[id].get("name",id))
+		if found:
+			text += "\n[color=#9db1c7]   " + str(case_data.clues[id].get("description","")) + "[/color]"
+		text += "\n\n"
+	text += "[color=#9db1c7]CONTRADICTIONS: %d[/color]\n\n" % state.contradictions.size()
+	text += "[b]TIMELINE[/b]\n"
 	for line in case_data.get("timeline",[]):
-		text += "• " + str(line) + "
-"
+		text += "• " + str(line) + "\n"
 	overlay_body.text = text
 	_clear(overlay_actions)
-	overlay_actions.add_child(_button("MAKE FINAL DEDUCTION",func(): _show_deduction()))
-	overlay_actions.add_child(_button("CASE SELECT",func(): _show_case_select_from_overlay()))
-	overlay_actions.add_child(_button("CLOSE",func(): overlay.visible=false))
+	overlay_actions.add_child(_button("MAKE A DEDUCTION  →",func(): _show_deduction(),true))
+	overlay_actions.add_child(_button("CASE SELECT",func(): _show_case_select_from_overlay(),false))
+	overlay_actions.add_child(_button("CLOSE",func(): overlay.visible=false,false))
 	overlay.visible = true
 
 func _show_deduction() -> void:
+	_play_deduction()
 	overlay_title.text = "FINAL DEDUCTION"
-	overlay_body.text = str(case_data.get("deduction_prompt","Who is responsible?"))
+	overlay_body.text = "[center][color=#e32636][font_size=34][b]WHO IS RESPONSIBLE?[/b][/font_size][/color][/center]\n\n" + str(case_data.get("deduction_prompt","Choose carefully. Your evidence decides the ending."))
 	_clear(overlay_actions)
 	for id in case_data.suspects.keys():
 		var sid: String = str(id)
-		overlay_actions.add_child(_button(str(case_data.suspects[id].get("name",id)),func(): _accuse(sid)))
-	overlay_actions.add_child(_button("NOT YET",func(): overlay.visible=false))
+		overlay_actions.add_child(_button(str(case_data.suspects[id].get("name",id)),func(): _accuse(sid),false))
+	overlay_actions.add_child(_button("NOT YET",func(): overlay.visible=false,false))
 	overlay.visible = true
 
 func _accuse(id: String) -> void:
@@ -430,16 +578,14 @@ func _finish(kind: String) -> void:
 	_save()
 	overlay_title.text = "CASE CLOSED" if kind=="true" else "THE LOOP RESISTS"
 	if kind=="true":
-		overlay_body.text = "[center][font_size=30][color=#f0c46c]TRUE ENDING[/color][/font_size][/center]
-
-"+str(case_data.get("truth",""))
+		overlay_body.text = "[center][font_size=34][color=#e6b85c][b]TRUE ENDING[/b][/color][/font_size][/center]\n\n"+str(case_data.get("truth",""))
 	elif kind=="partial":
-		overlay_body.text = str(case_data.get("partial","Incomplete deduction."))
+		overlay_body.text = "[center][color=#e6b85c][b]PARTIAL TRUTH[/b][/color][/center]\n\n"+str(case_data.get("partial","Incomplete deduction."))
 	else:
-		overlay_body.text = str(case_data.get("wrong","Wrong accusation."))
+		overlay_body.text = "[center][color=#e32636][b]WRONG ACCUSATION[/b][/color][/center]\n\n"+str(case_data.get("wrong","Wrong accusation."))
 	_clear(overlay_actions)
-	overlay_actions.add_child(_button("RESTART CASE",func(): _restart_case()))
-	overlay_actions.add_child(_button("CASE SELECT",func(): _show_case_select_from_overlay()))
+	overlay_actions.add_child(_button("RESTART CASE",func(): _restart_case(),true))
+	overlay_actions.add_child(_button("CASE SELECT",func(): _show_case_select_from_overlay(),false))
 	overlay.visible = true
 
 func _restart_case() -> void:
@@ -454,9 +600,9 @@ func _show_case_select_from_overlay() -> void:
 
 func _show_help() -> void:
 	overlay_title.text = "HOW TO PLAY"
-	overlay_body.text = "Explore locations, interrogate suspects, collect evidence and expose contradictions. Every action advances the loop. Knowledge and evidence survive resets. After three loops, make your final deduction."
+	overlay_body.text = "[color=#e6b85c][b]1. INVESTIGATE[/b][/color]\nMove between locations and inspect the scene.\n\n[color=#e6b85c][b]2. INTERROGATE[/b][/color]\nQuestion suspects. Their stories can change between loops.\n\n[color=#e6b85c][b]3. COLLECT CLUES[/b][/color]\nEvidence survives the reset.\n\n[color=#e6b85c][b]4. FIND CONTRADICTIONS[/b][/color]\nUse evidence to break false stories.\n\n[color=#e32636][b]5. BREAK THE LOOP[/b][/color]\nAfter three loops, make the final deduction."
 	_clear(overlay_actions)
-	overlay_actions.add_child(_button("CLOSE",func(): overlay.visible=false))
+	overlay_actions.add_child(_button("CLOSE",func(): overlay.visible=false,true))
 	overlay.visible = true
 
 func _close_and_refresh() -> void:
@@ -479,7 +625,7 @@ func _load_tex(path: String) -> Texture2D:
 	if path != "" and ResourceLoader.exists(path):
 		return load(path)
 	var image := Image.create(64,64,false,Image.FORMAT_RGBA8)
-	image.fill(Color(0.08,0.06,0.10))
+	image.fill(C_PANEL)
 	return ImageTexture.create_from_image(image)
 
 func _ensure_audio() -> void:
@@ -507,23 +653,46 @@ func _play_deduction() -> void:
 	if audio != null:
 		audio.deduction()
 
-func _button(text: String,action: Callable) -> Button:
+func _button(text: String,action: Callable,accent := false) -> Button:
 	var b := Button.new()
 	b.text = text
-	b.custom_minimum_size = Vector2(0,88)
-	b.add_theme_font_size_override("font_size",28)
+	b.custom_minimum_size = Vector2(0,82)
+	b.add_theme_font_size_override("font_size",24)
+	b.add_theme_color_override("font_color",C_TEXT)
+	b.add_theme_color_override("font_hover_color",Color.WHITE)
+	b.add_theme_stylebox_override("normal",_panel_style(C_RED_DARK if accent else C_PANEL_2,13,C_RED if accent else C_LINE,2,10))
+	b.add_theme_stylebox_override("hover",_panel_style(C_RED if accent else Color("#173553"),13,C_RED if accent else C_BLUE,2,10))
+	b.add_theme_stylebox_override("pressed",_panel_style(Color("#8f0d19") if accent else Color("#0b2138"),13,C_RED,2,10))
 	b.pressed.connect(func():
 		_play_click()
 		action.call()
 	)
 	return b
 
+func _nav_button(text: String,action: Callable,active: bool) -> Button:
+	var b := _button(text,action,false)
+	b.custom_minimum_size = Vector2(0,72)
+	b.add_theme_font_size_override("font_size",17)
+	if active:
+		b.add_theme_color_override("font_color",C_RED)
+		b.add_theme_stylebox_override("normal",_panel_style(Color("#101b2b"),12,C_RED,2,8))
+	return b
+
 func _add_section_title(text: String) -> void:
 	var l := Label.new()
 	l.text = text
-	l.add_theme_font_size_override("font_size",38)
-	l.add_theme_color_override("font_color",Color("#f0c46c"))
+	l.add_theme_font_size_override("font_size",25)
+	l.add_theme_color_override("font_color",C_GOLD)
 	body.add_child(l)
+
+func _panel_style(bg: Color,radius: int,border: Color,width: int,padding: int) -> StyleBoxFlat:
+	var s := StyleBoxFlat.new()
+	s.bg_color = bg
+	s.border_color = border
+	s.set_border_width_all(width)
+	s.set_corner_radius_all(radius)
+	s.set_content_margin_all(padding)
+	return s
 
 func _add_unique(arr: Array,value) -> void:
 	if value not in arr:
