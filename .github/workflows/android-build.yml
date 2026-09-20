@@ -60,12 +60,6 @@ jobs:
             sed -i '$i export/android/java_sdk_path = "'"${JAVA_HOME}"'"' "$SETTINGS_FILE"
           fi
 
-      - name: Prepare stable debug signing key
-        shell: bash
-        run: |
-          mkdir -p "$GITHUB_WORKSPACE/.ci"
-          base64 -d ci/debug.keystore.b64 > "$GITHUB_WORKSPACE/.ci/tld-debug.keystore"
-          chmod 600 "$GITHUB_WORKSPACE/.ci/tld-debug.keystore"
 
       - name: Import project
         run: godot --headless --editor --path . --quit
@@ -82,10 +76,6 @@ jobs:
 
       - name: Export Android APK
         shell: bash
-        env:
-          GODOT_ANDROID_KEYSTORE_DEBUG_PATH: ${{ github.workspace }}/.ci/tld-debug.keystore
-          GODOT_ANDROID_KEYSTORE_DEBUG_USER: androiddebugkey
-          GODOT_ANDROID_KEYSTORE_DEBUG_PASSWORD: android
         run: |
           mkdir -p build
           godot --headless --path . --export-debug "Android Debug" build/TimeLoopDetective.apk
