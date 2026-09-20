@@ -27,8 +27,6 @@ var overlay_actions: VBoxContainer
 
 func _ready() -> void:
 	_load_catalog()
-	audio = AudioManager.new()
-	add_child(audio)
 	_build_shell()
 	_show_main_menu()
 
@@ -142,14 +140,17 @@ func _show_main_menu() -> void:
 	overlay.visible = false
 	title_label.text = "TIME LOOP DETECTIVE"
 	status_label.text = "Five mysteries. Five loops in time. One detective who remembers."
-	_set_background("res://art/backgrounds/cafe.svg")
+	background.texture = null
 
-	var hero := TextureRect.new()
-	hero.texture = _load_tex("res://art/ui/keyart.svg")
-	hero.custom_minimum_size = Vector2(0,500)
-	hero.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	hero.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	body.add_child(hero)
+	var welcome := Label.new()
+	welcome.text = "FIVE MYSTERIES\nTHREE LOOPS EACH\nONE DETECTIVE WHO REMEMBERS"
+	welcome.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	welcome.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	welcome.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	welcome.custom_minimum_size = Vector2(0,500)
+	welcome.add_theme_font_size_override("font_size",42)
+	welcome.add_theme_color_override("font_color",Color("#f0c46c"))
+	body.add_child(welcome)
 
 	body.add_child(_button("CASE SELECT",func(): _show_case_select()))
 	body.add_child(_button("HOW TO PLAY",func(): _show_help()))
@@ -328,7 +329,7 @@ func _press_suspect(id: String) -> void:
 		overlay_body.text = "[color=#f0c46c][b]CONTRADICTION / TRUTH UNLOCKED[/b][/color]
 
 " + str(rule.get("result",""))
-		audio.evidence()
+		_play_evidence()
 	else:
 		overlay_body.text = "You do not yet have enough evidence to break this story."
 	_spend_action(false)
@@ -345,11 +346,11 @@ func _collect_clue(id: String) -> void:
 	_clear(overlay_actions)
 	overlay_actions.add_child(_button("ADD TO CASEBOOK",func(): _close_and_refresh()))
 	overlay.visible = true
-	audio.evidence()
+	_play_evidence()
 	_spend_action(false)
 
 func _reset_loop() -> void:
-	audio.loop_reset()
+	_play_loop_reset()
 	if int(state.loop) >= 3:
 		_show_deduction()
 		return
@@ -481,13 +482,38 @@ func _load_tex(path: String) -> Texture2D:
 	image.fill(Color(0.08,0.06,0.10))
 	return ImageTexture.create_from_image(image)
 
+func _ensure_audio() -> void:
+	if audio == null:
+		audio = AudioManager.new()
+		add_child(audio)
+
+func _play_click() -> void:
+	_ensure_audio()
+	if audio != null:
+		audio.click()
+
+func _play_evidence() -> void:
+	_ensure_audio()
+	if audio != null:
+		audio.evidence()
+
+func _play_loop_reset() -> void:
+	_ensure_audio()
+	if audio != null:
+		audio.loop_reset()
+
+func _play_deduction() -> void:
+	_ensure_audio()
+	if audio != null:
+		audio.deduction()
+
 func _button(text: String,action: Callable) -> Button:
 	var b := Button.new()
 	b.text = text
 	b.custom_minimum_size = Vector2(0,88)
 	b.add_theme_font_size_override("font_size",28)
 	b.pressed.connect(func():
-		audio.click()
+		_play_click()
 		action.call()
 	)
 	return b
