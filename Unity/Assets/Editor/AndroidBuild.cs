@@ -36,8 +36,8 @@ namespace TimeLoopDetective.Editor
             PlayerSettings.companyName = "ZetaRank";
             PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android, "com.zetarank.timeloopdetective");
             PlayerSettings.defaultInterfaceOrientation = UIOrientation.Portrait;
-            PlayerSettings.Android.bundleVersionCode = 14;
-            PlayerSettings.bundleVersion = "1.2.3-unity";
+            PlayerSettings.Android.bundleVersionCode = 15;
+            PlayerSettings.bundleVersion = "1.2.4-unity";
             PlayerSettings.Android.minSdkVersion = AndroidSdkVersions.AndroidApiLevel26;
             PlayerSettings.Android.targetSdkVersion = AndroidSdkVersions.AndroidApiLevel36;
             PlayerSettings.SetScriptingBackend(BuildTargetGroup.Android, ScriptingImplementation.IL2CPP);
