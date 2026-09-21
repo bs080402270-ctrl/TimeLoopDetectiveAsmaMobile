@@ -182,7 +182,7 @@ namespace TimeLoopDetective
             header.text = "HOW THE LOOP WORKS";
             subheader.text = "Observe. Question. Remember. Deduce.";
 
-            ArtworkCard("Art/Phase2/Backgrounds/InvestigationDesk", 270, "THE LOOP REMEMBERS", "Every reset changes what you can prove.");
+            ArtworkCard("Art/Phase1/Backgrounds/DailyBeanCafe", 270, "THE LOOP REMEMBERS", "Every reset changes what you can prove.");
             Step("01", "INVESTIGATE LOCATIONS", "Search every scene for useful clues.");
             Step("02", "QUESTION SUSPECTS", "Stories change. Contradictions reveal the truth.");
             Step("03", "CARRY CLUES ACROSS LOOPS", "The world resets. Your knowledge does not.");
@@ -215,7 +215,7 @@ namespace TimeLoopDetective
             ClearContent();
             header.text = "SELECT DIFFICULTY";
             subheader.text = "Choose how challenging the loop will be.";
-            ArtworkCard("Art/Phase2/Backgrounds/RiversideWalkway", 230, "CHOOSE YOUR PRESSURE", "Hints, actions, and deduction requirements change by mode.");
+            ArtworkCard("Art/Phase2/Backgrounds/CafeExteriorRain", 230, "CHOOSE YOUR PRESSURE", "Hints, actions, and deduction requirements change by mode.");
             DifficultyCard(DifficultyMode.Easy, "EASY", "More hints, two extra actions per loop, easier final deduction.");
             DifficultyCard(DifficultyMode.Hard, "HARD", "Balanced investigation, standard actions and limited guidance.");
             DifficultyCard(DifficultyMode.Hardest, "HARDEST", "No hints, two fewer actions and the strictest final deduction.");
@@ -368,7 +368,7 @@ namespace TimeLoopDetective
             ClearContent();
             header.text = ok ? "CONTRADICTION FOUND" : "NEED MORE EVIDENCE";
             subheader.text = ok ? game.CurrentCase.suspects[id].contradiction.result : "Return to the scene and keep investigating.";
-            ArtworkCard(ok ? "Art/Phase1/Clues/RedThread" : "Art/Phase2/Backgrounds/InvestigationDesk",
+            ArtworkCard(ok ? "Art/Phase1/Clues/RedThread" : "Art/Phase1/Backgrounds/DailyBeanCafe",
                 300, ok ? "STORY BROKEN" : "NOT ENOUGH YET", subheader.text);
             AddButton(content, "BACK TO SCENE", ShowGame, true);
         }
@@ -409,7 +409,7 @@ namespace TimeLoopDetective
             header.text = "CASEBOOK / EVIDENCE";
             subheader.text = string.Format("COLLECTED {0}/{1}", game.State.clues.Count, game.CurrentCase.clues.Count);
 
-            ArtworkCard("Art/Phase2/Backgrounds/InvestigationDesk", 320, "INVESTIGATION BOARD", "Everything you remember survives the reset.");
+            ArtworkCard("Art/Phase1/Backgrounds/DailyBeanCafe", 320, "INVESTIGATION BOARD", "Everything you remember survives the reset.");
 
             foreach (var kv in game.CurrentCase.clues)
                 Label((game.State.clues.Contains(kv.Key) ? "■ " : "□ ") + kv.Value.name,
@@ -478,7 +478,7 @@ namespace TimeLoopDetective
                 ShowSettings();
             }, false);
             AddButton(content, "CLEAR ALL CASE PROGRESS", ClearProgress, false);
-            Label("VERSION 1.2.1 UNITY", content, 18, Muted, TextAnchor.MiddleCenter);
+            Label("VERSION 1.2.2 UNITY", content, 18, Muted, TextAnchor.MiddleCenter);
             Label("ZetaRank • Offline detective adventure", content, 16, Muted, TextAnchor.MiddleCenter);
         }
 
