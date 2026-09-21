@@ -35,6 +35,20 @@ func _run() -> void:
 	if game.title_label.text != "SETTINGS" or game.body.get_child_count() < 5:
 		_fail("settings screen did not render")
 		return
+
+	game._show_intro()
+	await process_frame
+	if game.title_label.text != "HOW THE LOOP WORKS" or game.body.get_child_count() < 5:
+		_fail("intro screen did not render")
+		return
+
+	game._show_difficulty()
+	await process_frame
+	if game.title_label.text != "SELECT DIFFICULTY" or game.body.get_child_count() < 5:
+		_fail("difficulty screen did not render")
+		return
+
+	game.settings_manager.set_difficulty("easy")
 	game._show_case_select()
 	await process_frame
 
@@ -46,6 +60,15 @@ func _run() -> void:
 
 		game._start_new()
 		await process_frame
+		var base_actions := int(game.case_data.get("max_actions",8))
+		if game._effective_max_actions() != base_actions + 2:
+			_fail(case_id + " easy difficulty did not add actions")
+			return
+		game.settings_manager.set_difficulty("hardest")
+		if game._effective_max_actions() != maxi(4,base_actions - 2):
+			_fail(case_id + " hardest difficulty did not reduce actions")
+			return
+		game.settings_manager.set_difficulty("hard")
 		if game.nav.get_child_count() < game.case_data.get("locations", {}).size() + 1:
 			_fail(case_id + " navigation is missing a location or casebook button")
 			return
@@ -118,5 +141,5 @@ func _run() -> void:
 
 		game.save_manager.clear(case_id)
 
-	print("FLOW TEST PASSED: menu, case select, start, interrogation, evidence, casebook, navigation, loop reset and deduction work across all 5 cases.")
+	print("FLOW TEST PASSED: menu, onboarding, difficulty, settings, case select, navigation and full five-case gameplay flow work.")
 	quit(0)
