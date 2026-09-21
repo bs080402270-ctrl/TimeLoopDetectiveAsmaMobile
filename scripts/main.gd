@@ -27,6 +27,38 @@ const ART_DEDUCTION := "res://art/actual/final_deduction.jpg"
 const ART_SETTINGS := "res://art/actual/detective_office.jpg"
 const ART_INTRO := "res://art/actual/investigation_desk.jpg"
 const ART_DIFFICULTY := "res://art/polished/difficulty.svg"
+const ART_CHARACTER_ATLAS := "res://art/actual/character_atlas.jpg"
+
+const CHARACTER_ATLAS_MAP := {
+	"maya": 0, "omar": 19, "lina": 16, "theo": 2,
+	"hassan": 15, "meera": 5, "elias": 6, "juno": 9, "rafi": 10,
+	"sofia": 3, "marcus": 4, "ivy": 7, "noah": 13, "elena": 1,
+	"clara": 8, "anton": 18, "gabriel": 12, "rowan": 17, "selene": 11, "nikolai": 14,
+	"morgan": 2, "iris": 16, "leo": 13, "calvin": 1, "mara": 5, "tate": 6
+}
+
+const CHARACTER_GALLERY := [
+	{"name":"Asma","role":"Detective trapped in the time loop","index":0},
+	{"name":"Chief Farid","role":"Police chief and mentor","index":1},
+	{"name":"Ryan Khan","role":"Detective with secrets","index":2},
+	{"name":"Dr. Leila","role":"Forensic analyst","index":3},
+	{"name":"Viktor Malik","role":"Influential businessman","index":4},
+	{"name":"Nora Said","role":"Socialite with hidden motives","index":5},
+	{"name":"Imran","role":"Street informant","index":6},
+	{"name":"Mrs. Zahra","role":"Hotel owner","index":7},
+	{"name":"Marco","role":"Bartender and observer","index":8},
+	{"name":"Ayumi","role":"Independent journalist","index":9},
+	{"name":"The Fixer","role":"Underground contact","index":10},
+	{"name":"Samira","role":"Hacker","index":11},
+	{"name":"Colonel Rashid","role":"Retired military officer","index":12},
+	{"name":"Kareem","role":"Street vendor and witness","index":13},
+	{"name":"Ayesha","role":"Hotel staff","index":14},
+	{"name":"Dr. Hassan","role":"Historian","index":15},
+	{"name":"Officer Lina","role":"Police officer","index":16},
+	{"name":"The Mayor","role":"Public official with secrets","index":17},
+	{"name":"The Stranger","role":"Unknown figure in every loop","index":18},
+	{"name":"Young Omar","role":"Witness","index":19}
+]
 
 var case_catalog: Array[Dictionary] = []
 var case_data: Dictionary = {}
@@ -225,6 +257,7 @@ func _show_main_menu() -> void:
 	body.add_child(hero)
 
 	body.add_child(_button("START INVESTIGATION  →",func(): _show_intro(),true))
+	body.add_child(_button("CHARACTERS",func(): _show_character_gallery(),false))
 	body.add_child(_button("HOW TO PLAY",func(): _show_help(),false))
 	_build_home_nav("HOME")
 
@@ -331,6 +364,48 @@ func _difficulty_card(id: String,label_text: String,description: String) -> Cont
 	choose.disabled = selected
 	row.add_child(choose)
 	return card
+
+func _show_character_gallery() -> void:
+	_clear(body)
+	_clear(nav)
+	overlay.visible = false
+	_set_polished_background(ART_SETTINGS,0.44)
+	title_label.text = "CHARACTERS"
+	status_label.text = "People. Secrets. Consequences. Every loop reveals more."
+
+	for item in CHARACTER_GALLERY:
+		var card := PanelContainer.new()
+		card.add_theme_stylebox_override("panel",_panel_style(C_PANEL,16,C_GOLD,2,14))
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation",14)
+		card.add_child(row)
+
+		var portrait := TextureRect.new()
+		portrait.texture = _atlas_portrait(int(item.index))
+		portrait.custom_minimum_size = Vector2(150,210)
+		portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		row.add_child(portrait)
+
+		var vb := VBoxContainer.new()
+		vb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row.add_child(vb)
+
+		var n := Label.new()
+		n.text = str(item.name)
+		n.add_theme_font_size_override("font_size",_fs(28))
+		n.add_theme_color_override("font_color",C_TEXT)
+		vb.add_child(n)
+
+		var r := Label.new()
+		r.text = str(item.role)
+		r.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		r.add_theme_font_size_override("font_size",_fs(19))
+		r.add_theme_color_override("font_color",C_MUTED)
+		vb.add_child(r)
+
+	body.add_child(_button("BACK",func(): _show_main_menu(),false))
+	_build_home_nav("")
 
 func _show_case_select() -> void:
 	_clear(body)
@@ -511,7 +586,7 @@ func _person_card(id: String) -> Control:
 	card.add_child(row)
 
 	var portrait := TextureRect.new()
-	portrait.texture = _load_tex(str(data.get("art","")))
+	portrait.texture = _character_portrait(id,str(data.get("art","")))
 	portrait.custom_minimum_size = Vector2(180,220)
 	portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
@@ -876,6 +951,25 @@ func _set_polished_background(path: String,alpha := 0.40) -> void:
 	background.texture = _load_tex(path)
 	var strength := alpha if settings_manager.graphics_quality == "enhanced" else alpha * 0.72
 	background.modulate = Color(0.82,0.88,0.96,strength)
+
+func _atlas_portrait(index: int) -> Texture2D:
+	var atlas := _load_tex(ART_CHARACTER_ATLAS)
+	if atlas == null:
+		return null
+	var col := index % 10
+	var row := index / 10
+	var x := float(col) * 76.8 + 5.0
+	var y := 55.0 if row == 0 else 252.0
+	var h := 136.0 if row == 0 else 139.0
+	var tex := AtlasTexture.new()
+	tex.atlas = atlas
+	tex.region = Rect2(x,y,69.0,h)
+	return tex
+
+func _character_portrait(id: String,fallback_path: String) -> Texture2D:
+	if CHARACTER_ATLAS_MAP.has(id):
+		return _atlas_portrait(int(CHARACTER_ATLAS_MAP[id]))
+	return _load_tex(fallback_path)
 
 func _load_tex(path: String) -> Texture2D:
 	if path != "" and ResourceLoader.exists(path):
