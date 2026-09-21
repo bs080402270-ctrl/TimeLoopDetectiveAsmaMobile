@@ -30,6 +30,14 @@ func _run() -> void:
 		_fail("case select did not render all cases")
 		return
 
+	game._show_settings()
+	await process_frame
+	if game.title_label.text != "SETTINGS" or game.body.get_child_count() < 5:
+		_fail("settings screen did not render")
+		return
+	game._show_case_select()
+	await process_frame
+
 	for case_entry in game.case_catalog:
 		var case_id := str(case_entry.get("id", ""))
 		if not game._load_case(case_id):
@@ -38,6 +46,9 @@ func _run() -> void:
 
 		game._start_new()
 		await process_frame
+		if game.nav.get_child_count() < game.case_data.get("locations", {}).size() + 1:
+			_fail(case_id + " navigation is missing a location or casebook button")
+			return
 
 		var start_location := str(game.case_data.get("start_location", ""))
 		if str(game.state.location) != start_location:
