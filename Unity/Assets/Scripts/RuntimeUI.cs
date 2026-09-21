@@ -322,11 +322,16 @@ namespace TimeLoopDetective
 
             AddButton(content, "CASEBOOK / EVIDENCE", ShowCasebook, false);
             if (s.action >= game.EffectiveMaxActions())
-                AddButton(content, "RESET THE TIMELINE  ↻", () =>
-                {
-                    game.ResetLoop();
-                    ShowGame();
-                }, true);
+            {
+                if (game.CanResetLoop())
+                    AddButton(content, "RESET THE TIMELINE  ↻", () =>
+                    {
+                        game.ResetLoop();
+                        ShowGame();
+                    }, true);
+                else
+                    AddButton(content, "FINAL DEDUCTION  →", ShowDeduction, true);
+            }
         }
 
         void SuspectCard(string id)
@@ -339,13 +344,18 @@ namespace TimeLoopDetective
             AddArtStrip(p, ArtManager.Suspect(id), id == "maya" || id == "lina" || id == "omar" ? 210 : 145);
             Label(d.name, p, 27, Color.white, TextAnchor.MiddleLeft);
             Label(d.role, p, 18, Muted, TextAnchor.MiddleLeft);
-            AddButton(p, "INTERROGATE  →", () => Interrogate(id), true);
+            var talkButton = AddButton(p, game.CanAct() || game.State.talked.Contains(id) ? "INTERROGATE  →" : "NO ACTIONS LEFT", () => Interrogate(id), true);
+            talkButton.interactable = game.CanAct() || game.State.talked.Contains(id);
         }
 
         void Interrogate(string id)
         {
             currentScreen = "interrogate";
-            game.Talk(id);
+            if (!game.Talk(id))
+            {
+                ShowGame();
+                return;
+            }
             var d = game.CurrentCase.suspects[id];
             int idx = Mathf.Clamp(game.State.loop - 1, 0, Mathf.Max(0, d.dialogue.Count - 1));
             ClearContent();
@@ -386,12 +396,12 @@ namespace TimeLoopDetective
             AddArtStrip(p, ArtManager.Clue(id), 170);
             Label((found ? "RECORDED • " : "") + d.name, p, 24, found ? Gold : Color.white, TextAnchor.MiddleLeft);
             Label(found ? d.description : HintText(), p, 17, Muted, TextAnchor.MiddleLeft);
-            var b = AddButton(p, found ? "RECORDED" : "INSPECT", () =>
+            var b = AddButton(p, found ? "RECORDED" : game.CanAct() ? "INSPECT" : "NO ACTIONS LEFT", () =>
             {
                 game.AddClue(id);
                 ShowGame();
             }, false);
-            b.interactable = !found;
+            b.interactable = !found && game.CanAct();
         }
 
         string HintText()
