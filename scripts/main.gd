@@ -18,15 +18,15 @@ const C_RED := Color("#e32636")
 const C_RED_DARK := Color("#a51220")
 const C_GOLD := Color("#e6b85c")
 const C_BLUE := Color("#f0b85f")
-const ART_MENU := "res://art/polished/menu.svg"
+const ART_MENU := "res://art/actual/detective_office.jpg"
 const ART_CASES := "res://art/actual/detective_office.jpg"
 const ART_INTERROGATION := "res://art/actual/detective_office.jpg"
 const ART_CASEBOOK := "res://art/actual/evidence_room.jpg"
-const ART_RESET := "res://art/polished/reset.svg"
+const ART_RESET := "res://art/actual/evidence_room.jpg"
 const ART_DEDUCTION := "res://art/actual/final_deduction.jpg"
 const ART_SETTINGS := "res://art/actual/detective_office.jpg"
 const ART_INTRO := "res://art/actual/investigation_desk.jpg"
-const ART_DIFFICULTY := "res://art/polished/difficulty.svg"
+const ART_DIFFICULTY := "res://art/actual/investigation_desk.jpg"
 const ART_CHARACTER_ATLAS := "res://art/actual/character_atlas.jpg"
 
 const CHARACTER_ATLAS_MAP := {
@@ -405,7 +405,7 @@ func _show_character_gallery() -> void:
 		vb.add_child(r)
 
 	body.add_child(_button("BACK",func(): _show_main_menu(),false))
-	_build_home_nav("")
+	_build_home_nav("CHARACTERS")
 
 func _show_case_select() -> void:
 	_clear(body)
@@ -662,7 +662,8 @@ func _clue_card(id: String) -> Control:
 	return card
 
 func _interrogate(id: String) -> void:
-	_set_polished_background(ART_INTERROGATION,0.34)
+	background.texture = _character_portrait(id,str(case_data.suspects[id].get("art","")))
+	background.modulate = Color(0.82,0.88,0.96,0.42)
 	var data: Dictionary = case_data.suspects[id]
 	var lines: Array = data.get("dialogue",[])
 	var idx := clampi(int(state.loop)-1,0,maxi(0,lines.size()-1))
@@ -741,9 +742,10 @@ func _build_nav() -> void:
 
 func _build_home_nav(active: String) -> void:
 	_clear(nav)
-	nav.columns = 4
+	nav.columns = 5
 	nav.add_child(_nav_button("HOME",func(): _show_main_menu(),active=="HOME"))
 	nav.add_child(_nav_button("CASES",func(): _show_case_select(),active=="CASES"))
+	nav.add_child(_nav_button("CHARACTERS",func(): _show_character_gallery(),active=="CHARACTERS"))
 	nav.add_child(_nav_button("HOW TO",func(): _show_help(),active=="HOW TO"))
 	nav.add_child(_nav_button("SETTINGS",func(): _show_settings(),active=="SETTINGS"))
 
