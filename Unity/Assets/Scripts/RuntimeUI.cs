@@ -173,7 +173,7 @@ namespace TimeLoopDetective
             header.text = "TIME LOOP DETECTIVE";
             subheader.text = "SAME TIME. DIFFERENT TRUTHS. BREAK THE LOOP.";
 
-            ArtworkCard("Art/Phase1/Backgrounds/SuspectKeyArt", 500,
+            ArtworkCard("Art/Generated/MainMenu", 500,
                 "INVESTIGATE. UNCOVER.\nBREAK THE LOOP.",
                 "Five mysteries. Three loops each.\nYou are the only one who remembers.");
 
