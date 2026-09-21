@@ -21,8 +21,8 @@ namespace TimeLoopDetective.Editor
             PlayerSettings.companyName = "ZetaRank";
             PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android, "com.zetarank.timeloopdetective");
             PlayerSettings.defaultInterfaceOrientation = UIOrientation.Portrait;
-            PlayerSettings.Android.bundleVersionCode = 11;
-            PlayerSettings.bundleVersion = "1.2.0-unity";
+            PlayerSettings.Android.bundleVersionCode = 12;
+            PlayerSettings.bundleVersion = "1.2.1-unity";
             PlayerSettings.Android.minSdkVersion = AndroidSdkVersions.AndroidApiLevel26;
             PlayerSettings.Android.targetSdkVersion = AndroidSdkVersions.AndroidApiLevelAuto;
             PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARM64 | AndroidArchitecture.ARMv7;
@@ -32,7 +32,7 @@ namespace TimeLoopDetective.Editor
                 scenes = new[] { scenePath },
                 locationPathName = "Builds/Android/TimeLoopDetective-Unity.apk",
                 target = BuildTarget.Android,
-                options = BuildOptions.Development
+                options = BuildOptions.None
             };
             var report = BuildPipeline.BuildPlayer(options);
             if (report.summary.result != BuildResult.Succeeded)
