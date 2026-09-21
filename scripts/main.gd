@@ -9,15 +9,15 @@ const CASE_FILES := [
 ]
 
 const C_BG := Color("#07111f")
-const C_PANEL := Color("#0b1a2c")
-const C_PANEL_2 := Color("#10243b")
-const C_LINE := Color("#1f5b8f")
+const C_PANEL := Color("#0a1119")
+const C_PANEL_2 := Color("#15130f")
+const C_LINE := Color("#8a6437")
 const C_TEXT := Color("#f4f7fb")
 const C_MUTED := Color("#9db1c7")
 const C_RED := Color("#e32636")
 const C_RED_DARK := Color("#a51220")
 const C_GOLD := Color("#e6b85c")
-const C_BLUE := Color("#2c8cff")
+const C_BLUE := Color("#f0b85f")
 const ART_MENU := "res://art/polished/menu.svg"
 const ART_CASES := "res://art/polished/cases.svg"
 const ART_INTERROGATION := "res://art/polished/interrogation.svg"
@@ -25,6 +25,8 @@ const ART_CASEBOOK := "res://art/polished/casebook.svg"
 const ART_RESET := "res://art/polished/reset.svg"
 const ART_DEDUCTION := "res://art/polished/deduction.svg"
 const ART_SETTINGS := "res://art/polished/settings.svg"
+const ART_INTRO := "res://art/polished/intro.svg"
+const ART_DIFFICULTY := "res://art/polished/difficulty.svg"
 
 var case_catalog: Array[Dictionary] = []
 var case_data: Dictionary = {}
@@ -222,9 +224,113 @@ func _show_main_menu() -> void:
 	hv.add_child(sub)
 	body.add_child(hero)
 
-	body.add_child(_button("START INVESTIGATION  →",func(): _show_case_select(),true))
+	body.add_child(_button("START INVESTIGATION  →",func(): _show_intro(),true))
 	body.add_child(_button("HOW TO PLAY",func(): _show_help(),false))
 	_build_home_nav("HOME")
+
+func _show_intro() -> void:
+	_clear(body)
+	_clear(nav)
+	overlay.visible = false
+	_set_polished_background(ART_INTRO,0.48)
+	title_label.text = "HOW THE LOOP WORKS"
+	status_label.text = "Observe. Question. Remember. Deduce."
+
+	var steps := [
+		["01","INVESTIGATE LOCATIONS","Search every scene for useful clues."],
+		["02","QUESTION SUSPECTS","Stories change. Contradictions reveal the truth."],
+		["03","CARRY CLUES ACROSS LOOPS","The world resets. Your knowledge does not."]
+	]
+	for step in steps:
+		var card := PanelContainer.new()
+		card.add_theme_stylebox_override("panel",_panel_style(Color("#0d131a"),18,C_GOLD,2,18))
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation",16)
+		card.add_child(row)
+		var badge := Label.new()
+		badge.text = str(step[0])
+		badge.custom_minimum_size = Vector2(86,86)
+		badge.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		badge.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		badge.add_theme_font_size_override("font_size",_fs(30))
+		badge.add_theme_color_override("font_color",C_GOLD)
+		row.add_child(badge)
+		var vb := VBoxContainer.new()
+		vb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row.add_child(vb)
+		var h := Label.new()
+		h.text = str(step[1])
+		h.add_theme_font_size_override("font_size",_fs(25))
+		h.add_theme_color_override("font_color",C_TEXT)
+		vb.add_child(h)
+		var d := Label.new()
+		d.text = str(step[2])
+		d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		d.add_theme_font_size_override("font_size",_fs(19))
+		d.add_theme_color_override("font_color",C_MUTED)
+		vb.add_child(d)
+		body.add_child(card)
+
+	body.add_child(_button("CHOOSE DIFFICULTY  →",func():
+		settings_manager.mark_tutorial_seen()
+		_show_difficulty()
+	,true))
+	body.add_child(_button("BACK",func(): _show_main_menu(),false))
+	_build_home_nav("HOW TO")
+
+func _show_difficulty() -> void:
+	_clear(body)
+	_clear(nav)
+	overlay.visible = false
+	_set_polished_background(ART_DIFFICULTY,0.48)
+	title_label.text = "SELECT DIFFICULTY"
+	status_label.text = "Choose how challenging the loop will be."
+
+	body.add_child(_difficulty_card("easy","EASY","More hints, two extra actions per loop, easier final deduction."))
+	body.add_child(_difficulty_card("hard","HARD","Balanced investigation, standard actions and limited guidance."))
+	body.add_child(_difficulty_card("hardest","HARDEST","No hints, two fewer actions and the strictest final deduction."))
+	body.add_child(_button("CONTINUE TO CASES  →",func(): _show_case_select(),true))
+	body.add_child(_button("BACK",func(): _show_main_menu(),false))
+	_build_home_nav("")
+
+func _difficulty_card(id: String,label_text: String,description: String) -> Control:
+	var selected := settings_manager.difficulty == id
+	var card := PanelContainer.new()
+	card.add_theme_stylebox_override("panel",_panel_style(Color("#17140f") if selected else Color("#0d131a"),18,C_GOLD if selected else Color("#765a3a"),3 if selected else 2,16))
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation",14)
+	card.add_child(row)
+	var icon := Label.new()
+	icon.text = "✓" if selected else "○"
+	icon.custom_minimum_size = Vector2(72,72)
+	icon.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	icon.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	icon.add_theme_font_size_override("font_size",_fs(34))
+	icon.add_theme_color_override("font_color",C_GOLD)
+	row.add_child(icon)
+	var vb := VBoxContainer.new()
+	vb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(vb)
+	var title := Label.new()
+	title.text = label_text
+	title.add_theme_font_size_override("font_size",_fs(30))
+	title.add_theme_color_override("font_color",C_TEXT)
+	vb.add_child(title)
+	var desc := Label.new()
+	desc.text = description
+	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	desc.add_theme_font_size_override("font_size",_fs(18))
+	desc.add_theme_color_override("font_color",C_MUTED)
+	vb.add_child(desc)
+	var did := id
+	var choose := _button("SELECTED" if selected else "SELECT",func():
+		settings_manager.set_difficulty(did)
+		_show_difficulty()
+	,false)
+	choose.custom_minimum_size = Vector2(150,72)
+	choose.disabled = selected
+	row.add_child(choose)
+	return card
 
 func _show_case_select() -> void:
 	_clear(body)
@@ -334,8 +440,8 @@ func _show_game() -> void:
 	var loc: Dictionary = case_data.get("locations",{}).get(loc_key,{})
 	title_label.text = str(case_data.get("title","Investigation"))
 	var total_clues: int = case_data.get("clues",{}).size()
-	var max_actions: int = int(case_data.get("max_actions",8))
-	status_label.text = "LOOP %d OF 3   •   ACTIONS %d/%d   •   CLUES %d/%d" % [int(state.loop),int(state.action),max_actions,state.clues.size(),total_clues]
+	var max_actions: int = _effective_max_actions()
+	status_label.text = "%s   •   LOOP %d/3   •   ACTIONS %d/%d   •   CLUES %d/%d" % [settings_manager.difficulty_label(),int(state.loop),int(state.action),max_actions,state.clues.size(),total_clues]
 	_set_background(str(loc.get("art","")))
 	_show_location(loc_key)
 
@@ -381,7 +487,7 @@ func _show_location(loc_key: String) -> void:
 		if str(clue.get("location","")) == loc_key:
 			body.add_child(_clue_card(str(clue_id)))
 
-	if int(state.action) >= int(case_data.get("max_actions",8)):
+	if int(state.action) >= _effective_max_actions():
 		var warning := PanelContainer.new()
 		warning.add_theme_stylebox_override("panel",_panel_style(Color("#31111a"),16,C_RED,2,16))
 		var wv := VBoxContainer.new()
@@ -467,7 +573,7 @@ func _clue_card(id: String) -> Control:
 	vb.add_child(n)
 
 	var d := Label.new()
-	d.text = str(data.get("description","")) if found else "Inspect this area for evidence."
+	d.text = str(data.get("description","")) if found else _clue_hint_text(data)
 	d.add_theme_font_size_override("font_size",_fs(19))
 	d.add_theme_color_override("font_color",C_MUTED)
 	d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -508,7 +614,14 @@ func _press_suspect(id: String) -> void:
 		overlay_body.text = "[center][color=#e6b85c][font_size=30][b]CONTRADICTION FOUND[/b][/font_size][/color][/center]\n\n" + str(rule.get("result",""))
 		_play_evidence()
 	else:
-		overlay_body.text = "[color=#9db1c7]You need more evidence before this story can be broken.[/color]"
+		if settings_manager.difficulty == "easy":
+			var missing: Array[String] = []
+			for clue in needs:
+				if str(clue) not in state.clues:
+					missing.append(str(case_data.clues.get(str(clue),{}).get("name",clue)))
+			overlay_body.text = "[color=#9db1c7]You need more evidence. Look for: %s[/color]" % ", ".join(missing)
+		else:
+			overlay_body.text = "[color=#9db1c7]You need more evidence before this story can be broken.[/color]"
 	_spend_action(false)
 
 func _collect_clue(id: String) -> void:
@@ -585,6 +698,9 @@ func _show_settings() -> void:
 	iv.add_child(desc)
 	body.add_child(info)
 
+	body.add_child(_settings_row("DIFFICULTY",settings_manager.difficulty_label(),"Easy adds guidance. Hard is balanced. Hardest removes hints and reduces actions.",func():
+		_show_difficulty()
+	))
 	body.add_child(_settings_row("GRAPHICS",settings_manager.graphics_label(),"Enhanced keeps richer artwork. Performance reduces background intensity.",func():
 		settings_manager.toggle_graphics()
 		_show_settings()
@@ -599,7 +715,7 @@ func _show_settings() -> void:
 		_show_settings()
 	))
 	body.add_child(_button("CLEAR ALL CASE PROGRESS",func(): _confirm_clear_progress(),false))
-	body.add_child(_button("ABOUT / VERSION 1.0.9",func(): _show_about(),false))
+	body.add_child(_button("ABOUT / VERSION 1.1.0",func(): _show_about(),false))
 	_build_home_nav("SETTINGS")
 
 func _settings_row(label_text: String,value_text: String,description: String,action: Callable) -> Control:
@@ -645,7 +761,7 @@ func _clear_all_progress() -> void:
 
 func _show_about() -> void:
 	overlay_title.text = "TIME LOOP DETECTIVE"
-	overlay_body.text = "[center][color=#e6b85c][b]Version 1.0.9[/b][/color][/center]\n\nA story-driven detective mystery built for Android and iOS. Investigate five cases, carry knowledge across loops, expose contradictions and make the final deduction."
+	overlay_body.text = "[center][color=#e6b85c][b]Version 1.1.0[/b][/color][/center]\n\nA story-driven detective mystery built for Android and iOS. Investigate five cases, carry knowledge across loops, expose contradictions and make the final deduction."
 	_clear(overlay_actions)
 	overlay_actions.add_child(_button("CLOSE",func(): overlay.visible=false,false))
 	overlay.visible = true
@@ -695,7 +811,7 @@ func _accuse(id: String) -> void:
 			count += 1
 	var culprit := str(case_data.get("culprit",""))
 	var required := str(case_data.get("required_contradiction",""))
-	if id == culprit and count >= 4 and required in state.contradictions:
+	if id == culprit and count >= _required_strong_count() and required in state.contradictions:
 		_finish("true")
 	elif id == culprit and count >= 2:
 		_finish("partial")
@@ -743,7 +859,7 @@ func _close_and_refresh() -> void:
 		_show_main_menu()
 
 func _spend_action(refresh := true) -> void:
-	state.action = mini(int(state.action)+1,int(case_data.get("max_actions",8)))
+	state.action = mini(int(state.action)+1,_effective_max_actions())
 	_save()
 	if refresh:
 		_show_game()
@@ -796,6 +912,35 @@ func _play_deduction() -> void:
 	if audio != null:
 		audio.deduction()
 
+func _effective_max_actions() -> int:
+	var base := int(case_data.get("max_actions",8))
+	match settings_manager.difficulty:
+		"easy":
+			return base + 2
+		"hardest":
+			return maxi(4,base - 2)
+		_:
+			return base
+
+func _required_strong_count() -> int:
+	var available := case_data.get("strong_clues",[]).size()
+	match settings_manager.difficulty:
+		"easy":
+			return mini(3,available)
+		"hardest":
+			return available
+		_:
+			return mini(4,available)
+
+func _clue_hint_text(data: Dictionary) -> String:
+	match settings_manager.difficulty:
+		"easy":
+			return "Hint: inspect carefully here. Evidence in this area may connect to a suspect."
+		"hardest":
+			return "No hint available. Trust your observations."
+		_:
+			return "Inspect this area for evidence."
+
 func _fs(size: int) -> int:
 	return maxi(12,roundi(float(size) * settings_manager.font_scale()))
 
@@ -810,9 +955,9 @@ func _button(text: String,action: Callable,accent := false) -> Button:
 	b.add_theme_font_size_override("font_size",_fs(24))
 	b.add_theme_color_override("font_color",C_TEXT)
 	b.add_theme_color_override("font_hover_color",Color.WHITE)
-	b.add_theme_stylebox_override("normal",_panel_style(C_RED_DARK if accent else C_PANEL_2,13,C_RED if accent else C_LINE,2,10))
-	b.add_theme_stylebox_override("hover",_panel_style(C_RED if accent else Color("#173553"),13,C_RED if accent else C_BLUE,2,10))
-	b.add_theme_stylebox_override("pressed",_panel_style(Color("#8f0d19") if accent else Color("#0b2138"),13,C_RED,2,10))
+	b.add_theme_stylebox_override("normal",_panel_style(Color("#2a1b0d") if accent else C_PANEL_2,13,C_GOLD if accent else C_LINE,2,10))
+	b.add_theme_stylebox_override("hover",_panel_style(Color("#3a260f") if accent else Color("#1b1712"),13,C_GOLD,2,10))
+	b.add_theme_stylebox_override("pressed",_panel_style(Color("#171007"),13,C_GOLD,2,10))
 	b.pressed.connect(func():
 		_play_click()
 		action.call()
