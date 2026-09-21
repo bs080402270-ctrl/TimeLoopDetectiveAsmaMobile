@@ -9,6 +9,7 @@ namespace TimeLoopDetective
         const string TextSizeKey = "text_size";
         const string VibrationKey = "vibration";
         const string TutorialKey = "tutorial_seen";
+        const string SoundKey = "sound";
 
         public static DifficultyMode Difficulty
         {
@@ -32,6 +33,12 @@ namespace TimeLoopDetective
         {
             get { return PlayerPrefs.GetInt(VibrationKey, 1) == 1; }
             set { PlayerPrefs.SetInt(VibrationKey, value ? 1 : 0); PlayerPrefs.Save(); }
+        }
+
+        public static bool Sound
+        {
+            get { return PlayerPrefs.GetInt(SoundKey, 1) == 1; }
+            set { PlayerPrefs.SetInt(SoundKey, value ? 1 : 0); PlayerPrefs.Save(); }
         }
 
         public static bool TutorialSeen
