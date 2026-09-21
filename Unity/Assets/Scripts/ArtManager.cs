@@ -14,11 +14,21 @@ namespace TimeLoopDetective
             Sprite cached;
             if (Cache.TryGetValue(resourcePath, out cached)) return cached;
 
+            var directTexture = Resources.Load<Texture2D>(resourcePath);
+            if (directTexture != null)
+            {
+                var directSprite = Sprite.Create(directTexture,
+                    new Rect(0, 0, directTexture.width, directTexture.height),
+                    new Vector2(.5f, .5f), 100f);
+                Cache[resourcePath] = directSprite;
+                return directSprite;
+            }
+
             var textPath = resourcePath.Replace("Art/", "ArtBase64/");
             var encoded = Resources.Load<TextAsset>(textPath);
             if (encoded == null)
             {
-                Debug.LogWarning("Missing artwork TextAsset: " + textPath);
+                Debug.LogWarning("Missing artwork resource: " + resourcePath);
                 return null;
             }
 
