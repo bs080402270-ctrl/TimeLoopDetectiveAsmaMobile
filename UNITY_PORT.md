@@ -105,3 +105,15 @@ Do not merge into `main` until the Unity project opens, compiles, builds on Andr
 - Structural case validation: **Time Loop Detective > Validate Project**.
 
 The final remaining verification is runtime-only: open the project in Unity, confirm there are no Console compile errors, run Play Mode, then install the APK on physical Android devices and build a signed AAB with your release keystore.
+
+
+## Generated screen artwork integrated
+The following generated native textures are now committed and used by the Unity UI:
+- Main menu/startup splash: `Art/Generated/MainMenu`
+- Tutorial/investigation presentation: `Art/Generated/InvestigationDesk`
+- Case archive/settings office: `Art/Generated/DetectiveOffice`
+- Casebook/evidence board: `Art/Generated/EvidenceRoom`
+- Final deduction: `Art/Generated/FinalDeduction`
+- Android app icon: `Art/Generated/AppIcon`
+
+Release QA now verifies these assets are present before final device testing.
