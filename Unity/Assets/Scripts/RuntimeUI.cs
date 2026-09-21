@@ -18,11 +18,13 @@ namespace TimeLoopDetective
         RectTransform content;
         Text header;
         Text subheader;
+        string currentScreen = "menu";
 
         void Start()
         {
             font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
             game = GetComponent<GameController>();
+            SettingsManager.ApplyRuntime();
             BuildShell();
             ShowMenu();
         }
@@ -103,6 +105,7 @@ namespace TimeLoopDetective
 
         void ShowMenu()
         {
+            currentScreen="menu";
             ClearContent();
             header.text="TIME LOOP DETECTIVE";
             subheader.text="SAME TIME. DIFFERENT TRUTHS. BREAK THE LOOP.";
@@ -114,17 +117,18 @@ namespace TimeLoopDetective
             Label("◷",hero,96,Gold,TextAnchor.MiddleCenter);
             Label("INVESTIGATE. UNCOVER.\nBREAK THE LOOP.",hero,34,Color.white,TextAnchor.MiddleCenter);
             Label("Five mysteries. Three loops each.\nYou are the only one who remembers.",hero,22,Muted,TextAnchor.MiddleCenter);
-            AddButton(content,"START INVESTIGATION  →",ShowDifficulty,true);
+            AddButton(content,"START INVESTIGATION  →",()=>{ if(SettingsManager.TutorialSeen) ShowDifficulty(); else ShowHowTo(); },true);
             AddButton(content,"HOW TO PLAY",ShowHowTo,false);
         }
 
         void ShowHowTo()
         {
+            currentScreen="howto";
             ClearContent(); header.text="HOW THE LOOP WORKS"; subheader.text="Observe. Question. Remember. Deduce.";
             Step("01","INVESTIGATE LOCATIONS","Search every scene for useful clues.");
             Step("02","QUESTION SUSPECTS","Stories change. Contradictions reveal the truth.");
             Step("03","CARRY CLUES ACROSS LOOPS","The world resets. Your knowledge does not.");
-            AddButton(content,"CHOOSE DIFFICULTY  →",ShowDifficulty,true);
+            AddButton(content,"CHOOSE DIFFICULTY  →",()=>{SettingsManager.TutorialSeen=true;ShowDifficulty();},true);
         }
 
         void Step(string num,string title,string desc)
@@ -140,6 +144,7 @@ namespace TimeLoopDetective
 
         void ShowDifficulty()
         {
+            currentScreen="difficulty";
             ClearContent(); header.text="SELECT DIFFICULTY"; subheader.text="Choose how challenging the loop will be.";
             DifficultyCard(DifficultyMode.Easy,"EASY","More hints, two extra actions per loop, easier final deduction.");
             DifficultyCard(DifficultyMode.Hard,"HARD","Balanced investigation, standard actions and limited guidance.");
@@ -162,6 +167,7 @@ namespace TimeLoopDetective
 
         void ShowCases()
         {
+            currentScreen="cases";
             ClearContent(); header.text="SELECT A CASE"; subheader.text="Each case is a loop. Each truth changes everything.";
             if(game.Cases.Count==0){ Label("Case data could not be loaded.",content,24,Red,TextAnchor.MiddleCenter); return; }
             int i=1;
@@ -187,6 +193,7 @@ namespace TimeLoopDetective
 
         void ShowGame()
         {
+            currentScreen="game";
             ClearContent();
             var c=game.CurrentCase; var s=game.State;
             header.text=c.title;
@@ -217,6 +224,7 @@ namespace TimeLoopDetective
 
         void Interrogate(string id)
         {
+            currentScreen="interrogate";
             game.Talk(id);
             var d=game.CurrentCase.suspects[id];
             int idx=Mathf.Clamp(game.State.loop-1,0,Mathf.Max(0,d.dialogue.Count-1));
@@ -229,6 +237,7 @@ namespace TimeLoopDetective
 
         void Press(string id)
         {
+            currentScreen="result";
             bool ok=game.TryContradiction(id);
             ClearContent(); header.text=ok?"CONTRADICTION FOUND":"NEED MORE EVIDENCE";
             subheader.text=ok?game.CurrentCase.suspects[id].contradiction.result:"Return to the scene and keep investigating.";
@@ -253,6 +262,7 @@ namespace TimeLoopDetective
 
         void ShowCasebook()
         {
+            currentScreen="casebook";
             ClearContent(); header.text="CASEBOOK / EVIDENCE"; subheader.text=$"COLLECTED {game.State.clues.Count}/{game.CurrentCase.clues.Count}";
             foreach(var kv in game.CurrentCase.clues)
                 Label((game.State.clues.Contains(kv.Key)?"■ ":"□ ")+kv.Value.name,content,21,game.State.clues.Contains(kv.Key)?Gold:Muted,TextAnchor.MiddleLeft);
@@ -264,6 +274,7 @@ namespace TimeLoopDetective
 
         void ShowDeduction()
         {
+            currentScreen="deduction";
             ClearContent(); header.text="FINAL DEDUCTION"; subheader.text=game.CurrentCase.deduction_prompt;
             Label("WHO IS RESPONSIBLE?",content,31,Red,TextAnchor.MiddleCenter);
             foreach(var kv in game.CurrentCase.suspects){ string id=kv.Key; AddButton(content,kv.Value.name,()=>Finish(game.Accuse(id)),false); }
@@ -272,6 +283,8 @@ namespace TimeLoopDetective
 
         void Finish(string kind)
         {
+            currentScreen="ending";
+            SettingsManager.Haptic();
             ClearContent(); header.text=kind=="true"?"CASE CLOSED":"THE LOOP RESISTS";
             string text=kind=="true"?game.CurrentCase.truth:kind=="partial"?game.CurrentCase.partial:game.CurrentCase.wrong;
             Label(kind=="true"?"TRUE ENDING":kind=="partial"?"PARTIAL TRUTH":"WRONG ACCUSATION",content,34,kind=="wrong"?Red:Gold,TextAnchor.MiddleCenter);
@@ -281,12 +294,34 @@ namespace TimeLoopDetective
 
         void ShowSettings()
         {
+            currentScreen="settings";
             ClearContent(); header.text="SETTINGS"; subheader.text="Tune readability, graphics and gameplay.";
             AddButton(content,"DIFFICULTY: "+SettingsManager.Difficulty.ToString().ToUpper(),ShowDifficulty,false);
             AddButton(content,"GRAPHICS: "+(SettingsManager.EnhancedGraphics?"ENHANCED":"PERFORMANCE"),()=>{SettingsManager.EnhancedGraphics=!SettingsManager.EnhancedGraphics;ShowSettings();},false);
-            AddButton(content,"TEXT SIZE",()=>{SettingsManager.TextSize=(SettingsManager.TextSize+1)%3;ShowSettings();},false);
+            string textLabel=SettingsManager.TextSize==0?"NORMAL":SettingsManager.TextSize==1?"LARGE":"EXTRA LARGE";
+            AddButton(content,"TEXT SIZE: "+textLabel,()=>{SettingsManager.TextSize=(SettingsManager.TextSize+1)%3;ShowSettings();},false);
             AddButton(content,"VIBRATION: "+(SettingsManager.Vibration?"ON":"OFF"),()=>{SettingsManager.Vibration=!SettingsManager.Vibration;ShowSettings();},false);
-            Label("UNITY PORT • WORKING BRANCH",content,18,Muted,TextAnchor.MiddleCenter);
+            AddButton(content,"CLEAR ALL CASE PROGRESS",ClearProgress,false);
+            Label("VERSION 1.2.0 UNITY",content,18,Muted,TextAnchor.MiddleCenter);
+            Label("ZetaRank • Offline detective adventure",content,16,Muted,TextAnchor.MiddleCenter);
+        }
+
+
+        void Update()
+        {
+            if (!Input.GetKeyDown(KeyCode.Escape)) return;
+            if (currentScreen=="game" || currentScreen=="interrogate" || currentScreen=="casebook" || currentScreen=="deduction" || currentScreen=="result") ShowGame();
+            else if (currentScreen=="cases" || currentScreen=="difficulty" || currentScreen=="howto" || currentScreen=="settings") ShowMenu();
+            else if (currentScreen=="ending") ShowCases();
+            else Application.Quit();
+        }
+
+        void ClearProgress()
+        {
+            if (game != null && game.Cases != null)
+                foreach (var c in game.Cases) SaveManager.Clear(c.id);
+            SettingsManager.Haptic();
+            ShowSettings();
         }
 
         Image CreatePanel(string name,Component parent,Color color)
@@ -300,7 +335,7 @@ namespace TimeLoopDetective
         Text Label(string text,Component parent,int size,Color color,TextAnchor anchor)
         {
             var go=new GameObject("Text",typeof(RectTransform),typeof(Text)); go.transform.SetParent(parent,false);
-            var t=go.GetComponent<Text>(); t.text=text; t.font=font; t.fontSize=size; t.color=color; t.alignment=anchor; t.horizontalOverflow=HorizontalWrapMode.Wrap; t.verticalOverflow=VerticalWrapMode.Overflow;
+            var t=go.GetComponent<Text>(); t.text=text; t.font=font; t.fontSize=size + SettingsManager.TextSize*3; t.color=color; t.alignment=anchor; t.horizontalOverflow=HorizontalWrapMode.Wrap; t.verticalOverflow=VerticalWrapMode.Overflow;
             var le=go.AddComponent<LayoutElement>(); le.minHeight=Mathf.Max(34,size+14); le.flexibleWidth=1;
             return t;
         }
@@ -312,7 +347,7 @@ namespace TimeLoopDetective
             var b=go.GetComponent<Button>(); var cb=b.colors; cb.normalColor=Color.white; cb.highlightedColor=new Color(1f,.92f,.75f); cb.pressedColor=new Color(.8f,.68f,.45f); b.colors=cb;
             go.GetComponent<LayoutElement>().preferredHeight=78;
             var t=Label(text,go.transform,22,accent?Gold:Color.white,TextAnchor.MiddleCenter); Stretch(t.rectTransform);
-            b.onClick.AddListener(()=>action());
+            b.onClick.AddListener(()=>{ SettingsManager.Haptic(); action(); });
             return b;
         }
 
