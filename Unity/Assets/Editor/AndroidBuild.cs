@@ -1,5 +1,6 @@
 using System.IO;
 using UnityEditor;
+using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -45,7 +46,12 @@ namespace TimeLoopDetective.Editor
 
             var icon = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Resources/Art/Generated/AppIcon.jpg");
             if (icon != null)
-                PlayerSettings.SetIconsForTargetGroup(BuildTargetGroup.Android, new[] { icon });
+            {
+                var sizes = PlayerSettings.GetIconSizes(NamedBuildTarget.Android, IconKind.Application);
+                var icons = new Texture2D[sizes.Length];
+                for (int i = 0; i < icons.Length; i++) icons[i] = icon;
+                PlayerSettings.SetIcons(NamedBuildTarget.Android, icons, IconKind.Application);
+            }
 
             EditorUserBuildSettings.buildAppBundle = appBundle;
         }
