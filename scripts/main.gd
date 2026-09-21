@@ -24,11 +24,13 @@ const ART_INTERROGATION := "res://art/polished/interrogation.svg"
 const ART_CASEBOOK := "res://art/polished/casebook.svg"
 const ART_RESET := "res://art/polished/reset.svg"
 const ART_DEDUCTION := "res://art/polished/deduction.svg"
+const ART_SETTINGS := "res://art/polished/settings.svg"
 
 var case_catalog: Array[Dictionary] = []
 var case_data: Dictionary = {}
 var state: Dictionary = {}
 var save_manager := SaveManager.new()
+var settings_manager := SettingsManager.new()
 var audio: AudioManager
 var current_case_id := ""
 
@@ -46,6 +48,20 @@ func _ready() -> void:
 	_load_catalog()
 	_build_shell()
 	_show_main_menu()
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("back"):
+		get_viewport().set_input_as_handled()
+		if overlay != null and overlay.visible:
+			overlay.visible = false
+			if current_case_id != "":
+				_show_game()
+			else:
+				_show_main_menu()
+		elif current_case_id != "":
+			_show_case_select()
+		else:
+			_show_main_menu()
 
 func _load_catalog() -> void:
 	case_catalog.clear()
@@ -102,14 +118,14 @@ func _build_shell() -> void:
 
 	title_label = Label.new()
 	title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title_label.add_theme_font_size_override("font_size",42)
+	title_label.add_theme_font_size_override("font_size",_fs(42))
 	title_label.add_theme_color_override("font_color",C_TEXT)
 	root.add_child(title_label)
 
 	status_label = Label.new()
 	status_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	status_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	status_label.add_theme_font_size_override("font_size",20)
+	status_label.add_theme_font_size_override("font_size",_fs(20))
 	status_label.add_theme_color_override("font_color",C_MUTED)
 	root.add_child(status_label)
 
@@ -149,7 +165,7 @@ func _build_shell() -> void:
 
 	overlay_title = Label.new()
 	overlay_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	overlay_title.add_theme_font_size_override("font_size",38)
+	overlay_title.add_theme_font_size_override("font_size",_fs(38))
 	overlay_title.add_theme_color_override("font_color",C_TEXT)
 	ov.add_child(overlay_title)
 
@@ -157,7 +173,7 @@ func _build_shell() -> void:
 	overlay_body.bbcode_enabled = true
 	overlay_body.fit_content = false
 	overlay_body.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	overlay_body.add_theme_font_size_override("normal_font_size",25)
+	overlay_body.add_theme_font_size_override("normal_font_size",_fs(25))
 	overlay_body.add_theme_color_override("default_color",C_TEXT)
 	ov.add_child(overlay_body)
 
@@ -186,14 +202,14 @@ func _show_main_menu() -> void:
 	var mark := Label.new()
 	mark.text = "∞"
 	mark.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	mark.add_theme_font_size_override("font_size",104)
+	mark.add_theme_font_size_override("font_size",_fs(104))
 	mark.add_theme_color_override("font_color",C_RED)
 	hv.add_child(mark)
 
 	var big := Label.new()
 	big.text = "INVESTIGATE. UNCOVER.\nBREAK THE LOOP."
 	big.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	big.add_theme_font_size_override("font_size",34)
+	big.add_theme_font_size_override("font_size",_fs(34))
 	big.add_theme_color_override("font_color",C_TEXT)
 	hv.add_child(big)
 
@@ -201,7 +217,7 @@ func _show_main_menu() -> void:
 	sub.text = "Five mysteries. Three loops each.\nYou are the only one who remembers."
 	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	sub.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	sub.add_theme_font_size_override("font_size",23)
+	sub.add_theme_font_size_override("font_size",_fs(23))
 	sub.add_theme_color_override("font_color",C_MUTED)
 	hv.add_child(sub)
 	body.add_child(hero)
@@ -252,7 +268,7 @@ func _case_card(data: Dictionary,index: int) -> Control:
 	num.text = "%02d" % index
 	num.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	num.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	num.add_theme_font_size_override("font_size",34)
+	num.add_theme_font_size_override("font_size",_fs(34))
 	num.add_theme_color_override("font_color",C_GOLD)
 	badge.add_child(num)
 	row.add_child(badge)
@@ -264,20 +280,20 @@ func _case_card(data: Dictionary,index: int) -> Control:
 
 	var t := Label.new()
 	t.text = str(data.get("title","Untitled Case"))
-	t.add_theme_font_size_override("font_size",29)
+	t.add_theme_font_size_override("font_size",_fs(29))
 	t.add_theme_color_override("font_color",C_TEXT)
 	vb.add_child(t)
 
 	var d := Label.new()
 	d.text = str(data.get("subtitle",""))
 	d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	d.add_theme_font_size_override("font_size",20)
+	d.add_theme_font_size_override("font_size",_fs(20))
 	d.add_theme_color_override("font_color",C_MUTED)
 	vb.add_child(d)
 
 	var state_text := Label.new()
 	state_text.text = "CONTINUE INVESTIGATION" if save_manager.has_save(case_id) else "NEW INVESTIGATION"
-	state_text.add_theme_font_size_override("font_size",17)
+	state_text.add_theme_font_size_override("font_size",_fs(17))
 	state_text.add_theme_color_override("font_color",C_RED if save_manager.has_save(case_id) else C_GOLD)
 	vb.add_child(state_text)
 
@@ -341,14 +357,14 @@ func _show_location(loc_key: String) -> void:
 
 	var place := Label.new()
 	place.text = str(loc.get("name","Investigation"))
-	place.add_theme_font_size_override("font_size",34)
+	place.add_theme_font_size_override("font_size",_fs(34))
 	place.add_theme_color_override("font_color",C_GOLD)
 	lv.add_child(place)
 
 	var intro := Label.new()
 	intro.text = str(loc.get("description","Search carefully."))
 	intro.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	intro.add_theme_font_size_override("font_size",23)
+	intro.add_theme_font_size_override("font_size",_fs(23))
 	intro.add_theme_color_override("font_color",C_TEXT)
 	lv.add_child(intro)
 	body.add_child(location_card)
@@ -373,7 +389,7 @@ func _show_location(loc_key: String) -> void:
 		var w := Label.new()
 		w.text = "THE LOOP IS COLLAPSING"
 		w.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		w.add_theme_font_size_override("font_size",27)
+		w.add_theme_font_size_override("font_size",_fs(27))
 		w.add_theme_color_override("font_color",C_RED)
 		wv.add_child(w)
 		wv.add_child(_button("RESET THE TIMELINE  ↻",func(): _reset_loop(),true))
@@ -402,20 +418,20 @@ func _person_card(id: String) -> Control:
 
 	var n := Label.new()
 	n.text = str(data.get("name",id))
-	n.add_theme_font_size_override("font_size",30)
+	n.add_theme_font_size_override("font_size",_fs(30))
 	n.add_theme_color_override("font_color",C_TEXT)
 	vb.add_child(n)
 
 	var role := Label.new()
 	role.text = str(data.get("role",""))
-	role.add_theme_font_size_override("font_size",20)
+	role.add_theme_font_size_override("font_size",_fs(20))
 	role.add_theme_color_override("font_color",C_MUTED)
 	role.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vb.add_child(role)
 
 	var memory := Label.new()
 	memory.text = "INTERVIEWED" if id in state.talked else "NOT YET INTERVIEWED"
-	memory.add_theme_font_size_override("font_size",16)
+	memory.add_theme_font_size_override("font_size",_fs(16))
 	memory.add_theme_color_override("font_color",C_GOLD if id in state.talked else C_MUTED)
 	vb.add_child(memory)
 
@@ -446,13 +462,13 @@ func _clue_card(id: String) -> Control:
 
 	var n := Label.new()
 	n.text = ("RECORDED • " if found else "") + str(data.get("name",id))
-	n.add_theme_font_size_override("font_size",25)
+	n.add_theme_font_size_override("font_size",_fs(25))
 	n.add_theme_color_override("font_color",C_GOLD if found else C_TEXT)
 	vb.add_child(n)
 
 	var d := Label.new()
 	d.text = str(data.get("description","")) if found else "Inspect this area for evidence."
-	d.add_theme_font_size_override("font_size",19)
+	d.add_theme_font_size_override("font_size",_fs(19))
 	d.add_theme_color_override("font_color",C_MUTED)
 	d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vb.add_child(d)
@@ -526,17 +542,13 @@ func _reset_loop() -> void:
 
 func _build_nav() -> void:
 	_clear(nav)
-	nav.columns = 4
+	nav.columns = 3
 	var locs: Array = case_data.get("locations",{}).keys()
-	var shown := 0
 	for loc_id in locs:
-		if shown >= 3:
-			break
 		var lid: String = str(loc_id)
 		var name := str(case_data.locations[loc_id].get("name",lid))
-		var label := name.substr(0,min(9,name.length())).to_upper()
+		var label := name.substr(0,min(12,name.length())).to_upper()
 		nav.add_child(_nav_button(label,func(): _travel(lid),lid == str(state.location)))
-		shown += 1
 	nav.add_child(_nav_button("CASEBOOK",func(): _show_casebook(),false))
 
 func _build_home_nav(active: String) -> void:
@@ -544,8 +556,99 @@ func _build_home_nav(active: String) -> void:
 	nav.columns = 4
 	nav.add_child(_nav_button("HOME",func(): _show_main_menu(),active=="HOME"))
 	nav.add_child(_nav_button("CASES",func(): _show_case_select(),active=="CASES"))
-	nav.add_child(_nav_button("CASEBOOK",func(): _show_help(),false))
-	nav.add_child(_nav_button("HELP",func(): _show_help(),false))
+	nav.add_child(_nav_button("HOW TO",func(): _show_help(),active=="HOW TO"))
+	nav.add_child(_nav_button("SETTINGS",func(): _show_settings(),active=="SETTINGS"))
+
+func _show_settings() -> void:
+	_clear(body)
+	_clear(nav)
+	overlay.visible = false
+	_set_polished_background(ART_SETTINGS,0.44)
+	title_label.text = "SETTINGS"
+	status_label.text = "Tune readability, graphics and mobile feedback."
+
+	var info := PanelContainer.new()
+	info.add_theme_stylebox_override("panel",_panel_style(C_PANEL,16,C_GOLD,2,16))
+	var iv := VBoxContainer.new()
+	iv.add_theme_constant_override("separation",8)
+	info.add_child(iv)
+	var heading := Label.new()
+	heading.text = "MOBILE EXPERIENCE"
+	heading.add_theme_font_size_override("font_size",_fs(26))
+	heading.add_theme_color_override("font_color",C_GOLD)
+	iv.add_child(heading)
+	var desc := Label.new()
+	desc.text = "These settings are saved on this device."
+	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	desc.add_theme_font_size_override("font_size",_fs(19))
+	desc.add_theme_color_override("font_color",C_MUTED)
+	iv.add_child(desc)
+	body.add_child(info)
+
+	body.add_child(_settings_row("GRAPHICS",settings_manager.graphics_label(),"Enhanced keeps richer artwork. Performance reduces background intensity.",func():
+		settings_manager.toggle_graphics()
+		_show_settings()
+	))
+	body.add_child(_settings_row("TEXT SIZE",settings_manager.text_size_label(),"Changes interface and story text sizing.",func():
+		settings_manager.cycle_text_size()
+		get_tree().reload_current_scene()
+	))
+	body.add_child(_settings_row("VIBRATION","ON" if settings_manager.vibration_enabled else "OFF","Short haptic feedback for clues, resets and deductions.",func():
+		settings_manager.toggle_vibration()
+		_vibrate(25)
+		_show_settings()
+	))
+	body.add_child(_button("CLEAR ALL CASE PROGRESS",func(): _confirm_clear_progress(),false))
+	body.add_child(_button("ABOUT / VERSION 1.0.9",func(): _show_about(),false))
+	_build_home_nav("SETTINGS")
+
+func _settings_row(label_text: String,value_text: String,description: String,action: Callable) -> Control:
+	var card := PanelContainer.new()
+	card.add_theme_stylebox_override("panel",_panel_style(C_PANEL,14,C_LINE,2,14))
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation",12)
+	card.add_child(row)
+	var vb := VBoxContainer.new()
+	vb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(vb)
+	var label := Label.new()
+	label.text = label_text
+	label.add_theme_font_size_override("font_size",_fs(24))
+	label.add_theme_color_override("font_color",C_TEXT)
+	vb.add_child(label)
+	var detail := Label.new()
+	detail.text = description
+	detail.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	detail.add_theme_font_size_override("font_size",_fs(17))
+	detail.add_theme_color_override("font_color",C_MUTED)
+	vb.add_child(detail)
+	var b := _button(value_text,action,false)
+	b.custom_minimum_size = Vector2(190,72)
+	row.add_child(b)
+	return card
+
+func _confirm_clear_progress() -> void:
+	overlay_title.text = "CLEAR ALL PROGRESS?"
+	overlay_body.text = "This removes saved progress for all five cases on this device. This cannot be undone."
+	_clear(overlay_actions)
+	overlay_actions.add_child(_button("CLEAR PROGRESS",func(): _clear_all_progress(),true))
+	overlay_actions.add_child(_button("CANCEL",func(): overlay.visible=false,false))
+	overlay.visible = true
+
+func _clear_all_progress() -> void:
+	for item in case_catalog:
+		save_manager.clear(str(item.get("id","")))
+	current_case_id = ""
+	state = {}
+	overlay.visible = false
+	_show_settings()
+
+func _show_about() -> void:
+	overlay_title.text = "TIME LOOP DETECTIVE"
+	overlay_body.text = "[center][color=#e6b85c][b]Version 1.0.9[/b][/color][/center]\n\nA story-driven detective mystery built for Android and iOS. Investigate five cases, carry knowledge across loops, expose contradictions and make the final deduction."
+	_clear(overlay_actions)
+	overlay_actions.add_child(_button("CLOSE",func(): overlay.visible=false,false))
+	overlay.visible = true
 
 func _travel(loc: String) -> void:
 	state.location = loc
@@ -634,7 +737,10 @@ func _show_help() -> void:
 
 func _close_and_refresh() -> void:
 	overlay.visible = false
-	_show_game()
+	if current_case_id != "" and not case_data.is_empty():
+		_show_game()
+	else:
+		_show_main_menu()
 
 func _spend_action(refresh := true) -> void:
 	state.action = mini(int(state.action)+1,int(case_data.get("max_actions",8)))
@@ -647,11 +753,13 @@ func _save() -> void:
 
 func _set_background(path: String) -> void:
 	background.texture = _load_tex(path)
-	background.modulate = Color(0.82,0.88,0.96,0.58)
+	var strength := 0.58 if settings_manager.graphics_quality == "enhanced" else 0.42
+	background.modulate = Color(0.82,0.88,0.96,strength)
 
 func _set_polished_background(path: String,alpha := 0.40) -> void:
 	background.texture = _load_tex(path)
-	background.modulate = Color(0.82,0.88,0.96,alpha)
+	var strength := alpha if settings_manager.graphics_quality == "enhanced" else alpha * 0.72
+	background.modulate = Color(0.82,0.88,0.96,strength)
 
 func _load_tex(path: String) -> Texture2D:
 	if path != "" and ResourceLoader.exists(path):
@@ -671,25 +779,35 @@ func _play_click() -> void:
 		audio.click()
 
 func _play_evidence() -> void:
+	_vibrate(35)
 	_ensure_audio()
 	if audio != null:
 		audio.evidence()
 
 func _play_loop_reset() -> void:
+	_vibrate(60)
 	_ensure_audio()
 	if audio != null:
 		audio.loop_reset()
 
 func _play_deduction() -> void:
+	_vibrate(45)
 	_ensure_audio()
 	if audio != null:
 		audio.deduction()
+
+func _fs(size: int) -> int:
+	return maxi(12,roundi(float(size) * settings_manager.font_scale()))
+
+func _vibrate(duration_ms: int) -> void:
+	if settings_manager.vibration_enabled and OS.has_feature("mobile"):
+		Input.vibrate_handheld(duration_ms)
 
 func _button(text: String,action: Callable,accent := false) -> Button:
 	var b := Button.new()
 	b.text = text
 	b.custom_minimum_size = Vector2(0,82)
-	b.add_theme_font_size_override("font_size",24)
+	b.add_theme_font_size_override("font_size",_fs(24))
 	b.add_theme_color_override("font_color",C_TEXT)
 	b.add_theme_color_override("font_hover_color",Color.WHITE)
 	b.add_theme_stylebox_override("normal",_panel_style(C_RED_DARK if accent else C_PANEL_2,13,C_RED if accent else C_LINE,2,10))
@@ -704,7 +822,7 @@ func _button(text: String,action: Callable,accent := false) -> Button:
 func _nav_button(text: String,action: Callable,active: bool) -> Button:
 	var b := _button(text,action,false)
 	b.custom_minimum_size = Vector2(0,72)
-	b.add_theme_font_size_override("font_size",17)
+	b.add_theme_font_size_override("font_size",_fs(17))
 	if active:
 		b.add_theme_color_override("font_color",C_RED)
 		b.add_theme_stylebox_override("normal",_panel_style(Color("#101b2b"),12,C_RED,2,8))
@@ -713,7 +831,7 @@ func _nav_button(text: String,action: Callable,active: bool) -> Button:
 func _add_section_title(text: String) -> void:
 	var l := Label.new()
 	l.text = text
-	l.add_theme_font_size_override("font_size",25)
+	l.add_theme_font_size_override("font_size",_fs(25))
 	l.add_theme_color_override("font_color",C_GOLD)
 	body.add_child(l)
 
