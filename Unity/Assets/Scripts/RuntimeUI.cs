@@ -7,11 +7,11 @@ namespace TimeLoopDetective
 {
     public class RuntimeUI : MonoBehaviour
     {
-        readonly Color Bg = new(0.025f,0.035f,0.05f,1f);
-        readonly Color PanelColor = new(0.055f,0.06f,0.065f,0.96f);
-        readonly Color Gold = new(0.90f,0.72f,0.36f,1f);
-        readonly Color Muted = new(0.68f,0.64f,0.57f,1f);
-        readonly Color Red = new(0.75f,0.11f,0.15f,1f);
+        readonly Color Bg = new Color(0.025f,0.035f,0.05f,1f);
+        readonly Color PanelColor = new Color(0.055f,0.06f,0.065f,0.96f);
+        readonly Color Gold = new Color(0.90f,0.72f,0.36f,1f);
+        readonly Color Muted = new Color(0.68f,0.64f,0.57f,1f);
+        readonly Color Red = new Color(0.75f,0.11f,0.15f,1f);
         Font font;
         GameController game;
         Canvas canvas;
@@ -41,7 +41,7 @@ namespace TimeLoopDetective
             var bg = CreateImage("Background", canvas.transform, Bg);
             Stretch(bg.rectTransform);
 
-            var root = CreateCreatePanel("Root", canvas.transform, new Color(0,0,0,0));
+            var root = CreatePanel("Root", canvas.transform, new Color(0,0,0,0));
             Stretch(root);
             var layout = root.gameObject.AddComponent<VerticalLayoutGroup>();
             layout.padding = new RectOffset(26,26,28,22);
@@ -54,7 +54,7 @@ namespace TimeLoopDetective
             subheader = Label("", root, 20, Muted, TextAnchor.MiddleCenter);
             subheader.gameObject.AddComponent<LayoutElement>().preferredHeight = 44;
 
-            var divider = Image("Divider", root, new Color(Gold.r,Gold.g,Gold.b,.45f));
+            var divider = CreateImage("Divider", root, new Color(Gold.r,Gold.g,Gold.b,.45f));
             divider.gameObject.AddComponent<LayoutElement>().preferredHeight = 2;
 
             var scrollGo = new GameObject("Scroll", typeof(RectTransform), typeof(ScrollRect), typeof(Image), typeof(Mask), typeof(LayoutElement));
