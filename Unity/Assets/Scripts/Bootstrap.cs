@@ -11,6 +11,8 @@ namespace TimeLoopDetective
             var root=new GameObject("TimeLoopDetective");
             Object.DontDestroyOnLoad(root);
             root.AddComponent<GameController>();
+            root.AddComponent<AudioSource>();
+            root.AddComponent<AmbientAudio>();
             root.AddComponent<RuntimeUI>();
         }
     }
