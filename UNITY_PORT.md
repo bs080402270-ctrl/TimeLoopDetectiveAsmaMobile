@@ -8,74 +8,69 @@ This branch contains the isolated Unity conversion of Time Loop Detective. Keep 
 - App version: **1.2.2-unity**
 - Android versionCode: **13**
 - Package: `com.zetarank.timeloopdetective`
-- Orientation: portrait
+- Portrait mobile layout
 - Minimum Android API: 26
 
-## Complete gameplay
-- Five cases with 20 investigation locations
+## Gameplay included
+- Five cases / 20 investigation locations
 - Three-loop investigation structure
 - Persistent case saves
-- Clue/evidence collection
-- Suspect interrogation
-- Contradiction checks
+- Clue collection and evidence inspection
+- Suspect interrogation and contradictions
 - Casebook and timeline
-- Final accusations
-- True / partial / wrong endings
+- Final deductions with true / partial / wrong endings
 - Easy / Hard / Hardest difficulty
 - First-run tutorial
-- Settings and clear-progress controls
-- Android back navigation
-- Mobile safe-area handling
+- Settings, clear progress, Android back navigation and mobile safe-area support
 
-## Integrated visual package
-The optimized real game artwork is stored in:
-`Unity/Assets/ArtAssets.zip`
+## Integrated artwork
+Optimized versions of the real noir game artwork are embedded as offline Unity Resources under:
 
-Unity automatically extracts the package into:
-`Unity/Assets/Resources/Art/`
+`Unity/Assets/Resources/ArtBase64/`
 
-The visual package includes:
-- Daily Bean cafe background
-- suspect key art
-- investigation desk
-- riverside walkway
-- back room
-- rainy cafe exterior
-- Maya, Lina and Omar portraits
-- broken watch
-- coffee receipt
-- wet umbrella
-- red thread
-- voicemail evidence art
+The game decodes these local TextAssets into textures at runtime. No network connection or external art download is required.
 
-The runtime UI uses these assets for the title screen, onboarding, difficulty, case archive, investigation locations, interrogations, clue cards, casebook, deduction, results and settings. Other cases use themed artwork fallbacks until case-specific future art is added.
+Integrated assets include:
+- Daily Bean cafe artwork
+- detective/suspect key art
+- rainy exterior artwork
+- Maya portrait
+- Lina portrait
+- Omar portrait
+- broken watch evidence
+- coffee receipt evidence
+- wet umbrella evidence
+- red thread evidence
+- voicemail evidence
 
-## Polish included
-- Noir/gold visual system
-- Artwork hero cards
-- Evidence thumbnails
-- Suspect portraits/key art
-- Gold button outlines
+Case 1 uses its dedicated character/evidence art. Cases 2–5 currently use matching noir background/key-art fallbacks where unique case-specific illustrations do not yet exist.
+
+## Visual polish included
+- Noir/gold interface
+- Large artwork hero cards
+- Character/evidence image cards
+- Gold outlined controls
 - Screen fade transitions
-- Mobile click sound feedback
+- UI click feedback
 - Optional vibration
-- Performance/Enhanced frame-rate setting
-- Text size modes
+- Enhanced/Performance frame-rate modes
+- Three text-size modes
+- Safe-area handling for modern phones
 
 ## Open locally
-1. Clone or pull the repository.
+1. Clone/pull the repository.
 2. Check out `unity-port`.
 3. In Unity Hub choose **Add project from disk**.
 4. Select the repository's `Unity` folder.
-5. Open it with Unity 6.
-6. Allow Unity to import the project. The editor automatically extracts the optimized artwork.
-7. Check the Console for errors.
+5. Open with Unity 6.
+6. Allow Unity to import packages/resources.
+7. Check **Window > General > Console**.
 8. Use **Time Loop Detective > Build Android APK**.
 
-Local APK output:
+APK output:
 `Unity/Builds/Android/TimeLoopDetective-Unity.apk`
 
-There is intentionally no Unity GitHub Actions workflow. Android builds are local so no Unity CI license secret is required.
+There is intentionally no Unity GitHub Actions workflow.
 
 ## Merge rule
-Do not merge into `main` until the Unity version is opened, built, device-tested, and visually approved.
+Do not merge into `main` until the Unity project opens, compiles, builds on Android, is device-tested, and the visuals are approved.
