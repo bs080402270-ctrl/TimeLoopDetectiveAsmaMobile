@@ -31,7 +31,7 @@ namespace TimeLoopDetective
             game = GetComponent<GameController>();
             SettingsManager.ApplyRuntime();
             BuildShell();
-            ShowMenu();
+            StartCoroutine(StartupSequence());
         }
 
         void BuildShell()
@@ -154,6 +154,16 @@ namespace TimeLoopDetective
                 yield return null;
             }
             contentGroup.alpha = 1f;
+        }
+
+        IEnumerator StartupSequence()
+        {
+            ClearContent();
+            header.text = "TIME LOOP DETECTIVE";
+            subheader.text = "A ZETARANK GAME";
+            ArtworkCard("Art/Phase1/Backgrounds/SuspectKeyArt", 560, "TIME LOOP DETECTIVE", "Every reset hides a different truth.");
+            yield return new WaitForSecondsRealtime(1.15f);
+            ShowMenu();
         }
 
         void ShowMenu()
@@ -487,6 +497,13 @@ namespace TimeLoopDetective
             AddButton(content, "VIBRATION: " + (SettingsManager.Vibration ? "ON" : "OFF"), () =>
             {
                 SettingsManager.Vibration = !SettingsManager.Vibration;
+                ShowSettings();
+            }, false);
+            AddButton(content, "SOUND: " + (SettingsManager.Sound ? "ON" : "OFF"), () =>
+            {
+                SettingsManager.Sound = !SettingsManager.Sound;
+                var ambient = GetComponent<AmbientAudio>();
+                if (ambient != null) ambient.Apply();
                 ShowSettings();
             }, false);
             AddButton(content, "CLEAR ALL CASE PROGRESS", ClearProgress, false);
