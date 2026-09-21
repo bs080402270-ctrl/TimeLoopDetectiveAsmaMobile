@@ -1,0 +1,49 @@
+{
+  "id":"case_05",
+  "title":"Case 05: The Vanishing Witness",
+  "subtitle":"A protected witness disappears from a locked safe house six hours before trial. The cameras never go offline.",
+  "start_location":"safehouse",
+  "max_actions":9,
+  "loop_reset_text":"The apartment lights dim. The hallway camera rewinds twenty-eight minutes. Eva is back inside.",
+  "locations":{
+    "safehouse":{"name":"Safe House","art":"res://art/cases/case05_safehouse.svg","description":"The apartment is empty but staged: a broken glass, fake blood and one envelope of emergency cash.","people":["morgan","leo"]},
+    "hall":{"name":"Hallway","art":"res://art/cases/case05_hall.svg","description":"Two officers guard the floor while the camera repeats the same clean sequence.","people":["tate","mara"]},
+    "service":{"name":"Service Shaft","art":"res://art/cases/case05_service.svg","description":"A maintenance passage links the safe house to the freight elevator without crossing the monitored hallway.","people":["iris"]},
+    "court":{"name":"Prosecutor Staging Room","art":"res://art/cases/case05_court.svg","description":"Trial schedules, transport routes and sealed witness instructions sit behind government locks.","people":["calvin"]}
+  },
+  "suspects":{
+    "morgan":{"name":"Detective Morgan Shaw","role":"Witness-protection officer","art":"res://art/cases/case05_morgan.svg","dialogue":["Eva was secure when I left.","Only my supervisor knew the transport route.","I changed the escort plan after receiving an anonymous warning."],"contradiction":{"needs":["camera","duplicate"],"id":"morgan_leak","result":"Morgan's duplicate key and the camera-loop timing show he could enter without appearing in the hallway footage."}},
+    "iris":{"name":"Captain Iris Dean","role":"Protection supervisor","art":"res://art/cases/case05_iris.svg","dialogue":["The safe house was never compromised.","The service shaft is sealed.","I ordered a new escort after Eva became paranoid."],"contradiction":{"needs":["shaft","schedule"],"id":"iris_route","result":"Iris knew the service shaft existed but did not leak it. Her new escort order was a response to the same internal threat."}},
+    "leo":{"name":"Leo Marlow","role":"Eva's brother","art":"res://art/cases/case05_leo.svg","dialogue":["I have not seen Eva in weeks.","She called me last night.","She said: if I disappear, do not trust the escort."],"contradiction":{"needs":["burner","note"],"id":"leo_contact","result":"Leo concealed contact with Eva but the burner messages show he was helping her prepare an emergency exit."}},
+    "calvin":{"name":"Calvin Ross","role":"Government prosecutor","art":"res://art/cases/case05_calvin.svg","dialogue":["The trial schedule is sealed.","Only protection officers know the route.","Someone viewed the sealed schedule using Morgan's credentials."],"contradiction":{"needs":["schedule","duplicate"],"id":"calvin_access","result":"The access audit proves the schedule leak used Morgan's credentials before Calvin opened the file."}},
+    "mara":{"name":"Mara Quinn","role":"Neighbor","art":"res://art/cases/case05_mara.svg","dialogue":["I heard nothing unusual.","The freight elevator moved twice after midnight.","A woman in a maintenance coat used it the second time."],"contradiction":{"needs":["elevator"],"id":"mara_elevator","result":"The freight record confirms Mara's statement and supports Eva's planned escape."}},
+    "tate":{"name":"Officer Tate","role":"Night-shift security","art":"res://art/cases/case05_tate.svg","dialogue":["Nobody crossed the hallway.","The camera feed never failed.","Morgan asked me to ignore a thirty-second sync warning."],"contradiction":{"needs":["camera"],"id":"tate_warning","result":"The footage was not offline; it replayed a clean thirty-second segment while someone crossed the hall."}}
+  },
+  "clues":{
+    "camera":{"name":"Camera Loop Timing","art":"res://art/evidence/phone.svg","location":"hall","description":"Thirty seconds of hallway footage repeat perfectly, hiding one passage."},
+    "shaft":{"name":"Maintenance Shaft","art":"res://art/evidence/breaker.svg","location":"service","description":"The shaft leads from the safe house to the freight elevator."},
+    "burner":{"name":"Eva's Burner Phone","art":"res://art/evidence/phone.svg","location":"safehouse","description":"Messages show Eva planned an escape with Leo after learning someone leaked her location."},
+    "fakeblood":{"name":"Fake Blood","art":"res://art/evidence/thread.svg","location":"safehouse","description":"The bathroom blood is theatrical gel, meant to suggest violence."},
+    "duplicate":{"name":"Duplicate Safe-House Key","art":"res://art/evidence/key.svg","location":"hall","description":"A duplicate was cut from Morgan's issued key without authorization."},
+    "schedule":{"name":"Sealed Escort Schedule","art":"res://art/evidence/ledger.svg","location":"court","description":"The file was accessed using Morgan's credentials before the final route was announced."},
+    "elevator":{"name":"Freight Elevator Record","art":"res://art/evidence/watch.svg","location":"service","description":"Two unscheduled trips line up with Eva's planned escape and a second person following her."},
+    "note":{"name":"Do Not Trust the Escort","art":"res://art/evidence/receipt.svg","location":"safehouse","description":"Eva's handwritten warning singles out the protection detail, not the prosecutor."}
+  },
+  "timeline":[
+    "2:12 AM — Eva learns her route may be compromised.",
+    "2:19 AM — She contacts Leo from a burner phone.",
+    "2:27 AM — Camera loop begins for thirty seconds.",
+    "2:28 AM — Eva enters the service shaft.",
+    "2:31 AM — Freight elevator descends.",
+    "2:35 AM — A second elevator trip follows.",
+    "2:40 AM — Safe house is found empty.",
+    "2:40 AM — Loop resets."
+  ],
+  "culprit":"morgan",
+  "strong_clues":["camera","duplicate","schedule","elevator","note"],
+  "required_contradiction":"morgan_leak",
+  "deduction_prompt":"Who leaked Eva's location and followed her escape through the building's blind spot?",
+  "truth":"Eva staged her own disappearance after discovering her protection route had leaked. Morgan Shaw's credentials accessed the sealed schedule, a duplicate of his key was used during the camera loop, and the second freight-elevator trip shows he followed Eva through the service shaft. Eva's escape plan was real; Morgan turned it into an ambush.",
+  "partial":"You identify Morgan as the leak but fail to distinguish Eva's voluntary escape from an abduction.",
+  "wrong":"Your theory ignores the camera loop and the second elevator trip. The safe house rewinds."
+}
