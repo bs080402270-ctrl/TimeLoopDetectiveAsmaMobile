@@ -6,7 +6,7 @@ namespace TimeLoopDetective
 {
     public class GameController : MonoBehaviour
     {
-        public List<CaseData> Cases { get; private set; } = new();
+        public List<CaseData> Cases { get; private set; } = new List<CaseData>();
         public CaseData CurrentCase { get; private set; }
         public GameState State { get; private set; }
 
