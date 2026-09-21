@@ -43,6 +43,10 @@ namespace TimeLoopDetective.Editor
             PlayerSettings.SetScriptingBackend(BuildTargetGroup.Android, ScriptingImplementation.IL2CPP);
             PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARM64 | AndroidArchitecture.ARMv7;
 
+            var icon = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Resources/Art/Generated/AppIcon.jpg");
+            if (icon != null)
+                PlayerSettings.SetIconsForTargetGroup(BuildTargetGroup.Android, new[] { icon });
+
             EditorUserBuildSettings.buildAppBundle = appBundle;
         }
 
