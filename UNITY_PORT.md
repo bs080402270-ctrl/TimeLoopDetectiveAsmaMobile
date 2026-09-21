@@ -5,8 +5,8 @@ Branch: `unity-port`
 This branch contains the isolated Unity conversion of Time Loop Detective. Keep it separate from `main` until the Unity Android build, gameplay flow, and visual polish are approved.
 
 ## Current Unity version
-- App version: **1.2.3-unity**
-- Android versionCode: **14**
+- App version: **1.2.4-unity**
+- Android versionCode: **15**
 - Package: `com.zetarank.timeloopdetective`
 - Portrait mobile layout
 - Minimum Android API: 26
@@ -93,3 +93,15 @@ Do not merge into `main` until the Unity project opens, compiles, builds on Andr
 - Loop 3 cannot reset forever; when its budget is exhausted the game directs the player to the final deduction.
 - All five cases have valid culprits, required contradictions, strong-clue references and location references.
 - Each case remains solvable on Hardest: the minimum clue + culprit-interrogation path fits inside its Hardest action budget.
+
+
+## Final production additions
+- Generated noir main-menu artwork is now stored as a native Unity texture at `Assets/Resources/Art/Generated/MainMenu.jpg`.
+- Generated Android app icon is stored at `Assets/Resources/Art/Generated/AppIcon.jpg` and is applied by the local Android build menu.
+- Startup title splash is included.
+- Procedural noir/rain ambience is included with a persistent SOUND on/off setting.
+- One-click static QA: **Time Loop Detective > Run Release QA**.
+- End-to-end logic self-test: **Time Loop Detective > Run Full Gameplay Self-Test**.
+- Structural case validation: **Time Loop Detective > Validate Project**.
+
+The final remaining verification is runtime-only: open the project in Unity, confirm there are no Console compile errors, run Play Mode, then install the APK on physical Android devices and build a signed AAB with your release keystore.
