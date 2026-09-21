@@ -507,7 +507,7 @@ namespace TimeLoopDetective
                 ShowSettings();
             }, false);
             AddButton(content, "CLEAR ALL CASE PROGRESS", ClearProgress, false);
-            Label("VERSION 1.2.3 UNITY", content, 18, Muted, TextAnchor.MiddleCenter);
+            Label("VERSION 1.2.4 UNITY", content, 18, Muted, TextAnchor.MiddleCenter);
             Label("ZetaRank • Offline detective adventure", content, 16, Muted, TextAnchor.MiddleCenter);
         }
 
