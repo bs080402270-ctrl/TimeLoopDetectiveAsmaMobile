@@ -2,10 +2,11 @@
 
 Branch: `unity-port`
 
-This branch is the isolated Unity conversion of Time Loop Detective. Do not merge to `main` until the Unity Android build, gameplay flow and visual polish are approved.
+This branch contains the isolated Unity conversion of Time Loop Detective. Keep it separate from `main` until the Unity Android build, gameplay flow, and visual polish are approved.
 
 ## Ported
 - Five case JSON files
+- Android-safe case loading from Unity Resources
 - Save/progress model
 - Three-loop gameplay
 - Clue collection
@@ -15,15 +16,21 @@ This branch is the isolated Unity conversion of Time Loop Detective. Do not merg
 - Easy / Hard / Hardest rules
 - Noir/gold runtime mobile UI
 - Settings
-- Android build method
+- Android local build menu
 
-## Android CI
-The Unity workflow uses GameCI. Add repository secrets:
-- `UNITY_LICENSE`
-- `UNITY_EMAIL`
-- `UNITY_PASSWORD`
+## Open locally
+1. Clone or pull the repository.
+2. Check out `unity-port`.
+3. In Unity Hub choose **Add project from disk**.
+4. Select the repository's `Unity` folder.
+5. Open it with Unity 6.
+6. Let Unity import packages and assets.
+7. Use **Time Loop Detective > Build Android APK**.
 
-Then run **Build Unity Android Port**. The APK artifact will be named `TimeLoopDetective-Unity-Android`.
+The local APK output is:
+`Unity/Builds/Android/TimeLoopDetective-Unity.apk`
+
+There is intentionally no Unity GitHub Actions workflow. Android builds are local so no Unity CI license secret is required.
 
 ## Merge rule
-Keep all Unity conversion work on `unity-port`. Merge into `main` only after device testing and final approval.
+Do not merge into `main` until the Unity version is opened, built, device-tested, and visually approved.
