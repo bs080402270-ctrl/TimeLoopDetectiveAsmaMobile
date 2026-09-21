@@ -161,7 +161,7 @@ namespace TimeLoopDetective
             ClearContent();
             header.text = "TIME LOOP DETECTIVE";
             subheader.text = "A ZETARANK GAME";
-            ArtworkCard("Art/Phase1/Backgrounds/SuspectKeyArt", 560, "TIME LOOP DETECTIVE", "Every reset hides a different truth.");
+            ArtworkCard("Art/Generated/MainMenu", 560, "TIME LOOP DETECTIVE", "Every reset hides a different truth.");
             yield return new WaitForSecondsRealtime(1.15f);
             ShowMenu();
         }
