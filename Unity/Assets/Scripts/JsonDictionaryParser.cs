@@ -44,7 +44,7 @@ namespace TimeLoopDetective
         static string S(Dictionary<string,object> d,string k) => d.TryGetValue(k,out var v) ? Convert.ToString(v) ?? "" : "";
         static int I(Dictionary<string,object> d,string k,int def) => d.TryGetValue(k,out var v) ? Convert.ToInt32(v) : def;
         static List<string> SL(Dictionary<string,object> d,string k) {
-            var r=new List<string>(); if (!d.TryGetValue(k,out var v) || v is not IList a) return r;
+            var r=new List<string>(); object v; if (!d.TryGetValue(k,out v)) return r; var a = v as IList; if (a == null) return r;
             foreach (var x in a) r.Add(Convert.ToString(x) ?? ""); return r;
         }
     }
