@@ -923,7 +923,7 @@ func _effective_max_actions() -> int:
 			return base
 
 func _required_strong_count() -> int:
-	var available := case_data.get("strong_clues",[]).size()
+	var available: int = int(case_data.get("strong_clues",[]).size())
 	match settings_manager.difficulty:
 		"easy":
 			return mini(3,available)
