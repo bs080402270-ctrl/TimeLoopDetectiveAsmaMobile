@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,36 +13,64 @@ namespace TimeLoopDetective
         {
             Sprite cached;
             if (Cache.TryGetValue(resourcePath, out cached)) return cached;
-            var texture = Resources.Load<Texture2D>(resourcePath);
-            if (texture == null) return null;
-            var sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f), 100f);
-            Cache[resourcePath] = sprite;
-            return sprite;
+
+            var textPath = resourcePath.Replace("Art/", "ArtBase64/");
+            var encoded = Resources.Load<TextAsset>(textPath);
+            if (encoded == null)
+            {
+                Debug.LogWarning("Missing artwork TextAsset: " + textPath);
+                return null;
+            }
+
+            try
+            {
+                var bytes = Convert.FromBase64String(encoded.text.Trim());
+                var texture = new Texture2D(2, 2, TextureFormat.RGB24, false);
+                texture.name = textPath;
+                texture.wrapMode = TextureWrapMode.Clamp;
+                texture.filterMode = FilterMode.Bilinear;
+                if (!texture.LoadImage(bytes, false))
+                {
+                    UnityEngine.Object.Destroy(texture);
+                    return null;
+                }
+
+                var sprite = Sprite.Create(texture,
+                    new Rect(0, 0, texture.width, texture.height),
+                    new Vector2(.5f, .5f), 100f);
+                Cache[resourcePath] = sprite;
+                return sprite;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning("Could not decode artwork " + textPath + ": " + ex.Message);
+                return null;
+            }
         }
 
         public static string Location(string id)
         {
             switch (id)
             {
-                case "cafe": return "Art/Phase1/Backgrounds/DailyBeanCafe";
-                case "riverside": return "Art/Phase2/Backgrounds/RiversideWalkway";
-                case "alley": return "Art/Phase2/Backgrounds/CafeExteriorRain";
-                case "office": return "Art/Phase2/Backgrounds/InvestigationDesk";
-                case "coach":
-                case "lounge":
-                case "terminal": return "Art/Phase1/Backgrounds/SuspectKeyArt";
-                case "luggage":
-                case "baggage":
-                case "service":
-                case "maintenance": return "Art/Phase2/Backgrounds/BackRoom";
-                case "tunnel":
-                case "hall":
-                case "safehouse": return "Art/Phase2/Backgrounds/CafeExteriorRain";
+                case "cafe":
+                case "office":
                 case "room":
                 case "conference":
                 case "court":
-                case "sleeper": return "Art/Phase2/Backgrounds/InvestigationDesk";
-                default: return "Art/Phase1/Backgrounds/DailyBeanCafe";
+                case "sleeper":
+                    return "Art/Phase1/Backgrounds/DailyBeanCafe";
+
+                case "alley":
+                case "riverside":
+                case "tunnel":
+                case "hall":
+                case "safehouse":
+                case "service":
+                case "maintenance":
+                    return "Art/Phase2/Backgrounds/CafeExteriorRain";
+
+                default:
+                    return "Art/Phase1/Backgrounds/SuspectKeyArt";
             }
         }
 
@@ -67,8 +96,10 @@ namespace TimeLoopDetective
                 case "voicemail":
                 case "burner":
                 case "message":
-                case "note": return "Art/Phase1/Clues/Voicemail";
-                default: return "Art/Phase2/Backgrounds/InvestigationDesk";
+                case "note":
+                    return "Art/Phase1/Clues/Voicemail";
+                default:
+                    return "Art/Phase1/Backgrounds/SuspectKeyArt";
             }
         }
 
