@@ -42,7 +42,7 @@ namespace TimeLoopDetective
             Stretch(bg.rectTransform);
 
             var root = CreatePanel("Root", canvas.transform, new Color(0,0,0,0));
-            Stretch(root);
+            Stretch(root.rectTransform);
             var layout = root.gameObject.AddComponent<VerticalLayoutGroup>();
             layout.padding = new RectOffset(26,26,28,22);
             layout.spacing = 12;
@@ -132,7 +132,7 @@ namespace TimeLoopDetective
             var p=CreatePanel("Step",content,PanelColor); p.gameObject.AddComponent<LayoutElement>().preferredHeight=145;
             var h=p.gameObject.AddComponent<HorizontalLayoutGroup>(); h.padding=new RectOffset(14,14,14,14); h.spacing=14;
             var n=Label(num,p,30,Gold,TextAnchor.MiddleCenter); n.gameObject.AddComponent<LayoutElement>().preferredWidth=72;
-            var box=new GameObject("Text",typeof(RectTransform),typeof(VerticalLayoutGroup)); box.transform.SetParent(p,false);
+            var box=new GameObject("Text",typeof(RectTransform),typeof(VerticalLayoutGroup)); box.transform.SetParent(p.transform,false);
             box.GetComponent<VerticalLayoutGroup>().spacing=5;
             Label(title,box.transform,25,Color.white,TextAnchor.MiddleLeft);
             Label(desc,box.transform,18,Muted,TextAnchor.MiddleLeft);
@@ -150,7 +150,7 @@ namespace TimeLoopDetective
         void DifficultyCard(DifficultyMode mode,string title,string desc)
         {
             bool selected=SettingsManager.Difficulty==mode;
-            var p=Panel(title,content,selected?new Color(.12f,.09f,.045f,1):PanelColor);
+            var p=CreatePanel(title,content,selected?new Color(.12f,.09f,.045f,1):PanelColor);
             p.gameObject.AddComponent<LayoutElement>().preferredHeight=165;
             var v=p.gameObject.AddComponent<VerticalLayoutGroup>(); v.padding=new RectOffset(18,18,14,14); v.spacing=6;
             Label((selected?"✓  ":"○  ")+title,p,30,selected?Gold:Color.white,TextAnchor.MiddleLeft);
@@ -167,7 +167,7 @@ namespace TimeLoopDetective
             int i=1;
             foreach(var c in game.Cases)
             {
-                var p=Panel(c.id,content,PanelColor); p.gameObject.AddComponent<LayoutElement>().preferredHeight=180;
+                var p=CreatePanel(c.id,content,PanelColor); p.gameObject.AddComponent<LayoutElement>().preferredHeight=180;
                 var v=p.gameObject.AddComponent<VerticalLayoutGroup>(); v.padding=new RectOffset(18,18,15,15); v.spacing=5;
                 Label($"{i:00}  {c.title}",p,27,Gold,TextAnchor.MiddleLeft);
                 Label(c.subtitle,p,18,Muted,TextAnchor.MiddleLeft);
@@ -289,15 +289,15 @@ namespace TimeLoopDetective
             Label("UNITY PORT • WORKING BRANCH",content,18,Muted,TextAnchor.MiddleCenter);
         }
 
-        Image CreatePanel(string name,Transform parent,Color color)
+        Image CreatePanel(string name,Component parent,Color color)
         {
-            var go=new GameObject(name,typeof(RectTransform),typeof(Image)); go.transform.SetParent(parent,false);
+            var go=new GameObject(name,typeof(RectTransform),typeof(Image)); go.transform.SetParent(parent.transform,false);
             var img=go.GetComponent<Image>(); img.color=color; return img;
         }
 
-        Image CreateImage(string name,Transform parent,Color color)=>CreatePanel(name,parent,color);
+        Image CreateImage(string name,Component parent,Color color)=>CreatePanel(name,parent,color);
 
-        Text Label(string text,Transform parent,int size,Color color,TextAnchor anchor)
+        Text Label(string text,Component parent,int size,Color color,TextAnchor anchor)
         {
             var go=new GameObject("Text",typeof(RectTransform),typeof(Text)); go.transform.SetParent(parent,false);
             var t=go.GetComponent<Text>(); t.text=text; t.font=font; t.fontSize=size; t.color=color; t.alignment=anchor; t.horizontalOverflow=HorizontalWrapMode.Wrap; t.verticalOverflow=VerticalWrapMode.Overflow;
@@ -305,7 +305,7 @@ namespace TimeLoopDetective
             return t;
         }
 
-        Button AddButton(Transform parent,string text,Action action,bool accent)
+        Button AddButton(Component parent,string text,Action action,bool accent)
         {
             var go=new GameObject("Button",typeof(RectTransform),typeof(Image),typeof(Button),typeof(LayoutElement)); go.transform.SetParent(parent,false);
             go.GetComponent<Image>().color=accent?new Color(.23f,.15f,.055f,1):new Color(.085f,.075f,.06f,1);
