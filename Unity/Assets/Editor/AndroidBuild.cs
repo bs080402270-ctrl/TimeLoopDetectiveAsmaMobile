@@ -12,8 +12,6 @@ namespace TimeLoopDetective.Editor
         [MenuItem("Time Loop Detective/Build Android APK")]
         public static void BuildAndroid()
         {
-            ArtInstaller.EnsureInstalled();
-            AssetDatabase.Refresh();
             const string scenePath = "Assets/Scenes/Main.unity";
             Directory.CreateDirectory("Assets/Scenes");
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
