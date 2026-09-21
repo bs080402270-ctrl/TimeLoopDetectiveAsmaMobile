@@ -11,9 +11,9 @@ namespace TimeLoopDetective
         public int loop = 1;
         public int action;
         public string location;
-        public List<string> clues = new();
-        public List<string> contradictions = new();
-        public List<string> talked = new();
+        public List<string> clues = new List<string>();
+        public List<string> contradictions = new List<string>();
+        public List<string> talked = new List<string>();
         public string ending = "";
     }
 
