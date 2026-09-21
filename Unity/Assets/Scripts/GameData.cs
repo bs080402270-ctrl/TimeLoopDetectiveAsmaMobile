@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TimeLoopDetective
 {
-    [Serializable] public class CaseCatalog { public List<CaseData> cases = new(); }
+    [Serializable] public class CaseCatalog { public List<CaseData> cases = new List<CaseData>(); }
     [Serializable] public class CaseData
     {
         public string id;
@@ -12,12 +12,12 @@ namespace TimeLoopDetective
         public string start_location;
         public int max_actions;
         public string loop_reset_text;
-        public SerializableDictionary<string, LocationData> locations = new();
-        public SerializableDictionary<string, SuspectData> suspects = new();
-        public SerializableDictionary<string, ClueData> clues = new();
-        public List<string> timeline = new();
+        public SerializableDictionary<string, LocationData> locations = new SerializableDictionary<string, LocationData>();
+        public SerializableDictionary<string, SuspectData> suspects = new SerializableDictionary<string, SuspectData>();
+        public SerializableDictionary<string, ClueData> clues = new SerializableDictionary<string, ClueData>();
+        public List<string> timeline = new List<string>();
         public string culprit;
-        public List<string> strong_clues = new();
+        public List<string> strong_clues = new List<string>();
         public string required_contradiction;
         public string deduction_prompt;
         public string truth;
@@ -30,7 +30,7 @@ namespace TimeLoopDetective
         public string name;
         public string art;
         public string description;
-        public List<string> people = new();
+        public List<string> people = new List<string>();
     }
 
     [Serializable] public class SuspectData
@@ -38,14 +38,14 @@ namespace TimeLoopDetective
         public string name;
         public string role;
         public string art;
-        public List<string> dialogue = new();
-        public ContradictionData contradiction = new();
+        public List<string> dialogue = new List<string>();
+        public ContradictionData contradiction = new ContradictionData();
     }
 
     [Serializable] public class ContradictionData
     {
         public string id;
-        public List<string> needs = new();
+        public List<string> needs = new List<string>();
         public string result;
     }
 
