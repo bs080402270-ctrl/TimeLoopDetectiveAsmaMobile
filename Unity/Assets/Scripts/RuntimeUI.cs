@@ -216,9 +216,9 @@ namespace TimeLoopDetective
             header.text = "SELECT DIFFICULTY";
             subheader.text = "Choose how challenging the loop will be.";
             ArtworkCard("Art/Phase2/Backgrounds/CafeExteriorRain", 230, "CHOOSE YOUR PRESSURE", "Hints, actions, and deduction requirements change by mode.");
-            DifficultyCard(DifficultyMode.Easy, "EASY", "More hints, two extra actions per loop, easier final deduction.");
-            DifficultyCard(DifficultyMode.Hard, "HARD", "Balanced investigation, standard actions and limited guidance.");
-            DifficultyCard(DifficultyMode.Hardest, "HARDEST", "No hints, two fewer actions and the strictest final deduction.");
+            DifficultyCard(DifficultyMode.Easy, "EASY", "More hints • +2 actions each loop • only 3 strong clues required.");
+            DifficultyCard(DifficultyMode.Hard, "HARD", "Balanced clues • standard actions • 4 strong clues required.");
+            DifficultyCard(DifficultyMode.Hardest, "HARDEST", "No hints • -2 actions each loop • every strong clue required.");
             AddButton(content, "CONTINUE TO CASES  →", ShowCases, true);
         }
 
@@ -260,12 +260,14 @@ namespace TimeLoopDetective
             int i = 1;
             foreach (var c in game.Cases)
             {
+                string recommended = i <= 2 ? "EASY" : i <= 4 ? "HARD" : "HARDEST";
                 var p = CreatePanel(c.id, content, PanelColor);
                 p.gameObject.AddComponent<LayoutElement>().preferredHeight = 180;
                 var v = p.gameObject.AddComponent<VerticalLayoutGroup>();
                 v.padding = new RectOffset(18, 18, 15, 15);
                 v.spacing = 5;
-                Label(string.Format("{0:00}  {1}", i, c.title), p, 27, Gold, TextAnchor.MiddleLeft);
+                Label(string.Format("LEVEL {0}  •  {1}", i, c.title), p, 27, Gold, TextAnchor.MiddleLeft);
+                Label("RECOMMENDED: " + recommended, p, 16, recommended == "HARDEST" ? Red : Muted, TextAnchor.MiddleLeft);
                 Label(c.subtitle, p, 18, Muted, TextAnchor.MiddleLeft);
                 string id = c.id;
                 var b = AddButton(p, SaveManager.HasSave(id) ? "CONTINUE  →" : "OPEN CASE  →", () => OpenCase(id), false);
