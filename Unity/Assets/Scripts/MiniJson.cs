@@ -14,7 +14,7 @@ namespace TimeLoopDetective
         sealed class Parser : IDisposable
         {
             readonly StringReader r; Parser(string json){r=new StringReader(json);}
-            public static object Parse(string json){using var p=new Parser(json);return p.Value();}
+            public static object Parse(string json){using (var p=new Parser(json)){return p.Value();}}
             public void Dispose(){r.Dispose();}
             object Value(){Eat();int c=r.Peek();if(c=='{')return Obj();if(c=='[')return Arr();if(c=='"')return Str();if(c=='t'||c=='f')return Bool();if(c=='n'){for(int i=0;i<4;i++)r.Read();return null;}return Num();}
             Dictionary<string,object> Obj(){var d=new Dictionary<string,object>();r.Read();while(true){Eat();if(r.Peek()=='}'){r.Read();return d;}var k=Str();Eat();r.Read();d[k]=Value();Eat();int c=r.Read();if(c=='}')return d;}}
