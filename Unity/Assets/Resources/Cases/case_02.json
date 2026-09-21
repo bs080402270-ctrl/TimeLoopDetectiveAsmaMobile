@@ -1,0 +1,48 @@
+{
+  "id":"case_02",
+  "title":"Case 02: The Missing Passenger",
+  "subtitle":"A late-night coach reaches its final terminal with one passenger missing, seven minutes of camera footage gone, and no recorded stop.",
+  "start_location":"coach",
+  "max_actions":10,
+  "loop_reset_text":"The tunnel lights strobe. The engine hum reverses. Forty-two minutes snap backward and Nadia is seated again.",
+  "locations":{
+    "coach":{"name":"Passenger Coach","art":"res://art/cases/case02_coach.svg","description":"Rows of tired passengers, steamed windows and one empty seat that should not be empty.","people":["hassan","meera"]},
+    "luggage":{"name":"Luggage Bay","art":"res://art/cases/case02_luggage.svg","description":"A cramped storage compartment beneath the coach. Scraped metal and shifted bags suggest recent movement.","people":["elias"]},
+    "tunnel":{"name":"Tunnel Service Point","art":"res://art/cases/case02_tunnel.svg","description":"A maintenance recess beside the final tunnel. The road cameras lose sight of the bus here.","people":["juno"]},
+    "terminal":{"name":"Final Terminal","art":"res://art/cases/case02_terminal.svg","description":"Security shutters, arrival screens and one officer waiting before the coach arrives.","people":["rafi"]}
+  },
+  "suspects":{
+    "hassan":{"name":"Hassan Cole","role":"Bus driver","art":"res://art/cases/case02_hassan.svg","dialogue":["I never stopped after the last toll gate.","You keep asking about the tunnel. I slowed down, but I did not stop.","The service-door warning flickered for three seconds. I thought it was a sensor fault."],"contradiction":{"needs":["gps","door"],"id":"hassan_stop","result":"The GPS slowdown and service-door latch prove Hassan's 'no stop' story is incomplete. He did not plan Nadia's disappearance, but he concealed the slowdown to protect his job."}},
+    "meera":{"name":"Meera Shah","role":"Corporate lawyer","art":"res://art/cases/case02_meera.svg","dialogue":["I do not know Nadia Reeve.","I represent many companies. Her name means nothing to me.","Fine. I knew who she was. That does not mean I touched her."],"contradiction":{"needs":["burner","map"],"id":"meera_contact","result":"The burner phone and Nadia's marked tunnel map connect Meera to the threat. She knew Nadia planned to leave the coach before the terminal."}},
+    "elias":{"name":"Elias Ward","role":"Lecturer","art":"res://art/cases/case02_elias.svg","dialogue":["I slept through most of the journey.","I woke when someone opened the luggage hatch.","I saw Nadia below, alive. She told me not to say anything."],"contradiction":{"needs":["blood","ticket"],"id":"elias_witness","result":"The blood belongs to Elias, cut while helping Nadia through the luggage hatch. He lied to protect her, not to harm her."}},
+    "juno":{"name":"Juno Pike","role":"Travel blogger","art":"res://art/cases/case02_juno.svg","dialogue":["My camera battery died in the tunnel.","I deleted nothing important.","Nadia asked me to erase seven minutes. She said someone would kill her if the video survived."],"contradiction":{"needs":["video"],"id":"juno_video","result":"Recovered video metadata proves Juno deliberately deleted the seven-minute segment at Nadia's request."}},
+    "rafi":{"name":"Rafi Bennett","role":"Terminal security officer","art":"res://art/cases/case02_rafi.svg","dialogue":["I was assigned to this arrival.","The assignment came through normal channels.","The order came early. Too early. Someone expected Nadia to arrive."],"contradiction":{"needs":["order","burner"],"id":"rafi_order","result":"Rafi's assignment was created before the coach crossed the final toll. Someone using the burner phone tipped terminal security in advance."}}
+  },
+  "clues":{
+    "ticket":{"name":"Torn Ticket Stub","art":"res://art/evidence/receipt.svg","location":"coach","description":"Nadia tore away the seat number and wrote 'service hatch' on the back."},
+    "door":{"name":"Service-Door Latch Marks","art":"res://art/evidence/key.svg","location":"luggage","description":"Fresh scrape marks show the emergency service hatch was opened during the final tunnel."},
+    "video":{"name":"Deleted Video Segment","art":"res://art/evidence/phone.svg","location":"coach","description":"Seven minutes were manually deleted from Juno's camera, not lost to battery failure."},
+    "blood":{"name":"Blood on Luggage Rail","art":"res://art/evidence/thread.svg","location":"luggage","description":"The blood type does not match Nadia. It belongs to Elias."},
+    "burner":{"name":"Burner Phone","art":"res://art/evidence/phone.svg","location":"terminal","description":"Messages warn: 'She cannot reach the terminal.' One contact is tied to Meera's firm."},
+    "gps":{"name":"Unscheduled GPS Slowdown","art":"res://art/evidence/watch.svg","location":"tunnel","description":"The coach dropped to walking speed for 19 seconds inside the tunnel."},
+    "map":{"name":"Marked Tunnel Map","art":"res://art/evidence/ledger.svg","location":"tunnel","description":"Nadia marked a service recess exactly where the coach slowed."},
+    "order":{"name":"Early Security Assignment","art":"res://art/evidence/ledger.svg","location":"terminal","description":"Rafi's assignment was issued before the coach should have been identifiable as Nadia's route."}
+  },
+  "timeline":[
+    "11:18 PM — Nadia boards the coach.",
+    "11:42 PM — Juno begins filming.",
+    "11:55 PM — Meera sends a burner message.",
+    "12:02 AM — Nadia moves toward the rear luggage hatch.",
+    "12:06 AM — Coach slows inside the final tunnel.",
+    "12:07 AM — Seven minutes of video are deleted.",
+    "12:09 AM — Nadia leaves through the service recess.",
+    "12:16 AM — Coach arrives without her."
+  ],
+  "culprit":"meera",
+  "strong_clues":["burner","map","door","gps","order"],
+  "required_contradiction":"meera_contact",
+  "deduction_prompt":"Who forced Nadia Reeve to stage her disappearance, and who knew her escape plan?",
+  "truth":"Nadia discovered Meera's firm had identified her as the source exposing an illegal land-acquisition scheme. Rather than wait to be attacked at the terminal, Nadia planned her own escape through the luggage service hatch during the tunnel slowdown. Elias helped her, Juno erased the video, and Meera's burner messages prove the threat that forced the disappearance.",
+  "partial":"You identify Meera as the threat but fail to prove Nadia escaped voluntarily. The case remains officially unsolved.",
+  "wrong":"Your accusation does not explain the service hatch, the deleted footage and the terminal order. The tunnel lights flash and the journey begins again."
+}
