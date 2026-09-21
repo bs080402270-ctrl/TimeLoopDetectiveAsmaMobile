@@ -1,27 +1,22 @@
-using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 using UnityEngine;
 
 namespace TimeLoopDetective
 {
     public static class CaseJsonLoader
     {
-        [Serializable] class CaseWrapper { public CaseData data; }
-
         public static List<CaseData> LoadAll()
         {
             var list = new List<CaseData>();
-            var dir = Path.Combine(Application.streamingAssetsPath, "Cases");
-            if (!Directory.Exists(dir)) return list;
-            foreach (var path in Directory.GetFiles(dir, "case_*.json"))
+            var assets = Resources.LoadAll<TextAsset>("Cases");
+            foreach (var asset in assets)
             {
-                var json = File.ReadAllText(path);
-                var parsed = JsonDictionaryParser.ParseCase(json);
+                if (asset == null || !asset.name.StartsWith("case_")) continue;
+                var parsed = JsonDictionaryParser.ParseCase(asset.text);
                 if (parsed != null) list.Add(parsed);
             }
-            list.Sort((a,b) => string.CompareOrdinal(a.id,b.id));
-            return list;
+            return list.OrderBy(x => x.id).ToList();
         }
     }
 }
