@@ -22,9 +22,17 @@ namespace TimeLoopDetective.Editor
             if (icon == null)
                 Debug.LogError("Release QA: Android app icon asset is missing.");
 
-            var menu = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Resources/Art/Generated/MainMenu.jpg");
-            if (menu == null)
-                Debug.LogError("Release QA: generated main-menu artwork is missing.");
+            string[] requiredArt = {
+                "Assets/Resources/Art/Generated/MainMenu.jpg",
+                "Assets/Resources/Art/Generated/AppIcon.jpg",
+                "Assets/Resources/Art/Generated/InvestigationDesk.jpg",
+                "Assets/Resources/Art/Generated/EvidenceRoom.jpg",
+                "Assets/Resources/Art/Generated/DetectiveOffice.jpg",
+                "Assets/Resources/Art/Generated/FinalDeduction.jpg"
+            };
+            foreach (var path in requiredArt)
+                if (AssetDatabase.LoadAssetAtPath<Texture2D>(path) == null)
+                    Debug.LogError("Release QA: generated artwork is missing: " + path);
 
             Debug.Log("Release QA static checks finished. Continue with Play Mode, APK device test and AAB signing test.");
         }
