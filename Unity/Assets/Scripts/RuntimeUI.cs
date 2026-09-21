@@ -8,7 +8,7 @@ namespace TimeLoopDetective
     public class RuntimeUI : MonoBehaviour
     {
         readonly Color Bg = new(0.025f,0.035f,0.05f,1f);
-        readonly Color Panel = new(0.055f,0.06f,0.065f,0.96f);
+        readonly Color PanelColor = new(0.055f,0.06f,0.065f,0.96f);
         readonly Color Gold = new(0.90f,0.72f,0.36f,1f);
         readonly Color Muted = new(0.68f,0.64f,0.57f,1f);
         readonly Color Red = new(0.75f,0.11f,0.15f,1f);
@@ -38,10 +38,10 @@ namespace TimeLoopDetective
             scaler.referenceResolution = new Vector2(720,1280);
             scaler.matchWidthOrHeight = 0.5f;
 
-            var bg = Image("Background", canvas.transform, Bg);
+            var bg = CreateImage("Background", canvas.transform, Bg);
             Stretch(bg.rectTransform);
 
-            var root = Panel("Root", canvas.transform, new Color(0,0,0,0));
+            var root = CreateCreatePanel("Root", canvas.transform, new Color(0,0,0,0));
             Stretch(root);
             var layout = root.gameObject.AddComponent<VerticalLayoutGroup>();
             layout.padding = new RectOffset(26,26,28,22);
@@ -107,7 +107,7 @@ namespace TimeLoopDetective
             header.text="TIME LOOP DETECTIVE";
             subheader.text="SAME TIME. DIFFERENT TRUTHS. BREAK THE LOOP.";
 
-            var hero=Panel("Hero",content,Panel);
+            var hero=CreatePanel("Hero",content,PanelColor);
             hero.gameObject.AddComponent<LayoutElement>().preferredHeight=430;
             var v=hero.gameObject.AddComponent<VerticalLayoutGroup>();
             v.padding=new RectOffset(22,22,38,28); v.spacing=15; v.childAlignment=TextAnchor.MiddleCenter;
@@ -129,7 +129,7 @@ namespace TimeLoopDetective
 
         void Step(string num,string title,string desc)
         {
-            var p=Panel("Step",content,Panel); p.gameObject.AddComponent<LayoutElement>().preferredHeight=145;
+            var p=CreatePanel("Step",content,PanelColor); p.gameObject.AddComponent<LayoutElement>().preferredHeight=145;
             var h=p.gameObject.AddComponent<HorizontalLayoutGroup>(); h.padding=new RectOffset(14,14,14,14); h.spacing=14;
             var n=Label(num,p,30,Gold,TextAnchor.MiddleCenter); n.gameObject.AddComponent<LayoutElement>().preferredWidth=72;
             var box=new GameObject("Text",typeof(RectTransform),typeof(VerticalLayoutGroup)); box.transform.SetParent(p,false);
@@ -150,7 +150,7 @@ namespace TimeLoopDetective
         void DifficultyCard(DifficultyMode mode,string title,string desc)
         {
             bool selected=SettingsManager.Difficulty==mode;
-            var p=Panel(title,content,selected?new Color(.12f,.09f,.045f,1):Panel);
+            var p=Panel(title,content,selected?new Color(.12f,.09f,.045f,1):PanelColor);
             p.gameObject.AddComponent<LayoutElement>().preferredHeight=165;
             var v=p.gameObject.AddComponent<VerticalLayoutGroup>(); v.padding=new RectOffset(18,18,14,14); v.spacing=6;
             Label((selected?"✓  ":"○  ")+title,p,30,selected?Gold:Color.white,TextAnchor.MiddleLeft);
@@ -167,7 +167,7 @@ namespace TimeLoopDetective
             int i=1;
             foreach(var c in game.Cases)
             {
-                var p=Panel(c.id,content,Panel); p.gameObject.AddComponent<LayoutElement>().preferredHeight=180;
+                var p=Panel(c.id,content,PanelColor); p.gameObject.AddComponent<LayoutElement>().preferredHeight=180;
                 var v=p.gameObject.AddComponent<VerticalLayoutGroup>(); v.padding=new RectOffset(18,18,15,15); v.spacing=5;
                 Label($"{i:00}  {c.title}",p,27,Gold,TextAnchor.MiddleLeft);
                 Label(c.subtitle,p,18,Muted,TextAnchor.MiddleLeft);
@@ -193,7 +193,7 @@ namespace TimeLoopDetective
             subheader.text=$"{SettingsManager.Difficulty.ToString().ToUpper()}  •  LOOP {s.loop}/3  •  ACTIONS {s.action}/{game.EffectiveMaxActions()}  •  CLUES {s.clues.Count}/{c.clues.Count}";
             if(c.locations.TryGetValue(s.location,out var loc))
             {
-                var hero=Panel("Location",content,new Color(.05f,.045f,.035f,.96f));
+                var hero=CreatePanel("Location",content,new Color(.05f,.045f,.035f,.96f));
                 var v=hero.gameObject.AddComponent<VerticalLayoutGroup>(); v.padding=new RectOffset(18,18,18,18); v.spacing=8;
                 Label(loc.name,hero,32,Gold,TextAnchor.MiddleLeft);
                 Label(loc.description,hero,20,Color.white,TextAnchor.MiddleLeft);
@@ -209,7 +209,7 @@ namespace TimeLoopDetective
         void SuspectCard(string id)
         {
             var d=game.CurrentCase.suspects[id];
-            var p=Panel("Suspect",content,Panel); var v=p.gameObject.AddComponent<VerticalLayoutGroup>(); v.padding=new RectOffset(16,16,12,12); v.spacing=5;
+            var p=CreatePanel("Suspect",content,PanelColor); var v=p.gameObject.AddComponent<VerticalLayoutGroup>(); v.padding=new RectOffset(16,16,12,12); v.spacing=5;
             Label(d.name,p,27,Color.white,TextAnchor.MiddleLeft);
             Label(d.role,p,18,Muted,TextAnchor.MiddleLeft);
             AddButton(p,"INTERROGATE  →",()=>Interrogate(id),true);
@@ -221,7 +221,7 @@ namespace TimeLoopDetective
             var d=game.CurrentCase.suspects[id];
             int idx=Mathf.Clamp(game.State.loop-1,0,Mathf.Max(0,d.dialogue.Count-1));
             ClearContent(); header.text=d.name+" • INTERROGATION"; subheader.text=d.role;
-            var p=Panel("Dialogue",content,Panel); var v=p.gameObject.AddComponent<VerticalLayoutGroup>(); v.padding=new RectOffset(20,20,25,25); v.spacing=15;
+            var p=CreatePanel("Dialogue",content,PanelColor); var v=p.gameObject.AddComponent<VerticalLayoutGroup>(); v.padding=new RectOffset(20,20,25,25); v.spacing=15;
             Label(d.dialogue.Count>0?d.dialogue[idx]:"They watch you carefully.",p,24,Color.white,TextAnchor.UpperLeft);
             AddButton(p,"THIS DOESN'T ADD UP...  →",()=>Press(id),true);
             AddButton(content,"BACK TO SCENE",ShowGame,false);
@@ -238,7 +238,7 @@ namespace TimeLoopDetective
         void ClueCard(string id)
         {
             var d=game.CurrentCase.clues[id]; bool found=game.State.clues.Contains(id);
-            var p=Panel("Clue",content,found?new Color(.11f,.09f,.045f,1):Panel);
+            var p=CreatePanel("Clue",content,found?new Color(.11f,.09f,.045f,1):PanelColor);
             var v=p.gameObject.AddComponent<VerticalLayoutGroup>(); v.padding=new RectOffset(16,16,12,12); v.spacing=5;
             Label((found?"RECORDED • ":"")+d.name,p,24,found?Gold:Color.white,TextAnchor.MiddleLeft);
             Label(found?d.description:HintText(),p,17,Muted,TextAnchor.MiddleLeft);
@@ -289,13 +289,13 @@ namespace TimeLoopDetective
             Label("UNITY PORT • WORKING BRANCH",content,18,Muted,TextAnchor.MiddleCenter);
         }
 
-        Image Panel(string name,Transform parent,Color color)
+        Image CreatePanel(string name,Transform parent,Color color)
         {
             var go=new GameObject(name,typeof(RectTransform),typeof(Image)); go.transform.SetParent(parent,false);
             var img=go.GetComponent<Image>(); img.color=color; return img;
         }
 
-        Image Image(string name,Transform parent,Color color)=>Panel(name,parent,color);
+        Image CreateImage(string name,Transform parent,Color color)=>CreatePanel(name,parent,color);
 
         Text Label(string text,Transform parent,int size,Color color,TextAnchor anchor)
         {
