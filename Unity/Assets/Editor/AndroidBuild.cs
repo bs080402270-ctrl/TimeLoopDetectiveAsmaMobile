@@ -9,37 +9,64 @@ namespace TimeLoopDetective.Editor
 {
     public static class AndroidBuild
     {
+        const string ScenePath = "Assets/Scenes/Main.unity";
+        const string BuildDir = "Builds/Android";
+
         [MenuItem("Time Loop Detective/Build Android APK")]
-        public static void BuildAndroid()
+        public static void BuildAndroidApk()
         {
-            const string scenePath = "Assets/Scenes/Main.unity";
+            ConfigureAndroid(false);
+            Build("Builds/Android/TimeLoopDetective-Unity.apk");
+        }
+
+        [MenuItem("Time Loop Detective/Build Android AAB")]
+        public static void BuildAndroidAab()
+        {
+            ConfigureAndroid(true);
+            Build("Builds/Android/TimeLoopDetective-Unity.aab");
+        }
+
+        static void ConfigureAndroid(bool appBundle)
+        {
             Directory.CreateDirectory("Assets/Scenes");
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
-            EditorSceneManager.SaveScene(scene, scenePath);
+            EditorSceneManager.SaveScene(scene, ScenePath);
 
             PlayerSettings.productName = "Time Loop Detective";
             PlayerSettings.companyName = "ZetaRank";
             PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android, "com.zetarank.timeloopdetective");
             PlayerSettings.defaultInterfaceOrientation = UIOrientation.Portrait;
-            PlayerSettings.Android.bundleVersionCode = 13;
-            PlayerSettings.bundleVersion = "1.2.2-unity";
+            PlayerSettings.Android.bundleVersionCode = 14;
+            PlayerSettings.bundleVersion = "1.2.3-unity";
             PlayerSettings.Android.minSdkVersion = AndroidSdkVersions.AndroidApiLevel26;
-            PlayerSettings.Android.targetSdkVersion = AndroidSdkVersions.AndroidApiLevelAuto;
+            PlayerSettings.Android.targetSdkVersion = AndroidSdkVersions.AndroidApiLevel36;
+            PlayerSettings.SetScriptingBackend(BuildTargetGroup.Android, ScriptingImplementation.IL2CPP);
             PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARM64 | AndroidArchitecture.ARMv7;
 
-            Directory.CreateDirectory("Builds/Android");
-            var options = new BuildPlayerOptions {
-                scenes = new[] { scenePath },
-                locationPathName = "Builds/Android/TimeLoopDetective-Unity.apk",
+            EditorUserBuildSettings.buildAppBundle = appBundle;
+        }
+
+        static void Build(string outputPath)
+        {
+            Directory.CreateDirectory(BuildDir);
+            var options = new BuildPlayerOptions
+            {
+                scenes = new[] { ScenePath },
+                locationPathName = outputPath,
                 target = BuildTarget.Android,
                 options = BuildOptions.None
             };
+
             var report = BuildPipeline.BuildPlayer(options);
             if (report.summary.result != BuildResult.Succeeded)
                 throw new System.Exception("Android build failed: " + report.summary.result);
-            Debug.Log("Android APK built: " + options.locationPathName);
+
+            Debug.Log("Android build created: " + outputPath);
         }
 
-        public static void BuildAndroidFromCI() => BuildAndroid();
+        public static void BuildAndroidFromCI()
+        {
+            BuildAndroidApk();
+        }
     }
 }
