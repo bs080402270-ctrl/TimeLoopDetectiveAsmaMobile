@@ -192,7 +192,7 @@ namespace TimeLoopDetective
             header.text = "HOW THE LOOP WORKS";
             subheader.text = "Observe. Question. Remember. Deduce.";
 
-            ArtworkCard("Art/Phase1/Backgrounds/DailyBeanCafe", 270, "THE LOOP REMEMBERS", "Every reset changes what you can prove.");
+            ArtworkCard("Art/Generated/InvestigationDesk", 270, "THE LOOP REMEMBERS", "Every reset changes what you can prove.");
             Step("01", "INVESTIGATE LOCATIONS", "Search every scene for useful clues.");
             Step("02", "QUESTION SUSPECTS", "Stories change. Contradictions reveal the truth.");
             Step("03", "CARRY CLUES ACROSS LOOPS", "The world resets. Your knowledge does not.");
@@ -259,7 +259,7 @@ namespace TimeLoopDetective
             header.text = "SELECT A CASE";
             subheader.text = "Each case is a loop. Each truth changes everything.";
 
-            ArtworkCard("Art/Phase1/Backgrounds/DailyBeanCafe", 290, "CASE ARCHIVE", "Five investigations are ready.");
+            ArtworkCard("Art/Generated/DetectiveOffice", 290, "CASE ARCHIVE", "Five investigations are ready.");
 
             if (game.Cases.Count == 0)
             {
@@ -390,7 +390,7 @@ namespace TimeLoopDetective
             ClearContent();
             header.text = ok ? "CONTRADICTION FOUND" : "NEED MORE EVIDENCE";
             subheader.text = ok ? game.CurrentCase.suspects[id].contradiction.result : "Return to the scene and keep investigating.";
-            ArtworkCard(ok ? "Art/Phase1/Clues/RedThread" : "Art/Phase1/Backgrounds/DailyBeanCafe",
+            ArtworkCard(ok ? "Art/Phase1/Clues/RedThread" : "Art/Generated/InvestigationDesk",
                 300, ok ? "STORY BROKEN" : "NOT ENOUGH YET", subheader.text);
             AddButton(content, "BACK TO SCENE", ShowGame, true);
         }
@@ -431,7 +431,7 @@ namespace TimeLoopDetective
             header.text = "CASEBOOK / EVIDENCE";
             subheader.text = string.Format("COLLECTED {0}/{1}", game.State.clues.Count, game.CurrentCase.clues.Count);
 
-            ArtworkCard("Art/Phase1/Backgrounds/DailyBeanCafe", 320, "INVESTIGATION BOARD", "Everything you remember survives the reset.");
+            ArtworkCard("Art/Generated/EvidenceRoom", 320, "INVESTIGATION BOARD", "Everything you remember survives the reset.");
 
             foreach (var kv in game.CurrentCase.clues)
                 Label((game.State.clues.Contains(kv.Key) ? "■ " : "□ ") + kv.Value.name,
@@ -451,7 +451,7 @@ namespace TimeLoopDetective
             ClearContent();
             header.text = "FINAL DEDUCTION";
             subheader.text = game.CurrentCase.deduction_prompt;
-            ArtworkCard("Art/Phase1/Backgrounds/SuspectKeyArt", 330, "BREAK THE LOOP", "Your evidence must support the accusation.");
+            ArtworkCard("Art/Generated/FinalDeduction", 330, "BREAK THE LOOP", "Your evidence must support the accusation.");
             Label("WHO IS RESPONSIBLE?", content, 31, Red, TextAnchor.MiddleCenter);
             foreach (var kv in game.CurrentCase.suspects)
             {
@@ -481,7 +481,7 @@ namespace TimeLoopDetective
             header.text = "SETTINGS";
             subheader.text = "Tune readability, graphics and gameplay.";
 
-            ArtworkCard("Art/Phase2/Backgrounds/CafeExteriorRain", 260, "NOIR DISPLAY", "Optimized for portrait mobile play.");
+            ArtworkCard("Art/Generated/DetectiveOffice", 260, "NOIR DISPLAY", "Optimized for portrait mobile play.");
             AddButton(content, "DIFFICULTY: " + SettingsManager.Difficulty.ToString().ToUpper(), ShowDifficulty, false);
             AddButton(content, "GRAPHICS: " + (SettingsManager.EnhancedGraphics ? "ENHANCED" : "PERFORMANCE"), () =>
             {
