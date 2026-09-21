@@ -1,0 +1,43 @@
+name: Build Unity Android Port
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [unity-port]
+    paths:
+      - "Unity/**"
+      - ".github/workflows/unity-android-build.yml"
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Validate Unity branch structure
+        shell: bash
+        run: |
+          test -f Unity/ProjectSettings/ProjectVersion.txt
+          test -f Unity/Assets/Scripts/GameController.cs
+          test -f Unity/Assets/Scripts/RuntimeUI.cs
+          test -f Unity/Assets/StreamingAssets/Cases/case_01.json
+          test -f Unity/Assets/StreamingAssets/Cases/case_05.json
+
+      - name: Build Android APK
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          projectPath: Unity
+          targetPlatform: Android
+          buildMethod: TimeLoopDetective.Editor.AndroidBuild.BuildAndroidFromCI
+
+      - name: Upload Android APK
+        uses: actions/upload-artifact@v7
+        with:
+          name: TimeLoopDetective-Unity-Android
+          path: Unity/Builds/Android/TimeLoopDetective-Unity.apk
+          if-no-files-found: error
