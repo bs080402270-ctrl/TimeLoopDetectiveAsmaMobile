@@ -54,6 +54,7 @@ func _run() -> void:
 
 	for case_entry in game.case_catalog:
 		var case_id := str(case_entry.get("id", ""))
+		game.settings_manager.set_difficulty("easy")
 		if not game._load_case(case_id):
 			_fail("could not load " + case_id)
 			return
@@ -139,7 +140,22 @@ func _run() -> void:
 			return
 		game.overlay.visible = false
 
+		# Verify every case can reach its configured true ending.
+		game.settings_manager.set_difficulty("hard")
+		game.state.clues = game.case_data.get("strong_clues", []).duplicate()
+		game.state.contradictions = [str(game.case_data.get("required_contradiction", ""))]
+		var culprit := str(game.case_data.get("culprit", ""))
+		if culprit == "":
+			_fail(case_id + " has no culprit configured")
+			return
+		game._accuse(culprit)
+		await process_frame
+		if str(game.state.ending) != "true":
+			_fail(case_id + " could not reach the true ending")
+			return
+		game.overlay.visible = false
+
 		game.save_manager.clear(case_id)
 
-	print("FLOW TEST PASSED: menu, onboarding, difficulty, settings, case select, navigation and full five-case gameplay flow work.")
+	print("FLOW TEST PASSED: menu, onboarding, all difficulty levels, settings, case select, navigation, evidence, interrogation, loop reset, deduction and true endings work for all five cases.")
 	quit(0)
