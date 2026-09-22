@@ -34,6 +34,7 @@ const ART_INTRO := "res://art/actual/investigation_desk.jpg"
 const ART_DIFFICULTY := "res://art/actual/investigation_desk.jpg"
 const ART_CHARACTER_ATLAS := "res://art/actual/character_atlas.jpg"
 const ART_SEASON2_TEASER := "res://art/actual/season2_teaser.jpg"
+const ART_GENERATED_STORY_BOARD := "res://art/actual/base64/generated_story_ui_board.txt"
 
 const CHARACTER_REAL_ART := {
 	"maya": "res://art/actual/base64/maya.txt",
@@ -315,8 +316,36 @@ func _show_main_menu() -> void:
 	body.add_child(_button("INVESTIGATION TEAM",func(): _show_investigation_team(),false))
 	body.add_child(_button("CHARACTERS",func(): _show_character_gallery(),false))
 	body.add_child(_button("HOW TO PLAY",func(): _show_help(),false))
+	body.add_child(_button("STORY ART / MANGA UI",func(): _show_story_art(),false))
 	body.add_child(_button("SEASON 2 TEASER",func(): _show_season2_teaser(),false))
 	_build_home_nav("HOME")
+
+func _show_story_art() -> void:
+	_clear(body)
+	_clear(nav)
+	overlay.visible = false
+	_scroll_to_top()
+	_set_polished_background(ART_GENERATED_STORY_BOARD,0.24)
+	title_label.text = "STORY ART / MANGA UI"
+	status_label.text = "Dialogue • clues • locations • investigators • case UI"
+
+	var art := TextureRect.new()
+	art.texture = _load_tex(ART_GENERATED_STORY_BOARD)
+	art.custom_minimum_size = Vector2(0,680)
+	art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	body.add_child(art)
+
+	var note := Label.new()
+	note.text = "The generated visual concepts are now part of the game direction. Interrogations use manga-style two-character dialogue, cases display investigation types, and the five-person team is available from the main menu."
+	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	note.add_theme_font_size_override("font_size",_fs(18))
+	note.add_theme_color_override("font_color",C_MUTED)
+	body.add_child(note)
+
+	body.add_child(_button("BACK",func(): _show_main_menu(),false))
+	_build_home_nav("ART")
 
 func _show_season2_teaser() -> void:
 	_clear(body)
@@ -963,6 +992,7 @@ func _build_home_nav(active: String) -> void:
 	nav.add_child(_nav_button("TEAM",func(): _show_investigation_team(),active=="TEAM"))
 	nav.add_child(_nav_button("CHARACTERS",func(): _show_character_gallery(),active=="CHARACTERS"))
 	nav.add_child(_nav_button("HOW TO",func(): _show_help(),active=="HOW TO"))
+	nav.add_child(_nav_button("ART",func(): _show_story_art(),active=="ART"))
 
 func _show_settings() -> void:
 	_clear(body)
