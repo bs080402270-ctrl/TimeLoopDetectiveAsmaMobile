@@ -35,7 +35,23 @@ jobs:
         shell: bash
         run: |
           yes | sdkmanager --licenses >/dev/null || true
-          sdkmanager             "platform-tools"             "platforms;android-${ANDROID_PLATFORM}"             "build-tools;${ANDROID_BUILD_TOOLS}"             "ndk;${ANDROID_NDK}"             "cmake;${ANDROID_CMAKE}"
+          packages=(
+            "platform-tools"
+            "platforms;android-${ANDROID_PLATFORM}"
+            "build-tools;${ANDROID_BUILD_TOOLS}"
+            "ndk;${ANDROID_NDK}"
+            "cmake;${ANDROID_CMAKE}"
+          )
+          for attempt in 1 2 3; do
+            echo "Android SDK install attempt ${attempt}/3"
+            if sdkmanager "${packages[@]}"; then
+              exit 0
+            fi
+            rm -rf "${ANDROID_SDK_ROOT}/.temp" "${ANDROID_SDK_ROOT}/temp" || true
+            sleep 5
+          done
+          echo "Android SDK package installation failed after 3 attempts."
+          exit 1
 
       - name: Validate case data
         run: python3 tools/validate_cases.py
