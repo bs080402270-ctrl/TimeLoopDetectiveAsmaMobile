@@ -150,7 +150,7 @@ func _run() -> void:
 
 		game.state.loop = 1
 		game.state.action = int(game.case_data.get("max_actions", 8))
-		var clues_before_reset := game.state.clues.duplicate()
+		var clues_before_reset: Array = game.state.clues.duplicate()
 		game._reset_loop()
 		await process_frame
 		if int(game.state.loop) != 2:
