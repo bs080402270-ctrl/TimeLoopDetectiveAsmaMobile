@@ -142,7 +142,7 @@ func _run() -> void:
 			return
 
 		var first_clue := str(clue_ids[0])
-		var fragments_before := game.settings_manager.season_fragments.size()
+		var fragments_before: int = game.settings_manager.season_fragments.size()
 		game._collect_clue(first_clue)
 		await process_frame
 		if first_clue not in game.state.clues:
