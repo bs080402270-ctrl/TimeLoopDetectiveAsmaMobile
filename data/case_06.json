@@ -209,5 +209,11 @@
   "deduction_prompt": "Who poisoned the host and used the prerecorded broadcast to disguise the real time of death?",
   "truth": "Nadia poisoned the host after learning he planned to expose the station's hidden finances. Felix's prerecorded segment made the host appear alive after he was already dying, but Nadia's bracelet click and poison residue place her inside the booth during the true murder window.",
   "partial": "You identify Nadia, but without proving the broadcast was prerecorded the timeline remains vulnerable.",
-  "wrong": "Your theory cannot explain the duplicated waveform, poisoned cup and Nadia's hidden visit. The ON AIR lamp rewinds."
+  "wrong": "Your theory cannot explain the duplicated waveform, poisoned cup and Nadia's hidden visit. The ON AIR lamp rewinds.",
+  "case_type": "Broadcast Sabotage / Poisoning",
+  "investigators": [
+    "Asma",
+    "Samira",
+    "Dr. Leila"
+  ]
 }

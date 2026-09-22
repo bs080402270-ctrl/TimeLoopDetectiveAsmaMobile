@@ -204,5 +204,11 @@
   "deduction_prompt": "Who killed the photographer and used an automated image to make him appear alive after death?",
   "truth": "Adrian killed the photographer to protect a forged-art scheme, then relied on the camera's interval timer and manipulated metadata to push the apparent time of death later. The rooftop shadows expose the trick.",
   "partial": "You identify Adrian but cannot fully prove how the post-mortem photograph was created.",
-  "wrong": "Your theory leaves the delayed photograph and forged-art trail unexplained. The shutter rewinds."
+  "wrong": "Your theory leaves the delayed photograph and forged-art trail unexplained. The shutter rewinds.",
+  "case_type": "Art Fraud / Homicide",
+  "investigators": [
+    "Asma",
+    "Dr. Leila",
+    "Samira"
+  ]
 }

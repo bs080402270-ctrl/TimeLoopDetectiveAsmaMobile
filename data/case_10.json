@@ -235,5 +235,13 @@
   "deduction_prompt": "Who caused the original temporal disaster that trapped Asma and the city inside the repeating probability window?",
   "truth": "Viktor Malik caused the original disaster by forcing the experiment forward after its safety checks failed and ordering the probability governor bypassed. The Stranger did not create the loop, but later learned to sustain it because the restored timeline costs someone he refuses to lose. Asma finally understands both the cause and the prison.",
   "partial": "You expose Viktor's role but cannot prove how Asma became the one person who reliably remembers.",
-  "wrong": "Your accusation explains neither the override order nor the missing governor. The city clock stops and the first loop begins again."
+  "wrong": "Your accusation explains neither the override order nor the missing governor. The city clock stops and the first loop begins again.",
+  "case_type": "Temporal Conspiracy",
+  "investigators": [
+    "Asma",
+    "Chief Farid",
+    "Dr. Leila",
+    "Samira",
+    "Ryan Khan"
+  ]
 }

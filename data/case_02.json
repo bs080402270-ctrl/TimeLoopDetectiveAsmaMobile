@@ -203,5 +203,11 @@
   "deduction_prompt": "Who forced Nadia Reeve to stage her disappearance, and who knew her escape plan?",
   "truth": "Nadia discovered Meera's firm had identified her as the source exposing an illegal land-acquisition scheme. Rather than wait to be attacked at the terminal, Nadia planned her own escape through the luggage service hatch during the tunnel slowdown. Elias helped her, Juno erased the video, and Meera's burner messages prove the threat that forced the disappearance.",
   "partial": "You identify Meera as the threat but fail to prove Nadia escaped voluntarily. The case remains officially unsolved.",
-  "wrong": "Your accusation does not explain the service hatch, the deleted footage and the terminal order. The tunnel lights flash and the journey begins again."
+  "wrong": "Your accusation does not explain the service hatch, the deleted footage and the terminal order. The tunnel lights flash and the journey begins again.",
+  "case_type": "Disappearance / Missing Person",
+  "investigators": [
+    "Asma",
+    "Ryan Khan",
+    "Samira"
+  ]
 }

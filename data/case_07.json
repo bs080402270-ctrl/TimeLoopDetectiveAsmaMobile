@@ -201,5 +201,11 @@
   "deduction_prompt": "Who followed the victim through the hidden maintenance hatch after his planned escape?",
   "truth": "The disappearance was voluntary at first. Samira warned the victim, Tariq's slowdown created the opportunity, and the victim escaped through the old hatch. Ethan, working for the company under investigation, followed him into the tunnel and killed him.",
   "partial": "You identify Ethan but fail to prove the victim escaped voluntarily before being attacked.",
-  "wrong": "Your theory cannot explain the weight shift, the hidden hatch and Ethan's tunnel footprint. The train rolls backward."
+  "wrong": "Your theory cannot explain the weight shift, the hidden hatch and Ethan's tunnel footprint. The train rolls backward.",
+  "case_type": "Disappearance / Corporate Pursuit",
+  "investigators": [
+    "Asma",
+    "Ryan Khan",
+    "Samira"
+  ]
 }

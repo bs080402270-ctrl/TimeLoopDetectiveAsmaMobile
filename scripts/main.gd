@@ -102,6 +102,15 @@ const CHARACTER_GALLERY := [
 	{"id":"young_omar","name":"Young Omar","role":"Witness","index":19}
 ]
 
+const INVESTIGATION_TEAM := [
+	{"id":"asma","name":"Asma","role":"Lead Detective","specialty":"Interrogation • deduction • loop memory"},
+	{"id":"chief_farid","name":"Chief Farid","role":"Field Commander","specialty":"Operations • warrants • case strategy"},
+	{"id":"ryan_khan","name":"Ryan Khan","role":"Tactical Investigator","specialty":"Surveillance • pursuit • field reconstruction"},
+	{"id":"dr_leila","name":"Dr. Leila","role":"Forensic Specialist","specialty":"Forensics • pathology • physical evidence"},
+	{"id":"samira","name":"Samira","role":"Digital Analyst","specialty":"CCTV • devices • data recovery"}
+]
+
+
 var case_catalog: Array[Dictionary] = []
 var case_data: Dictionary = {}
 var state: Dictionary = {}
@@ -303,6 +312,7 @@ func _show_main_menu() -> void:
 	body.add_child(hero)
 
 	body.add_child(_button("START INVESTIGATION  →",func(): _show_intro(),true))
+	body.add_child(_button("INVESTIGATION TEAM",func(): _show_investigation_team(),false))
 	body.add_child(_button("CHARACTERS",func(): _show_character_gallery(),false))
 	body.add_child(_button("HOW TO PLAY",func(): _show_help(),false))
 	body.add_child(_button("SEASON 2 TEASER",func(): _show_season2_teaser(),false))
@@ -441,6 +451,58 @@ func _difficulty_card(id: String,label_text: String,description: String) -> Cont
 	row.add_child(choose)
 	return card
 
+
+func _show_investigation_team() -> void:
+	_clear(body)
+	_clear(nav)
+	overlay.visible = false
+	_scroll_to_top()
+	_set_polished_background(ART_INTERROGATION,0.42)
+	title_label.text = "INVESTIGATION TEAM"
+	status_label.text = "Five specialists. Different skills. One truth."
+
+	for member in INVESTIGATION_TEAM:
+		var card := PanelContainer.new()
+		card.add_theme_stylebox_override("panel",_panel_style(C_PANEL,16,C_GOLD,2,14))
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation",14)
+		card.add_child(row)
+
+		var portrait := TextureRect.new()
+		portrait.texture = _character_portrait(str(member.get("id","")), "")
+		portrait.custom_minimum_size = Vector2(124,168)
+		portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		row.add_child(portrait)
+
+		var vb := VBoxContainer.new()
+		vb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row.add_child(vb)
+
+		var n := Label.new()
+		n.text = str(member.get("name","Investigator"))
+		n.add_theme_font_size_override("font_size",_fs(26))
+		n.add_theme_color_override("font_color",C_TEXT)
+		vb.add_child(n)
+
+		var role := Label.new()
+		role.text = str(member.get("role","Investigator"))
+		role.add_theme_font_size_override("font_size",_fs(19))
+		role.add_theme_color_override("font_color",C_GOLD)
+		vb.add_child(role)
+
+		var specialty := Label.new()
+		specialty.text = str(member.get("specialty",""))
+		specialty.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		specialty.add_theme_font_size_override("font_size",_fs(16))
+		specialty.add_theme_color_override("font_color",C_MUTED)
+		vb.add_child(specialty)
+
+		body.add_child(card)
+
+	body.add_child(_button("BACK",func(): _show_main_menu(),false))
+	_build_home_nav("TEAM")
+
 func _show_character_gallery() -> void:
 	_clear(body)
 	_clear(nav)
@@ -549,6 +611,12 @@ func _case_card(data: Dictionary,index: int) -> Control:
 	t.add_theme_color_override("font_color",C_TEXT)
 	head.add_child(t)
 
+	var case_type := Label.new()
+	case_type.text = str(data.get("case_type","INVESTIGATION")).to_upper()
+	case_type.add_theme_font_size_override("font_size",_fs(14))
+	case_type.add_theme_color_override("font_color",C_GOLD)
+	head.add_child(case_type)
+
 	var state_text := Label.new()
 	state_text.text = "CONTINUE INVESTIGATION" if save_manager.has_save(case_id) else "NEW INVESTIGATION"
 	state_text.add_theme_font_size_override("font_size",_fs(15))
@@ -561,6 +629,14 @@ func _case_card(data: Dictionary,index: int) -> Control:
 	d.add_theme_font_size_override("font_size",_fs(17))
 	d.add_theme_color_override("font_color",C_MUTED)
 	stack.add_child(d)
+
+	var team_line := Label.new()
+	var assigned: Array = data.get("investigators",[])
+	team_line.text = "TEAM: " + ", ".join(assigned) if assigned.size() > 0 else "TEAM: Asma"
+	team_line.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	team_line.add_theme_font_size_override("font_size",_fs(14))
+	team_line.add_theme_color_override("font_color",C_MUTED)
+	stack.add_child(team_line)
 
 	var cid: String = case_id
 	var open := _button("OPEN CASE  →",func(): _open_case(cid),true)
@@ -747,20 +823,72 @@ func _clue_card(id: String) -> Control:
 	return card
 
 func _interrogate(id: String) -> void:
-	background.texture = _character_portrait(id,str(case_data.suspects[id].get("art","")))
-	background.modulate = Color(0.82,0.88,0.96,0.42)
 	var data: Dictionary = case_data.suspects[id]
 	var lines: Array = data.get("dialogue",[])
 	var idx := clampi(int(state.loop)-1,0,maxi(0,lines.size()-1))
+	var suspect_line := str(lines[idx]) if lines.size() > 0 else "They watch you carefully."
+
+	# Manga / visual-novel presentation: Asma and the suspect share the scene.
+	background.texture = _character_portrait(id,str(data.get("art","")))
+	background.modulate = Color(0.82,0.88,0.96,0.32)
 	overlay_title.text = str(data.get("name",id)) + " • INTERROGATION"
-	overlay_body.text = "[color=#9db1c7]%s[/color]\n\n%s" % [str(data.get("role","Person of interest")), str(lines[idx]) if lines.size() > 0 else "They watch you carefully."]
+	overlay_body.text = "[color=#e6b85c][b]ASMA[/b][/color]\nTell me what really happened. Small details matter in a loop.\n\n[color=#9db1c7][b]%s[/b][/color]\n%s" % [str(data.get("name",id)),suspect_line]
 	_clear(overlay_actions)
+	overlay_actions.add_child(_manga_portrait_strip(id))
+
 	var sid: String = id
-	overlay_actions.add_child(_button("THIS DOESN'T ADD UP...  →",func(): _press_suspect(sid),true))
-	overlay_actions.add_child(_button("CLOSE",func(): _close_and_refresh(),false))
+	overlay_actions.add_child(_button("ASK ABOUT THE TIMELINE",func(): _manga_followup(sid,"timeline"),false))
+	overlay_actions.add_child(_button("ASK ABOUT THEIR MOTIVE",func(): _manga_followup(sid,"motive"),false))
+	overlay_actions.add_child(_button("PRESS WITH EVIDENCE  →",func(): _press_suspect(sid),true))
+	overlay_actions.add_child(_button("END INTERVIEW",func(): _close_and_refresh(),false))
 	overlay.visible = true
 	_add_unique(state.talked,id)
 	_spend_action(false)
+
+func _manga_portrait_strip(id: String) -> Control:
+	var panel := PanelContainer.new()
+	panel.add_theme_stylebox_override("panel",_panel_style(Color("#07111f"),14,C_GOLD,2,10))
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation",10)
+	panel.add_child(row)
+
+	var asma := TextureRect.new()
+	asma.texture = _character_portrait("asma","")
+	asma.custom_minimum_size = Vector2(96,126)
+	asma.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	asma.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	row.add_child(asma)
+
+	var center := VBoxContainer.new()
+	center.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	center.alignment = BoxContainer.ALIGNMENT_CENTER
+	row.add_child(center)
+	var versus := Label.new()
+	versus.text = "QUESTION • OBSERVE • REMEMBER"
+	versus.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	versus.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	versus.add_theme_font_size_override("font_size",_fs(14))
+	versus.add_theme_color_override("font_color",C_GOLD)
+	center.add_child(versus)
+
+	var suspect := TextureRect.new()
+	suspect.texture = _character_portrait(id,str(case_data.suspects[id].get("art","")))
+	suspect.custom_minimum_size = Vector2(96,126)
+	suspect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	suspect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	row.add_child(suspect)
+	return panel
+
+func _manga_followup(id: String,topic: String) -> void:
+	var data: Dictionary = case_data.suspects[id]
+	var lines: Array = data.get("dialogue",[])
+	var base_idx := clampi(int(state.loop)-1,0,maxi(0,lines.size()-1))
+	var response := str(lines[base_idx]) if lines.size() > 0 else "I have already told you what I know."
+	if lines.size() > 1 and topic == "motive":
+		response = str(lines[(base_idx + 1) % lines.size()])
+
+	var question := "Walk me through the exact timeline again." if topic == "timeline" else "What did you have to gain from what happened?"
+	overlay_body.text = "[color=#e6b85c][b]ASMA[/b][/color]\n%s\n\n[color=#9db1c7][b]%s[/b][/color]\n%s" % [question,str(data.get("name",id)),response]
 
 func _press_suspect(id: String) -> void:
 	var data: Dictionary = case_data.suspects[id]
@@ -832,6 +960,7 @@ func _build_home_nav(active: String) -> void:
 	nav.add_child(_nav_button("HOME",func(): _show_main_menu(),active=="HOME"))
 	nav.add_child(_nav_button("CASES",func(): _show_case_select(),active=="CASES"))
 	nav.add_child(_nav_button("SETTINGS",func(): _show_settings(),active=="SETTINGS"))
+	nav.add_child(_nav_button("TEAM",func(): _show_investigation_team(),active=="TEAM"))
 	nav.add_child(_nav_button("CHARACTERS",func(): _show_character_gallery(),active=="CHARACTERS"))
 	nav.add_child(_nav_button("HOW TO",func(): _show_help(),active=="HOW TO"))
 

@@ -181,5 +181,11 @@
   "deduction_prompt": "Who engineered Daniel Rowan's death and the 8:47 blackout?",
   "truth": "Lina altered Daniel's drink with an ingredient she knew could trigger his severe allergy, then arranged the blackout to retrieve the financial ledger during the panic.",
   "partial": "You identify Lina, but without enough evidence the case collapses under scrutiny.",
-  "wrong": "Your accusation does not explain the altered drink, the blackout and the financial motive. The cafe rewinds."
+  "wrong": "Your accusation does not explain the altered drink, the blackout and the financial motive. The cafe rewinds.",
+  "case_type": "Homicide Investigation",
+  "investigators": [
+    "Asma",
+    "Dr. Leila",
+    "Ryan Khan"
+  ]
 }

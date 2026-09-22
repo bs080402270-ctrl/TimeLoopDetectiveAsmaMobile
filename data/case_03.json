@@ -204,5 +204,11 @@
   "deduction_prompt": "Who prepared Room 417 so the victim could die without the killer entering during the murder window?",
   "truth": "Elena prepared Room 417 before Adrian checked in, using substituted minibar chemicals and a modified ventilation filter. She later used Noah's service tablet and a cloned Marcus badge to trigger the lethal HVAC cycle remotely. The locked door was genuine because the murder mechanism was already inside.",
   "partial": "You name Elena but cannot fully explain how the locked room worked. The prosecution has motive, but the mechanism remains vulnerable to doubt.",
-  "wrong": "The room remains logically impossible under your theory. At 2:17 AM the hotel resets."
+  "wrong": "The room remains logically impossible under your theory. At 2:17 AM the hotel resets.",
+  "case_type": "Locked-Room Death",
+  "investigators": [
+    "Asma",
+    "Dr. Leila",
+    "Chief Farid"
+  ]
 }

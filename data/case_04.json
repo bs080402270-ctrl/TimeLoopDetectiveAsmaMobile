@@ -221,5 +221,11 @@
   "deduction_prompt": "Who knew about the compartment switch and killed the wrong passenger while trying to reach Judge Hale?",
   "truth": "Inspector Rowan was the compromised escort. He learned of Hale's compartment switch through a police cipher, copied the conductor's master-key signature and drugged the wrong passenger, believing him to be the judge. Hale survived by hiding in the maintenance compartment.",
   "partial": "You expose Rowan but fail to prove Hale survived or how the wrong victim was selected.",
-  "wrong": "Your theory cannot explain the swapped keys, the drugged tea and the hidden judge. Midnight returns."
+  "wrong": "Your theory cannot explain the swapped keys, the drugged tea and the hidden judge. Midnight returns.",
+  "case_type": "Missing Person / Identity Mystery",
+  "investigators": [
+    "Asma",
+    "Ryan Khan",
+    "Chief Farid"
+  ]
 }

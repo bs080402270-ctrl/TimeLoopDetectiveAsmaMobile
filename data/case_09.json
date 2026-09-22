@@ -204,5 +204,11 @@
   "deduction_prompt": "Who used the blackout and hidden elevator passage to enter a penthouse without opening its biometric door?",
   "truth": "Celeste caused the blackout to steal documents, but Julian exploited it. He had secretly modified the elevator service passage weeks earlier, entered through the wall, killed his partner and escaped before the power returned.",
   "partial": "You identify Julian but fail to separate his murder route from Celeste's blackout scheme.",
-  "wrong": "Your theory cannot explain the sealed biometric door, elevator grease and hidden service panel. The floor goes dark again."
+  "wrong": "Your theory cannot explain the sealed biometric door, elevator grease and hidden service panel. The floor goes dark again.",
+  "case_type": "Corporate Conspiracy / Blackout",
+  "investigators": [
+    "Asma",
+    "Ryan Khan",
+    "Chief Farid"
+  ]
 }

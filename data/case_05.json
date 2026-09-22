@@ -221,5 +221,11 @@
   "deduction_prompt": "Who leaked Eva's location and followed her escape through the building's blind spot?",
   "truth": "Eva staged her own disappearance after discovering her protection route had leaked. Morgan Shaw's credentials accessed the sealed schedule, a duplicate of his key was used during the camera loop, and the second freight-elevator trip shows he followed Eva through the service shaft. Eva's escape plan was real; Morgan turned it into an ambush.",
   "partial": "You identify Morgan as the leak but fail to distinguish Eva's voluntary escape from an abduction.",
-  "wrong": "Your theory ignores the camera loop and the second elevator trip. The safe house rewinds."
+  "wrong": "Your theory ignores the camera loop and the second elevator trip. The safe house rewinds.",
+  "case_type": "Witness Protection Breach",
+  "investigators": [
+    "Asma",
+    "Samira",
+    "Ryan Khan"
+  ]
 }
