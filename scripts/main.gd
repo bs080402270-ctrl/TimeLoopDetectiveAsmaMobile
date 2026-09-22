@@ -112,6 +112,21 @@ const INVESTIGATION_TEAM := [
 ]
 
 
+const OUTFIT_STORE := [
+	{"id":"classic","name":"Classic Detective","cost":0,"desc":"Default investigator coat and badge."},
+	{"id":"noir","name":"Noir Investigator","cost":120,"desc":"Dark trench-coat style for interrogation scenes."},
+	{"id":"field","name":"Field Operations","cost":150,"desc":"Practical field-investigator outfit."},
+	{"id":"formal","name":"Formal Casewear","cost":180,"desc":"Premium formal investigator style."}
+]
+
+const GEAR_STORE := [
+	{"id":"handcuffs","name":"Handcuffs","cost":0,"desc":"Standard arrest equipment."},
+	{"id":"flashlight","name":"Tactical Flashlight","cost":60,"desc":"Improves confrontation options."},
+	{"id":"vest","name":"Protective Vest","cost":100,"desc":"Helps in risky final confrontations."},
+	{"id":"sidearm","name":"Service Sidearm","cost":160,"desc":"Virtual game equipment for high-risk confrontation scenes."}
+]
+
+
 var case_catalog: Array[Dictionary] = []
 var case_data: Dictionary = {}
 var state: Dictionary = {}
@@ -312,13 +327,123 @@ func _show_main_menu() -> void:
 	hv.add_child(sub)
 	body.add_child(hero)
 
+	var profile := Label.new()
+	profile.text = "PLAYING AS: %s  •  OUTFIT: %s  •  CREDITS: %d" % [_selected_investigator_name(), settings_manager.selected_outfit.to_upper(), settings_manager.detective_credits]
+	profile.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	profile.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	profile.add_theme_font_size_override("font_size",_fs(17))
+	profile.add_theme_color_override("font_color",C_GOLD)
+	body.add_child(profile)
+
 	body.add_child(_button("START INVESTIGATION  →",func(): _show_intro(),true))
+	body.add_child(_button("CHOOSE INVESTIGATOR",func(): _show_investigator_select(),false))
+	body.add_child(_button("DETECTIVE STORE",func(): _show_store(),false))
 	body.add_child(_button("INVESTIGATION TEAM",func(): _show_investigation_team(),false))
 	body.add_child(_button("CHARACTERS",func(): _show_character_gallery(),false))
 	body.add_child(_button("HOW TO PLAY",func(): _show_help(),false))
 	body.add_child(_button("STORY ART / MANGA UI",func(): _show_story_art(),false))
 	body.add_child(_button("SEASON 2 TEASER",func(): _show_season2_teaser(),false))
 	_build_home_nav("HOME")
+
+func _selected_investigator_name() -> String:
+	for member in INVESTIGATION_TEAM:
+		if str(member.get("id","")) == settings_manager.selected_investigator:
+			return str(member.get("name","Asma"))
+	return "Asma"
+
+func _show_investigator_select() -> void:
+	_clear(body)
+	_clear(nav)
+	overlay.visible = false
+	_scroll_to_top()
+	_set_polished_background(ART_INTERROGATION,0.40)
+	title_label.text = "CHOOSE INVESTIGATOR"
+	status_label.text = "Play the case as one of the five investigation-team members."
+
+	for member in INVESTIGATION_TEAM:
+		var id := str(member.get("id","asma"))
+		var card := PanelContainer.new()
+		card.add_theme_stylebox_override("panel",_panel_style(C_PANEL,16,C_GOLD if id == settings_manager.selected_investigator else C_LINE,2,14))
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation",12)
+		card.add_child(row)
+
+		var portrait := TextureRect.new()
+		portrait.texture = _character_portrait(id,"")
+		portrait.custom_minimum_size = Vector2(110,145)
+		portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		row.add_child(portrait)
+
+		var vb := VBoxContainer.new()
+		vb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row.add_child(vb)
+		var n := Label.new()
+		n.text = str(member.get("name","Investigator"))
+		n.add_theme_font_size_override("font_size",_fs(23))
+		n.add_theme_color_override("font_color",C_TEXT)
+		vb.add_child(n)
+		var r := Label.new()
+		r.text = str(member.get("role",""))
+		r.add_theme_font_size_override("font_size",_fs(17))
+		r.add_theme_color_override("font_color",C_MUTED)
+		vb.add_child(r)
+		var mid := id
+		vb.add_child(_button("SELECTED" if id == settings_manager.selected_investigator else "SELECT",func():
+			settings_manager.set_investigator(mid)
+			_show_investigator_select()
+		,false))
+		body.add_child(card)
+
+	body.add_child(_button("BACK",func(): _show_main_menu(),false))
+	_build_home_nav("TEAM")
+
+func _show_store() -> void:
+	_clear(body)
+	_clear(nav)
+	overlay.visible = false
+	_scroll_to_top()
+	_set_polished_background(ART_SETTINGS,0.38)
+	title_label.text = "DETECTIVE STORE"
+	status_label.text = "Credits: %d  •  Cosmetic outfits, gear and extra hints." % settings_manager.detective_credits
+
+	_add_section_title("OUTFITS")
+	for item in OUTFIT_STORE:
+		var iid := str(item.get("id","classic"))
+		var owned := iid in settings_manager.unlocked_outfits
+		var label := "%s%s" % [str(item.get("name","Outfit")), "  •  OWNED" if owned else "  •  %d CREDITS" % int(item.get("cost",0))]
+		var action_id := iid
+		var cost := int(item.get("cost",0))
+		body.add_child(_button(label,func():
+			if action_id in settings_manager.unlocked_outfits:
+				settings_manager.set_outfit(action_id)
+			elif settings_manager.buy_outfit(action_id,cost):
+				settings_manager.set_outfit(action_id)
+			_show_store()
+		,owned and action_id == settings_manager.selected_outfit))
+
+	_add_section_title("EQUIPMENT")
+	for gear in GEAR_STORE:
+		var gid := str(gear.get("id","handcuffs"))
+		var owned_gear := gid in settings_manager.unlocked_gear
+		var gtext := "%s%s" % [str(gear.get("name","Gear")), "  •  OWNED" if owned_gear else "  •  %d CREDITS" % int(gear.get("cost",0))]
+		var buy_id := gid
+		var buy_cost := int(gear.get("cost",0))
+		body.add_child(_button(gtext,func():
+			if not owned_gear:
+				settings_manager.buy_gear(buy_id,buy_cost)
+			_show_store()
+		,false))
+
+	var hint_info := Label.new()
+	hint_info.text = "HINTS: The first hint in every case is free. Additional hints cost 25 credits."
+	hint_info.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	hint_info.add_theme_font_size_override("font_size",_fs(17))
+	hint_info.add_theme_color_override("font_color",C_MUTED)
+	body.add_child(hint_info)
+
+	body.add_child(_button("BACK",func(): _show_main_menu(),false))
+	_build_home_nav("STORE")
 
 func _show_story_art() -> void:
 	_clear(body)
@@ -692,6 +817,7 @@ func _start_new() -> void:
 	state.clues = []
 	state.contradictions = []
 	state.talked = []
+	state.hints_used = 0
 	state.ending = ""
 	_save()
 	_show_game()
@@ -989,6 +1115,7 @@ func _build_home_nav(active: String) -> void:
 	nav.add_child(_nav_button("HOME",func(): _show_main_menu(),active=="HOME"))
 	nav.add_child(_nav_button("CASES",func(): _show_case_select(),active=="CASES"))
 	nav.add_child(_nav_button("SETTINGS",func(): _show_settings(),active=="SETTINGS"))
+	nav.add_child(_nav_button("STORE",func(): _show_store(),active=="STORE"))
 	nav.add_child(_nav_button("TEAM",func(): _show_investigation_team(),active=="TEAM"))
 	nav.add_child(_nav_button("CHARACTERS",func(): _show_character_gallery(),active=="CHARACTERS"))
 	nav.add_child(_nav_button("HOW TO",func(): _show_help(),active=="HOW TO"))
@@ -1038,7 +1165,7 @@ func _show_settings() -> void:
 		_show_settings()
 	))
 	body.add_child(_button("CLEAR ALL CASE PROGRESS",func(): _confirm_clear_progress(),false))
-	body.add_child(_button("ABOUT / VERSION 1.2.0",func(): _show_about(),false))
+	body.add_child(_button("ABOUT / VERSION 1.3.0",func(): _show_about(),false))
 	_build_home_nav("SETTINGS")
 
 func _settings_row(label_text: String,value_text: String,description: String,action: Callable) -> Control:
@@ -1085,7 +1212,7 @@ func _clear_all_progress() -> void:
 
 func _show_about() -> void:
 	overlay_title.text = "TIME LOOP DETECTIVE"
-	overlay_body.text = "[center][color=#e6b85c][b]Version 1.2.0[/b][/color][/center]\n\nA story-driven detective mystery built for Android and iOS. Investigate ten Season 1 cases, carry knowledge across loops, expose contradictions and uncover the origin of the time loop."
+	overlay_body.text = "[center][color=#e6b85c][b]Version 1.3.0[/b][/color][/center]\n\nA story-driven detective mystery built for Android and iOS. Investigate ten Season 1 cases, choose your investigator, use outfits and equipment, request hints, expose contradictions, confront culprits and uncover the origin of the time loop."
 	_clear(overlay_actions)
 	overlay_actions.add_child(_button("CLOSE",func(): overlay.visible=false,false))
 	overlay.visible = true
@@ -1111,9 +1238,39 @@ func _show_casebook() -> void:
 		text += "• " + str(line) + "\n"
 	overlay_body.text = text
 	_clear(overlay_actions)
+	overlay_actions.add_child(_button("GET A HINT",func(): _use_hint(),false))
 	overlay_actions.add_child(_button("MAKE A DEDUCTION  →",func(): _show_deduction(),true))
 	overlay_actions.add_child(_button("CASE SELECT",func(): _show_case_select_from_overlay(),false))
 	overlay_actions.add_child(_button("CLOSE",func(): _close_and_refresh(),false))
+	overlay.visible = true
+
+func _use_hint() -> void:
+	var used := int(state.get("hints_used",0))
+	var cost := 0 if used == 0 else 25
+	if cost > 0 and not settings_manager.spend_credits(cost):
+		overlay_title.text = "MORE CREDITS NEEDED"
+		overlay_body.text = "Your first hint for this case was free. Additional hints cost 25 credits."
+		_clear(overlay_actions)
+		overlay_actions.add_child(_button("OPEN DETECTIVE STORE",func():
+			overlay.visible = false
+			_show_store()
+		,true))
+		overlay_actions.add_child(_button("CLOSE",func(): _close_and_refresh(),false))
+		overlay.visible = true
+		return
+
+	var hint := "Recheck the timeline and compare suspect statements against your strongest evidence."
+	for clue_id in case_data.get("strong_clues",[]):
+		if str(clue_id) not in state.clues:
+			var clue: Dictionary = case_data.clues.get(str(clue_id),{})
+			hint = "Focus on %s at %s. %s" % [str(clue.get("name","a missing clue")),str(case_data.locations.get(str(clue.get("location","")),{}).get("name","the scene")),_clue_hint_text(clue)]
+			break
+	state.hints_used = used + 1
+	_save()
+	overlay_title.text = "INVESTIGATION HINT"
+	overlay_body.text = "[center][color=#e6b85c][b]%s[/b][/color][/center]\n\n%s" % ["FREE HINT" if cost == 0 else "25 CREDITS USED",hint]
+	_clear(overlay_actions)
+	overlay_actions.add_child(_button("BACK TO CASEBOOK",func(): _show_casebook(),true))
 	overlay.visible = true
 
 func _show_deduction() -> void:
@@ -1136,11 +1293,39 @@ func _accuse(id: String) -> void:
 	var culprit := str(case_data.get("culprit",""))
 	var required := str(case_data.get("required_contradiction",""))
 	if id == culprit and count >= _required_strong_count() and required in state.contradictions:
-		_finish("true")
+		_start_confrontation(id)
 	elif id == culprit and count >= 2:
 		_finish("partial")
 	else:
 		_finish("wrong")
+
+func _start_confrontation(culprit_id: String) -> void:
+	var culprit_name := str(case_data.suspects.get(culprit_id,{}).get("name","the suspect"))
+	overlay_title.text = "FINAL CONFRONTATION"
+	overlay_body.text = "[center][color=#e32636][font_size=30][b]%s tries to escape.[/b][/font_size][/color][/center]\n\nYou solved the case. Now choose how your investigator brings the culprit into custody." % culprit_name
+	_clear(overlay_actions)
+	overlay_actions.add_child(_button("CHASE & ARREST",func(): _resolve_confrontation("chase"),true))
+	overlay_actions.add_child(_button("FIGHT / RESTRAIN",func(): _resolve_confrontation("fight"),false))
+	if "sidearm" in settings_manager.unlocked_gear:
+		overlay_actions.add_child(_button("DRAW SERVICE SIDEARM • ORDER SURRENDER",func(): _resolve_confrontation("sidearm"),false))
+	overlay_actions.add_child(_button("USE HANDCUFFS",func(): _resolve_confrontation("cuff"),false))
+	overlay.visible = true
+
+func _resolve_confrontation(method: String) -> void:
+	var outcome := ""
+	match method:
+		"fight":
+			outcome = "After a short struggle, your investigator restrains the culprit and takes them into custody."
+		"sidearm":
+			outcome = "Your investigator keeps distance, orders the culprit to surrender, and makes the arrest without firing."
+		"cuff":
+			outcome = "You close the distance at the right moment and secure the culprit with handcuffs."
+		_:
+			outcome = "You pursue the culprit through the scene, cut off the escape route, and make the arrest."
+	state["confrontation"] = method
+	_save()
+	_finish("true")
+	overlay_body.text += "\n\n[color=#9db1c7]%s[/color]" % outcome
 
 func _finish(kind: String) -> void:
 	state.ending = kind

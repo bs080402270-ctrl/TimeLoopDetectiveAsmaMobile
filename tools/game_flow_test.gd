@@ -150,6 +150,9 @@ func _run() -> void:
 			return
 		game._accuse(culprit)
 		await process_frame
+		if game.overlay_title.text == "FINAL CONFRONTATION":
+			game._resolve_confrontation("chase")
+			await process_frame
 		if str(game.state.ending) != "true":
 			_fail(case_id + " could not reach the true ending")
 			return
