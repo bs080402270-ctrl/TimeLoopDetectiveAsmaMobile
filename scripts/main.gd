@@ -338,6 +338,7 @@ func _show_main_menu() -> void:
 	body.add_child(_button("START INVESTIGATION  →",func(): _show_intro(),true))
 	body.add_child(_button("CHOOSE INVESTIGATOR",func(): _show_investigator_select(),false))
 	body.add_child(_button("DETECTIVE STORE",func(): _show_store(),false))
+	body.add_child(_button("ACHIEVEMENTS",func(): _show_achievements(),false))
 	body.add_child(_button("INVESTIGATION TEAM",func(): _show_investigation_team(),false))
 	body.add_child(_button("CHARACTERS",func(): _show_character_gallery(),false))
 	body.add_child(_button("HOW TO PLAY",func(): _show_help(),false))
@@ -444,6 +445,45 @@ func _show_store() -> void:
 
 	body.add_child(_button("BACK",func(): _show_main_menu(),false))
 	_build_home_nav("STORE")
+
+func _show_achievements() -> void:
+	_clear(body)
+	_clear(nav)
+	overlay.visible = false
+	_scroll_to_top()
+	_set_polished_background(ART_CASEBOOK,0.34)
+	title_label.text = "ACHIEVEMENTS"
+	status_label.text = "Milestones from your investigation career."
+
+	var all := [
+		["first_clue","FIRST CLUE","Collect your first piece of evidence."],
+		["first_contradiction","STORY BREAKER","Expose your first contradiction."],
+		["first_case","CASE CLOSED","Reach your first true ending."],
+		["no_hint_case","SHARP MIND","Close a case without using a hint."],
+		["perfect_loop","LOOP MASTER","Close a case before the third loop."],
+		["season_one","SEASON 1 DETECTIVE","Close Case 10 with the true ending."]
+	]
+	for item in all:
+		var unlocked := str(item[0]) in settings_manager.achievements
+		var card := PanelContainer.new()
+		card.add_theme_stylebox_override("panel",_panel_style(C_PANEL,14,C_GOLD if unlocked else C_LINE,2,12))
+		var vb := VBoxContainer.new()
+		card.add_child(vb)
+		var n := Label.new()
+		n.text = ("✓ " if unlocked else "○ ") + str(item[1])
+		n.add_theme_font_size_override("font_size",_fs(22))
+		n.add_theme_color_override("font_color",C_GOLD if unlocked else C_TEXT)
+		vb.add_child(n)
+		var d := Label.new()
+		d.text = str(item[2])
+		d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		d.add_theme_font_size_override("font_size",_fs(16))
+		d.add_theme_color_override("font_color",C_MUTED)
+		vb.add_child(d)
+		body.add_child(card)
+
+	body.add_child(_button("BACK",func(): _show_main_menu(),false))
+	_build_home_nav("ACHIEVEMENTS")
 
 func _show_story_art() -> void:
 	_clear(body)
@@ -926,6 +966,19 @@ func _person_card(id: String) -> Control:
 	role.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vb.add_child(role)
 
+	var suspicion := Label.new()
+	var suspicion_value := 30
+	if id in state.talked:
+		suspicion_value += 15
+	var rule: Dictionary = data.get("contradiction",{})
+	if str(rule.get("id","")) in state.contradictions:
+		suspicion_value += 40
+	suspicion_value = mini(100,suspicion_value)
+	suspicion.text = "SUSPICION  %d%%" % suspicion_value
+	suspicion.add_theme_font_size_override("font_size",_fs(15))
+	suspicion.add_theme_color_override("font_color",C_RED if suspicion_value >= 70 else C_GOLD)
+	vb.add_child(suspicion)
+
 	var memory := Label.new()
 	memory.text = "INTERVIEWED" if id in state.talked else "NOT YET INTERVIEWED"
 	memory.add_theme_font_size_override("font_size",_fs(16))
@@ -1055,6 +1108,7 @@ func _press_suspect(id: String) -> void:
 			complete = false
 	if complete and needs.size() > 0:
 		_add_unique(state.contradictions,str(rule.get("id","")))
+		settings_manager.unlock_achievement("first_contradiction")
 		overlay_body.text = "[center][color=#e6b85c][font_size=30][b]CONTRADICTION FOUND[/b][/font_size][/color][/center]\n\n" + str(rule.get("result",""))
 		_play_evidence()
 	else:
@@ -1072,6 +1126,7 @@ func _collect_clue(id: String) -> void:
 	if id in state.clues:
 		return
 	_add_unique(state.clues,id)
+	settings_manager.unlock_achievement("first_clue")
 	var data: Dictionary = case_data.clues[id]
 	overlay_title.text = "EVIDENCE FOUND"
 	overlay_body.text = "[center][color=#e6b85c][font_size=30][b]%s[/b][/font_size][/color][/center]\n\n%s" % [str(data.get("name",id)),str(data.get("description",""))]
@@ -1116,6 +1171,7 @@ func _build_home_nav(active: String) -> void:
 	nav.add_child(_nav_button("CASES",func(): _show_case_select(),active=="CASES"))
 	nav.add_child(_nav_button("SETTINGS",func(): _show_settings(),active=="SETTINGS"))
 	nav.add_child(_nav_button("STORE",func(): _show_store(),active=="STORE"))
+	nav.add_child(_nav_button("BADGES",func(): _show_achievements(),active=="ACHIEVEMENTS"))
 	nav.add_child(_nav_button("TEAM",func(): _show_investigation_team(),active=="TEAM"))
 	nav.add_child(_nav_button("CHARACTERS",func(): _show_character_gallery(),active=="CHARACTERS"))
 	nav.add_child(_nav_button("HOW TO",func(): _show_help(),active=="HOW TO"))
@@ -1165,7 +1221,7 @@ func _show_settings() -> void:
 		_show_settings()
 	))
 	body.add_child(_button("CLEAR ALL CASE PROGRESS",func(): _confirm_clear_progress(),false))
-	body.add_child(_button("ABOUT / VERSION 1.3.0",func(): _show_about(),false))
+	body.add_child(_button("ABOUT / VERSION 1.4.0",func(): _show_about(),false))
 	_build_home_nav("SETTINGS")
 
 func _settings_row(label_text: String,value_text: String,description: String,action: Callable) -> Control:
@@ -1212,7 +1268,7 @@ func _clear_all_progress() -> void:
 
 func _show_about() -> void:
 	overlay_title.text = "TIME LOOP DETECTIVE"
-	overlay_body.text = "[center][color=#e6b85c][b]Version 1.3.0[/b][/color][/center]\n\nA story-driven detective mystery built for Android and iOS. Investigate ten Season 1 cases, choose your investigator, use outfits and equipment, request hints, expose contradictions, confront culprits and uncover the origin of the time loop."
+	overlay_body.text = "[center][color=#e6b85c][b]Version 1.4.0[/b][/color][/center]\n\nA story-driven detective mystery built for Android and iOS. Investigate ten Season 1 cases, choose your investigator, use outfits and equipment, request hints, expose contradictions, confront culprits and uncover the origin of the time loop."
 	_clear(overlay_actions)
 	overlay_actions.add_child(_button("CLOSE",func(): overlay.visible=false,false))
 	overlay.visible = true
@@ -1238,10 +1294,28 @@ func _show_casebook() -> void:
 		text += "• " + str(line) + "\n"
 	overlay_body.text = text
 	_clear(overlay_actions)
+	overlay_actions.add_child(_button("EVIDENCE BOARD",func(): _show_evidence_board(),false))
 	overlay_actions.add_child(_button("GET A HINT",func(): _use_hint(),false))
 	overlay_actions.add_child(_button("MAKE A DEDUCTION  →",func(): _show_deduction(),true))
 	overlay_actions.add_child(_button("CASE SELECT",func(): _show_case_select_from_overlay(),false))
 	overlay_actions.add_child(_button("CLOSE",func(): _close_and_refresh(),false))
+	overlay.visible = true
+
+func _show_evidence_board() -> void:
+	overlay_title.text = "EVIDENCE BOARD"
+	var text := "[color=#e6b85c][b]KNOWN CONNECTIONS[/b][/color]\n\n"
+	var found_count := 0
+	for clue_id in state.clues:
+		var clue: Dictionary = case_data.clues.get(str(clue_id),{})
+		var loc_name := str(case_data.locations.get(str(clue.get("location","")),{}).get("name","Unknown"))
+		text += "• %s  →  %s\n" % [str(clue.get("name",clue_id)),loc_name]
+		found_count += 1
+	text += "\n[color=#9db1c7]Suspects interviewed: %d/%d[/color]" % [state.talked.size(),case_data.suspects.size()]
+	text += "\n[color=#9db1c7]Contradictions exposed: %d[/color]" % state.contradictions.size()
+	text += "\n[color=#9db1c7]Evidence collected: %d/%d[/color]" % [found_count,case_data.clues.size()]
+	overlay_body.text = text
+	_clear(overlay_actions)
+	overlay_actions.add_child(_button("BACK TO CASEBOOK",func(): _show_casebook(),true))
 	overlay.visible = true
 
 func _use_hint() -> void:
@@ -1327,12 +1401,36 @@ func _resolve_confrontation(method: String) -> void:
 	_finish("true")
 	overlay_body.text += "\n\n[color=#9db1c7]%s[/color]" % outcome
 
+func _detective_rank() -> String:
+	var score := 100
+	score -= maxi(0,int(state.get("loop",1))-1) * 12
+	score -= int(state.get("hints_used",0)) * 8
+	score -= maxi(0,int(state.get("action",0)) - int(case_data.get("max_actions",8))) * 2
+	if score >= 90:
+		return "S"
+	if score >= 78:
+		return "A"
+	if score >= 65:
+		return "B"
+	return "C"
+
 func _finish(kind: String) -> void:
 	state.ending = kind
 	_save()
 	overlay_title.text = "CASE CLOSED" if kind=="true" else "THE LOOP RESISTS"
 	if kind=="true":
-		overlay_body.text = "[center][font_size=34][color=#e6b85c][b]TRUE ENDING[/b][/color][/font_size][/center]\n\n"+str(case_data.get("truth",""))
+		var rank := _detective_rank()
+		var reward := settings_manager.reward_case_once(current_case_id,50)
+		settings_manager.unlock_achievement("first_case")
+		if int(state.get("hints_used",0)) == 0:
+			settings_manager.unlock_achievement("no_hint_case")
+		if int(state.get("loop",1)) < 3:
+			settings_manager.unlock_achievement("perfect_loop")
+		if current_case_id == "case_10":
+			settings_manager.unlock_achievement("season_one")
+		overlay_body.text = "[center][font_size=34][color=#e6b85c][b]TRUE ENDING[/b][/color][/font_size]\nDETECTIVE RANK: [b]%s[/b][/center]\n\n%s" % [rank,str(case_data.get("truth",""))]
+		if reward > 0:
+			overlay_body.text += "\n\n[color=#e6b85c]+%d DETECTIVE CREDITS[/color]" % reward
 	elif kind=="partial":
 		overlay_body.text = "[center][color=#e6b85c][b]PARTIAL TRUTH[/b][/color][/center]\n\n"+str(case_data.get("partial","Incomplete deduction."))
 	else:
