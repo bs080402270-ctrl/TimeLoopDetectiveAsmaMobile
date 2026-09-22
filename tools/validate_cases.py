@@ -50,8 +50,8 @@ for path in case_files:
         if data["required_contradiction"] not in ids:
             errors.append(f"{path.name}: required contradiction is not defined")
 
-if len(case_files) != 5:
-    errors.append(f"Expected 5 case files, found {len(case_files)}")
+if len(case_files) != 10:
+    errors.append(f"Expected 10 Season 1 case files, found {len(case_files)}")
 
 if errors:
     print("\n".join("ERROR: " + e for e in errors))
