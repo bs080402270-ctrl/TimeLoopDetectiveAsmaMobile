@@ -28,6 +28,11 @@ CI uses Godot 4.5.1, Java 17, Android API 35, Build Tools 35.0.0 and NDK 29.
 
 Package: `com.zetarank.timeloopdetective`
 
-Current release line: **1.2.0 (version code 11)**.
+Current release line: **1.5.0 (version code 12)**.
 
-The normal workflow builds a debug APK. The release preset is prepared for a signed AAB, but production signing still requires your private keystore/alias/password to be supplied securely as GitHub Actions secrets.
+The normal workflow builds a debug APK. The manual release workflow builds a signed AAB once your private keystore/alias/password are supplied securely as GitHub Actions secrets.
+
+See:
+- `docs/ANDROID_RELEASE.md`
+- `docs/REAL_DEVICE_QA.md`
+- `docs/STORE_LISTING.md`
