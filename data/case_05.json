@@ -58,7 +58,14 @@
         ],
         "id": "morgan_leak",
         "result": "Morgan's duplicate key and the camera-loop timing show he could enter without appearing in the hallway footage."
-      }
+      },
+      "asma_open": "Watch Detective Morgan Shaw. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Detective Morgan Shaw answers quickly, but their eyes move toward the nearest exit.",
+        "This time Detective Morgan Shaw reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Detective Morgan Shaw tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "iris": {
       "name": "Captain Iris Dean",
@@ -76,7 +83,14 @@
         ],
         "id": "iris_route",
         "result": "Iris knew the service shaft existed but did not leak it. Her new escort order was a response to the same internal threat."
-      }
+      },
+      "asma_open": "Watch Captain Iris Dean. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Captain Iris Dean answers quickly, but their eyes move toward the nearest exit.",
+        "This time Captain Iris Dean reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Captain Iris Dean tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "leo": {
       "name": "Leo Marlow",
@@ -94,7 +108,14 @@
         ],
         "id": "leo_contact",
         "result": "Leo concealed contact with Eva but the burner messages show he was helping her prepare an emergency exit."
-      }
+      },
+      "asma_open": "Watch Leo Marlow. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Leo Marlow answers quickly, but their eyes move toward the nearest exit.",
+        "This time Leo Marlow reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Leo Marlow tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "calvin": {
       "name": "Calvin Ross",
@@ -112,7 +133,14 @@
         ],
         "id": "calvin_access",
         "result": "The access audit proves the schedule leak used Morgan's credentials before Calvin opened the file."
-      }
+      },
+      "asma_open": "Watch Calvin Ross. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Calvin Ross answers quickly, but their eyes move toward the nearest exit.",
+        "This time Calvin Ross reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Calvin Ross tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "mara": {
       "name": "Mara Quinn",
@@ -129,7 +157,14 @@
         ],
         "id": "mara_elevator",
         "result": "The freight record confirms Mara's statement and supports Eva's planned escape."
-      }
+      },
+      "asma_open": "Watch Mara Quinn. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Mara Quinn answers quickly, but their eyes move toward the nearest exit.",
+        "This time Mara Quinn reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Mara Quinn tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "tate": {
       "name": "Officer Tate",
@@ -146,7 +181,14 @@
         ],
         "id": "tate_warning",
         "result": "The footage was not offline; it replayed a clean thirty-second segment while someone crossed the hall."
-      }
+      },
+      "asma_open": "Watch Officer Tate. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Officer Tate answers quickly, but their eyes move toward the nearest exit.",
+        "This time Officer Tate reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Officer Tate tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     }
   },
   "clues": {
@@ -154,49 +196,70 @@
       "name": "Camera Loop Timing",
       "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "hall",
-      "description": "Thirty seconds of hallway footage repeat perfectly, hiding one passage."
+      "description": "Thirty seconds of hallway footage repeat perfectly, hiding one passage.",
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/coffee_receipt.jpg"
     },
     "shaft": {
       "name": "Maintenance Shaft",
       "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "service",
-      "description": "The shaft leads from the safe house to the freight elevator."
+      "description": "The shaft leads from the safe house to the freight elevator.",
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/broken_watch.jpg"
     },
     "burner": {
       "name": "Eva's Burner Phone",
       "art": "res://art/actual/optimized/wet_umbrella.jpg",
       "location": "safehouse",
-      "description": "Messages show Eva planned an escape with Leo after learning someone leaked her location."
+      "description": "Messages show Eva planned an escape with Leo after learning someone leaked her location.",
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/wet_umbrella.jpg"
     },
     "fakeblood": {
       "name": "Fake Blood",
       "art": "res://art/actual/optimized/red_thread.jpg",
       "location": "safehouse",
-      "description": "The bathroom blood is theatrical gel, meant to suggest violence."
+      "description": "The bathroom blood is theatrical gel, meant to suggest violence.",
+      "loop_min": 2,
+      "visual": "res://art/actual/optimized/red_thread.jpg",
+      "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "duplicate": {
       "name": "Duplicate Safe-House Key",
       "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "hall",
-      "description": "A duplicate was cut from Morgan's issued key without authorization."
+      "description": "A duplicate was cut from Morgan's issued key without authorization.",
+      "loop_min": 2,
+      "visual": "res://art/actual/optimized/voicemail.jpg",
+      "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "schedule": {
       "name": "Sealed Escort Schedule",
       "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "court",
-      "description": "The file was accessed using Morgan's credentials before the final route was announced."
+      "description": "The file was accessed using Morgan's credentials before the final route was announced.",
+      "loop_min": 2,
+      "visual": "res://art/actual/optimized/coffee_receipt.jpg",
+      "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "elevator": {
       "name": "Freight Elevator Record",
       "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "service",
-      "description": "Two unscheduled trips line up with Eva's planned escape and a second person following her."
+      "description": "Two unscheduled trips line up with Eva's planned escape and a second person following her.",
+      "loop_min": 3,
+      "visual": "res://art/actual/optimized/broken_watch.jpg",
+      "locked_hint": "A detail from the earlier loops tells you to return here later."
     },
     "note": {
       "name": "Do Not Trust the Escort",
       "art": "res://art/actual/optimized/wet_umbrella.jpg",
       "location": "safehouse",
-      "description": "Eva's handwritten warning singles out the protection detail, not the prosecutor."
+      "description": "Eva's handwritten warning singles out the protection detail, not the prosecutor.",
+      "loop_min": 3,
+      "visual": "res://art/actual/optimized/wet_umbrella.jpg",
+      "locked_hint": "A detail from the earlier loops tells you to return here later."
     }
   },
   "timeline": [
@@ -225,7 +288,23 @@
   "case_type": "Witness Protection Breach",
   "investigators": [
     "Asma",
-    "Samira",
-    "Ryan Khan"
-  ]
+    "You"
+  ],
+  "visual_scenes": {
+    "crime_scene": "res://art/actual/evidence_room.jpg",
+    "location": "res://art/actual/detective_office.jpg",
+    "interrogation": "res://art/actual/detective_office.jpg",
+    "clue": "res://art/actual/evidence_room.jpg",
+    "search": "res://art/actual/investigation_desk.jpg",
+    "chase": "res://art/actual/optimized/cafe_exterior_rain.jpg",
+    "pursuit": "res://art/actual/optimized/cafe_exterior_rain.jpg",
+    "cover": "res://art/actual/evidence_room.jpg",
+    "confrontation": "res://art/actual/final_deduction.jpg",
+    "capture": "res://art/actual/final_deduction.jpg",
+    "loop": "res://art/actual/investigation_desk.jpg"
+  },
+  "loop_reveals": {
+    "2": "Look at me. We already know Camera Loop Timing does not fit. This time, watch Duplicate Safe-House Key before anyone knows we are suspicious.",
+    "3": "Something is repeating too precisely. We have Camera Loop Timing and Duplicate Safe-House Key. Now we find the detail nobody expected us to remember."
+  }
 }

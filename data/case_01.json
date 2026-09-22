@@ -54,7 +54,14 @@
         ],
         "id": "maya_receipt",
         "result": "Maya admits the drink order was changed after Daniel's complaint. Someone used that opportunity."
-      }
+      },
+      "asma_open": "Watch Maya Cole. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Maya Cole answers quickly, but their eyes move toward the nearest exit.",
+        "This time Maya Cole reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Maya Cole tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "omar": {
       "name": "Omar Hale",
@@ -71,7 +78,14 @@
         ],
         "id": "omar_recording",
         "result": "The recording proves Omar concealed evidence, but it also places him away from the murder scene."
-      }
+      },
+      "asma_open": "Watch Omar Hale. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Omar Hale answers quickly, but their eyes move toward the nearest exit.",
+        "This time Omar Hale reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Omar Hale tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "lina": {
       "name": "Lina Vale",
@@ -89,7 +103,14 @@
         ],
         "id": "lina_access",
         "result": "The violet thread places Lina at the rear corridor, while the ledger gives her a reason to access the office. Her denial collapses."
-      }
+      },
+      "asma_open": "Watch Lina Vale. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Lina Vale answers quickly, but their eyes move toward the nearest exit.",
+        "This time Lina Vale reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Lina Vale tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "theo": {
       "name": "Theo Marsh",
@@ -106,7 +127,14 @@
         ],
         "id": "theo_key",
         "result": "The returned key clears Theo during the critical window."
-      }
+      },
+      "asma_open": "Watch Theo Marsh. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Theo Marsh answers quickly, but their eyes move toward the nearest exit.",
+        "This time Theo Marsh reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Theo Marsh tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     }
   },
   "clues": {
@@ -114,49 +142,70 @@
       "name": "Altered Receipt",
       "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "cafe",
-      "description": "Daniel's usual black coffee was changed to an almond syrup drink at 8:31."
+      "description": "Daniel's usual black coffee was changed to an almond syrup drink at 8:31.",
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/broken_watch.jpg"
     },
     "watch": {
       "name": "Broken Watch",
       "art": "res://art/actual/optimized/wet_umbrella.jpg",
       "location": "cafe",
-      "description": "The watch stopped at exactly 8:47, matching the blackout."
+      "description": "The watch stopped at exactly 8:47, matching the blackout.",
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/wet_umbrella.jpg"
     },
     "umbrella": {
       "name": "Wet Umbrella",
       "art": "res://art/actual/optimized/red_thread.jpg",
       "location": "alley",
-      "description": "Fresh rainwater and a violet fiber place someone in the rear alley."
+      "description": "Fresh rainwater and a violet fiber place someone in the rear alley.",
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/red_thread.jpg"
     },
     "thread": {
       "name": "Violet Thread",
       "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "alley",
-      "description": "A violet thread is caught on the rear latch. Lina wears the same fabric."
+      "description": "A violet thread is caught on the rear latch. Lina wears the same fabric.",
+      "loop_min": 2,
+      "visual": "res://art/actual/optimized/voicemail.jpg",
+      "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "voicemail": {
       "name": "Recorded Argument",
       "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "riverside",
-      "description": "Omar's recording catches Daniel telling Lina: 'Tomorrow the auditors see everything.'"
+      "description": "Omar's recording catches Daniel telling Lina: 'Tomorrow the auditors see everything.'",
+      "loop_min": 2,
+      "visual": "res://art/actual/optimized/coffee_receipt.jpg",
+      "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "breaker": {
       "name": "Breaker Dust",
       "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "office",
-      "description": "Fresh graphite dust shows the breaker was deliberately bridged for a timed failure."
+      "description": "Fresh graphite dust shows the breaker was deliberately bridged for a timed failure.",
+      "loop_min": 2,
+      "visual": "res://art/actual/optimized/broken_watch.jpg",
+      "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "ledger": {
       "name": "Missing Ledger Page",
       "art": "res://art/actual/optimized/wet_umbrella.jpg",
       "location": "office",
-      "description": "A torn page documents transfers approved by Lina to a shell account."
+      "description": "A torn page documents transfers approved by Lina to a shell account.",
+      "loop_min": 3,
+      "visual": "res://art/actual/optimized/wet_umbrella.jpg",
+      "locked_hint": "A detail from the earlier loops tells you to return here later."
     },
     "key": {
       "name": "Spare Office Key",
       "art": "res://art/actual/optimized/red_thread.jpg",
       "location": "cafe",
-      "description": "Theo returned the spare key before the blackout. His access does not match the murder window."
+      "description": "Theo returned the spare key before the blackout. His access does not match the murder window.",
+      "loop_min": 3,
+      "visual": "res://art/actual/optimized/red_thread.jpg",
+      "locked_hint": "A detail from the earlier loops tells you to return here later."
     }
   },
   "timeline": [
@@ -185,7 +234,23 @@
   "case_type": "Homicide Investigation",
   "investigators": [
     "Asma",
-    "Dr. Leila",
-    "Ryan Khan"
-  ]
+    "You"
+  ],
+  "visual_scenes": {
+    "crime_scene": "res://art/actual/evidence_room.jpg",
+    "location": "res://art/actual/detective_office.jpg",
+    "interrogation": "res://art/actual/detective_office.jpg",
+    "clue": "res://art/actual/evidence_room.jpg",
+    "search": "res://art/actual/investigation_desk.jpg",
+    "chase": "res://art/actual/optimized/cafe_exterior_rain.jpg",
+    "pursuit": "res://art/actual/optimized/cafe_exterior_rain.jpg",
+    "cover": "res://art/actual/evidence_room.jpg",
+    "confrontation": "res://art/actual/final_deduction.jpg",
+    "capture": "res://art/actual/final_deduction.jpg",
+    "loop": "res://art/actual/investigation_desk.jpg"
+  },
+  "loop_reveals": {
+    "2": "Look at me. We already know Altered Receipt does not fit. This time, watch Violet Thread before anyone knows we are suspicious.",
+    "3": "Something is repeating too precisely. We have Altered Receipt and Violet Thread. Now we find the detail nobody expected us to remember."
+  }
 }

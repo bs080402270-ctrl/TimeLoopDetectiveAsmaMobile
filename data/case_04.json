@@ -58,7 +58,14 @@
         ],
         "id": "clara_switch",
         "result": "Clara knew about the compartment switch and concealed it to protect her father."
-      }
+      },
+      "asma_open": "Watch Clara Hale. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Clara Hale answers quickly, but their eyes move toward the nearest exit.",
+        "This time Clara Hale reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Clara Hale tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "anton": {
       "name": "Anton Voss",
@@ -76,7 +83,14 @@
         ],
         "id": "anton_info",
         "result": "Anton financed surveillance of Hale, but the baggage claim trail points to someone with official access."
-      }
+      },
+      "asma_open": "Watch Anton Voss. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Anton Voss answers quickly, but their eyes move toward the nearest exit.",
+        "This time Anton Voss reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Anton Voss tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "gabriel": {
       "name": "Father Gabriel",
@@ -93,7 +107,14 @@
         ],
         "id": "gabriel_package",
         "result": "Gabriel's sealed package contains backup evidence, not a weapon."
-      }
+      },
+      "asma_open": "Watch Father Gabriel. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Father Gabriel answers quickly, but their eyes move toward the nearest exit.",
+        "This time Father Gabriel reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Father Gabriel tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "rowan": {
       "name": "Inspector Rowan",
@@ -112,7 +133,14 @@
         ],
         "id": "rowan_compromised",
         "result": "The master-key access, coded message and drugged tea show Rowan knew about the room switch and targeted the wrong passenger."
-      }
+      },
+      "asma_open": "Watch Inspector Rowan. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Inspector Rowan answers quickly, but their eyes move toward the nearest exit.",
+        "This time Inspector Rowan reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Inspector Rowan tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "selene": {
       "name": "Selene Marr",
@@ -129,7 +157,14 @@
         ],
         "id": "selene_witness",
         "result": "The drugged tea supports Selene's account and places Rowan at the false target compartment."
-      }
+      },
+      "asma_open": "Watch Selene Marr. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Selene Marr answers quickly, but their eyes move toward the nearest exit.",
+        "This time Selene Marr reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Selene Marr tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "nikolai": {
       "name": "Nikolai Finch",
@@ -147,7 +182,14 @@
         ],
         "id": "nikolai_key",
         "result": "The copied key signature clears Nikolai of direct access while revealing the judge's hiding place."
-      }
+      },
+      "asma_open": "Watch Nikolai Finch. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Nikolai Finch answers quickly, but their eyes move toward the nearest exit.",
+        "This time Nikolai Finch reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Nikolai Finch tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     }
   },
   "clues": {
@@ -155,49 +197,70 @@
       "name": "Swapped Compartment Keys",
       "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "sleeper",
-      "description": "Two passenger keys were exchanged shortly before the murder."
+      "description": "Two passenger keys were exchanged shortly before the murder.",
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/voicemail.jpg"
     },
     "paper": {
       "name": "Torn Legal Document",
       "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "lounge",
-      "description": "A document names Anton's company but also references a police leak."
+      "description": "A document names Anton's company but also references a police leak.",
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/coffee_receipt.jpg"
     },
     "claim": {
       "name": "Baggage Claim Ticket",
       "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "baggage",
-      "description": "The dead passenger's trunk was redirected using an escort credential."
+      "description": "The dead passenger's trunk was redirected using an escort credential.",
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/broken_watch.jpg"
     },
     "masterkey": {
       "name": "Copied Master-Key Signature",
       "art": "res://art/actual/optimized/wet_umbrella.jpg",
       "location": "service",
-      "description": "A copied conductor credential opened the service passage."
+      "description": "A copied conductor credential opened the service passage.",
+      "loop_min": 2,
+      "visual": "res://art/actual/optimized/wet_umbrella.jpg",
+      "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "tea": {
       "name": "Drugged Tea",
       "art": "res://art/actual/optimized/red_thread.jpg",
       "location": "sleeper",
-      "description": "A sedative was delivered to the compartment the murderer believed belonged to Hale."
+      "description": "A sedative was delivered to the compartment the murderer believed belonged to Hale.",
+      "loop_min": 2,
+      "visual": "res://art/actual/optimized/red_thread.jpg",
+      "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "compartment": {
       "name": "Hidden Maintenance Compartment",
       "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "service",
-      "description": "Judge Hale is alive, hiding beneath the sleeper car."
+      "description": "Judge Hale is alive, hiding beneath the sleeper car.",
+      "loop_min": 2,
+      "visual": "res://art/actual/optimized/voicemail.jpg",
+      "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "message": {
       "name": "Coded Newspaper Message",
       "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "lounge",
-      "description": "The message reveals the room switch to someone using a police cipher."
+      "description": "The message reveals the room switch to someone using a police cipher.",
+      "loop_min": 3,
+      "visual": "res://art/actual/optimized/coffee_receipt.jpg",
+      "locked_hint": "A detail from the earlier loops tells you to return here later."
     },
     "package": {
       "name": "Sealed Evidence Package",
       "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "baggage",
-      "description": "Documents identify a compromised escort officer and duplicate Hale's evidence."
+      "description": "Documents identify a compromised escort officer and duplicate Hale's evidence.",
+      "loop_min": 3,
+      "visual": "res://art/actual/optimized/broken_watch.jpg",
+      "locked_hint": "A detail from the earlier loops tells you to return here later."
     }
   },
   "timeline": [
@@ -225,7 +288,23 @@
   "case_type": "Missing Person / Identity Mystery",
   "investigators": [
     "Asma",
-    "Ryan Khan",
-    "Chief Farid"
-  ]
+    "You"
+  ],
+  "visual_scenes": {
+    "crime_scene": "res://art/actual/evidence_room.jpg",
+    "location": "res://art/actual/detective_office.jpg",
+    "interrogation": "res://art/actual/detective_office.jpg",
+    "clue": "res://art/actual/evidence_room.jpg",
+    "search": "res://art/actual/investigation_desk.jpg",
+    "chase": "res://art/actual/optimized/cafe_exterior_rain.jpg",
+    "pursuit": "res://art/actual/optimized/cafe_exterior_rain.jpg",
+    "cover": "res://art/actual/evidence_room.jpg",
+    "confrontation": "res://art/actual/final_deduction.jpg",
+    "capture": "res://art/actual/final_deduction.jpg",
+    "loop": "res://art/actual/investigation_desk.jpg"
+  },
+  "loop_reveals": {
+    "2": "Look at me. We already know Swapped Compartment Keys does not fit. This time, watch Copied Master-Key Signature before anyone knows we are suspicious.",
+    "3": "Something is repeating too precisely. We have Swapped Compartment Keys and Copied Master-Key Signature. Now we find the detail nobody expected us to remember."
+  }
 }

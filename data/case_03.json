@@ -57,7 +57,14 @@
         ],
         "id": "sofia_left",
         "result": "Camera timing and key logs show Sofia left before the lethal system cycle. Her argument is real, but the locked-room setup predates it."
-      }
+      },
+      "asma_open": "Watch Sofia Cross. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Sofia Cross answers quickly, but their eyes move toward the nearest exit.",
+        "This time Sofia Cross reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Sofia Cross tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "marcus": {
       "name": "Marcus Vale",
@@ -75,7 +82,14 @@
         ],
         "id": "marcus_badge",
         "result": "Marcus's badge was cloned. The access event cannot prove he entered maintenance."
-      }
+      },
+      "asma_open": "Watch Marcus Vale. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Marcus Vale answers quickly, but their eyes move toward the nearest exit.",
+        "This time Marcus Vale reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Marcus Vale tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "ivy": {
       "name": "Ivy Chen",
@@ -93,7 +107,14 @@
         ],
         "id": "ivy_inventory",
         "result": "The housekeeping schedule and minibar discrepancy prove Room 417 was prepared hours before Adrian arrived."
-      }
+      },
+      "asma_open": "Watch Ivy Chen. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Ivy Chen answers quickly, but their eyes move toward the nearest exit.",
+        "This time Ivy Chen reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Ivy Chen tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "noah": {
       "name": "Noah Reed",
@@ -111,7 +132,14 @@
         ],
         "id": "noah_access",
         "result": "Noah's service tablet was used, but a cloned badge authenticated the command. Someone exploited his device."
-      }
+      },
+      "asma_open": "Watch Noah Reed. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Noah Reed answers quickly, but their eyes move toward the nearest exit.",
+        "This time Noah Reed reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Noah Reed tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "elena": {
       "name": "Dr. Elena Hart",
@@ -130,7 +158,14 @@
         ],
         "id": "elena_method",
         "result": "The missing filter, residue and remote HVAC command establish Elena's method: the room itself became the delivery system."
-      }
+      },
+      "asma_open": "Watch Dr. Elena Hart. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Dr. Elena Hart answers quickly, but their eyes move toward the nearest exit.",
+        "This time Dr. Elena Hart reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Dr. Elena Hart tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     }
   },
   "clues": {
@@ -138,49 +173,70 @@
       "name": "Minibar Inventory Gap",
       "art": "res://art/actual/optimized/red_thread.jpg",
       "location": "room",
-      "description": "Two solvent-containing minibar items were replaced before check-in."
+      "description": "Two solvent-containing minibar items were replaced before check-in.",
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/red_thread.jpg"
     },
     "residue": {
       "name": "Meltwater Residue",
       "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "room",
-      "description": "The ice bucket contains residue that becomes dangerous when aerosolized with the missing filter compound."
+      "description": "The ice bucket contains residue that becomes dangerous when aerosolized with the missing filter compound.",
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/voicemail.jpg"
     },
     "keylog": {
       "name": "Digital Key Log",
       "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "hall",
-      "description": "No guest key opens Room 417 during the lethal window."
+      "description": "No guest key opens Room 417 during the lethal window.",
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/coffee_receipt.jpg"
     },
     "schedule": {
       "name": "Housekeeping Schedule",
       "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "hall",
-      "description": "Room 417 was serviced hours before Adrian arrived, leaving time to prepare it."
+      "description": "Room 417 was serviced hours before Adrian arrived, leaving time to prepare it.",
+      "loop_min": 2,
+      "visual": "res://art/actual/optimized/broken_watch.jpg",
+      "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "camera": {
       "name": "Hallway Camera",
       "art": "res://art/actual/optimized/wet_umbrella.jpg",
       "location": "hall",
-      "description": "The corridor remains empty when the poisoning begins."
+      "description": "The corridor remains empty when the poisoning begins.",
+      "loop_min": 2,
+      "visual": "res://art/actual/optimized/wet_umbrella.jpg",
+      "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "filter": {
       "name": "Missing Ventilation Filter",
       "art": "res://art/actual/optimized/red_thread.jpg",
       "location": "maintenance",
-      "description": "Panel 4B is missing a specialized filter cartridge."
+      "description": "Panel 4B is missing a specialized filter cartridge.",
+      "loop_min": 2,
+      "visual": "res://art/actual/optimized/red_thread.jpg",
+      "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "tablet": {
       "name": "Remote HVAC Command",
       "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "maintenance",
-      "description": "A service tablet scheduled a 2:11 AM ventilation cycle for Room 417."
+      "description": "A service tablet scheduled a 2:11 AM ventilation cycle for Room 417.",
+      "loop_min": 3,
+      "visual": "res://art/actual/optimized/voicemail.jpg",
+      "locked_hint": "A detail from the earlier loops tells you to return here later."
     },
     "badge": {
       "name": "Cloned Conference Badge",
       "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "conference",
-      "description": "A cloned badge authorized access under Marcus's identity."
+      "description": "A cloned badge authorized access under Marcus's identity.",
+      "loop_min": 3,
+      "visual": "res://art/actual/optimized/coffee_receipt.jpg",
+      "locked_hint": "A detail from the earlier loops tells you to return here later."
     }
   },
   "timeline": [
@@ -208,7 +264,23 @@
   "case_type": "Locked-Room Death",
   "investigators": [
     "Asma",
-    "Dr. Leila",
-    "Chief Farid"
-  ]
+    "You"
+  ],
+  "visual_scenes": {
+    "crime_scene": "res://art/actual/evidence_room.jpg",
+    "location": "res://art/actual/detective_office.jpg",
+    "interrogation": "res://art/actual/detective_office.jpg",
+    "clue": "res://art/actual/evidence_room.jpg",
+    "search": "res://art/actual/investigation_desk.jpg",
+    "chase": "res://art/actual/optimized/cafe_exterior_rain.jpg",
+    "pursuit": "res://art/actual/optimized/cafe_exterior_rain.jpg",
+    "cover": "res://art/actual/evidence_room.jpg",
+    "confrontation": "res://art/actual/final_deduction.jpg",
+    "capture": "res://art/actual/final_deduction.jpg",
+    "loop": "res://art/actual/investigation_desk.jpg"
+  },
+  "loop_reveals": {
+    "2": "Look at me. We already know Meltwater Residue does not fit. This time, watch Missing Ventilation Filter before anyone knows we are suspicious.",
+    "3": "Something is repeating too precisely. We have Meltwater Residue and Missing Ventilation Filter. Now we find the detail nobody expected us to remember."
+  }
 }

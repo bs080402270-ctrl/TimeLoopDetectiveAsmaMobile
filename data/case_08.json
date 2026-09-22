@@ -57,7 +57,14 @@
         ],
         "id": "nora_left",
         "result": "Nora's prints are on the wine glass, but the camera timer proves the fatal photo was automated after she left."
-      }
+      },
+      "asma_open": "Watch Nora Blake. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Nora Blake answers quickly, but their eyes move toward the nearest exit.",
+        "This time Nora Blake reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Nora Blake tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "adrian": {
       "name": "Adrian Frost",
@@ -76,7 +83,14 @@
         ],
         "id": "adrian_timeline",
         "result": "Shadow angle, forged pigment and alarm timing prove Adrian staged the later photograph to manufacture an alibi."
-      }
+      },
+      "asma_open": "Watch Adrian Frost. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Adrian Frost answers quickly, but their eyes move toward the nearest exit.",
+        "This time Adrian Frost reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Adrian Frost tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "milo": {
       "name": "Milo Chen",
@@ -94,7 +108,14 @@
         ],
         "id": "milo_camera",
         "result": "Milo's workstation confirms interval mode and shows the missing card was removed by someone with gallery-office access."
-      }
+      },
+      "asma_open": "Watch Milo Chen. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Milo Chen answers quickly, but their eyes move toward the nearest exit.",
+        "This time Milo Chen reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Milo Chen tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "sofia": {
       "name": "Sofia Reyes",
@@ -112,7 +133,14 @@
         ],
         "id": "sofia_story",
         "result": "Sofia's draft article and rooftop timing support her claim that she was investigating the same fraud."
-      }
+      },
+      "asma_open": "Watch Sofia Reyes. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Sofia Reyes answers quickly, but their eyes move toward the nearest exit.",
+        "This time Sofia Reyes reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Sofia Reyes tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "evelyn": {
       "name": "Evelyn Cross",
@@ -130,7 +158,14 @@
         ],
         "id": "evelyn_purchase",
         "result": "Evelyn bought a forged work unknowingly; invoices point back to Adrian's private office."
-      }
+      },
+      "asma_open": "Watch Evelyn Cross. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Evelyn Cross answers quickly, but their eyes move toward the nearest exit.",
+        "This time Evelyn Cross reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Evelyn Cross tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     }
   },
   "clues": {
@@ -138,49 +173,70 @@
       "name": "Interval Timer Setting",
       "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "darkroom",
-      "description": "The camera was programmed to fire automatically after the victim's death."
+      "description": "The camera was programmed to fire automatically after the victim's death.",
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/broken_watch.jpg"
     },
     "shadow": {
       "name": "Shadow Direction",
       "art": "res://art/actual/optimized/wet_umbrella.jpg",
       "location": "rooftop",
-      "description": "The final photograph's shadows match an earlier time, not its metadata timestamp."
+      "description": "The final photograph's shadows match an earlier time, not its metadata timestamp.",
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/wet_umbrella.jpg"
     },
     "pigment": {
       "name": "Forged Painting Pigment",
       "art": "res://art/actual/optimized/red_thread.jpg",
       "location": "office",
-      "description": "Modern pigment appears in a supposedly historic canvas."
+      "description": "Modern pigment appears in a supposedly historic canvas.",
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/red_thread.jpg"
     },
     "card": {
       "name": "Missing Memory Card",
       "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "darkroom",
-      "description": "A second card containing provenance photos was removed."
+      "description": "A second card containing provenance photos was removed.",
+      "loop_min": 2,
+      "visual": "res://art/actual/optimized/coffee_receipt.jpg",
+      "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "wine": {
       "name": "Wine-Glass Print",
       "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "gallery",
-      "description": "Nora handled the glass during an earlier argument but left before the murder window."
+      "description": "Nora handled the glass during an earlier argument but left before the murder window.",
+      "loop_min": 2,
+      "visual": "res://art/actual/optimized/coffee_receipt.jpg",
+      "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "alarm": {
       "name": "Gallery Alarm Log",
       "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "office",
-      "description": "Adrian's office opened during the interval before the staged rooftop shot."
+      "description": "Adrian's office opened during the interval before the staged rooftop shot.",
+      "loop_min": 2,
+      "visual": "res://art/actual/optimized/broken_watch.jpg",
+      "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "article": {
       "name": "Unpublished Article",
       "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "rooftop",
-      "description": "Sofia's draft accuses the gallery of swapping originals for copies."
+      "description": "Sofia's draft accuses the gallery of swapping originals for copies.",
+      "loop_min": 3,
+      "visual": "res://art/actual/optimized/voicemail.jpg",
+      "locked_hint": "A detail from the earlier loops tells you to return here later."
     },
     "invoice": {
       "name": "Private Sale Invoice",
       "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "office",
-      "description": "Forged works were sold through a shell company controlled by Adrian."
+      "description": "Forged works were sold through a shell company controlled by Adrian.",
+      "loop_min": 3,
+      "visual": "res://art/actual/optimized/coffee_receipt.jpg",
+      "locked_hint": "A detail from the earlier loops tells you to return here later."
     }
   },
   "timeline": [
@@ -208,7 +264,23 @@
   "case_type": "Art Fraud / Homicide",
   "investigators": [
     "Asma",
-    "Dr. Leila",
-    "Samira"
-  ]
+    "You"
+  ],
+  "visual_scenes": {
+    "crime_scene": "res://art/actual/evidence_room.jpg",
+    "location": "res://art/actual/detective_office.jpg",
+    "interrogation": "res://art/actual/detective_office.jpg",
+    "clue": "res://art/actual/evidence_room.jpg",
+    "search": "res://art/actual/investigation_desk.jpg",
+    "chase": "res://art/actual/optimized/cafe_exterior_rain.jpg",
+    "pursuit": "res://art/actual/optimized/cafe_exterior_rain.jpg",
+    "cover": "res://art/actual/evidence_room.jpg",
+    "confrontation": "res://art/actual/final_deduction.jpg",
+    "capture": "res://art/actual/final_deduction.jpg",
+    "loop": "res://art/actual/investigation_desk.jpg"
+  },
+  "loop_reveals": {
+    "2": "Look at me. We already know Interval Timer Setting does not fit. This time, watch Shadow Direction before anyone knows we are suspicious.",
+    "3": "Something is repeating too precisely. We have Interval Timer Setting and Shadow Direction. Now we find the detail nobody expected us to remember."
+  }
 }

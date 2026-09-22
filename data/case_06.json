@@ -57,7 +57,14 @@
         ],
         "id": "nadia_booth",
         "result": "Chemical residue and the metallic bracelet strike on the mic prove Nadia entered after 11:00 and handled the poisoned drink."
-      }
+      },
+      "asma_open": "Watch Nadia Vale. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Nadia Vale answers quickly, but their eyes move toward the nearest exit.",
+        "This time Nadia Vale reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Nadia Vale tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "marcus": {
       "name": "Marcus Reed",
@@ -75,7 +82,14 @@
         ],
         "id": "marcus_alibi",
         "result": "Makeup-room timing clears Marcus while the duplicated waveform proves the final segment was not live."
-      }
+      },
+      "asma_open": "Watch Marcus Reed. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Marcus Reed answers quickly, but their eyes move toward the nearest exit.",
+        "This time Marcus Reed reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Marcus Reed tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "felix": {
       "name": "Felix Grant",
@@ -93,7 +107,14 @@
         ],
         "id": "felix_edit",
         "result": "Felix manipulated the broadcast, but the edit happened after the poisoning. He covered the timeline, not the murder."
-      }
+      },
+      "asma_open": "Watch Felix Grant. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Felix Grant answers quickly, but their eyes move toward the nearest exit.",
+        "This time Felix Grant reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Felix Grant tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "lena": {
       "name": "Lena Park",
@@ -111,7 +132,14 @@
         ],
         "id": "lena_roof",
         "result": "Rooftop access and the outgoing message confirm Lena's location during the fatal window."
-      }
+      },
+      "asma_open": "Watch Lena Park. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Lena Park answers quickly, but their eyes move toward the nearest exit.",
+        "This time Lena Park reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Lena Park tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "victor": {
       "name": "Victor Crane",
@@ -129,7 +157,14 @@
         ],
         "id": "victor_money",
         "result": "The missing tape and ledger show Victor hid financial wrongdoing, but the murder method points elsewhere."
-      }
+      },
+      "asma_open": "Watch Victor Crane. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Victor Crane answers quickly, but their eyes move toward the nearest exit.",
+        "This time Victor Crane reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Victor Crane tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     }
   },
   "clues": {
@@ -137,55 +172,79 @@
       "name": "Duplicated Waveform",
       "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "control",
-      "description": "The final thirty seconds are digitally identical to an earlier rehearsal."
+      "description": "The final thirty seconds are digitally identical to an earlier rehearsal.",
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/voicemail.jpg"
     },
     "poison": {
       "name": "Coffee Cup Residue",
       "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "studio",
-      "description": "A fast-acting toxin coats the inside rim of the host's cup."
+      "description": "A fast-acting toxin coats the inside rim of the host's cup.",
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/coffee_receipt.jpg"
     },
     "automation": {
       "name": "Edited Automation Log",
       "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "control",
-      "description": "A manual insert was scheduled for 11:16:31 PM."
+      "description": "A manual insert was scheduled for 11:16:31 PM.",
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/broken_watch.jpg"
     },
     "tape": {
       "name": "Missing Archive Tape",
       "art": "res://art/actual/optimized/red_thread.jpg",
       "location": "archive",
-      "description": "A tape naming shell-company payments was removed hours before the show."
+      "description": "A tape naming shell-company payments was removed hours before the show.",
+      "loop_min": 2,
+      "visual": "res://art/actual/optimized/red_thread.jpg",
+      "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "access": {
       "name": "Rooftop Access Card",
       "art": "res://art/actual/optimized/wet_umbrella.jpg",
       "location": "rooftop",
-      "description": "Lena's card opened the transmitter door before the fatal segment."
+      "description": "Lena's card opened the transmitter door before the fatal segment.",
+      "loop_min": 2,
+      "visual": "res://art/actual/optimized/wet_umbrella.jpg",
+      "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "message": {
       "name": "Deleted Editor Message",
       "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "rooftop",
-      "description": "Lena sent her editor a timestamped warning while the murder unfolded."
+      "description": "Lena sent her editor a timestamped warning while the murder unfolded.",
+      "loop_min": 2,
+      "visual": "res://art/actual/optimized/voicemail.jpg",
+      "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "bracelet": {
       "name": "Mic-Stand Audio Click",
       "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "studio",
-      "description": "A metallic double-click matches Nadia's heavy bracelet striking the microphone stand."
+      "description": "A metallic double-click matches Nadia's heavy bracelet striking the microphone stand.",
+      "loop_min": 3,
+      "visual": "res://art/actual/optimized/broken_watch.jpg",
+      "locked_hint": "A detail from the earlier loops tells you to return here later."
     },
     "makeup": {
       "name": "Makeup Room Timestamp",
       "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "studio",
-      "description": "Marcus appears on an internal camera throughout the poison window."
+      "description": "Marcus appears on an internal camera throughout the poison window.",
+      "loop_min": 3,
+      "visual": "res://art/actual/optimized/coffee_receipt.jpg",
+      "locked_hint": "A detail from the earlier loops tells you to return here later."
     },
     "ledger": {
       "name": "Station Payment Ledger",
       "art": "res://art/actual/optimized/red_thread.jpg",
       "location": "archive",
-      "description": "Shell-company transfers connect Victor and Nadia to a hidden account."
+      "description": "Shell-company transfers connect Victor and Nadia to a hidden account.",
+      "loop_min": 3,
+      "visual": "res://art/actual/optimized/red_thread.jpg",
+      "locked_hint": "A detail from the earlier loops tells you to return here later."
     }
   },
   "timeline": [
@@ -213,7 +272,23 @@
   "case_type": "Broadcast Sabotage / Poisoning",
   "investigators": [
     "Asma",
-    "Samira",
-    "Dr. Leila"
-  ]
+    "You"
+  ],
+  "visual_scenes": {
+    "crime_scene": "res://art/actual/evidence_room.jpg",
+    "location": "res://art/actual/detective_office.jpg",
+    "interrogation": "res://art/actual/detective_office.jpg",
+    "clue": "res://art/actual/evidence_room.jpg",
+    "search": "res://art/actual/investigation_desk.jpg",
+    "chase": "res://art/actual/optimized/cafe_exterior_rain.jpg",
+    "pursuit": "res://art/actual/optimized/cafe_exterior_rain.jpg",
+    "cover": "res://art/actual/evidence_room.jpg",
+    "confrontation": "res://art/actual/final_deduction.jpg",
+    "capture": "res://art/actual/final_deduction.jpg",
+    "loop": "res://art/actual/investigation_desk.jpg"
+  },
+  "loop_reveals": {
+    "2": "Look at me. We already know Coffee Cup Residue does not fit. This time, watch Mic-Stand Audio Click before anyone knows we are suspicious.",
+    "3": "Something is repeating too precisely. We have Coffee Cup Residue and Mic-Stand Audio Click. Now we find the detail nobody expected us to remember."
+  }
 }

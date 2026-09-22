@@ -58,7 +58,14 @@
         ],
         "id": "farid_secret",
         "result": "Farid concealed Asma's connection to the experiment but did not cause the temporal failure."
-      }
+      },
+      "asma_open": "Watch Chief Farid. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Chief Farid answers quickly, but their eyes move toward the nearest exit.",
+        "This time Chief Farid reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Chief Farid tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "hassan": {
       "name": "Dr. Hassan",
@@ -76,7 +83,14 @@
         ],
         "id": "hassan_design",
         "result": "Hassan's design records show the system was altered after his safety review."
-      }
+      },
+      "asma_open": "Watch Dr. Hassan. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Dr. Hassan answers quickly, but their eyes move toward the nearest exit.",
+        "This time Dr. Hassan reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Dr. Hassan tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "samira": {
       "name": "Samira",
@@ -94,7 +108,14 @@
         ],
         "id": "samira_pattern",
         "result": "Samira proves the earlier cases share the same temporal corruption signature."
-      }
+      },
+      "asma_open": "Watch Samira. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Samira answers quickly, but their eyes move toward the nearest exit.",
+        "This time Samira reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Samira tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "stranger": {
       "name": "The Stranger",
@@ -112,7 +133,14 @@
         ],
         "id": "stranger_keeps_loop",
         "result": "The Stranger's diary and clock data prove he has deliberately sustained the loop after the original accident."
-      }
+      },
+      "asma_open": "Watch The Stranger. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "The Stranger answers quickly, but their eyes move toward the nearest exit.",
+        "This time The Stranger reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "The Stranger tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "viktor": {
       "name": "Viktor Malik",
@@ -131,7 +159,14 @@
         ],
         "id": "viktor_sabotage",
         "result": "Viktor's signed order, removed governor and payment trail prove he forced the unsafe test that caused the first loop."
-      }
+      },
+      "asma_open": "Watch Viktor Malik. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Viktor Malik answers quickly, but their eyes move toward the nearest exit.",
+        "This time Viktor Malik reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Viktor Malik tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "leila": {
       "name": "Dr. Leila Rahman",
@@ -149,7 +184,14 @@
         ],
         "id": "leila_warning",
         "result": "Leila's notes confirm she warned against the test and documented Viktor's override order."
-      }
+      },
+      "asma_open": "Watch Dr. Leila Rahman. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Dr. Leila Rahman answers quickly, but their eyes move toward the nearest exit.",
+        "This time Dr. Leila Rahman reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Dr. Leila Rahman tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     }
   },
   "clues": {
@@ -157,61 +199,87 @@
       "name": "Removed Probability Governor",
       "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "lab",
-      "description": "The key safety module was physically bypassed before the first experiment."
+      "description": "The key safety module was physically bypassed before the first experiment.",
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/broken_watch.jpg"
     },
     "manual": {
       "name": "Original Safety Manual",
       "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "lab",
-      "description": "The approved procedure forbids operating without the governor."
+      "description": "The approved procedure forbids operating without the governor.",
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/coffee_receipt.jpg"
     },
     "order": {
       "name": "Viktor's Override Order",
       "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "archive",
-      "description": "A signed directive orders the team to proceed despite failed safety checks."
+      "description": "A signed directive orders the team to proceed despite failed safety checks.",
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/coffee_receipt.jpg"
     },
     "ledger": {
       "name": "Project Funding Ledger",
       "art": "res://art/actual/optimized/red_thread.jpg",
       "location": "archive",
-      "description": "Bonus payments were tied to completing the test before a market event."
+      "description": "Bonus payments were tied to completing the test before a market event.",
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/red_thread.jpg"
     },
     "diary": {
       "name": "The Stranger's Loop Diary",
       "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "clock",
-      "description": "Thousands of loop counts prove someone has remained conscious far longer than Asma."
+      "description": "Thousands of loop counts prove someone has remained conscious far longer than Asma.",
+      "loop_min": 2,
+      "visual": "res://art/actual/optimized/voicemail.jpg",
+      "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "clock": {
       "name": "Synchronized Clock Drift",
       "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "clock",
-      "description": "All anomaly sites drift by the same impossible fraction before resetting."
+      "description": "All anomaly sites drift by the same impossible fraction before resetting.",
+      "loop_min": 2,
+      "visual": "res://art/actual/optimized/broken_watch.jpg",
+      "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "checksum": {
       "name": "Recurring Corruption Checksum",
       "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "vault",
-      "description": "Camera files from earlier cases share one temporal-error signature."
+      "description": "Camera files from earlier cases share one temporal-error signature.",
+      "loop_min": 2,
+      "visual": "res://art/actual/optimized/voicemail.jpg",
+      "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "camera": {
       "name": "Cross-Case Camera Archive",
       "art": "res://art/actual/evidence_room.jpg",
       "location": "vault",
-      "description": "Frames from five previous cases contain the same one-frame discontinuity."
+      "description": "Frames from five previous cases contain the same one-frame discontinuity.",
+      "loop_min": 3,
+      "visual": "res://art/actual/evidence_room.jpg",
+      "locked_hint": "A detail from the earlier loops tells you to return here later."
     },
     "vaultlog": {
       "name": "Sealed Evidence Access Log",
       "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "vault",
-      "description": "Farid repeatedly accessed the original lab file after Asma joined the force."
+      "description": "Farid repeatedly accessed the original lab file after Asma joined the force.",
+      "loop_min": 3,
+      "visual": "res://art/actual/optimized/coffee_receipt.jpg",
+      "locked_hint": "A detail from the earlier loops tells you to return here later."
     },
     "photo": {
       "name": "Original Lab Photograph",
       "art": "res://art/actual/optimized/case01_suspect_keyart.jpg",
       "location": "vault",
-      "description": "Asma appears inside the calibration zone moments before the first failure."
+      "description": "Asma appears inside the calibration zone moments before the first failure.",
+      "loop_min": 3,
+      "visual": "res://art/actual/optimized/case01_suspect_keyart.jpg",
+      "locked_hint": "A detail from the earlier loops tells you to return here later."
     }
   },
   "timeline": [
@@ -239,9 +307,23 @@
   "case_type": "Temporal Conspiracy",
   "investigators": [
     "Asma",
-    "Chief Farid",
-    "Dr. Leila",
-    "Samira",
-    "Ryan Khan"
-  ]
+    "You"
+  ],
+  "visual_scenes": {
+    "crime_scene": "res://art/actual/evidence_room.jpg",
+    "location": "res://art/actual/detective_office.jpg",
+    "interrogation": "res://art/actual/detective_office.jpg",
+    "clue": "res://art/actual/evidence_room.jpg",
+    "search": "res://art/actual/investigation_desk.jpg",
+    "chase": "res://art/actual/optimized/cafe_exterior_rain.jpg",
+    "pursuit": "res://art/actual/optimized/cafe_exterior_rain.jpg",
+    "cover": "res://art/actual/evidence_room.jpg",
+    "confrontation": "res://art/actual/final_deduction.jpg",
+    "capture": "res://art/actual/final_deduction.jpg",
+    "loop": "res://art/actual/investigation_desk.jpg"
+  },
+  "loop_reveals": {
+    "2": "Look at me. We already know Removed Probability Governor does not fit. This time, watch Viktor's Override Order before anyone knows we are suspicious.",
+    "3": "Something is repeating too precisely. We have Removed Probability Governor and Viktor's Override Order. Now we find the detail nobody expected us to remember."
+  }
 }

@@ -57,7 +57,14 @@
         ],
         "id": "celeste_blackout",
         "result": "Celeste admits causing the blackout to steal documents, but her route never reaches the murder scene."
-      }
+      },
+      "asma_open": "Watch Celeste Ward. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Celeste Ward answers quickly, but their eyes move toward the nearest exit.",
+        "This time Celeste Ward reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Celeste Ward tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "amir": {
       "name": "Amir Shah",
@@ -75,7 +82,14 @@
         ],
         "id": "amir_door",
         "result": "Biometric logs confirm Amir's claim that nobody used the front door."
-      }
+      },
+      "asma_open": "Watch Amir Shah. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Amir Shah answers quickly, but their eyes move toward the nearest exit.",
+        "This time Amir Shah reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Amir Shah tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "daniel": {
       "name": "Daniel Price",
@@ -93,7 +107,14 @@
         ],
         "id": "daniel_work",
         "result": "Daniel's maintenance invoice shows he previously installed a service panel at Julian's request, but he did not trigger the murder."
-      }
+      },
+      "asma_open": "Watch Daniel Price. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Daniel Price answers quickly, but their eyes move toward the nearest exit.",
+        "This time Daniel Price reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Daniel Price tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "mira": {
       "name": "Mira Lane",
@@ -110,7 +131,14 @@
         ],
         "id": "mira_heard",
         "result": "A phone recording captures the same machine-room vibration Mira described."
-      }
+      },
+      "asma_open": "Watch Mira Lane. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Mira Lane answers quickly, but their eyes move toward the nearest exit.",
+        "This time Mira Lane reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Mira Lane tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "julian": {
       "name": "Julian Cross",
@@ -129,7 +157,14 @@
         ],
         "id": "julian_passage",
         "result": "Grease, drywall dust and Julian's maintenance request prove he used the hidden service passage during the blackout."
-      }
+      },
+      "asma_open": "Watch Julian Cross. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Julian Cross answers quickly, but their eyes move toward the nearest exit.",
+        "This time Julian Cross reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Julian Cross tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     }
   },
   "clues": {
@@ -137,49 +172,70 @@
       "name": "Bridged Breaker",
       "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "electrical",
-      "description": "The blackout was intentionally triggered for exactly ninety seconds."
+      "description": "The blackout was intentionally triggered for exactly ninety seconds.",
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/broken_watch.jpg"
     },
     "grease": {
       "name": "Elevator Grease",
       "art": "res://art/actual/optimized/wet_umbrella.jpg",
       "location": "penthouse",
-      "description": "Industrial grease appears on the penthouse service wall."
+      "description": "Industrial grease appears on the penthouse service wall.",
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/wet_umbrella.jpg"
     },
     "drywall": {
       "name": "Fresh Drywall Powder",
       "art": "res://art/actual/optimized/red_thread.jpg",
       "location": "elevator",
-      "description": "A hidden panel was opened moments before the murder."
+      "description": "A hidden panel was opened moments before the murder.",
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/red_thread.jpg"
     },
     "biometric": {
       "name": "Biometric Backup Log",
       "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "penthouse",
-      "description": "The front door remained sealed through the entire blackout."
+      "description": "The front door remained sealed through the entire blackout.",
+      "loop_min": 2,
+      "visual": "res://art/actual/optimized/broken_watch.jpg",
+      "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "documents": {
       "name": "Stolen Company Documents",
       "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "penthouse",
-      "description": "Celeste targeted the safe, giving her a motive for the blackout but not the killing."
+      "description": "Celeste targeted the safe, giving her a motive for the blackout but not the killing.",
+      "loop_min": 2,
+      "visual": "res://art/actual/optimized/coffee_receipt.jpg",
+      "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "invoice": {
       "name": "Maintenance Invoice",
       "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "electrical",
-      "description": "Julian secretly paid for service access to be widened weeks earlier."
+      "description": "Julian secretly paid for service access to be widened weeks earlier.",
+      "loop_min": 2,
+      "visual": "res://art/actual/optimized/coffee_receipt.jpg",
+      "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "vibration": {
       "name": "Elevator Vibration Recording",
       "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "neighbor",
-      "description": "A recording captures movement through the machine room during the outage."
+      "description": "A recording captures movement through the machine room during the outage.",
+      "loop_min": 3,
+      "visual": "res://art/actual/optimized/voicemail.jpg",
+      "locked_hint": "A detail from the earlier loops tells you to return here later."
     },
     "watch": {
       "name": "Smartwatch Heart Log",
       "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "penthouse",
-      "description": "The victim dies halfway through the blackout, not after power returns."
+      "description": "The victim dies halfway through the blackout, not after power returns.",
+      "loop_min": 3,
+      "visual": "res://art/actual/optimized/broken_watch.jpg",
+      "locked_hint": "A detail from the earlier loops tells you to return here later."
     }
   },
   "timeline": [
@@ -208,7 +264,23 @@
   "case_type": "Corporate Conspiracy / Blackout",
   "investigators": [
     "Asma",
-    "Ryan Khan",
-    "Chief Farid"
-  ]
+    "You"
+  ],
+  "visual_scenes": {
+    "crime_scene": "res://art/actual/evidence_room.jpg",
+    "location": "res://art/actual/detective_office.jpg",
+    "interrogation": "res://art/actual/detective_office.jpg",
+    "clue": "res://art/actual/evidence_room.jpg",
+    "search": "res://art/actual/investigation_desk.jpg",
+    "chase": "res://art/actual/optimized/cafe_exterior_rain.jpg",
+    "pursuit": "res://art/actual/optimized/cafe_exterior_rain.jpg",
+    "cover": "res://art/actual/evidence_room.jpg",
+    "confrontation": "res://art/actual/final_deduction.jpg",
+    "capture": "res://art/actual/final_deduction.jpg",
+    "loop": "res://art/actual/investigation_desk.jpg"
+  },
+  "loop_reveals": {
+    "2": "Look at me. We already know Elevator Grease does not fit. This time, watch Fresh Drywall Powder before anyone knows we are suspicious.",
+    "3": "Something is repeating too precisely. We have Elevator Grease and Fresh Drywall Powder. Now we find the detail nobody expected us to remember."
+  }
 }

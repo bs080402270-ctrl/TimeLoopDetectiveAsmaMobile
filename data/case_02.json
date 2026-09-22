@@ -58,7 +58,13 @@
         ],
         "id": "mira_prop",
         "result": "Mira did not plant the rose. The torn ticket places her in the lobby during the critical window, but she knew a prop rose was missing."
-      }
+      },
+      "tells": [
+        "Mira Vale answers quickly, but their eyes move toward the nearest exit.",
+        "This time Mira Vale reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Mira Vale tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "anton": {
       "name": "Anton Reeve",
@@ -77,7 +83,13 @@
         ],
         "id": "anton_alarm",
         "result": "Anton concealed that the local alarm could be delayed. His statement is technically true but intentionally misleading."
-      }
+      },
+      "tells": [
+        "Anton Reeve answers quickly, but their eyes move toward the nearest exit.",
+        "This time Anton Reeve reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Anton Reeve tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "julian": {
       "name": "Julian Cross",
@@ -95,7 +107,13 @@
         ],
         "id": "julian_watch",
         "result": "Julian moved the watch and contaminated the scene, but his timeline suggests it stopped before he found it."
-      }
+      },
+      "tells": [
+        "Julian Cross answers quickly, but their eyes move toward the nearest exit.",
+        "This time Julian Cross reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Julian Cross tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "celeste": {
       "name": "Celeste Ward",
@@ -114,7 +132,13 @@
         ],
         "id": "celeste_money",
         "result": "Celeste had a financial motive and tried to delay exposure, but the records do not place her at the alarm panel."
-      }
+      },
+      "tells": [
+        "Celeste Ward answers quickly, but their eyes move toward the nearest exit.",
+        "This time Celeste Ward reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Celeste Ward tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "amir": {
       "name": "Amir Hale",
@@ -133,7 +157,13 @@
         ],
         "id": "amir_cue",
         "result": "The blackout was programmed, not accidental. Amir knew the system well enough to recognize it, but the cue was added under another login."
-      }
+      },
+      "tells": [
+        "Amir Hale answers quickly, but their eyes move toward the nearest exit.",
+        "This time Amir Hale reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Amir Hale tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     }
   },
   "clues": {
@@ -142,14 +172,16 @@
       "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "theater",
       "description": "Stopped at 10:17. The crack is fresh, but the mechanism failed before impact.",
-      "loop_min": 1
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/broken_watch.jpg"
     },
     "ticket": {
       "name": "Torn Theater Ticket",
       "art": "res://art/actual/optimized/wet_umbrella.jpg",
       "location": "theater",
       "description": "Seat B14 was scanned at 10:11 and torn again at 10:16.",
-      "loop_min": 1
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/wet_umbrella.jpg"
     },
     "rose": {
       "name": "Blood-Specked White Rose",
@@ -157,14 +189,16 @@
       "location": "backstage",
       "description": "One prop rose is missing from the final scene. Petals match those in the alley drain.",
       "loop_min": 2,
-      "locked_hint": "You remember petals near the stage door, but you did not think to compare them before."
+      "locked_hint": "You remember petals near the stage door, but you did not think to compare them before.",
+      "visual": "res://art/actual/optimized/red_thread.jpg"
     },
     "alarm": {
       "name": "Central Fire Alarm Log",
       "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "office",
       "description": "Central system logged activation at 10:12, five minutes before the watch stopped.",
-      "loop_min": 1
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/voicemail.jpg"
     },
     "service": {
       "name": "Alarm Service Report",
@@ -172,7 +206,8 @@
       "location": "office",
       "description": "The local bell relay was replaced that afternoon and left in test-delay mode.",
       "loop_min": 2,
-      "locked_hint": "The alarm panel looked ordinary before. Now you remember the maintenance sticker."
+      "locked_hint": "The alarm panel looked ordinary before. Now you remember the maintenance sticker.",
+      "visual": "res://art/actual/optimized/coffee_receipt.jpg"
     },
     "cue": {
       "name": "Hidden Lighting Cue",
@@ -180,14 +215,16 @@
       "location": "backstage",
       "description": "A five-second blackout cue was inserted into the rehearsal stack under a borrowed login.",
       "loop_min": 2,
-      "locked_hint": "The blackout pattern feels familiar. You need another loop to notice exactly why."
+      "locked_hint": "The blackout pattern feels familiar. You need another loop to notice exactly why.",
+      "visual": "res://art/actual/optimized/broken_watch.jpg"
     },
     "ledger": {
       "name": "Donor Ledger Copy",
       "art": "res://art/actual/optimized/wet_umbrella.jpg",
       "location": "office",
       "description": "Payments were routed through a shell foundation tied to the theater owner.",
-      "loop_min": 1
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/wet_umbrella.jpg"
     },
     "contract": {
       "name": "Unsigned Cancellation Contract",
@@ -195,7 +232,8 @@
       "location": "office",
       "description": "The victim planned to cancel the production and expose the shell foundation the next morning.",
       "loop_min": 2,
-      "locked_hint": "A folded document on the desk seems unimportant the first time through."
+      "locked_hint": "A folded document on the desk seems unimportant the first time through.",
+      "visual": "res://art/actual/optimized/red_thread.jpg"
     },
     "keycard": {
       "name": "Stage Door Keycard Log",
@@ -203,7 +241,8 @@
       "location": "alley",
       "description": "A duplicate staff card opened the stage door at 10:10, then again at 10:18.",
       "loop_min": 3,
-      "locked_hint": "The door sensor chirp is easy to miss. By the third loop, you know exactly when to listen."
+      "locked_hint": "The door sensor chirp is easy to miss. By the third loop, you know exactly when to listen.",
+      "visual": "res://art/actual/optimized/voicemail.jpg"
     }
   },
   "timeline": [
@@ -239,5 +278,18 @@
   "loop_reveals": {
     "2": "You were right about the timing. This loop, do not chase the body first. Watch the alarm panel and the rose.",
     "3": "I remember the stage-door chirp now. It happened before we ever looked at the alley. Someone is using the loop against the investigation."
+  },
+  "visual_scenes": {
+    "crime_scene": "res://art/actual/evidence_room.jpg",
+    "location": "res://art/actual/detective_office.jpg",
+    "interrogation": "res://art/actual/detective_office.jpg",
+    "clue": "res://art/actual/evidence_room.jpg",
+    "search": "res://art/actual/investigation_desk.jpg",
+    "chase": "res://art/actual/optimized/cafe_exterior_rain.jpg",
+    "pursuit": "res://art/actual/optimized/cafe_exterior_rain.jpg",
+    "cover": "res://art/actual/evidence_room.jpg",
+    "confrontation": "res://art/actual/final_deduction.jpg",
+    "capture": "res://art/actual/final_deduction.jpg",
+    "loop": "res://art/actual/investigation_desk.jpg"
   }
 }

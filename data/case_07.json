@@ -56,7 +56,14 @@
         ],
         "id": "samira_warning",
         "result": "Samira's radio call and maintenance map prove she warned the victim and helped him plan an escape route."
-      }
+      },
+      "asma_open": "Watch Samira Khan. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Samira Khan answers quickly, but their eyes move toward the nearest exit.",
+        "This time Samira Khan reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Samira Khan tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "ethan": {
       "name": "Ethan Cole",
@@ -75,7 +82,14 @@
         ],
         "id": "ethan_followed",
         "result": "Kenji's reflection photo, shoeprint and carriage weight change prove Ethan followed the victim through the hatch."
-      }
+      },
+      "asma_open": "Watch Ethan Cole. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Ethan Cole answers quickly, but their eyes move toward the nearest exit.",
+        "This time Ethan Cole reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Ethan Cole tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "tariq": {
       "name": "Tariq Malik",
@@ -93,7 +107,14 @@
         ],
         "id": "tariq_hatch",
         "result": "Tariq created the slowdown and unlocked the hatch, but his control-room log keeps him away from the tunnel."
-      }
+      },
+      "asma_open": "Watch Tariq Malik. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Tariq Malik answers quickly, but their eyes move toward the nearest exit.",
+        "This time Tariq Malik reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Tariq Malik tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "julia": {
       "name": "Julia Mason",
@@ -110,7 +131,14 @@
         ],
         "id": "julia_knew",
         "result": "Julia knew about the danger but her messages show she tried to stop him, not trap him."
-      }
+      },
+      "asma_open": "Watch Julia Mason. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Julia Mason answers quickly, but their eyes move toward the nearest exit.",
+        "This time Julia Mason reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Julia Mason tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     },
     "kenji": {
       "name": "Kenji Ito",
@@ -127,7 +155,14 @@
         ],
         "id": "kenji_photo",
         "result": "Kenji's image reveals Ethan tracking the victim before the train even departed."
-      }
+      },
+      "asma_open": "Watch Kenji Ito. Do not decide too early. Ask one thing at a time and listen for what changes.",
+      "tells": [
+        "Kenji Ito answers quickly, but their eyes move toward the nearest exit.",
+        "This time Kenji Ito reacts before you finish the question. They remember nothing, but the pattern changed.",
+        "Kenji Ito tries to repeat the same wording. One detail is different."
+      ],
+      "scene_art": "res://art/actual/detective_office.jpg"
     }
   },
   "clues": {
@@ -135,49 +170,70 @@
       "name": "Scratched Floor Bolts",
       "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "carriage",
-      "description": "Fresh tool marks surround the folding seat above the hidden hatch."
+      "description": "Fresh tool marks surround the folding seat above the hidden hatch.",
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/broken_watch.jpg"
     },
     "map": {
       "name": "Old Maintenance Map",
       "art": "res://art/actual/optimized/red_thread.jpg",
       "location": "tunnel",
-      "description": "A discontinued service hatch aligns exactly under the carriage slowdown point."
+      "description": "A discontinued service hatch aligns exactly under the carriage slowdown point.",
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/red_thread.jpg"
     },
     "sensor": {
       "name": "Carriage Weight Shift",
       "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "control",
-      "description": "Two adult-weight drops occur while the train is still moving."
+      "description": "Two adult-weight drops occur while the train is still moving.",
+      "loop_min": 1,
+      "visual": "res://art/actual/optimized/broken_watch.jpg"
     },
     "photo": {
       "name": "Platform Reflection Photo",
       "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "platform",
-      "description": "A window reflection shows Ethan watching the victim before boarding."
+      "description": "A window reflection shows Ethan watching the victim before boarding.",
+      "loop_min": 2,
+      "visual": "res://art/actual/optimized/voicemail.jpg",
+      "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "radio": {
       "name": "Emergency Radio Call",
       "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "control",
-      "description": "Samira warns the victim to use the hatch if the train slows unexpectedly."
+      "description": "Samira warns the victim to use the hatch if the train slows unexpectedly.",
+      "loop_min": 2,
+      "visual": "res://art/actual/optimized/voicemail.jpg",
+      "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "shoeprint": {
       "name": "Tunnel Shoeprint",
       "art": "res://art/actual/optimized/wet_umbrella.jpg",
       "location": "tunnel",
-      "description": "A fresh tread matches Ethan's shoes and follows the victim's path."
+      "description": "A fresh tread matches Ethan's shoes and follows the victim's path.",
+      "loop_min": 2,
+      "visual": "res://art/actual/optimized/wet_umbrella.jpg",
+      "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "signal": {
       "name": "Signal Slowdown Log",
       "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "control",
-      "description": "Tariq scheduled an unscheduled three-minute crawl through the old service section."
+      "description": "Tariq scheduled an unscheduled three-minute crawl through the old service section.",
+      "loop_min": 3,
+      "visual": "res://art/actual/optimized/coffee_receipt.jpg",
+      "locked_hint": "A detail from the earlier loops tells you to return here later."
     },
     "message": {
       "name": "Julia's Warning Message",
       "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "carriage",
-      "description": "Julia begged the victim to skip the train after he mentioned being followed."
+      "description": "Julia begged the victim to skip the train after he mentioned being followed.",
+      "loop_min": 3,
+      "visual": "res://art/actual/optimized/voicemail.jpg",
+      "locked_hint": "A detail from the earlier loops tells you to return here later."
     }
   },
   "timeline": [
@@ -205,7 +261,23 @@
   "case_type": "Disappearance / Corporate Pursuit",
   "investigators": [
     "Asma",
-    "Ryan Khan",
-    "Samira"
-  ]
+    "You"
+  ],
+  "visual_scenes": {
+    "crime_scene": "res://art/actual/evidence_room.jpg",
+    "location": "res://art/actual/detective_office.jpg",
+    "interrogation": "res://art/actual/detective_office.jpg",
+    "clue": "res://art/actual/evidence_room.jpg",
+    "search": "res://art/actual/investigation_desk.jpg",
+    "chase": "res://art/actual/optimized/cafe_exterior_rain.jpg",
+    "pursuit": "res://art/actual/optimized/cafe_exterior_rain.jpg",
+    "cover": "res://art/actual/evidence_room.jpg",
+    "confrontation": "res://art/actual/final_deduction.jpg",
+    "capture": "res://art/actual/final_deduction.jpg",
+    "loop": "res://art/actual/investigation_desk.jpg"
+  },
+  "loop_reveals": {
+    "2": "Look at me. We already know Platform Reflection Photo does not fit. This time, watch Tunnel Shoeprint before anyone knows we are suspicious.",
+    "3": "Something is repeating too precisely. We have Platform Reflection Photo and Tunnel Shoeprint. Now we find the detail nobody expected us to remember."
+  }
 }
