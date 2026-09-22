@@ -15,6 +15,8 @@ var unlocked_outfits: Array[String] = ["classic"]
 var unlocked_gear: Array[String] = ["handcuffs"]
 var rewarded_cases: Array[String] = []
 var achievements: Array[String] = []
+var season_fragments: Array[String] = []
+var completed_cases: Array[String] = []
 
 func _init() -> void:
 	load_settings()
@@ -35,6 +37,8 @@ func load_settings() -> void:
 	unlocked_gear = Array(cfg.get_value("economy", "unlocked_gear", unlocked_gear), TYPE_STRING, "", null)
 	rewarded_cases = Array(cfg.get_value("economy", "rewarded_cases", rewarded_cases), TYPE_STRING, "", null)
 	achievements = Array(cfg.get_value("profile", "achievements", achievements), TYPE_STRING, "", null)
+	season_fragments = Array(cfg.get_value("story", "season_fragments", season_fragments), TYPE_STRING, "", null)
+	completed_cases = Array(cfg.get_value("story", "completed_cases", completed_cases), TYPE_STRING, "", null)
 
 func save_settings() -> void:
 	var cfg := ConfigFile.new()
@@ -50,6 +54,8 @@ func save_settings() -> void:
 	cfg.set_value("economy", "unlocked_gear", unlocked_gear)
 	cfg.set_value("economy", "rewarded_cases", rewarded_cases)
 	cfg.set_value("profile", "achievements", achievements)
+	cfg.set_value("story", "season_fragments", season_fragments)
+	cfg.set_value("story", "completed_cases", completed_cases)
 	cfg.save(PATH)
 
 func toggle_graphics() -> void:
@@ -161,3 +167,21 @@ func unlock_achievement(id: String) -> bool:
 	achievements.append(id)
 	save_settings()
 	return true
+
+
+func unlock_season_fragment(id: String) -> bool:
+	if id == "" or id in season_fragments:
+		return false
+	season_fragments.append(id)
+	save_settings()
+	return true
+
+func mark_case_completed(case_id: String) -> bool:
+	if case_id == "" or case_id in completed_cases:
+		return false
+	completed_cases.append(case_id)
+	save_settings()
+	return true
+
+func season_progress_text() -> String:
+	return "%d/10 CASES • %d LOOP FRAGMENTS" % [completed_cases.size(),season_fragments.size()]

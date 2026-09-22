@@ -295,7 +295,7 @@ func _show_main_menu() -> void:
 	_set_polished_background(ART_MENU,0.46)
 	title_label.text = "TIME LOOP DETECTIVE"
 	title_label.add_theme_color_override("font_color",C_TEXT)
-	status_label.text = "SAME TIME. DIFFERENT TRUTHS. BREAK THE LOOP."
+	status_label.text = "SAME TIME. DIFFERENT TRUTHS. BREAK THE LOOP.  •  " + settings_manager.season_progress_text()
 
 	var hero := PanelContainer.new()
 	hero.custom_minimum_size = Vector2(0,470)
@@ -865,6 +865,8 @@ func _start_new() -> void:
 	state.observations = []
 	state.action_history = []
 	state.partner_trust = 50
+	state.suspect_pressure = {}
+	state.branch_flags = []
 	_save()
 	_show_game()
 
@@ -924,6 +926,17 @@ func _show_location(loc_key: String) -> void:
 		if str(clue.get("location","")) == loc_key:
 			body.add_child(_clue_card(str(clue_id)))
 
+	var action_beats: Array = case_data.get("action_beats",[])
+	var local_actions: Array = []
+	for beat in action_beats:
+		if str(beat.get("location","")) == loc_key and int(state.loop) >= int(beat.get("loop_min",1)):
+			local_actions.append(beat)
+	if local_actions.size() > 0:
+		_add_section_title("FIELD ACTIONS")
+		for beat in local_actions:
+			var beat_copy: Dictionary = beat
+			body.add_child(_button(str(beat_copy.get("label","TAKE ACTION")),func(): _field_action(beat_copy),false))
+
 	if int(state.action) >= _effective_max_actions():
 		var warning := PanelContainer.new()
 		warning.add_theme_stylebox_override("panel",_panel_style(Color("#31111a"),16,C_RED,2,16))
@@ -937,6 +950,72 @@ func _show_location(loc_key: String) -> void:
 		wv.add_child(w)
 		wv.add_child(_button("RESET THE TIMELINE  ↻",func(): _reset_loop(),true))
 		body.add_child(warning)
+
+func _field_action(beat: Dictionary) -> void:
+	var id := str(beat.get("id","field_action"))
+	var flags: Array = state.get("branch_flags",[])
+	if id in flags:
+		overlay_title.text = "ACTION COMPLETE"
+		overlay_body.text = "You already changed this part of the loop."
+		_clear(overlay_actions)
+		overlay_actions.add_child(_button("BACK",func(): _close_and_refresh(),true))
+		overlay.visible = true
+		return
+	flags.append(id)
+	state.branch_flags = flags
+	var kind := str(beat.get("kind","search"))
+	_apply_scene_visual(kind,str(beat.get("visual","")),0.52)
+	overlay_title.text = str(beat.get("title",kind.replace("_"," ").to_upper()))
+	overlay_body.text = str(beat.get("text","You and Asma move before the moment can repeat."))
+	var reveal_clue := str(beat.get("reveal_clue",""))
+	if reveal_clue != "" and reveal_clue in case_data.get("clues",{}):
+		var clue: Dictionary = case_data.clues[reveal_clue]
+		if int(state.loop) >= int(clue.get("loop_min",1)) and reveal_clue not in state.clues:
+			_add_unique(state.clues,reveal_clue)
+			overlay_body.text += "\n\n[color=#e6b85c][b]NEW CLUE[/b][/color]\n" + str(clue.get("name",reveal_clue)) + " — " + str(clue.get("description",""))
+	state.partner_trust = mini(100,int(state.get("partner_trust",50))+int(beat.get("trust",1)))
+	_remember_action(id)
+	_clear(overlay_actions)
+	overlay_actions.add_child(_button("CONTINUE  →",func(): _close_and_refresh(),true))
+	overlay.visible = true
+	_spend_action(false)
+
+func _challenge_previous_loop(id: String) -> void:
+	var data: Dictionary = case_data.suspects.get(id,{})
+	var pressure: Dictionary = state.get("suspect_pressure",{})
+	pressure[id] = int(pressure.get(id,0)) + 1
+	state.suspect_pressure = pressure
+	var needed: Array = data.get("contradiction",{}).get("needs",[])
+	var have := 0
+	for clue in needed:
+		if str(clue) in state.clues:
+			have += 1
+	if have >= maxi(1,needed.size()-1):
+		state.partner_trust = mini(100,int(state.get("partner_trust",50))+3)
+		overlay_body.text = "[color=#e6b85c][b]ASMA[/b][/color]\nYes. That is the part that changed. Push there.\n\n[color=#9db1c7][b]%s[/b][/color]\n%s" % [str(data.get("name",id)),str(data.get("pressure_line","You should not know that."))]
+	else:
+		state.partner_trust = maxi(0,int(state.get("partner_trust",50))-1)
+		overlay_body.text = "[color=#e6b85c][b]ASMA[/b][/color]\nNot yet. I know what you remember, but the evidence does not support that jump. Give me something concrete."
+	_remember_action("challenge_" + id)
+
+func _shadow_suspect(id: String) -> void:
+	var data: Dictionary = case_data.suspects.get(id,{})
+	_apply_scene_visual("pursuit",str(data.get("pursuit_art","")),0.52)
+	var flags: Array = state.get("branch_flags",[])
+	var flag := "shadow_" + id + "_loop_" + str(state.loop)
+	if flag not in flags:
+		flags.append(flag)
+	state.branch_flags = flags
+	var reveal := str(data.get("shadow_reveal","They change direction twice, then check whether you are still behind them."))
+	overlay_body.text = "[color=#e6b85c][b]ASMA[/b][/color]\nStay close. Do not let them see us.\n\n[color=#9db1c7]" + reveal + "[/color]"
+	var clue_id := str(data.get("shadow_clue",""))
+	if clue_id != "" and clue_id in case_data.get("clues",{}):
+		var clue: Dictionary = case_data.clues[clue_id]
+		if int(state.loop) >= int(clue.get("loop_min",1)) and clue_id not in state.clues:
+			_add_unique(state.clues,clue_id)
+			overlay_body.text += "\n\n[color=#e6b85c][b]CLUE UNLOCKED[/b][/color]\n" + str(clue.get("name",clue_id))
+	_remember_action("shadow_" + id)
+	_save()
 
 func _resolve_scene_art(kind: String,preferred: String = "") -> String:
 	if preferred != "" and ResourceLoader.exists(preferred):
@@ -1111,6 +1190,9 @@ func _interrogate(id: String) -> void:
 	overlay_actions.add_child(_button("ASK ABOUT THE TIMELINE",func(): _manga_followup(sid,"timeline"),false))
 	overlay_actions.add_child(_button("ASK ABOUT THEIR MOTIVE",func(): _manga_followup(sid,"motive"),false))
 	overlay_actions.add_child(_button("STAY SILENT & OBSERVE",func(): _observe_suspect(sid),false))
+	if int(state.loop) > 1:
+		overlay_actions.add_child(_button("CHALLENGE WITH PREVIOUS-LOOP KNOWLEDGE",func(): _challenge_previous_loop(sid),false))
+	overlay_actions.add_child(_button("SHADOW THEM AFTER THE INTERVIEW",func(): _shadow_suspect(sid),false))
 	overlay_actions.add_child(_button("PRESS WITH EVIDENCE  →",func(): _press_suspect(sid),true))
 	overlay_actions.add_child(_button("END INTERVIEW",func(): _close_and_refresh(),false))
 	overlay.visible = true
@@ -1198,12 +1280,16 @@ func _collect_clue(id: String) -> void:
 	_add_unique(state.clues,id)
 	settings_manager.unlock_achievement("first_clue")
 	var data: Dictionary = case_data.clues[id]
+	var fragment_id := str(data.get("season_fragment",""))
+	var new_fragment := settings_manager.unlock_season_fragment(fragment_id)
 	_apply_scene_visual("clue",str(data.get("visual",data.get("art",""))),0.48)
 	overlay_title.text = "EVIDENCE FOUND"
 	var loop_note := ""
 	if int(state.loop) > 1:
 		loop_note = "\n\n[color=#e6b85c][b]ASMA[/b][/color]\nWe missed this before. The loop gave us another angle."
 	overlay_body.text = "[center][color=#e6b85c][font_size=30][b]%s[/b][/font_size][/color][/center]\n\n%s%s" % [str(data.get("name",id)),str(data.get("description","")),loop_note]
+	if new_fragment:
+		overlay_body.text += "\n\n[color=#2c8cff][b]LOOP ANOMALY RECORDED[/b][/color]\nThis detail matches something outside this case."
 	_clear(overlay_actions)
 	overlay_actions.add_child(_button("ADD TO CASEBOOK  →",func(): _close_and_refresh(),true))
 	overlay.visible = true
@@ -1302,7 +1388,7 @@ func _show_settings() -> void:
 		_show_settings()
 	))
 	body.add_child(_button("CLEAR ALL CASE PROGRESS",func(): _confirm_clear_progress(),false))
-	body.add_child(_button("ABOUT / VERSION 1.4.0",func(): _show_about(),false))
+	body.add_child(_button("ABOUT / VERSION 1.5.0",func(): _show_about(),false))
 	_build_home_nav("SETTINGS")
 
 func _settings_row(label_text: String,value_text: String,description: String,action: Callable) -> Control:
@@ -1349,7 +1435,7 @@ func _clear_all_progress() -> void:
 
 func _show_about() -> void:
 	overlay_title.text = "TIME LOOP DETECTIVE"
-	overlay_body.text = "[center][color=#e6b85c][b]Version 1.4.0[/b][/color][/center]\n\nA story-driven detective mystery built for Android and iOS. Investigate ten Season 1 cases, choose your investigator, use outfits and equipment, request hints, expose contradictions, confront culprits and uncover the origin of the time loop."
+	overlay_body.text = "[center][color=#e6b85c][b]Version 1.5.0[/b][/color][/center]\n\nA story-driven detective mystery built for Android and iOS. Investigate ten Season 1 cases, choose your investigator, use outfits and equipment, request hints, expose contradictions, confront culprits and uncover the origin of the time loop."
 	_clear(overlay_actions)
 	overlay_actions.add_child(_button("CLOSE",func(): overlay.visible=false,false))
 	overlay.visible = true
@@ -1369,7 +1455,8 @@ func _show_casebook() -> void:
 		if found:
 			text += "\n[color=#9db1c7]   " + str(case_data.clues[id].get("description","")) + "[/color]"
 		text += "\n\n"
-	text += "[color=#9db1c7]CONTRADICTIONS: %d[/color]\n\n" % state.contradictions.size()
+	text += "[color=#9db1c7]CONTRADICTIONS: %d[/color]\n" % state.contradictions.size()
+	text += "[color=#2c8cff]SEASON LOOP FRAGMENTS: %d[/color]\n\n" % settings_manager.season_fragments.size()
 	text += "[b]TIMELINE[/b]\n"
 	for line in case_data.get("timeline",[]):
 		text += "• " + str(line) + "\n"
@@ -1509,6 +1596,10 @@ func _finish(kind: String) -> void:
 	if kind=="true":
 		var rank := _detective_rank()
 		var reward := settings_manager.reward_case_once(current_case_id,50)
+		settings_manager.mark_case_completed(current_case_id)
+		var case_fragment := str(case_data.get("season_fragment",""))
+		if case_fragment != "":
+			settings_manager.unlock_season_fragment(case_fragment)
 		settings_manager.unlock_achievement("first_case")
 		if int(state.get("hints_used",0)) == 0:
 			settings_manager.unlock_achievement("no_hint_case")
@@ -1519,6 +1610,7 @@ func _finish(kind: String) -> void:
 		overlay_body.text = "[center][font_size=34][color=#e6b85c][b]TRUE ENDING[/b][/color][/font_size]\nDETECTIVE RANK: [b]%s[/b][/center]\n\n%s" % [rank,str(case_data.get("truth",""))]
 		if reward > 0:
 			overlay_body.text += "\n\n[color=#e6b85c]+%d DETECTIVE CREDITS[/color]" % reward
+		overlay_body.text += "\n[color=#2c8cff]%s[/color]" % settings_manager.season_progress_text()
 	elif kind=="partial":
 		overlay_body.text = "[center][color=#e6b85c][b]PARTIAL TRUTH[/b][/color][/center]\n\n"+str(case_data.get("partial","Incomplete deduction."))
 	else:
