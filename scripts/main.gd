@@ -71,11 +71,11 @@ const CHARACTER_ATLAS_MAP := {
 	"sofia": 3, "marcus": 4, "ivy": 7, "noah": 13, "elena": 1,
 	"clara": 8, "anton": 18, "gabriel": 12, "rowan": 17, "selene": 11, "nikolai": 14,
 	"morgan": 2, "iris": 16, "leo": 13, "calvin": 1, "mara": 5, "tate": 6,
-	"nadia": 5, "marcus": 4, "felix": 6, "lena": 9, "victor": 4,
+	"nadia": 5, "felix": 6, "lena": 9, "victor": 4,
 	"samira": 11, "ethan": 2, "tariq": 12, "julia": 7, "kenji": 10,
-	"nora": 5, "adrian": 4, "milo": 6, "sofia": 3, "evelyn": 14,
+	"nora": 5, "adrian": 4, "milo": 6, "evelyn": 14,
 	"celeste": 7, "amir": 12, "daniel": 15, "mira": 9, "julian": 4,
-	"farid": 1, "hassan": 15, "stranger": 18, "viktor": 4, "leila": 3
+	"farid": 1, "stranger": 18, "viktor": 4, "leila": 3
 }
 
 const CHARACTER_GALLERY := [
