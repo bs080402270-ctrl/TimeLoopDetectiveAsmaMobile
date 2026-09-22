@@ -23,7 +23,7 @@
     },
     "alley": {
       "name": "Rear Alley",
-      "art": "res://art/actual/base64/case01_daily_bean.txt",
+      "art": "res://art/actual/optimized/case01_daily_bean.jpg",
       "description": "Rain turns the rear alley into a mirror. The back door latch catches fibers and secrets.",
       "people": [
         "lina"
@@ -31,7 +31,7 @@
     },
     "riverside": {
       "name": "Riverside Walk",
-      "art": "res://art/actual/base64/cafe_exterior_rain.txt",
+      "art": "res://art/actual/optimized/cafe_exterior_rain.jpg",
       "description": "The riverside is quieter than the cafe. Omar comes here to review recordings away from Daniel.",
       "people": [
         "omar"
@@ -112,49 +112,49 @@
   "clues": {
     "receipt": {
       "name": "Altered Receipt",
-      "art": "res://art/actual/base64/broken_watch.txt",
+      "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "cafe",
       "description": "Daniel's usual black coffee was changed to an almond syrup drink at 8:31."
     },
     "watch": {
       "name": "Broken Watch",
-      "art": "res://art/actual/base64/wet_umbrella.txt",
+      "art": "res://art/actual/optimized/wet_umbrella.jpg",
       "location": "cafe",
       "description": "The watch stopped at exactly 8:47, matching the blackout."
     },
     "umbrella": {
       "name": "Wet Umbrella",
-      "art": "res://art/actual/base64/red_thread.txt",
+      "art": "res://art/actual/optimized/red_thread.jpg",
       "location": "alley",
       "description": "Fresh rainwater and a violet fiber place someone in the rear alley."
     },
     "thread": {
       "name": "Violet Thread",
-      "art": "res://art/actual/base64/voicemail.txt",
+      "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "alley",
       "description": "A violet thread is caught on the rear latch. Lina wears the same fabric."
     },
     "voicemail": {
       "name": "Recorded Argument",
-      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "riverside",
       "description": "Omar's recording catches Daniel telling Lina: 'Tomorrow the auditors see everything.'"
     },
     "breaker": {
       "name": "Breaker Dust",
-      "art": "res://art/actual/base64/broken_watch.txt",
+      "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "office",
       "description": "Fresh graphite dust shows the breaker was deliberately bridged for a timed failure."
     },
     "ledger": {
       "name": "Missing Ledger Page",
-      "art": "res://art/actual/base64/wet_umbrella.txt",
+      "art": "res://art/actual/optimized/wet_umbrella.jpg",
       "location": "office",
       "description": "A torn page documents transfers approved by Lina to a shell account."
     },
     "key": {
       "name": "Spare Office Key",
-      "art": "res://art/actual/base64/red_thread.txt",
+      "art": "res://art/actual/optimized/red_thread.jpg",
       "location": "cafe",
       "description": "Theo returned the spare key before the blackout. His access does not match the murder window."
     }

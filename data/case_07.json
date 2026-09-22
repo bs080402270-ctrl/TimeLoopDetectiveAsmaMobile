@@ -8,7 +8,7 @@
   "locations": {
     "carriage": {
       "name": "Subway Carriage",
-      "art": "res://art/actual/base64/case01_suspect_keyart.txt",
+      "art": "res://art/actual/optimized/case01_suspect_keyart.jpg",
       "description": "A sealed train car, folding seats and floor bolts polished by years of commuters.",
       "people": [
         "samira",
@@ -18,7 +18,7 @@
     },
     "platform": {
       "name": "Platform 12",
-      "art": "res://art/actual/base64/cafe_exterior_rain.txt",
+      "art": "res://art/actual/optimized/cafe_exterior_rain.jpg",
       "description": "Morning crowds hide small movements. A photographer caught more than he realized.",
       "people": [
         "kenji"
@@ -133,49 +133,49 @@
   "clues": {
     "bolts": {
       "name": "Scratched Floor Bolts",
-      "art": "res://art/actual/base64/broken_watch.txt",
+      "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "carriage",
       "description": "Fresh tool marks surround the folding seat above the hidden hatch."
     },
     "map": {
       "name": "Old Maintenance Map",
-      "art": "res://art/actual/base64/red_thread.txt",
+      "art": "res://art/actual/optimized/red_thread.jpg",
       "location": "tunnel",
       "description": "A discontinued service hatch aligns exactly under the carriage slowdown point."
     },
     "sensor": {
       "name": "Carriage Weight Shift",
-      "art": "res://art/actual/base64/broken_watch.txt",
+      "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "control",
       "description": "Two adult-weight drops occur while the train is still moving."
     },
     "photo": {
       "name": "Platform Reflection Photo",
-      "art": "res://art/actual/base64/voicemail.txt",
+      "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "platform",
       "description": "A window reflection shows Ethan watching the victim before boarding."
     },
     "radio": {
       "name": "Emergency Radio Call",
-      "art": "res://art/actual/base64/voicemail.txt",
+      "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "control",
       "description": "Samira warns the victim to use the hatch if the train slows unexpectedly."
     },
     "shoeprint": {
       "name": "Tunnel Shoeprint",
-      "art": "res://art/actual/base64/wet_umbrella.txt",
+      "art": "res://art/actual/optimized/wet_umbrella.jpg",
       "location": "tunnel",
       "description": "A fresh tread matches Ethan's shoes and follows the victim's path."
     },
     "signal": {
       "name": "Signal Slowdown Log",
-      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "control",
       "description": "Tariq scheduled an unscheduled three-minute crawl through the old service section."
     },
     "message": {
       "name": "Julia's Warning Message",
-      "art": "res://art/actual/base64/voicemail.txt",
+      "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "carriage",
       "description": "Julia begged the victim to skip the train after he mentioned being followed."
     }

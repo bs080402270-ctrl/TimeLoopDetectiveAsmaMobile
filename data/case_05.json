@@ -17,7 +17,7 @@
     },
     "hall": {
       "name": "Hallway",
-      "art": "res://art/actual/base64/case01_daily_bean.txt",
+      "art": "res://art/actual/optimized/case01_daily_bean.jpg",
       "description": "Two officers guard the floor while the camera repeats the same clean sequence.",
       "people": [
         "tate",
@@ -26,7 +26,7 @@
     },
     "service": {
       "name": "Service Shaft",
-      "art": "res://art/actual/base64/cafe_exterior_rain.txt",
+      "art": "res://art/actual/optimized/cafe_exterior_rain.jpg",
       "description": "A maintenance passage links the safe house to the freight elevator without crossing the monitored hallway.",
       "people": [
         "iris"
@@ -34,7 +34,7 @@
     },
     "court": {
       "name": "Prosecutor Staging Room",
-      "art": "res://art/actual/base64/case01_suspect_keyart.txt",
+      "art": "res://art/actual/optimized/case01_suspect_keyart.jpg",
       "description": "Trial schedules, transport routes and sealed witness instructions sit behind government locks.",
       "people": [
         "calvin"
@@ -152,49 +152,49 @@
   "clues": {
     "camera": {
       "name": "Camera Loop Timing",
-      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "hall",
       "description": "Thirty seconds of hallway footage repeat perfectly, hiding one passage."
     },
     "shaft": {
       "name": "Maintenance Shaft",
-      "art": "res://art/actual/base64/broken_watch.txt",
+      "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "service",
       "description": "The shaft leads from the safe house to the freight elevator."
     },
     "burner": {
       "name": "Eva's Burner Phone",
-      "art": "res://art/actual/base64/wet_umbrella.txt",
+      "art": "res://art/actual/optimized/wet_umbrella.jpg",
       "location": "safehouse",
       "description": "Messages show Eva planned an escape with Leo after learning someone leaked her location."
     },
     "fakeblood": {
       "name": "Fake Blood",
-      "art": "res://art/actual/base64/red_thread.txt",
+      "art": "res://art/actual/optimized/red_thread.jpg",
       "location": "safehouse",
       "description": "The bathroom blood is theatrical gel, meant to suggest violence."
     },
     "duplicate": {
       "name": "Duplicate Safe-House Key",
-      "art": "res://art/actual/base64/voicemail.txt",
+      "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "hall",
       "description": "A duplicate was cut from Morgan's issued key without authorization."
     },
     "schedule": {
       "name": "Sealed Escort Schedule",
-      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "court",
       "description": "The file was accessed using Morgan's credentials before the final route was announced."
     },
     "elevator": {
       "name": "Freight Elevator Record",
-      "art": "res://art/actual/base64/broken_watch.txt",
+      "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "service",
       "description": "Two unscheduled trips line up with Eva's planned escape and a second person following her."
     },
     "note": {
       "name": "Do Not Trust the Escort",
-      "art": "res://art/actual/base64/wet_umbrella.txt",
+      "art": "res://art/actual/optimized/wet_umbrella.jpg",
       "location": "safehouse",
       "description": "Eva's handwritten warning singles out the protection detail, not the prosecutor."
     }

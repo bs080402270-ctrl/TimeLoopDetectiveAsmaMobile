@@ -8,7 +8,7 @@
   "locations": {
     "hall": {
       "name": "Fourth-Floor Hall",
-      "art": "res://art/actual/base64/case01_suspect_keyart.txt",
+      "art": "res://art/actual/optimized/case01_suspect_keyart.jpg",
       "description": "Thick carpet, silent doors and a camera watching a corridor where nobody seems to enter Room 417.",
       "people": [
         "sofia",
@@ -136,49 +136,49 @@
   "clues": {
     "minibar": {
       "name": "Minibar Inventory Gap",
-      "art": "res://art/actual/base64/red_thread.txt",
+      "art": "res://art/actual/optimized/red_thread.jpg",
       "location": "room",
       "description": "Two solvent-containing minibar items were replaced before check-in."
     },
     "residue": {
       "name": "Meltwater Residue",
-      "art": "res://art/actual/base64/voicemail.txt",
+      "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "room",
       "description": "The ice bucket contains residue that becomes dangerous when aerosolized with the missing filter compound."
     },
     "keylog": {
       "name": "Digital Key Log",
-      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "hall",
       "description": "No guest key opens Room 417 during the lethal window."
     },
     "schedule": {
       "name": "Housekeeping Schedule",
-      "art": "res://art/actual/base64/broken_watch.txt",
+      "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "hall",
       "description": "Room 417 was serviced hours before Adrian arrived, leaving time to prepare it."
     },
     "camera": {
       "name": "Hallway Camera",
-      "art": "res://art/actual/base64/wet_umbrella.txt",
+      "art": "res://art/actual/optimized/wet_umbrella.jpg",
       "location": "hall",
       "description": "The corridor remains empty when the poisoning begins."
     },
     "filter": {
       "name": "Missing Ventilation Filter",
-      "art": "res://art/actual/base64/red_thread.txt",
+      "art": "res://art/actual/optimized/red_thread.jpg",
       "location": "maintenance",
       "description": "Panel 4B is missing a specialized filter cartridge."
     },
     "tablet": {
       "name": "Remote HVAC Command",
-      "art": "res://art/actual/base64/voicemail.txt",
+      "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "maintenance",
       "description": "A service tablet scheduled a 2:11 AM ventilation cycle for Room 417."
     },
     "badge": {
       "name": "Cloned Conference Badge",
-      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "conference",
       "description": "A cloned badge authorized access under Marcus's identity."
     }

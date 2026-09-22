@@ -25,7 +25,7 @@
     },
     "rooftop": {
       "name": "Rooftop Transmitter",
-      "art": "res://art/actual/base64/cafe_exterior_rain.txt",
+      "art": "res://art/actual/optimized/cafe_exterior_rain.jpg",
       "description": "Rain needles the antenna deck. Access logs place someone here during the crucial minute.",
       "people": [
         "lena"
@@ -135,55 +135,55 @@
   "clues": {
     "waveform": {
       "name": "Duplicated Waveform",
-      "art": "res://art/actual/base64/voicemail.txt",
+      "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "control",
       "description": "The final thirty seconds are digitally identical to an earlier rehearsal."
     },
     "poison": {
       "name": "Coffee Cup Residue",
-      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "studio",
       "description": "A fast-acting toxin coats the inside rim of the host's cup."
     },
     "automation": {
       "name": "Edited Automation Log",
-      "art": "res://art/actual/base64/broken_watch.txt",
+      "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "control",
       "description": "A manual insert was scheduled for 11:16:31 PM."
     },
     "tape": {
       "name": "Missing Archive Tape",
-      "art": "res://art/actual/base64/red_thread.txt",
+      "art": "res://art/actual/optimized/red_thread.jpg",
       "location": "archive",
       "description": "A tape naming shell-company payments was removed hours before the show."
     },
     "access": {
       "name": "Rooftop Access Card",
-      "art": "res://art/actual/base64/wet_umbrella.txt",
+      "art": "res://art/actual/optimized/wet_umbrella.jpg",
       "location": "rooftop",
       "description": "Lena's card opened the transmitter door before the fatal segment."
     },
     "message": {
       "name": "Deleted Editor Message",
-      "art": "res://art/actual/base64/voicemail.txt",
+      "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "rooftop",
       "description": "Lena sent her editor a timestamped warning while the murder unfolded."
     },
     "bracelet": {
       "name": "Mic-Stand Audio Click",
-      "art": "res://art/actual/base64/broken_watch.txt",
+      "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "studio",
       "description": "A metallic double-click matches Nadia's heavy bracelet striking the microphone stand."
     },
     "makeup": {
       "name": "Makeup Room Timestamp",
-      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "studio",
       "description": "Marcus appears on an internal camera throughout the poison window."
     },
     "ledger": {
       "name": "Station Payment Ledger",
-      "art": "res://art/actual/base64/red_thread.txt",
+      "art": "res://art/actual/optimized/red_thread.jpg",
       "location": "archive",
       "description": "Shell-company transfers connect Victor and Nadia to a hidden account."
     }

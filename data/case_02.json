@@ -8,7 +8,7 @@
   "locations": {
     "coach": {
       "name": "Passenger Coach",
-      "art": "res://art/actual/base64/case01_daily_bean.txt",
+      "art": "res://art/actual/optimized/case01_daily_bean.jpg",
       "description": "Rows of tired passengers, steamed windows and one empty seat that should not be empty.",
       "people": [
         "hassan",
@@ -17,7 +17,7 @@
     },
     "luggage": {
       "name": "Luggage Bay",
-      "art": "res://art/actual/base64/cafe_exterior_rain.txt",
+      "art": "res://art/actual/optimized/cafe_exterior_rain.jpg",
       "description": "A cramped storage compartment beneath the coach. Scraped metal and shifted bags suggest recent movement.",
       "people": [
         "elias"
@@ -25,7 +25,7 @@
     },
     "tunnel": {
       "name": "Tunnel Service Point",
-      "art": "res://art/actual/base64/case01_suspect_keyart.txt",
+      "art": "res://art/actual/optimized/case01_suspect_keyart.jpg",
       "description": "A maintenance recess beside the final tunnel. The road cameras lose sight of the bus here.",
       "people": [
         "juno"
@@ -134,49 +134,49 @@
   "clues": {
     "ticket": {
       "name": "Torn Ticket Stub",
-      "art": "res://art/actual/base64/wet_umbrella.txt",
+      "art": "res://art/actual/optimized/wet_umbrella.jpg",
       "location": "coach",
       "description": "Nadia tore away the seat number and wrote 'service hatch' on the back."
     },
     "door": {
       "name": "Service-Door Latch Marks",
-      "art": "res://art/actual/base64/red_thread.txt",
+      "art": "res://art/actual/optimized/red_thread.jpg",
       "location": "luggage",
       "description": "Fresh scrape marks show the emergency service hatch was opened during the final tunnel."
     },
     "video": {
       "name": "Deleted Video Segment",
-      "art": "res://art/actual/base64/voicemail.txt",
+      "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "coach",
       "description": "Seven minutes were manually deleted from Juno's camera, not lost to battery failure."
     },
     "blood": {
       "name": "Blood on Luggage Rail",
-      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "luggage",
       "description": "The blood type does not match Nadia. It belongs to Elias."
     },
     "burner": {
       "name": "Burner Phone",
-      "art": "res://art/actual/base64/broken_watch.txt",
+      "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "terminal",
       "description": "Messages warn: 'She cannot reach the terminal.' One contact is tied to Meera's firm."
     },
     "gps": {
       "name": "Unscheduled GPS Slowdown",
-      "art": "res://art/actual/base64/wet_umbrella.txt",
+      "art": "res://art/actual/optimized/wet_umbrella.jpg",
       "location": "tunnel",
       "description": "The coach dropped to walking speed for 19 seconds inside the tunnel."
     },
     "map": {
       "name": "Marked Tunnel Map",
-      "art": "res://art/actual/base64/red_thread.txt",
+      "art": "res://art/actual/optimized/red_thread.jpg",
       "location": "tunnel",
       "description": "Nadia marked a service recess exactly where the coach slowed."
     },
     "order": {
       "name": "Early Security Assignment",
-      "art": "res://art/actual/base64/voicemail.txt",
+      "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "terminal",
       "description": "Rafi's assignment was issued before the coach should have been identifiable as Nadia's route."
     }

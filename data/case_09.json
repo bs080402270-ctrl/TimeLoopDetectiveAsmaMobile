@@ -25,7 +25,7 @@
     },
     "neighbor": {
       "name": "Neighboring Apartment",
-      "art": "res://art/actual/base64/case01_daily_bean.txt",
+      "art": "res://art/actual/optimized/case01_daily_bean.jpg",
       "description": "Thin walls, a balcony and a witness who heard the elevator machinery during the blackout.",
       "people": [
         "mira"
@@ -135,49 +135,49 @@
   "clues": {
     "breaker": {
       "name": "Bridged Breaker",
-      "art": "res://art/actual/base64/broken_watch.txt",
+      "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "electrical",
       "description": "The blackout was intentionally triggered for exactly ninety seconds."
     },
     "grease": {
       "name": "Elevator Grease",
-      "art": "res://art/actual/base64/wet_umbrella.txt",
+      "art": "res://art/actual/optimized/wet_umbrella.jpg",
       "location": "penthouse",
       "description": "Industrial grease appears on the penthouse service wall."
     },
     "drywall": {
       "name": "Fresh Drywall Powder",
-      "art": "res://art/actual/base64/red_thread.txt",
+      "art": "res://art/actual/optimized/red_thread.jpg",
       "location": "elevator",
       "description": "A hidden panel was opened moments before the murder."
     },
     "biometric": {
       "name": "Biometric Backup Log",
-      "art": "res://art/actual/base64/broken_watch.txt",
+      "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "penthouse",
       "description": "The front door remained sealed through the entire blackout."
     },
     "documents": {
       "name": "Stolen Company Documents",
-      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "penthouse",
       "description": "Celeste targeted the safe, giving her a motive for the blackout but not the killing."
     },
     "invoice": {
       "name": "Maintenance Invoice",
-      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "electrical",
       "description": "Julian secretly paid for service access to be widened weeks earlier."
     },
     "vibration": {
       "name": "Elevator Vibration Recording",
-      "art": "res://art/actual/base64/voicemail.txt",
+      "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "neighbor",
       "description": "A recording captures movement through the machine room during the outage."
     },
     "watch": {
       "name": "Smartwatch Heart Log",
-      "art": "res://art/actual/base64/broken_watch.txt",
+      "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "penthouse",
       "description": "The victim dies halfway through the blackout, not after power returns."
     }

@@ -34,12 +34,12 @@ const ART_INTRO := "res://art/actual/investigation_desk.jpg"
 const ART_DIFFICULTY := "res://art/actual/investigation_desk.jpg"
 const ART_CHARACTER_ATLAS := "res://art/actual/character_atlas.jpg"
 const ART_SEASON2_TEASER := "res://art/actual/season2_teaser.jpg"
-const ART_GENERATED_STORY_BOARD := "res://art/actual/base64/generated_story_ui_board.txt"
+const ART_GENERATED_STORY_BOARD := "res://art/actual/optimized/generated_story_ui_board.jpg"
 
 const CHARACTER_REAL_ART := {
-	"maya": "res://art/actual/base64/maya.txt",
-	"omar": "res://art/actual/base64/omar.txt",
-	"lina": "res://art/actual/base64/lina.txt",
+	"maya": "res://art/actual/optimized/maya.jpg",
+	"omar": "res://art/actual/optimized/omar.jpg",
+	"lina": "res://art/actual/optimized/lina.jpg",
 	"asma": "res://art/actual/characters/asma.tres",
 	"chief_farid": "res://art/actual/characters/chief_farid.tres",
 	"ryan_khan": "res://art/actual/characters/ryan_khan.tres",

@@ -25,7 +25,7 @@
     },
     "clock": {
       "name": "City Clock Tower",
-      "art": "res://art/actual/base64/cafe_exterior_rain.txt",
+      "art": "res://art/actual/optimized/cafe_exterior_rain.jpg",
       "description": "The Stranger waits where every loop's clocks briefly agree.",
       "people": [
         "stranger",
@@ -155,43 +155,43 @@
   "clues": {
     "governor": {
       "name": "Removed Probability Governor",
-      "art": "res://art/actual/base64/broken_watch.txt",
+      "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "lab",
       "description": "The key safety module was physically bypassed before the first experiment."
     },
     "manual": {
       "name": "Original Safety Manual",
-      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "lab",
       "description": "The approved procedure forbids operating without the governor."
     },
     "order": {
       "name": "Viktor's Override Order",
-      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "archive",
       "description": "A signed directive orders the team to proceed despite failed safety checks."
     },
     "ledger": {
       "name": "Project Funding Ledger",
-      "art": "res://art/actual/base64/red_thread.txt",
+      "art": "res://art/actual/optimized/red_thread.jpg",
       "location": "archive",
       "description": "Bonus payments were tied to completing the test before a market event."
     },
     "diary": {
       "name": "The Stranger's Loop Diary",
-      "art": "res://art/actual/base64/voicemail.txt",
+      "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "clock",
       "description": "Thousands of loop counts prove someone has remained conscious far longer than Asma."
     },
     "clock": {
       "name": "Synchronized Clock Drift",
-      "art": "res://art/actual/base64/broken_watch.txt",
+      "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "clock",
       "description": "All anomaly sites drift by the same impossible fraction before resetting."
     },
     "checksum": {
       "name": "Recurring Corruption Checksum",
-      "art": "res://art/actual/base64/voicemail.txt",
+      "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "vault",
       "description": "Camera files from earlier cases share one temporal-error signature."
     },
@@ -203,13 +203,13 @@
     },
     "vaultlog": {
       "name": "Sealed Evidence Access Log",
-      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "vault",
       "description": "Farid repeatedly accessed the original lab file after Asma joined the force."
     },
     "photo": {
       "name": "Original Lab Photograph",
-      "art": "res://art/actual/base64/case01_suspect_keyart.txt",
+      "art": "res://art/actual/optimized/case01_suspect_keyart.jpg",
       "location": "vault",
       "description": "Asma appears inside the calibration zone moments before the first failure."
     }

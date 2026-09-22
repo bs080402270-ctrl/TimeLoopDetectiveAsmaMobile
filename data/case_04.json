@@ -34,7 +34,7 @@
     },
     "service": {
       "name": "Maintenance Passage",
-      "art": "res://art/actual/base64/case01_daily_bean.txt",
+      "art": "res://art/actual/optimized/case01_daily_bean.jpg",
       "description": "A narrow corridor beneath the sleeper section hides access panels and a concealed compartment.",
       "people": [
         "rowan"
@@ -153,49 +153,49 @@
   "clues": {
     "keys": {
       "name": "Swapped Compartment Keys",
-      "art": "res://art/actual/base64/voicemail.txt",
+      "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "sleeper",
       "description": "Two passenger keys were exchanged shortly before the murder."
     },
     "paper": {
       "name": "Torn Legal Document",
-      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "lounge",
       "description": "A document names Anton's company but also references a police leak."
     },
     "claim": {
       "name": "Baggage Claim Ticket",
-      "art": "res://art/actual/base64/broken_watch.txt",
+      "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "baggage",
       "description": "The dead passenger's trunk was redirected using an escort credential."
     },
     "masterkey": {
       "name": "Copied Master-Key Signature",
-      "art": "res://art/actual/base64/wet_umbrella.txt",
+      "art": "res://art/actual/optimized/wet_umbrella.jpg",
       "location": "service",
       "description": "A copied conductor credential opened the service passage."
     },
     "tea": {
       "name": "Drugged Tea",
-      "art": "res://art/actual/base64/red_thread.txt",
+      "art": "res://art/actual/optimized/red_thread.jpg",
       "location": "sleeper",
       "description": "A sedative was delivered to the compartment the murderer believed belonged to Hale."
     },
     "compartment": {
       "name": "Hidden Maintenance Compartment",
-      "art": "res://art/actual/base64/voicemail.txt",
+      "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "service",
       "description": "Judge Hale is alive, hiding beneath the sleeper car."
     },
     "message": {
       "name": "Coded Newspaper Message",
-      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "lounge",
       "description": "The message reveals the room switch to someone using a police cipher."
     },
     "package": {
       "name": "Sealed Evidence Package",
-      "art": "res://art/actual/base64/broken_watch.txt",
+      "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "baggage",
       "description": "Documents identify a compromised escort officer and duplicate Hale's evidence."
     }

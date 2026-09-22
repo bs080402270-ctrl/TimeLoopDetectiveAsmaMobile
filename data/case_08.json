@@ -25,7 +25,7 @@
     },
     "rooftop": {
       "name": "Rooftop Garden",
-      "art": "res://art/actual/base64/cafe_exterior_rain.txt",
+      "art": "res://art/actual/optimized/cafe_exterior_rain.jpg",
       "description": "Wet footprints and long shadows expose when the famous final photograph was really staged.",
       "people": [
         "sofia"
@@ -136,49 +136,49 @@
   "clues": {
     "timer": {
       "name": "Interval Timer Setting",
-      "art": "res://art/actual/base64/broken_watch.txt",
+      "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "darkroom",
       "description": "The camera was programmed to fire automatically after the victim's death."
     },
     "shadow": {
       "name": "Shadow Direction",
-      "art": "res://art/actual/base64/wet_umbrella.txt",
+      "art": "res://art/actual/optimized/wet_umbrella.jpg",
       "location": "rooftop",
       "description": "The final photograph's shadows match an earlier time, not its metadata timestamp."
     },
     "pigment": {
       "name": "Forged Painting Pigment",
-      "art": "res://art/actual/base64/red_thread.txt",
+      "art": "res://art/actual/optimized/red_thread.jpg",
       "location": "office",
       "description": "Modern pigment appears in a supposedly historic canvas."
     },
     "card": {
       "name": "Missing Memory Card",
-      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "darkroom",
       "description": "A second card containing provenance photos was removed."
     },
     "wine": {
       "name": "Wine-Glass Print",
-      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "gallery",
       "description": "Nora handled the glass during an earlier argument but left before the murder window."
     },
     "alarm": {
       "name": "Gallery Alarm Log",
-      "art": "res://art/actual/base64/broken_watch.txt",
+      "art": "res://art/actual/optimized/broken_watch.jpg",
       "location": "office",
       "description": "Adrian's office opened during the interval before the staged rooftop shot."
     },
     "article": {
       "name": "Unpublished Article",
-      "art": "res://art/actual/base64/voicemail.txt",
+      "art": "res://art/actual/optimized/voicemail.jpg",
       "location": "rooftop",
       "description": "Sofia's draft accuses the gallery of swapping originals for copies."
     },
     "invoice": {
       "name": "Private Sale Invoice",
-      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "art": "res://art/actual/optimized/coffee_receipt.jpg",
       "location": "office",
       "description": "Forged works were sold through a shell company controlled by Adrian."
     }
