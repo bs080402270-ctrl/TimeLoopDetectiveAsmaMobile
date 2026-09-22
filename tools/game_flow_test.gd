@@ -84,6 +84,12 @@ func _run() -> void:
 		if not game.case_data.has("loop_reveals"):
 			_fail(case_id + " has no loop reveal progression")
 			return
+		if not game.case_data.has("action_beats") or game.case_data.get("action_beats", []).size() < 3:
+			_fail(case_id + " has no branching field action beats")
+			return
+		if str(game.case_data.get("season_fragment", "")) == "":
+			_fail(case_id + " has no season fragment")
+			return
 
 		var start_location := str(game.case_data.get("start_location", ""))
 		if str(game.state.location) != start_location:
@@ -119,6 +125,15 @@ func _run() -> void:
 		if game.state.get("observations", []).size() == 0:
 			_fail(case_id + " did not record suspect observation")
 			return
+		game.state.loop = 2
+		game._challenge_previous_loop(first_suspect)
+		if int(game.state.get("suspect_pressure", {}).get(first_suspect, 0)) < 1:
+			_fail(case_id + " did not track previous-loop pressure")
+			return
+		game._shadow_suspect(first_suspect)
+		if game.state.get("branch_flags", []).size() == 0:
+			_fail(case_id + " did not record branching suspect action")
+			return
 		game.overlay.visible = false
 
 		var clue_ids: Array = game.case_data.get("clues", {}).keys()
@@ -127,10 +142,15 @@ func _run() -> void:
 			return
 
 		var first_clue := str(clue_ids[0])
+		var fragments_before := game.settings_manager.season_fragments.size()
 		game._collect_clue(first_clue)
 		await process_frame
 		if first_clue not in game.state.clues:
 			_fail(case_id + " evidence was not saved")
+			return
+		var clue_data: Dictionary = game.case_data.clues.get(first_clue, {})
+		if str(clue_data.get("season_fragment", "")) != "" and game.settings_manager.season_fragments.size() < fragments_before:
+			_fail(case_id + " season fragment tracking regressed")
 			return
 		game.overlay.visible = false
 
@@ -189,5 +209,5 @@ func _run() -> void:
 		game.overlay.visible = false
 		game.save_manager.clear(case_id)
 
-	print("FLOW TEST PASSED: all ten cases support navigation, visual routing, partner memory, observation, evidence persistence, loop reset, deduction and true endings.")
+	print("FLOW TEST PASSED: all ten cases support navigation, visual routing, branching actions, partner memory, suspect pressure, season fragments, evidence persistence, loop reset, deduction and true endings.")
 	quit(0)
