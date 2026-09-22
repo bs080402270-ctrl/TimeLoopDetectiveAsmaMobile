@@ -29,6 +29,12 @@ const ART_INTRO := "res://art/actual/investigation_desk.jpg"
 const ART_DIFFICULTY := "res://art/actual/investigation_desk.jpg"
 const ART_CHARACTER_ATLAS := "res://art/actual/character_atlas.jpg"
 
+const CHARACTER_REAL_ART := {
+	"maya": "res://art/actual/base64/maya.txt",
+	"omar": "res://art/actual/base64/omar.txt",
+	"lina": "res://art/actual/base64/lina.txt"
+}
+
 const CHARACTER_ATLAS_MAP := {
 	"maya": 0, "omar": 19, "lina": 16, "theo": 2,
 	"hassan": 15, "meera": 5, "elias": 6, "juno": 9, "rafi": 10,
@@ -969,11 +975,20 @@ func _atlas_portrait(index: int) -> Texture2D:
 	return tex
 
 func _character_portrait(id: String,fallback_path: String) -> Texture2D:
+	if CHARACTER_REAL_ART.has(id):
+		return _load_tex(str(CHARACTER_REAL_ART[id]))
 	if CHARACTER_ATLAS_MAP.has(id):
 		return _atlas_portrait(int(CHARACTER_ATLAS_MAP[id]))
 	return _load_tex(fallback_path)
 
 func _load_tex(path: String) -> Texture2D:
+	if path.ends_with(".txt") and FileAccess.file_exists(path):
+		var file := FileAccess.open(path,FileAccess.READ)
+		if file != null:
+			var raw: PackedByteArray = Marshalls.base64_to_raw(file.get_as_text().strip_edges())
+			var decoded := Image.new()
+			if decoded.load_jpg_from_buffer(raw) == OK:
+				return ImageTexture.create_from_image(decoded)
 	if path != "" and ResourceLoader.exists(path):
 		return load(path)
 	var image := Image.create(64,64,false,Image.FORMAT_RGBA8)
