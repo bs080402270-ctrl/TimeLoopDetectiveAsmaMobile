@@ -1,16 +1,7 @@
-# Time Loop Detective - Unity scaffold
+# Unity migration scaffold
 
-This folder is a separate Unity project scaffold for the Asma mobile game.
+The tested production game remains Godot. This folder is an isolated Unity 6 migration scaffold.
 
-Current production game remains in Godot at the repository root. The Unity folder is isolated so migration can happen screen-by-screen without breaking the working Android build.
+Migration order: data/save model → menus → visual scene router → interrogation/partner memory → evidence/loop gates → casebook/deduction → action scenes → Android signing.
 
-Planned migration order:
-1. Main menu and navigation
-2. Case select and investigator screens
-3. Case data loader
-4. Interrogation and evidence systems
-5. Save/settings/credits/achievements
-6. Android build and signing
-7. Art migration after invalid JPG sources are replaced with clean originals
-
-Do not copy the currently corrupted JPG files into Unity. Replace them with clean source artwork first.
+Do not treat this folder as a finished Unity port yet.

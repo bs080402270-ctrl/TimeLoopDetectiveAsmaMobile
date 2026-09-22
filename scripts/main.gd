@@ -860,6 +860,11 @@ func _start_new() -> void:
 	state.talked = []
 	state.hints_used = 0
 	state.ending = ""
+	state.partner_choices = {}
+	state.loop_memories = []
+	state.observations = []
+	state.action_history = []
+	state.partner_trust = 50
 	_save()
 	_show_game()
 
@@ -873,15 +878,15 @@ func _show_game() -> void:
 	title_label.text = str(case_data.get("title","Investigation"))
 	var total_clues: int = case_data.get("clues",{}).size()
 	var max_actions: int = _effective_max_actions()
-	status_label.text = "%s   •   LOOP %d/3   •   ACTIONS %d/%d   •   CLUES %d/%d" % [settings_manager.difficulty_label(),int(state.loop),int(state.action),max_actions,state.clues.size(),total_clues]
-	_set_background(str(loc.get("art","")))
+	status_label.text = "%s   •   LOOP %d/3   •   ACTIONS %d/%d   •   CLUES %d/%d   •   TRUST %d" % [settings_manager.difficulty_label(),int(state.loop),int(state.action),max_actions,state.clues.size(),total_clues,int(state.get("partner_trust",50))]
+	_apply_scene_visual("location",str(loc.get("visual",loc.get("art",""))))
 	_show_location(loc_key)
 
 func _show_location(loc_key: String) -> void:
 	var loc: Dictionary = case_data.get("locations",{}).get(loc_key,{})
 
 	var hero := TextureRect.new()
-	hero.texture = _load_tex(str(loc.get("art","")))
+	hero.texture = _load_tex(_resolve_scene_art("location",str(loc.get("visual",loc.get("art","")))))
 	hero.custom_minimum_size = Vector2(0,250)
 	hero.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	hero.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
@@ -932,6 +937,53 @@ func _show_location(loc_key: String) -> void:
 		wv.add_child(w)
 		wv.add_child(_button("RESET THE TIMELINE  ↻",func(): _reset_loop(),true))
 		body.add_child(warning)
+
+func _resolve_scene_art(kind: String,preferred: String = "") -> String:
+	if preferred != "" and ResourceLoader.exists(preferred):
+		return preferred
+	var visuals: Dictionary = case_data.get("visual_scenes",{})
+	var configured := str(visuals.get(kind,""))
+	if configured != "" and ResourceLoader.exists(configured):
+		return configured
+	match kind:
+		"crime_scene", "clue", "search":
+			return ART_CASEBOOK
+		"interrogation", "suspect":
+			return ART_INTERROGATION
+		"chase", "pursuit", "escape", "cover":
+			return ART_CASES
+		"confrontation", "capture":
+			return ART_DEDUCTION
+		"loop":
+			return ART_RESET
+		_:
+			return ART_MENU
+
+func _apply_scene_visual(kind: String,preferred: String = "",alpha := 0.40) -> void:
+	_set_polished_background(_resolve_scene_art(kind,preferred),alpha)
+
+func _remember_action(action_id: String) -> void:
+	var history: Array = state.get("action_history",[])
+	history.append({"loop":int(state.get("loop",1)),"action":action_id})
+	if history.size() > 24:
+		history.pop_front()
+	state.action_history = history
+	_save()
+
+func _observe_suspect(id: String) -> void:
+	var data: Dictionary = case_data.suspects.get(id,{})
+	var observations: Array = state.get("observations",[])
+	var key := "%s_loop_%d" % [id,int(state.loop)]
+	if key not in observations:
+		observations.append(key)
+	state.observations = observations
+	state.partner_trust = mini(100,int(state.get("partner_trust",50))+2)
+	_remember_action("observe_" + id)
+	var tells: Array = data.get("tells",[])
+	var tell := "They pause before answering and watch which clue you reach for."
+	if tells.size() > 0:
+		tell = str(tells[clampi(int(state.loop)-1,0,tells.size()-1)])
+	overlay_body.text = "[color=#e6b85c][b]ASMA[/b][/color]\nGood. Do not rush them.\n\n[color=#9db1c7][b]YOU NOTICE[/b][/color]\n" + tell
 
 func _person_card(id: String) -> Control:
 	var data: Dictionary = case_data.suspects[id]
@@ -1049,8 +1101,7 @@ func _interrogate(id: String) -> void:
 		asma_open = "Last loop you pushed on %s. I remember. Let's see what changes this time." % remembered_topic.replace("_"," ")
 
 	# Manga / visual-novel presentation: Asma and the suspect share the scene.
-	background.texture = _character_portrait(id,str(data.get("art","")))
-	background.modulate = Color(0.82,0.88,0.96,0.32)
+	_apply_scene_visual("interrogation",str(data.get("scene_art","")),0.44)
 	overlay_title.text = str(data.get("name",id)) + " • INTERROGATION"
 	overlay_body.text = "[color=#e6b85c][b]ASMA[/b][/color]\n%s\n\n[color=#9db1c7][b]%s[/b][/color]\n%s" % [asma_open,str(data.get("name",id)),suspect_line]
 	_clear(overlay_actions)
@@ -1059,6 +1110,7 @@ func _interrogate(id: String) -> void:
 	var sid: String = id
 	overlay_actions.add_child(_button("ASK ABOUT THE TIMELINE",func(): _manga_followup(sid,"timeline"),false))
 	overlay_actions.add_child(_button("ASK ABOUT THEIR MOTIVE",func(): _manga_followup(sid,"motive"),false))
+	overlay_actions.add_child(_button("STAY SILENT & OBSERVE",func(): _observe_suspect(sid),false))
 	overlay_actions.add_child(_button("PRESS WITH EVIDENCE  →",func(): _press_suspect(sid),true))
 	overlay_actions.add_child(_button("END INTERVIEW",func(): _close_and_refresh(),false))
 	overlay.visible = true
@@ -1104,7 +1156,8 @@ func _manga_followup(id: String,topic: String) -> void:
 	var choices: Dictionary = state.get("partner_choices",{})
 	choices[id] = topic
 	state.partner_choices = choices
-	_save()
+	state.partner_trust = mini(100,int(state.get("partner_trust",50))+1)
+	_remember_action("ask_" + topic + "_" + id)
 	var lines: Array = data.get("dialogue",[])
 	var base_idx := clampi(int(state.loop)-1,0,maxi(0,lines.size()-1))
 	var response := str(lines[base_idx]) if lines.size() > 0 else "I have already told you what I know."
@@ -1145,8 +1198,12 @@ func _collect_clue(id: String) -> void:
 	_add_unique(state.clues,id)
 	settings_manager.unlock_achievement("first_clue")
 	var data: Dictionary = case_data.clues[id]
+	_apply_scene_visual("clue",str(data.get("visual",data.get("art",""))),0.48)
 	overlay_title.text = "EVIDENCE FOUND"
-	overlay_body.text = "[center][color=#e6b85c][font_size=30][b]%s[/b][/font_size][/color][/center]\n\n%s" % [str(data.get("name",id)),str(data.get("description",""))]
+	var loop_note := ""
+	if int(state.loop) > 1:
+		loop_note = "\n\n[color=#e6b85c][b]ASMA[/b][/color]\nWe missed this before. The loop gave us another angle."
+	overlay_body.text = "[center][color=#e6b85c][font_size=30][b]%s[/b][/font_size][/color][/center]\n\n%s%s" % [str(data.get("name",id)),str(data.get("description","")),loop_note]
 	_clear(overlay_actions)
 	overlay_actions.add_child(_button("ADD TO CASEBOOK  →",func(): _close_and_refresh(),true))
 	overlay.visible = true
@@ -1155,7 +1212,7 @@ func _collect_clue(id: String) -> void:
 
 func _reset_loop() -> void:
 	_play_loop_reset()
-	_set_polished_background(ART_RESET,0.38)
+	_apply_scene_visual("loop","",0.48)
 	if int(state.loop) >= 3:
 		_show_deduction()
 		return
@@ -1373,7 +1430,7 @@ func _use_hint() -> void:
 
 func _show_deduction() -> void:
 	_play_deduction()
-	_set_polished_background(ART_DEDUCTION,0.40)
+	_apply_scene_visual("confrontation","",0.48)
 	overlay_title.text = "FINAL DEDUCTION"
 	overlay_body.text = "[center][color=#e32636][font_size=34][b]WHO IS RESPONSIBLE?[/b][/font_size][/color][/center]\n\n" + str(case_data.get("deduction_prompt","Choose carefully. Your evidence decides the ending."))
 	_clear(overlay_actions)
@@ -1398,6 +1455,7 @@ func _accuse(id: String) -> void:
 		_finish("wrong")
 
 func _start_confrontation(culprit_id: String) -> void:
+	_apply_scene_visual("confrontation","",0.50)
 	var culprit_name := str(case_data.suspects.get(culprit_id,{}).get("name","the suspect"))
 	overlay_title.text = "FINAL CONFRONTATION"
 	overlay_body.text = "[center][color=#e32636][font_size=30][b]%s tries to escape.[/b][/font_size][/color][/center]\n\nYou solved the case. Now choose how your investigator brings the culprit into custody." % culprit_name
@@ -1410,6 +1468,12 @@ func _start_confrontation(culprit_id: String) -> void:
 	overlay.visible = true
 
 func _resolve_confrontation(method: String) -> void:
+	var visual_kind := "capture"
+	if method == "chase": visual_kind = "chase"
+	elif method == "fight": visual_kind = "confrontation"
+	elif method == "sidearm": visual_kind = "cover"
+	_apply_scene_visual(visual_kind,"",0.52)
+	_remember_action("confrontation_" + method)
 	var outcome := ""
 	match method:
 		"fight":

@@ -16,7 +16,10 @@ func load_state(case_id: String, start_location: String) -> Dictionary:
 		"talked": [],
 		"ending": "",
 		"partner_choices": {},
-		"loop_memories": []
+		"loop_memories": [],
+		"observations": [],
+		"action_history": [],
+		"partner_trust": 50
 	}
 	var path := path_for(case_id)
 	if not FileAccess.file_exists(path):

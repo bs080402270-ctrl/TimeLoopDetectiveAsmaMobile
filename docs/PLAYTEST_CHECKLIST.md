@@ -1,36 +1,29 @@
 # Playtest Checklist
 
-## Functional
-- New Case resets prior state.
-- Continue restores loop, location, clues and contradictions.
-- All four locations open.
-- All four suspects can be interrogated.
-- All eight evidence items can be collected.
-- Evidence remains after loop reset.
-- Each loop resets action count.
-- Casebook displays evidence and timeline.
-- Lina contradiction requires relevant evidence.
-- True, partial and wrong endings all trigger.
-- Restart Case clears save.
+## Story / loop
+- All 10 cases load.
+- Every case has visual_scenes and loop_reveals.
+- Player choices persist across resets.
+- Asma remembers a previous investigation direction.
+- Loop-gated evidence unlocks only on its configured loop.
+- Observation reveals a suspect tell.
+- Evidence persists after reset.
+- True, partial and wrong endings work.
 
-## Mobile UI
-- Test 720x1280, 1080x1920 and taller devices.
-- No controls overlap navigation bars.
-- All text remains readable at default system scaling.
-- Location and evidence lists scroll.
-- Portrait orientation fills the screen.
-- Tap targets are at least approximately 48dp.
+## Visuals
+- No important scene displays blank.
+- Location, clue, interrogation, loop, chase, confrontation and capture visuals resolve.
+- Missing dedicated artwork falls back safely.
+- Character appearances remain consistent.
 
-## Performance
-- Startup under five seconds on a mid-range device.
-- No stutter when switching vector art.
-- No memory growth after repeated location changes.
-- App resumes after backgrounding.
+## Android / UI
+- Test 720x1280, 1080x1920 and taller screens.
+- Dialogue stays short/readable.
+- All buttons remain tappable.
+- Back gesture, save/restore and resume work.
+- Test image memory/performance on a mid-range device.
 
-## Android
-- Install clean APK.
-- Upgrade over previous debug build.
-- Launch offline.
-- Portrait lock remains correct.
-- Save survives app restart.
-- Back gesture does not corrupt state.
+## Release
+- Debug APK installs and upgrades.
+- Signed AAB is built only after release signing secrets are configured.
+- Test AAB in Play Console internal testing before production rollout.

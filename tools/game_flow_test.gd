@@ -74,7 +74,7 @@ func _run() -> void:
 			_fail(case_id + " navigation is missing a location or casebook button")
 			return
 
-		var start_location := str(game.case_data.get("start_location", ""))
+		if not game.case_data.has("visual_scenes"):\n\t\t\t_fail(case_id + " has no visual scene map")\n\t\t\treturn\n\t\tif not game.case_data.has("loop_reveals"):\n\t\t\t_fail(case_id + " has no loop reveal progression")\n\t\t\treturn\n\n\t\tvar start_location := str(game.case_data.get("start_location", ""))
 		if str(game.state.location) != start_location:
 			_fail(case_id + " did not start at configured location")
 			return
@@ -91,7 +91,7 @@ func _run() -> void:
 		if suspect_ids.size() == 0:
 			_fail(case_id + " has no suspects")
 			return
-		game._interrogate(str(suspect_ids[0]))
+		var first_suspect := str(suspect_ids[0])\n\t\tgame._interrogate(first_suspect)
 		await process_frame
 		if not game.overlay.visible:
 			_fail(case_id + " interrogation did not open dialog overlay")

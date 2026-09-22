@@ -1,128 +1,33 @@
-# Time Loop Detective
+# Time Loop Detective: Asma
 
-A mobile-first detective mystery built with **Godot 4.7.2**.
+A mobile-first, conversation-driven detective mystery built with **Godot 4.5.1**.
 
-## Season 1 — Ten playable cases
+You are physically present as **Asma's detective partner**. Cases unfold through short conversations, investigation, clues, choices, suspense, action, and repeated time loops rather than long narration or early explanations.
 
-1. **The Last Cup** — café murder and blackout.
-2. **The Missing Passenger** — a passenger vanishes inside a tunnel.
-3. **Room 417** — an impossible locked-room hotel death.
-4. **The Midnight Train** — a judge disappears and the wrong passenger is killed.
-5. **The Vanishing Witness** — a protected witness escapes a compromised safe house.
-6. **The Silent Broadcast** — a radio host dies during a broadcast that is not truly live.
-7. **Platform Zero** — a commuter vanishes from a moving subway car.
-8. **The Last Photograph** — a camera takes a photograph after its owner is already dead.
-9. **The Blackout Floor** — a killer enters a biometric-locked penthouse without using the door.
-10. **The First Loop** — Asma discovers who caused the original temporal disaster.
+## Implemented
+- 10 Season 1 cases
+- Asma + player partner framing
+- persistent partner choices and trust
+- suspect observation / body-language clues
+- loop-gated clues and loop-specific reveals
+- evidence, contradictions, casebook, deductions
+- true / partial / wrong outcomes
+- chase, confrontation and capture visual routing
+- visual-event routing for locations, crime scenes, clues, interrogations, searches, pursuits, cover, captures and resets
+- stable character portrait resources
+- autosave / continue
+- investigator selection, outfits, gear, hints, achievements and credits
+- Android debug APK CI and full gameplay smoke tests
+- Unity migration scaffold under `unity/`
 
-Each case has its own suspects, locations, clues, timeline, contradiction rules, three-loop progression, autosave, and endings.
-
-## Case 01 — The Last Cup
-
-At 8:47 PM the lights fail inside The Daily Bean. At 8:49 PM Daniel Rowan collapses. At 8:52 PM the night resets.
-
-Everyone forgets.
-
-You do not.
-
-The first case is built around a three-loop investigation where evidence, contradictions and player knowledge persist across resets.
-
-## What is implemented
-
-- Complete first-case story
-- Four locations
-- Four suspects
-- Eight evidence items
-- Three time loops
-- Suspect interrogation
-- Contradiction system
-- Evidence casebook
-- Timeline review
-- Final deduction
-- True, partial and wrong endings
-- Local autosave / continue
-- Mobile-first portrait interface
-- Built-in vector artwork
-- Built-in procedural UI / evidence sounds
-- Offline gameplay
-- Android APK CI build
-- Runtime smoke testing
-
-## Locations
-
-- The Daily Bean
-- Manager's Office
-- Rear Alley
-- Riverside Walk
-
-## Suspects
-
-- Maya Cole — cafe manager
-- Omar Hale — investigative journalist
-- Lina Vale — business partner
-- Theo Marsh — barista
-
-## Technical structure
-
-```text
-project.godot
-export_presets.cfg
-scenes/
-  main.tscn
-scripts/
-  main.gd
-  save_manager.gd
-  audio_manager.gd
-data/
-  case_01.json
-art/
-  backgrounds/
-  characters/
-  evidence/
-  ui/
-docs/
-  GAME_DESIGN.md
-  PLAYTEST_CHECKLIST.md
-  STORE_LISTING.md
-.github/workflows/
-  android-build.yml
-```
+## Visual system
+Each case defines `visual_scenes`. Locations may define `visual`, suspects `scene_art`, and clues `visual`. The engine uses dedicated artwork when available and safe fallbacks when it is not, so important actions never show a blank scene.
 
 ## Android
+CI uses Godot 4.5.1, Java 17, Android API 35, Build Tools 35.0.0 and NDK 29.
 
-The GitHub workflow builds a debug APK using:
+Package: `com.zetarank.timeloopdetective`
 
-- Godot 4.7.2
-- Android API 36
-- Build Tools 36.1.0
-- NDK 29
-- Java 17
+Current release line: **1.2.0 (version code 11)**.
 
-No Unity license or Unity account is required.
-
-The APK is uploaded as the GitHub Actions artifact:
-
-`TimeLoopDetective-Android`
-
-## Local development
-
-Open the repository folder in Godot 4.7.2 and run `scenes/main.tscn`.
-
-## Release
-
-The current CI produces a debug APK for testing. A Google Play production release should use a private Android signing keystore and an AAB export preset.
-
-See:
-
-- `docs/GAME_DESIGN.md`
-- `docs/PLAYTEST_CHECKLIST.md`
-- `docs/STORE_LISTING.md`
-- `PRIVACY.md`
-
-## Next content milestone
-
-After Case 01 is tested on real Android devices, the reusable case/data structure can be expanded into Case 02 without replacing the core game systems.
-
-## Character artwork
-
-Season 1 includes **20 dedicated character portrait resources** under `art/actual/characters/`. Each Godot AtlasTexture resource is wired to the generated real-character atlas, providing stable reusable portrait paths for current and future cases.
+The normal workflow builds a debug APK. The release preset is prepared for a signed AAB, but production signing still requires your private keystore/alias/password to be supplied securely as GitHub Actions secrets.
