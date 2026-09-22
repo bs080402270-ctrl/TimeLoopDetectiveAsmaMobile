@@ -1701,7 +1701,7 @@ func _character_portrait(id: String,fallback_path: String) -> Texture2D:
 		"res://art/actual/optimized/omar.jpg",
 		"res://art/actual/optimized/lina.jpg"
 	]
-	var pick := abs(id.hash()) % stable.size()
+	var pick: int = abs(id.hash()) % stable.size()
 	return _load_tex(stable[pick])
 
 func _load_tex(path: String) -> Texture2D:
