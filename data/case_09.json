@@ -64,7 +64,11 @@
         "This time Celeste Ward reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Celeste Ward tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "You should not know that part yet.",
+      "shadow_reveal": "Celeste Ward changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "grease",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "amir": {
       "name": "Amir Shah",
@@ -89,7 +93,11 @@
         "This time Amir Shah reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Amir Shah tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "Amir Shah changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "drywall",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "daniel": {
       "name": "Daniel Price",
@@ -114,7 +122,11 @@
         "This time Daniel Price reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Daniel Price tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "Daniel Price changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "invoice",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "mira": {
       "name": "Mira Lane",
@@ -138,7 +150,11 @@
         "This time Mira Lane reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Mira Lane tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "Mira Lane changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "vibration",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "julian": {
       "name": "Julian Cross",
@@ -164,7 +180,11 @@
         "This time Julian Cross reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Julian Cross tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "Julian Cross changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "biometric",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     }
   },
   "clues": {
@@ -182,7 +202,8 @@
       "location": "penthouse",
       "description": "Industrial grease appears on the penthouse service wall.",
       "loop_min": 1,
-      "visual": "res://art/actual/optimized/wet_umbrella.jpg"
+      "visual": "res://art/actual/optimized/wet_umbrella.jpg",
+      "season_fragment": "loop_signature_9_1"
     },
     "drywall": {
       "name": "Fresh Drywall Powder",
@@ -190,7 +211,8 @@
       "location": "elevator",
       "description": "A hidden panel was opened moments before the murder.",
       "loop_min": 1,
-      "visual": "res://art/actual/optimized/red_thread.jpg"
+      "visual": "res://art/actual/optimized/red_thread.jpg",
+      "season_fragment": "loop_signature_9_2"
     },
     "biometric": {
       "name": "Biometric Backup Log",
@@ -282,5 +304,42 @@
   "loop_reveals": {
     "2": "Look at me. We already know Elevator Grease does not fit. This time, watch Fresh Drywall Powder before anyone knows we are suspicious.",
     "3": "Something is repeating too precisely. We have Elevator Grease and Fresh Drywall Powder. Now we find the detail nobody expected us to remember."
-  }
+  },
+  "season_fragment": "season_case_09",
+  "action_beats": [
+    {
+      "id": "case9_search_1",
+      "location": "penthouse",
+      "loop_min": 1,
+      "kind": "search",
+      "label": "SEARCH THE SCENE WITH ASMA",
+      "title": "SCENE SEARCH",
+      "text": "Asma moves with you through the scene, checking what everyone else ignored. You compare positions, timing, and what looks slightly too deliberate.",
+      "reveal_clue": "grease",
+      "trust": 1
+    },
+    {
+      "id": "case9_pursuit_2",
+      "location": "electrical",
+      "loop_min": 2,
+      "kind": "pursuit",
+      "label": "FOLLOW THE MOVEMENT YOU REMEMBER",
+      "title": "PURSUIT",
+      "text": "You move before the moment repeats. Asma follows your lead as you cut across the route you remember from the previous loop.",
+      "reveal_clue": "drywall",
+      "trust": 2
+    },
+    {
+      "id": "case9_danger_3",
+      "location": "neighbor",
+      "loop_min": 3,
+      "kind": "chase",
+      "label": "CHASE BEFORE THEY DISAPPEAR",
+      "title": "CHASE",
+      "text": "The suspect bolts. You and Asma run the route you already learned in an earlier loop, cutting off the escape before it can repeat.",
+      "reveal_clue": "invoice",
+      "trust": 2
+    }
+  ],
+  "twist_hint": "The obvious explanation for Case 09 is incomplete; one detail only makes sense after the loop repeats."
 }

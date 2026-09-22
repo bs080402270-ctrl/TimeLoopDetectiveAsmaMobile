@@ -63,7 +63,11 @@
         "This time Samira Khan reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Samira Khan tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "You should not know that part yet.",
+      "shadow_reveal": "Samira Khan changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "photo",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "ethan": {
       "name": "Ethan Cole",
@@ -89,7 +93,11 @@
         "This time Ethan Cole reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Ethan Cole tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "Ethan Cole changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "shoeprint",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "tariq": {
       "name": "Tariq Malik",
@@ -114,7 +122,11 @@
         "This time Tariq Malik reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Tariq Malik tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "Tariq Malik changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "sensor",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "julia": {
       "name": "Julia Mason",
@@ -138,7 +150,11 @@
         "This time Julia Mason reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Julia Mason tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "Julia Mason changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "map",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "kenji": {
       "name": "Kenji Ito",
@@ -162,7 +178,11 @@
         "This time Kenji Ito reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Kenji Ito tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "Kenji Ito changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "radio",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     }
   },
   "clues": {
@@ -197,7 +217,8 @@
       "description": "A window reflection shows Ethan watching the victim before boarding.",
       "loop_min": 2,
       "visual": "res://art/actual/optimized/voicemail.jpg",
-      "locked_hint": "You have seen this place before, but not from the right angle yet."
+      "locked_hint": "You have seen this place before, but not from the right angle yet.",
+      "season_fragment": "loop_signature_7_1"
     },
     "radio": {
       "name": "Emergency Radio Call",
@@ -215,7 +236,8 @@
       "description": "A fresh tread matches Ethan's shoes and follows the victim's path.",
       "loop_min": 2,
       "visual": "res://art/actual/optimized/wet_umbrella.jpg",
-      "locked_hint": "You have seen this place before, but not from the right angle yet."
+      "locked_hint": "You have seen this place before, but not from the right angle yet.",
+      "season_fragment": "loop_signature_7_2"
     },
     "signal": {
       "name": "Signal Slowdown Log",
@@ -279,5 +301,42 @@
   "loop_reveals": {
     "2": "Look at me. We already know Platform Reflection Photo does not fit. This time, watch Tunnel Shoeprint before anyone knows we are suspicious.",
     "3": "Something is repeating too precisely. We have Platform Reflection Photo and Tunnel Shoeprint. Now we find the detail nobody expected us to remember."
-  }
+  },
+  "season_fragment": "season_case_07",
+  "action_beats": [
+    {
+      "id": "case7_search_1",
+      "location": "carriage",
+      "loop_min": 1,
+      "kind": "search",
+      "label": "SEARCH THE SCENE WITH ASMA",
+      "title": "SCENE SEARCH",
+      "text": "Asma moves with you through the scene, checking what everyone else ignored. You compare positions, timing, and what looks slightly too deliberate.",
+      "reveal_clue": "photo",
+      "trust": 1
+    },
+    {
+      "id": "case7_pursuit_2",
+      "location": "platform",
+      "loop_min": 2,
+      "kind": "pursuit",
+      "label": "FOLLOW THE MOVEMENT YOU REMEMBER",
+      "title": "PURSUIT",
+      "text": "You move before the moment repeats. Asma follows your lead as you cut across the route you remember from the previous loop.",
+      "reveal_clue": "shoeprint",
+      "trust": 2
+    },
+    {
+      "id": "case7_danger_3",
+      "location": "tunnel",
+      "loop_min": 3,
+      "kind": "chase",
+      "label": "CHASE BEFORE THEY DISAPPEAR",
+      "title": "CHASE",
+      "text": "The suspect bolts. You and Asma run the route you already learned in an earlier loop, cutting off the escape before it can repeat.",
+      "reveal_clue": "sensor",
+      "trust": 2
+    }
+  ],
+  "twist_hint": "The obvious explanation for Case 07 is incomplete; one detail only makes sense after the loop repeats."
 }

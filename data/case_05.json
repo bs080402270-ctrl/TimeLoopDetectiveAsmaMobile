@@ -65,7 +65,11 @@
         "This time Detective Morgan Shaw reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Detective Morgan Shaw tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "You should not know that part yet.",
+      "shadow_reveal": "Detective Morgan Shaw changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "camera",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "iris": {
       "name": "Captain Iris Dean",
@@ -90,7 +94,11 @@
         "This time Captain Iris Dean reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Captain Iris Dean tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "Captain Iris Dean changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "duplicate",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "leo": {
       "name": "Leo Marlow",
@@ -115,7 +123,11 @@
         "This time Leo Marlow reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Leo Marlow tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "Leo Marlow changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "schedule",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "calvin": {
       "name": "Calvin Ross",
@@ -140,7 +152,11 @@
         "This time Calvin Ross reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Calvin Ross tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "Calvin Ross changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "elevator",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "mara": {
       "name": "Mara Quinn",
@@ -164,7 +180,11 @@
         "This time Mara Quinn reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Mara Quinn tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "Mara Quinn changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "note",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "tate": {
       "name": "Officer Tate",
@@ -188,7 +208,11 @@
         "This time Officer Tate reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Officer Tate tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "Officer Tate changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "note",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     }
   },
   "clues": {
@@ -198,7 +222,8 @@
       "location": "hall",
       "description": "Thirty seconds of hallway footage repeat perfectly, hiding one passage.",
       "loop_min": 1,
-      "visual": "res://art/actual/optimized/coffee_receipt.jpg"
+      "visual": "res://art/actual/optimized/coffee_receipt.jpg",
+      "season_fragment": "loop_signature_5_1"
     },
     "shaft": {
       "name": "Maintenance Shaft",
@@ -232,7 +257,8 @@
       "description": "A duplicate was cut from Morgan's issued key without authorization.",
       "loop_min": 2,
       "visual": "res://art/actual/optimized/voicemail.jpg",
-      "locked_hint": "You have seen this place before, but not from the right angle yet."
+      "locked_hint": "You have seen this place before, but not from the right angle yet.",
+      "season_fragment": "loop_signature_5_2"
     },
     "schedule": {
       "name": "Sealed Escort Schedule",
@@ -306,5 +332,42 @@
   "loop_reveals": {
     "2": "Look at me. We already know Camera Loop Timing does not fit. This time, watch Duplicate Safe-House Key before anyone knows we are suspicious.",
     "3": "Something is repeating too precisely. We have Camera Loop Timing and Duplicate Safe-House Key. Now we find the detail nobody expected us to remember."
-  }
+  },
+  "season_fragment": "season_case_05",
+  "action_beats": [
+    {
+      "id": "case5_search_1",
+      "location": "safehouse",
+      "loop_min": 1,
+      "kind": "search",
+      "label": "SEARCH THE SCENE WITH ASMA",
+      "title": "SCENE SEARCH",
+      "text": "Asma moves with you through the scene, checking what everyone else ignored. You compare positions, timing, and what looks slightly too deliberate.",
+      "reveal_clue": "camera",
+      "trust": 1
+    },
+    {
+      "id": "case5_pursuit_2",
+      "location": "hall",
+      "loop_min": 2,
+      "kind": "pursuit",
+      "label": "FOLLOW THE MOVEMENT YOU REMEMBER",
+      "title": "PURSUIT",
+      "text": "You move before the moment repeats. Asma follows your lead as you cut across the route you remember from the previous loop.",
+      "reveal_clue": "duplicate",
+      "trust": 2
+    },
+    {
+      "id": "case5_danger_3",
+      "location": "service",
+      "loop_min": 3,
+      "kind": "chase",
+      "label": "CHASE BEFORE THEY DISAPPEAR",
+      "title": "CHASE",
+      "text": "The suspect bolts. You and Asma run the route you already learned in an earlier loop, cutting off the escape before it can repeat.",
+      "reveal_clue": "schedule",
+      "trust": 2
+    }
+  ],
+  "twist_hint": "The obvious explanation for Case 05 is incomplete; one detail only makes sense after the loop repeats."
 }

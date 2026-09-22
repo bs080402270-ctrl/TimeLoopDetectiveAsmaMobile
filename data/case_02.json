@@ -64,7 +64,11 @@
         "This time Mira Vale reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Mira Vale tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "You should not know that part yet.",
+      "shadow_reveal": "Mira Vale changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "alarm",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "anton": {
       "name": "Anton Reeve",
@@ -89,7 +93,11 @@
         "This time Anton Reeve reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Anton Reeve tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "Anton Reeve changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "service",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "julian": {
       "name": "Julian Cross",
@@ -113,7 +121,11 @@
         "This time Julian Cross reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Julian Cross tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "Julian Cross changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "cue",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "celeste": {
       "name": "Celeste Ward",
@@ -138,7 +150,11 @@
         "This time Celeste Ward reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Celeste Ward tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "Celeste Ward changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "keycard",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "amir": {
       "name": "Amir Hale",
@@ -163,7 +179,11 @@
         "This time Amir Hale reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Amir Hale tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "Amir Hale changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "watch",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     }
   },
   "clues": {
@@ -198,7 +218,8 @@
       "location": "office",
       "description": "Central system logged activation at 10:12, five minutes before the watch stopped.",
       "loop_min": 1,
-      "visual": "res://art/actual/optimized/voicemail.jpg"
+      "visual": "res://art/actual/optimized/voicemail.jpg",
+      "season_fragment": "loop_signature_2_1"
     },
     "service": {
       "name": "Alarm Service Report",
@@ -207,7 +228,8 @@
       "description": "The local bell relay was replaced that afternoon and left in test-delay mode.",
       "loop_min": 2,
       "locked_hint": "The alarm panel looked ordinary before. Now you remember the maintenance sticker.",
-      "visual": "res://art/actual/optimized/coffee_receipt.jpg"
+      "visual": "res://art/actual/optimized/coffee_receipt.jpg",
+      "season_fragment": "loop_signature_2_2"
     },
     "cue": {
       "name": "Hidden Lighting Cue",
@@ -291,5 +313,42 @@
     "confrontation": "res://art/actual/final_deduction.jpg",
     "capture": "res://art/actual/final_deduction.jpg",
     "loop": "res://art/actual/investigation_desk.jpg"
-  }
+  },
+  "season_fragment": "season_case_02",
+  "action_beats": [
+    {
+      "id": "case2_search_1",
+      "location": "theater",
+      "loop_min": 1,
+      "kind": "search",
+      "label": "SEARCH THE SCENE WITH ASMA",
+      "title": "SCENE SEARCH",
+      "text": "Asma moves with you through the scene, checking what everyone else ignored. You compare positions, timing, and what looks slightly too deliberate.",
+      "reveal_clue": "alarm",
+      "trust": 1
+    },
+    {
+      "id": "case2_pursuit_2",
+      "location": "backstage",
+      "loop_min": 2,
+      "kind": "pursuit",
+      "label": "FOLLOW THE MOVEMENT YOU REMEMBER",
+      "title": "PURSUIT",
+      "text": "You move before the moment repeats. Asma follows your lead as you cut across the route you remember from the previous loop.",
+      "reveal_clue": "service",
+      "trust": 2
+    },
+    {
+      "id": "case2_danger_3",
+      "location": "office",
+      "loop_min": 3,
+      "kind": "cover",
+      "label": "TAKE COVER & HOLD POSITION",
+      "title": "TAKE COVER",
+      "text": "The situation turns dangerous. You and Asma take cover, wait for the opening, and move only when the evidence says the risk is worth it.",
+      "reveal_clue": "cue",
+      "trust": 2
+    }
+  ],
+  "twist_hint": "The obvious explanation for Case 02 is incomplete; one detail only makes sense after the loop repeats."
 }

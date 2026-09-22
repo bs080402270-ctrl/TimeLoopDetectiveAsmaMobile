@@ -64,7 +64,11 @@
         "This time Nadia Vale reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Nadia Vale tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "You should not know that part yet.",
+      "shadow_reveal": "Nadia Vale changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "poison",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "marcus": {
       "name": "Marcus Reed",
@@ -89,7 +93,11 @@
         "This time Marcus Reed reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Marcus Reed tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "Marcus Reed changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "bracelet",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "felix": {
       "name": "Felix Grant",
@@ -114,7 +122,11 @@
         "This time Felix Grant reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Felix Grant tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "Felix Grant changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "waveform",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "lena": {
       "name": "Lena Park",
@@ -139,7 +151,11 @@
         "This time Lena Park reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Lena Park tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "Lena Park changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "automation",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "victor": {
       "name": "Victor Crane",
@@ -164,7 +180,11 @@
         "This time Victor Crane reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Victor Crane tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "Victor Crane changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "ledger",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     }
   },
   "clues": {
@@ -182,7 +202,8 @@
       "location": "studio",
       "description": "A fast-acting toxin coats the inside rim of the host's cup.",
       "loop_min": 1,
-      "visual": "res://art/actual/optimized/coffee_receipt.jpg"
+      "visual": "res://art/actual/optimized/coffee_receipt.jpg",
+      "season_fragment": "loop_signature_6_1"
     },
     "automation": {
       "name": "Edited Automation Log",
@@ -226,7 +247,8 @@
       "description": "A metallic double-click matches Nadia's heavy bracelet striking the microphone stand.",
       "loop_min": 3,
       "visual": "res://art/actual/optimized/broken_watch.jpg",
-      "locked_hint": "A detail from the earlier loops tells you to return here later."
+      "locked_hint": "A detail from the earlier loops tells you to return here later.",
+      "season_fragment": "loop_signature_6_2"
     },
     "makeup": {
       "name": "Makeup Room Timestamp",
@@ -290,5 +312,42 @@
   "loop_reveals": {
     "2": "Look at me. We already know Coffee Cup Residue does not fit. This time, watch Mic-Stand Audio Click before anyone knows we are suspicious.",
     "3": "Something is repeating too precisely. We have Coffee Cup Residue and Mic-Stand Audio Click. Now we find the detail nobody expected us to remember."
-  }
+  },
+  "season_fragment": "season_case_06",
+  "action_beats": [
+    {
+      "id": "case6_search_1",
+      "location": "studio",
+      "loop_min": 1,
+      "kind": "search",
+      "label": "SEARCH THE SCENE WITH ASMA",
+      "title": "SCENE SEARCH",
+      "text": "Asma moves with you through the scene, checking what everyone else ignored. You compare positions, timing, and what looks slightly too deliberate.",
+      "reveal_clue": "poison",
+      "trust": 1
+    },
+    {
+      "id": "case6_pursuit_2",
+      "location": "control",
+      "loop_min": 2,
+      "kind": "pursuit",
+      "label": "FOLLOW THE MOVEMENT YOU REMEMBER",
+      "title": "PURSUIT",
+      "text": "You move before the moment repeats. Asma follows your lead as you cut across the route you remember from the previous loop.",
+      "reveal_clue": "bracelet",
+      "trust": 2
+    },
+    {
+      "id": "case6_danger_3",
+      "location": "rooftop",
+      "loop_min": 3,
+      "kind": "cover",
+      "label": "TAKE COVER & HOLD POSITION",
+      "title": "TAKE COVER",
+      "text": "The situation turns dangerous. You and Asma take cover, wait for the opening, and move only when the evidence says the risk is worth it.",
+      "reveal_clue": "waveform",
+      "trust": 2
+    }
+  ],
+  "twist_hint": "The obvious explanation for Case 06 is incomplete; one detail only makes sense after the loop repeats."
 }

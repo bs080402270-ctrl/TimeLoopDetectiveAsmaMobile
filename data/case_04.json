@@ -65,7 +65,11 @@
         "This time Clara Hale reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Clara Hale tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "You should not know that part yet.",
+      "shadow_reveal": "Clara Hale changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "keys",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "anton": {
       "name": "Anton Voss",
@@ -90,7 +94,11 @@
         "This time Anton Voss reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Anton Voss tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "Anton Voss changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "masterkey",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "gabriel": {
       "name": "Father Gabriel",
@@ -114,7 +122,11 @@
         "This time Father Gabriel reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Father Gabriel tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "Father Gabriel changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "tea",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "rowan": {
       "name": "Inspector Rowan",
@@ -140,7 +152,11 @@
         "This time Inspector Rowan reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Inspector Rowan tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "Inspector Rowan changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "message",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "selene": {
       "name": "Selene Marr",
@@ -164,7 +180,11 @@
         "This time Selene Marr reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Selene Marr tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "Selene Marr changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "compartment",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "nikolai": {
       "name": "Nikolai Finch",
@@ -189,7 +209,11 @@
         "This time Nikolai Finch reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Nikolai Finch tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "Nikolai Finch changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "compartment",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     }
   },
   "clues": {
@@ -199,7 +223,8 @@
       "location": "sleeper",
       "description": "Two passenger keys were exchanged shortly before the murder.",
       "loop_min": 1,
-      "visual": "res://art/actual/optimized/voicemail.jpg"
+      "visual": "res://art/actual/optimized/voicemail.jpg",
+      "season_fragment": "loop_signature_4_1"
     },
     "paper": {
       "name": "Torn Legal Document",
@@ -224,7 +249,8 @@
       "description": "A copied conductor credential opened the service passage.",
       "loop_min": 2,
       "visual": "res://art/actual/optimized/wet_umbrella.jpg",
-      "locked_hint": "You have seen this place before, but not from the right angle yet."
+      "locked_hint": "You have seen this place before, but not from the right angle yet.",
+      "season_fragment": "loop_signature_4_2"
     },
     "tea": {
       "name": "Drugged Tea",
@@ -306,5 +332,42 @@
   "loop_reveals": {
     "2": "Look at me. We already know Swapped Compartment Keys does not fit. This time, watch Copied Master-Key Signature before anyone knows we are suspicious.",
     "3": "Something is repeating too precisely. We have Swapped Compartment Keys and Copied Master-Key Signature. Now we find the detail nobody expected us to remember."
-  }
+  },
+  "season_fragment": "season_case_04",
+  "action_beats": [
+    {
+      "id": "case4_search_1",
+      "location": "lounge",
+      "loop_min": 1,
+      "kind": "search",
+      "label": "SEARCH THE SCENE WITH ASMA",
+      "title": "SCENE SEARCH",
+      "text": "Asma moves with you through the scene, checking what everyone else ignored. You compare positions, timing, and what looks slightly too deliberate.",
+      "reveal_clue": "keys",
+      "trust": 1
+    },
+    {
+      "id": "case4_pursuit_2",
+      "location": "sleeper",
+      "loop_min": 2,
+      "kind": "pursuit",
+      "label": "FOLLOW THE MOVEMENT YOU REMEMBER",
+      "title": "PURSUIT",
+      "text": "You move before the moment repeats. Asma follows your lead as you cut across the route you remember from the previous loop.",
+      "reveal_clue": "masterkey",
+      "trust": 2
+    },
+    {
+      "id": "case4_danger_3",
+      "location": "baggage",
+      "loop_min": 3,
+      "kind": "cover",
+      "label": "TAKE COVER & HOLD POSITION",
+      "title": "TAKE COVER",
+      "text": "The situation turns dangerous. You and Asma take cover, wait for the opening, and move only when the evidence says the risk is worth it.",
+      "reveal_clue": "tea",
+      "trust": 2
+    }
+  ],
+  "twist_hint": "The obvious explanation for Case 04 is incomplete; one detail only makes sense after the loop repeats."
 }

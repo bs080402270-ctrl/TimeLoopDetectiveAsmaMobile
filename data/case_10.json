@@ -65,7 +65,11 @@
         "This time Chief Farid reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Chief Farid tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "You should not know that part yet.",
+      "shadow_reveal": "Chief Farid changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "governor",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "hassan": {
       "name": "Dr. Hassan",
@@ -90,7 +94,11 @@
         "This time Dr. Hassan reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Dr. Hassan tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "Dr. Hassan changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "order",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "samira": {
       "name": "Samira",
@@ -115,7 +123,11 @@
         "This time Samira reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Samira tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "Samira changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "ledger",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "stranger": {
       "name": "The Stranger",
@@ -140,7 +152,11 @@
         "This time The Stranger reacts before you finish the question. They remember nothing, but the pattern changed.",
         "The Stranger tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "The Stranger changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "manual",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "viktor": {
       "name": "Viktor Malik",
@@ -166,7 +182,11 @@
         "This time Viktor Malik reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Viktor Malik tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "Viktor Malik changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "photo",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     },
     "leila": {
       "name": "Dr. Leila Rahman",
@@ -191,7 +211,11 @@
         "This time Dr. Leila Rahman reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Dr. Leila Rahman tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg"
+      "scene_art": "res://art/actual/detective_office.jpg",
+      "pressure_line": "That is not what I said before.",
+      "shadow_reveal": "Dr. Leila Rahman changes route after the interview and briefly checks a place they never mentioned.",
+      "shadow_clue": "photo",
+      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
     }
   },
   "clues": {
@@ -201,7 +225,8 @@
       "location": "lab",
       "description": "The key safety module was physically bypassed before the first experiment.",
       "loop_min": 1,
-      "visual": "res://art/actual/optimized/broken_watch.jpg"
+      "visual": "res://art/actual/optimized/broken_watch.jpg",
+      "season_fragment": "loop_signature_10_1"
     },
     "manual": {
       "name": "Original Safety Manual",
@@ -217,7 +242,8 @@
       "location": "archive",
       "description": "A signed directive orders the team to proceed despite failed safety checks.",
       "loop_min": 1,
-      "visual": "res://art/actual/optimized/coffee_receipt.jpg"
+      "visual": "res://art/actual/optimized/coffee_receipt.jpg",
+      "season_fragment": "loop_signature_10_2"
     },
     "ledger": {
       "name": "Project Funding Ledger",
@@ -325,5 +351,42 @@
   "loop_reveals": {
     "2": "Look at me. We already know Removed Probability Governor does not fit. This time, watch Viktor's Override Order before anyone knows we are suspicious.",
     "3": "Something is repeating too precisely. We have Removed Probability Governor and Viktor's Override Order. Now we find the detail nobody expected us to remember."
-  }
+  },
+  "season_fragment": "season_case_10",
+  "action_beats": [
+    {
+      "id": "case10_search_1",
+      "location": "lab",
+      "loop_min": 1,
+      "kind": "search",
+      "label": "SEARCH THE SCENE WITH ASMA",
+      "title": "SCENE SEARCH",
+      "text": "Asma moves with you through the scene, checking what everyone else ignored. You compare positions, timing, and what looks slightly too deliberate.",
+      "reveal_clue": "governor",
+      "trust": 1
+    },
+    {
+      "id": "case10_pursuit_2",
+      "location": "archive",
+      "loop_min": 2,
+      "kind": "pursuit",
+      "label": "FOLLOW THE MOVEMENT YOU REMEMBER",
+      "title": "PURSUIT",
+      "text": "You move before the moment repeats. Asma follows your lead as you cut across the route you remember from the previous loop.",
+      "reveal_clue": "order",
+      "trust": 2
+    },
+    {
+      "id": "case10_danger_3",
+      "location": "clock",
+      "loop_min": 3,
+      "kind": "cover",
+      "label": "TAKE COVER & HOLD POSITION",
+      "title": "TAKE COVER",
+      "text": "The situation turns dangerous. You and Asma take cover, wait for the opening, and move only when the evidence says the risk is worth it.",
+      "reveal_clue": "ledger",
+      "trust": 2
+    }
+  ],
+  "twist_hint": "The obvious explanation for Case 10 is incomplete; one detail only makes sense after the loop repeats."
 }
