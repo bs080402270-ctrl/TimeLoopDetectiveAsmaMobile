@@ -74,8 +74,8 @@ jobs:
           SETTINGS_FILE=$(find ~/.config/godot -type f -name "editor_settings-*.tres" | head -n 1)
           sed -i '/export\/android\/android_sdk_path/d' "$SETTINGS_FILE"
           sed -i '/export\/android\/java_sdk_path/d' "$SETTINGS_FILE"
-          sed -i '$i export/android/android_sdk_path = "'"${ANDROID_SDK_ROOT}"'"' "$SETTINGS_FILE"
-          sed -i '$i export/android/java_sdk_path = "'"${JAVA_HOME}"'"' "$SETTINGS_FILE"
+          printf '\nexport/android/android_sdk_path = "%s"\n' "${ANDROID_SDK_ROOT}" >> "$SETTINGS_FILE"
+          printf 'export/android/java_sdk_path = "%s"\n' "${JAVA_HOME}" >> "$SETTINGS_FILE"
 
       - name: Configure release signing
         shell: bash
