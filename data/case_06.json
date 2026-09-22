@@ -17,7 +17,7 @@
     },
     "control": {
       "name": "Control Room",
-      "art": "res://art/actual/investigation_desk.jpg",
+      "art": "res://art/polished/casebook.svg",
       "description": "Waveforms, automation logs and one suspiciously perfect thirty-second segment.",
       "people": [
         "felix"
@@ -44,7 +44,7 @@
     "nadia": {
       "name": "Nadia Vale",
       "role": "Executive producer",
-      "art": "res://art/actual/character_atlas.jpg",
+      "art": "res://art/actual/optimized/maya.jpg",
       "dialogue": [
         "I never entered the booth after 10:45.",
         "The host changed his own coffee order.",
@@ -73,7 +73,7 @@
     "marcus": {
       "name": "Marcus Reed",
       "role": "Co-host",
-      "art": "res://art/actual/character_atlas.jpg",
+      "art": "res://art/actual/optimized/maya.jpg",
       "dialogue": [
         "I was in makeup during the final break.",
         "We argued, but only about airtime.",
@@ -102,7 +102,7 @@
     "felix": {
       "name": "Felix Grant",
       "role": "Sound engineer",
-      "art": "res://art/actual/character_atlas.jpg",
+      "art": "res://art/actual/optimized/maya.jpg",
       "dialogue": [
         "The automation system ran normally.",
         "Fine, I inserted a prerecorded segment.",
@@ -131,7 +131,7 @@
     "lena": {
       "name": "Lena Park",
       "role": "Investigative reporter",
-      "art": "res://art/actual/character_atlas.jpg",
+      "art": "res://art/actual/optimized/maya.jpg",
       "dialogue": [
         "I came for an interview.",
         "The host promised me documents about the station accounts.",
@@ -160,7 +160,7 @@
     "victor": {
       "name": "Victor Crane",
       "role": "Station owner",
-      "art": "res://art/actual/character_atlas.jpg",
+      "art": "res://art/actual/optimized/maya.jpg",
       "dialogue": [
         "The host was unstable.",
         "There is no fraud at this station.",
@@ -198,11 +198,11 @@
     },
     "poison": {
       "name": "Coffee Cup Residue",
-      "art": "res://art/actual/optimized/coffee_receipt.jpg",
+      "art": "res://art/evidence/receipt.svg",
       "location": "studio",
       "description": "A fast-acting toxin coats the inside rim of the host's cup.",
       "loop_min": 1,
-      "visual": "res://art/actual/optimized/coffee_receipt.jpg",
+      "visual": "res://art/evidence/receipt.svg",
       "season_fragment": "loop_signature_6_1"
     },
     "automation": {
@@ -252,11 +252,11 @@
     },
     "makeup": {
       "name": "Makeup Room Timestamp",
-      "art": "res://art/actual/optimized/coffee_receipt.jpg",
+      "art": "res://art/evidence/receipt.svg",
       "location": "studio",
       "description": "Marcus appears on an internal camera throughout the poison window.",
       "loop_min": 3,
-      "visual": "res://art/actual/optimized/coffee_receipt.jpg",
+      "visual": "res://art/evidence/receipt.svg",
       "locked_hint": "A detail from the earlier loops tells you to return here later."
     },
     "ledger": {
@@ -297,17 +297,17 @@
     "You"
   ],
   "visual_scenes": {
-    "crime_scene": "res://art/actual/evidence_room.jpg",
+    "crime_scene": "res://art/polished/casebook.svg",
     "location": "res://art/actual/detective_office.jpg",
-    "interrogation": "res://art/actual/detective_office.jpg",
-    "clue": "res://art/actual/evidence_room.jpg",
-    "search": "res://art/actual/investigation_desk.jpg",
-    "chase": "res://art/actual/optimized/cafe_exterior_rain.jpg",
-    "pursuit": "res://art/actual/optimized/cafe_exterior_rain.jpg",
-    "cover": "res://art/actual/evidence_room.jpg",
-    "confrontation": "res://art/actual/final_deduction.jpg",
-    "capture": "res://art/actual/final_deduction.jpg",
-    "loop": "res://art/actual/investigation_desk.jpg"
+    "interrogation": "res://art/polished/interrogation.svg",
+    "clue": "res://art/polished/casebook.svg",
+    "search": "res://art/polished/casebook.svg",
+    "chase": "res://art/polished/cases.svg",
+    "pursuit": "res://art/polished/cases.svg",
+    "cover": "res://art/polished/reset.svg",
+    "confrontation": "res://art/polished/deduction.svg",
+    "capture": "res://art/polished/deduction.svg",
+    "loop": "res://art/polished/reset.svg"
   },
   "loop_reveals": {
     "2": "Look at me. We already know Coffee Cup Residue does not fit. This time, watch Mic-Stand Audio Click before anyone knows we are suspicious.",

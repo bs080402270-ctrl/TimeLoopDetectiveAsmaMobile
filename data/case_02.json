@@ -8,43 +8,47 @@
   "locations": {
     "theater": {
       "name": "Raven Theater",
-      "art": "res://art/actual/detective_office.jpg",
+      "art": "res://art/cases/case02_coach.svg",
       "description": "The final rehearsal ended early. Someone left the stage, someone lied about the alarm, and one seat in the front row is still warm.",
       "people": [
         "mira",
         "anton"
-      ]
+      ],
+      "visual": "res://art/cases/case02_coach.svg"
     },
     "backstage": {
       "name": "Backstage Corridor",
-      "art": "res://art/actual/evidence_room.jpg",
+      "art": "res://art/cases/case02_luggage.svg",
       "description": "Costumes, prop tables, and a service door that should have been locked.",
       "people": [
         "julian"
-      ]
+      ],
+      "visual": "res://art/cases/case02_luggage.svg"
     },
     "office": {
       "name": "Director's Office",
-      "art": "res://art/actual/final_deduction.jpg",
+      "art": "res://art/cases/case02_terminal.svg",
       "description": "Contracts, donor records, and a clock that runs two minutes fast.",
       "people": [
         "celeste"
-      ]
+      ],
+      "visual": "res://art/cases/case02_terminal.svg"
     },
     "alley": {
       "name": "Stage Door Alley",
-      "art": "res://art/actual/optimized/cafe_exterior_rain.jpg",
+      "art": "res://art/cases/case02_tunnel.svg",
       "description": "Rain, a fire-exit alarm box, and rose petals stuck to the drain.",
       "people": [
         "amir"
-      ]
+      ],
+      "visual": "res://art/cases/case02_tunnel.svg"
     }
   },
   "suspects": {
     "mira": {
       "name": "Mira Vale",
       "role": "Lead actress",
-      "art": "res://art/actual/character_atlas.jpg",
+      "art": "res://art/actual/optimized/maya.jpg",
       "asma_open": "Look at me. She is too calm for someone who says she found the body.",
       "dialogue": [
         "I left the stage before the alarm. Anton was still rehearsing.",
@@ -73,7 +77,7 @@
     "anton": {
       "name": "Anton Reeve",
       "role": "Stage manager",
-      "art": "res://art/actual/character_atlas.jpg",
+      "art": "res://art/actual/optimized/maya.jpg",
       "asma_open": "Something about his timing bothers me. Listen to the exact words he uses.",
       "dialogue": [
         "The fire alarm went off at 10:12. I started evacuation immediately.",
@@ -102,7 +106,7 @@
     "julian": {
       "name": "Julian Cross",
       "role": "Prop master",
-      "art": "res://art/actual/character_atlas.jpg",
+      "art": "res://art/actual/optimized/maya.jpg",
       "asma_open": "He keeps watching your hands, not mine. He knows we found something.",
       "dialogue": [
         "I was backstage fixing the blood rig. I never touched the stage-door alarm.",
@@ -130,7 +134,7 @@
     "celeste": {
       "name": "Celeste Ward",
       "role": "Theater owner",
-      "art": "res://art/actual/character_atlas.jpg",
+      "art": "res://art/actual/optimized/maya.jpg",
       "asma_open": "She wants us to think this is about the theater. I think it is about what the victim knew.",
       "dialogue": [
         "The victim threatened to ruin the production. That is all.",
@@ -159,7 +163,7 @@
     "amir": {
       "name": "Amir Hale",
       "role": "Lighting technician",
-      "art": "res://art/actual/character_atlas.jpg",
+      "art": "res://art/actual/optimized/maya.jpg",
       "asma_open": "He says the blackout was accidental. I do not believe accidents repeat this neatly.",
       "dialogue": [
         "The lights cut because the old dimmer board tripped.",
@@ -223,12 +227,12 @@
     },
     "service": {
       "name": "Alarm Service Report",
-      "art": "res://art/actual/optimized/coffee_receipt.jpg",
+      "art": "res://art/evidence/receipt.svg",
       "location": "office",
       "description": "The local bell relay was replaced that afternoon and left in test-delay mode.",
       "loop_min": 2,
       "locked_hint": "The alarm panel looked ordinary before. Now you remember the maintenance sticker.",
-      "visual": "res://art/actual/optimized/coffee_receipt.jpg",
+      "visual": "res://art/evidence/receipt.svg",
       "season_fragment": "loop_signature_2_2"
     },
     "cue": {
@@ -302,17 +306,17 @@
     "3": "I remember the stage-door chirp now. It happened before we ever looked at the alley. Someone is using the loop against the investigation."
   },
   "visual_scenes": {
-    "crime_scene": "res://art/actual/evidence_room.jpg",
-    "location": "res://art/actual/detective_office.jpg",
-    "interrogation": "res://art/actual/detective_office.jpg",
-    "clue": "res://art/actual/evidence_room.jpg",
-    "search": "res://art/actual/investigation_desk.jpg",
-    "chase": "res://art/actual/optimized/cafe_exterior_rain.jpg",
-    "pursuit": "res://art/actual/optimized/cafe_exterior_rain.jpg",
-    "cover": "res://art/actual/evidence_room.jpg",
-    "confrontation": "res://art/actual/final_deduction.jpg",
-    "capture": "res://art/actual/final_deduction.jpg",
-    "loop": "res://art/actual/investigation_desk.jpg"
+    "crime_scene": "res://art/polished/casebook.svg",
+    "location": "res://art/cases/case02_coach.svg",
+    "interrogation": "res://art/polished/interrogation.svg",
+    "clue": "res://art/polished/casebook.svg",
+    "search": "res://art/polished/casebook.svg",
+    "chase": "res://art/polished/cases.svg",
+    "pursuit": "res://art/polished/cases.svg",
+    "cover": "res://art/polished/reset.svg",
+    "confrontation": "res://art/polished/deduction.svg",
+    "capture": "res://art/polished/deduction.svg",
+    "loop": "res://art/polished/reset.svg"
   },
   "season_fragment": "season_case_02",
   "action_beats": [

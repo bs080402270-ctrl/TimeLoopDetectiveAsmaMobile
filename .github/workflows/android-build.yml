@@ -56,6 +56,9 @@ jobs:
       - name: Validate case data
         run: python3 tools/validate_cases.py
 
+      - name: Audit visual assets
+        run: python3 tools/asset_audit.py
+
       - name: Setup Godot
         uses: chickensoft-games/setup-godot@v2
         with:

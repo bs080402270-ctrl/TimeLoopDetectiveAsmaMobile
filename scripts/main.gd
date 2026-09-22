@@ -28,44 +28,52 @@ const ART_CASES := "res://art/actual/detective_office.jpg"
 const ART_INTERROGATION := "res://art/actual/detective_office.jpg"
 const ART_CASEBOOK := "res://art/actual/evidence_room.jpg"
 const ART_RESET := "res://art/actual/evidence_room.jpg"
-const ART_DEDUCTION := "res://art/actual/final_deduction.jpg"
-const ART_SETTINGS := "res://art/actual/detective_office.jpg"
-const ART_INTRO := "res://art/actual/detective_office.jpg"
-const ART_DIFFICULTY := "res://art/actual/detective_office.jpg"
-const ART_CHARACTER_ATLAS := "res://art/actual/character_atlas.jpg"
-const ART_SEASON2_TEASER := "res://art/actual/season2_teaser.jpg"
-const ART_GENERATED_STORY_BOARD := "res://art/actual/optimized/generated_story_ui_board.jpg"
+const ART_DEDUCTION := "res://art/polished/deduction.svg"
+const ART_SETTINGS := "res://art/polished/settings.svg"
+const ART_INTRO := "res://art/polished/intro.svg"
+const ART_DIFFICULTY := "res://art/polished/difficulty.svg"
+const ART_CHARACTER_ATLAS := "res://art/actual/optimized/maya.jpg"
+const ART_SEASON2_TEASER := "res://art/polished/cases.svg"
+const ART_GENERATED_STORY_BOARD := "res://art/polished/interrogation.svg"
 const ART_MANHWA_MAIN := "res://art/actual/detective_office.jpg"
 
 const CHARACTER_REAL_ART := {
 	"maya": "res://art/actual/optimized/maya.jpg",
 	"omar": "res://art/actual/optimized/omar.jpg",
 	"lina": "res://art/actual/optimized/lina.jpg",
-	"asma": "res://art/actual/characters/asma.tres",
-	"chief_farid": "res://art/actual/characters/chief_farid.tres",
-	"ryan_khan": "res://art/actual/characters/ryan_khan.tres",
-	"dr_leila": "res://art/actual/characters/dr_leila.tres",
-	"viktor_malik": "res://art/actual/characters/viktor_malik.tres",
-	"nora_said": "res://art/actual/characters/nora_said.tres",
-	"imran": "res://art/actual/characters/imran.tres",
-	"mrs_zahra": "res://art/actual/characters/mrs_zahra.tres",
-	"marco": "res://art/actual/characters/marco.tres",
-	"ayumi": "res://art/actual/characters/ayumi.tres",
-	"the_fixer": "res://art/actual/characters/the_fixer.tres",
-	"samira": "res://art/actual/characters/samira.tres",
-	"colonel_rashid": "res://art/actual/characters/colonel_rashid.tres",
-	"kareem": "res://art/actual/characters/kareem.tres",
-	"ayesha": "res://art/actual/characters/ayesha.tres",
-	"dr_hassan": "res://art/actual/characters/dr_hassan.tres",
-	"officer_lina": "res://art/actual/characters/officer_lina.tres",
-	"the_mayor": "res://art/actual/characters/the_mayor.tres",
-	"the_stranger": "res://art/actual/characters/the_stranger.tres",
-	"young_omar": "res://art/actual/characters/young_omar.tres",
-	"farid": "res://art/actual/characters/chief_farid.tres",
-	"leila": "res://art/actual/characters/dr_leila.tres",
-	"viktor": "res://art/actual/characters/viktor_malik.tres",
-	"hassan": "res://art/actual/characters/dr_hassan.tres",
-	"stranger": "res://art/actual/characters/the_stranger.tres"
+	"theo": "res://art/characters/theo.svg",
+	"asma": "res://art/actual/optimized/maya.jpg",
+	"chief_farid": "res://art/actual/optimized/omar.jpg",
+	"ryan_khan": "res://art/actual/optimized/lina.jpg",
+	"dr_leila": "res://art/actual/optimized/maya.jpg",
+	"samira": "res://art/actual/optimized/lina.jpg",
+	"farid": "res://art/actual/optimized/omar.jpg",
+	"leila": "res://art/actual/optimized/maya.jpg",
+	"viktor": "res://art/actual/optimized/omar.jpg",
+	"hassan": "res://art/actual/optimized/omar.jpg",
+	"stranger": "res://art/actual/optimized/lina.jpg",
+	"hassan_case2": "res://art/cases/case02_hassan.svg",
+	"meera": "res://art/cases/case02_meera.svg",
+	"elias": "res://art/cases/case02_elias.svg",
+	"juno": "res://art/cases/case02_juno.svg",
+	"rafi": "res://art/cases/case02_rafi.svg",
+	"sofia": "res://art/cases/case03_sofia.svg",
+	"marcus": "res://art/cases/case03_marcus.svg",
+	"ivy": "res://art/cases/case03_ivy.svg",
+	"noah": "res://art/cases/case03_noah.svg",
+	"elena": "res://art/cases/case03_elena.svg",
+	"clara": "res://art/cases/case04_clara.svg",
+	"anton": "res://art/cases/case04_anton.svg",
+	"gabriel": "res://art/cases/case04_gabriel.svg",
+	"rowan": "res://art/cases/case04_rowan.svg",
+	"selene": "res://art/cases/case04_selene.svg",
+	"nikolai": "res://art/cases/case04_nikolai.svg",
+	"morgan": "res://art/cases/case05_morgan.svg",
+	"iris": "res://art/cases/case05_iris.svg",
+	"leo": "res://art/cases/case05_leo.svg",
+	"calvin": "res://art/cases/case05_calvin.svg",
+	"mara": "res://art/cases/case05_mara.svg",
+	"tate": "res://art/cases/case05_tate.svg"
 }
 
 const CHARACTER_ATLAS_MAP := {
@@ -1686,9 +1694,15 @@ func _atlas_portrait(index: int) -> Texture2D:
 func _character_portrait(id: String,fallback_path: String) -> Texture2D:
 	if CHARACTER_REAL_ART.has(id):
 		return _load_tex(str(CHARACTER_REAL_ART[id]))
-	if CHARACTER_ATLAS_MAP.has(id):
-		return _atlas_portrait(int(CHARACTER_ATLAS_MAP[id]))
-	return _load_tex(fallback_path)
+	if fallback_path != "" and ResourceLoader.exists(fallback_path):
+		return _load_tex(fallback_path)
+	var stable: Array[String] = [
+		"res://art/actual/optimized/maya.jpg",
+		"res://art/actual/optimized/omar.jpg",
+		"res://art/actual/optimized/lina.jpg"
+	]
+	var pick := abs(id.hash()) % stable.size()
+	return _load_tex(stable[pick])
 
 func _load_tex(path: String) -> Texture2D:
 	if texture_cache.has(path):
