@@ -114,7 +114,9 @@ var background: TextureRect
 var title_label: Label
 var status_label: Label
 var body: VBoxContainer
+var main_scroll: ScrollContainer
 var nav: GridContainer
+var texture_cache: Dictionary = {}
 var overlay: PanelContainer
 var overlay_title: Label
 var overlay_body: RichTextLabel
@@ -182,10 +184,10 @@ func _build_shell() -> void:
 
 	var margin := MarginContainer.new()
 	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	margin.add_theme_constant_override("margin_left",28)
-	margin.add_theme_constant_override("margin_right",28)
-	margin.add_theme_constant_override("margin_top",30)
-	margin.add_theme_constant_override("margin_bottom",24)
+	margin.add_theme_constant_override("margin_left",20)
+	margin.add_theme_constant_override("margin_right",20)
+	margin.add_theme_constant_override("margin_top",24)
+	margin.add_theme_constant_override("margin_bottom",56)
 	add_child(margin)
 
 	var root := VBoxContainer.new()
@@ -210,15 +212,16 @@ func _build_shell() -> void:
 	divider.color = Color(0.10,0.31,0.49,0.65)
 	root.add_child(divider)
 
-	var scroll := ScrollContainer.new()
-	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	root.add_child(scroll)
+	main_scroll = ScrollContainer.new()
+	main_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	main_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	main_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+	root.add_child(main_scroll)
 
 	body = VBoxContainer.new()
 	body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	body.add_theme_constant_override("separation",16)
-	scroll.add_child(body)
+	body.add_theme_constant_override("separation",14)
+	main_scroll.add_child(body)
 
 	nav = GridContainer.new()
 	nav.columns = 4
@@ -262,6 +265,7 @@ func _show_main_menu() -> void:
 	_clear(body)
 	_clear(nav)
 	overlay.visible = false
+	_scroll_to_top()
 	_set_polished_background(ART_MENU,0.46)
 	title_label.text = "TIME LOOP DETECTIVE"
 	title_label.add_theme_color_override("font_color",C_TEXT)
@@ -308,6 +312,7 @@ func _show_season2_teaser() -> void:
 	_clear(body)
 	_clear(nav)
 	overlay.visible = false
+	_scroll_to_top()
 	_set_polished_background(ART_SEASON2_TEASER,0.30)
 	title_label.text = "SEASON 2"
 	status_label.text = "A NEW LOOP BEGINS."
@@ -334,6 +339,7 @@ func _show_intro() -> void:
 	_clear(body)
 	_clear(nav)
 	overlay.visible = false
+	_scroll_to_top()
 	_set_polished_background(ART_INTRO,0.48)
 	title_label.text = "HOW THE LOOP WORKS"
 	status_label.text = "Observe. Question. Remember. Deduce."
@@ -384,6 +390,7 @@ func _show_difficulty() -> void:
 	_clear(body)
 	_clear(nav)
 	overlay.visible = false
+	_scroll_to_top()
 	_set_polished_background(ART_DIFFICULTY,0.48)
 	title_label.text = "SELECT DIFFICULTY"
 	status_label.text = "Choose how challenging the loop will be."
@@ -438,6 +445,7 @@ func _show_character_gallery() -> void:
 	_clear(body)
 	_clear(nav)
 	overlay.visible = false
+	_scroll_to_top()
 	_set_polished_background(ART_SETTINGS,0.44)
 	title_label.text = "CHARACTERS"
 	status_label.text = "People. Secrets. Consequences. Every loop reveals more."
@@ -480,6 +488,7 @@ func _show_case_select() -> void:
 	_clear(body)
 	_clear(nav)
 	overlay.visible = false
+	_scroll_to_top()
 	_set_polished_background(ART_CASES,0.40)
 	title_label.text = "SELECT A CASE"
 	status_label.text = "Each case is a loop. Each truth changes everything."
@@ -496,61 +505,68 @@ func _show_case_select() -> void:
 func _case_card(data: Dictionary,index: int) -> Control:
 	var case_id := str(data.get("id",""))
 	var card := PanelContainer.new()
+	card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	card.add_theme_stylebox_override("panel",_panel_style(C_PANEL,16,Color("#174b78"),2,14))
 
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation",14)
-	card.add_child(row)
+	var stack := VBoxContainer.new()
+	stack.add_theme_constant_override("separation",10)
+	card.add_child(stack)
+
+	var top := HBoxContainer.new()
+	top.add_theme_constant_override("separation",12)
+	stack.add_child(top)
 
 	var start_id := str(data.get("start_location",""))
 	var thumb_path := str(data.get("locations",{}).get(start_id,{}).get("art",""))
 	var thumb := TextureRect.new()
 	thumb.texture = _load_tex(thumb_path)
-	thumb.custom_minimum_size = Vector2(130,104)
+	thumb.custom_minimum_size = Vector2(116,92)
 	thumb.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	thumb.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-	row.add_child(thumb)
+	top.add_child(thumb)
 
 	var badge := PanelContainer.new()
-	badge.custom_minimum_size = Vector2(92,92)
-	badge.add_theme_stylebox_override("panel",_panel_style(Color("#122943"),14,C_GOLD,2,10))
+	badge.custom_minimum_size = Vector2(78,92)
+	badge.add_theme_stylebox_override("panel",_panel_style(Color("#122943"),12,C_GOLD,2,8))
 	var num := Label.new()
 	num.text = "%02d" % index
 	num.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	num.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	num.add_theme_font_size_override("font_size",_fs(34))
+	num.add_theme_font_size_override("font_size",_fs(30))
 	num.add_theme_color_override("font_color",C_GOLD)
 	badge.add_child(num)
-	row.add_child(badge)
+	top.add_child(badge)
 
-	var vb := VBoxContainer.new()
-	vb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	vb.add_theme_constant_override("separation",4)
-	row.add_child(vb)
+	var head := VBoxContainer.new()
+	head.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	head.add_theme_constant_override("separation",3)
+	top.add_child(head)
 
 	var t := Label.new()
 	t.text = str(data.get("title","Untitled Case"))
-	t.add_theme_font_size_override("font_size",_fs(29))
+	t.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	t.add_theme_font_size_override("font_size",_fs(24))
 	t.add_theme_color_override("font_color",C_TEXT)
-	vb.add_child(t)
+	head.add_child(t)
+
+	var state_text := Label.new()
+	state_text.text = "CONTINUE INVESTIGATION" if save_manager.has_save(case_id) else "NEW INVESTIGATION"
+	state_text.add_theme_font_size_override("font_size",_fs(15))
+	state_text.add_theme_color_override("font_color",C_RED if save_manager.has_save(case_id) else C_GOLD)
+	head.add_child(state_text)
 
 	var d := Label.new()
 	d.text = str(data.get("subtitle",""))
 	d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	d.add_theme_font_size_override("font_size",_fs(20))
+	d.add_theme_font_size_override("font_size",_fs(17))
 	d.add_theme_color_override("font_color",C_MUTED)
-	vb.add_child(d)
-
-	var state_text := Label.new()
-	state_text.text = "CONTINUE INVESTIGATION" if save_manager.has_save(case_id) else "NEW INVESTIGATION"
-	state_text.add_theme_font_size_override("font_size",_fs(17))
-	state_text.add_theme_color_override("font_color",C_RED if save_manager.has_save(case_id) else C_GOLD)
-	vb.add_child(state_text)
+	stack.add_child(d)
 
 	var cid: String = case_id
-	var open := _button("OPEN  →",func(): _open_case(cid),false)
-	open.custom_minimum_size = Vector2(130,74)
-	row.add_child(open)
+	var open := _button("OPEN CASE  →",func(): _open_case(cid),true)
+	open.custom_minimum_size = Vector2(0,64)
+	open.add_theme_font_size_override("font_size",_fs(19))
+	stack.add_child(open)
 	return card
 
 func _open_case(case_id: String) -> void:
@@ -811,17 +827,19 @@ func _build_nav() -> void:
 
 func _build_home_nav(active: String) -> void:
 	_clear(nav)
-	nav.columns = 5
+	# Three columns keeps every control readable on narrow Android screens.
+	nav.columns = 3
 	nav.add_child(_nav_button("HOME",func(): _show_main_menu(),active=="HOME"))
 	nav.add_child(_nav_button("CASES",func(): _show_case_select(),active=="CASES"))
+	nav.add_child(_nav_button("SETTINGS",func(): _show_settings(),active=="SETTINGS"))
 	nav.add_child(_nav_button("CHARACTERS",func(): _show_character_gallery(),active=="CHARACTERS"))
 	nav.add_child(_nav_button("HOW TO",func(): _show_help(),active=="HOW TO"))
-	nav.add_child(_nav_button("SETTINGS",func(): _show_settings(),active=="SETTINGS"))
 
 func _show_settings() -> void:
 	_clear(body)
 	_clear(nav)
 	overlay.visible = false
+	_scroll_to_top()
 	_set_polished_background(ART_SETTINGS,0.44)
 	title_label.text = "SETTINGS"
 	status_label.text = "Tune readability, graphics and mobile feedback."
@@ -867,26 +885,27 @@ func _show_settings() -> void:
 func _settings_row(label_text: String,value_text: String,description: String,action: Callable) -> Control:
 	var card := PanelContainer.new()
 	card.add_theme_stylebox_override("panel",_panel_style(C_PANEL,14,C_LINE,2,14))
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation",12)
-	card.add_child(row)
-	var vb := VBoxContainer.new()
-	vb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	row.add_child(vb)
+	var stack := VBoxContainer.new()
+	stack.add_theme_constant_override("separation",8)
+	card.add_child(stack)
+
 	var label := Label.new()
 	label.text = label_text
-	label.add_theme_font_size_override("font_size",_fs(24))
+	label.add_theme_font_size_override("font_size",_fs(22))
 	label.add_theme_color_override("font_color",C_TEXT)
-	vb.add_child(label)
+	stack.add_child(label)
+
 	var detail := Label.new()
 	detail.text = description
 	detail.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	detail.add_theme_font_size_override("font_size",_fs(17))
+	detail.add_theme_font_size_override("font_size",_fs(16))
 	detail.add_theme_color_override("font_color",C_MUTED)
-	vb.add_child(detail)
+	stack.add_child(detail)
+
 	var b := _button(value_text,action,false)
-	b.custom_minimum_size = Vector2(190,72)
-	row.add_child(b)
+	b.custom_minimum_size = Vector2(0,62)
+	b.add_theme_font_size_override("font_size",_fs(18))
+	stack.add_child(b)
 	return card
 
 func _confirm_clear_progress() -> void:
@@ -1050,18 +1069,32 @@ func _character_portrait(id: String,fallback_path: String) -> Texture2D:
 	return _load_tex(fallback_path)
 
 func _load_tex(path: String) -> Texture2D:
+	if texture_cache.has(path):
+		return texture_cache[path]
 	if path.ends_with(".txt") and FileAccess.file_exists(path):
 		var file := FileAccess.open(path,FileAccess.READ)
 		if file != null:
 			var raw: PackedByteArray = Marshalls.base64_to_raw(file.get_as_text().strip_edges())
 			var decoded := Image.new()
 			if decoded.load_jpg_from_buffer(raw) == OK:
-				return ImageTexture.create_from_image(decoded)
+				var tex := ImageTexture.create_from_image(decoded)
+				texture_cache[path] = tex
+				return tex
 	if path != "" and ResourceLoader.exists(path):
-		return load(path)
+		var resource_tex = load(path)
+		if resource_tex is Texture2D:
+			texture_cache[path] = resource_tex
+			return resource_tex
 	var image := Image.create(64,64,false,Image.FORMAT_RGBA8)
 	image.fill(C_PANEL)
-	return ImageTexture.create_from_image(image)
+	var fallback := ImageTexture.create_from_image(image)
+	texture_cache[path] = fallback
+	return fallback
+
+func _scroll_to_top() -> void:
+	if main_scroll != null:
+		main_scroll.scroll_vertical = 0
+		main_scroll.call_deferred("set_v_scroll",0)
 
 func _ensure_audio() -> void:
 	if audio == null:
@@ -1145,8 +1178,8 @@ func _button(text: String,action: Callable,accent := false) -> Button:
 
 func _nav_button(text: String,action: Callable,active: bool) -> Button:
 	var b := _button(text,action,false)
-	b.custom_minimum_size = Vector2(0,72)
-	b.add_theme_font_size_override("font_size",_fs(17))
+	b.custom_minimum_size = Vector2(0,56)
+	b.add_theme_font_size_override("font_size",_fs(14))
 	if active:
 		b.add_theme_color_override("font_color",C_RED)
 		b.add_theme_stylebox_override("normal",_panel_style(Color("#101b2b"),12,C_RED,2,8))
