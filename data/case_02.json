@@ -1,213 +1,243 @@
 {
   "id": "case_02",
-  "title": "Case 02: The Missing Passenger",
-  "subtitle": "A late-night coach reaches its final terminal with one passenger missing, seven minutes of camera footage gone, and no recorded stop.",
-  "start_location": "coach",
-  "max_actions": 10,
-  "loop_reset_text": "The tunnel lights strobe. The engine hum reverses. Forty-two minutes snap backward and Nadia is seated again.",
+  "title": "Case 02: The Last Rehearsal",
+  "subtitle": "A theater closes after a final rehearsal. A cracked watch, a white rose, and a fire alarm disagree about when the crime really happened.",
+  "start_location": "theater",
+  "max_actions": 9,
+  "loop_reset_text": "The stage lights flare white. Applause runs backward. The cracked watch ticks again. Only you and Asma remember what did not fit.",
   "locations": {
-    "coach": {
-      "name": "Passenger Coach",
-      "art": "res://art/actual/optimized/case01_daily_bean.jpg",
-      "description": "Rows of tired passengers, steamed windows and one empty seat that should not be empty.",
-      "people": [
-        "hassan",
-        "meera"
-      ]
-    },
-    "luggage": {
-      "name": "Luggage Bay",
-      "art": "res://art/actual/optimized/cafe_exterior_rain.jpg",
-      "description": "A cramped storage compartment beneath the coach. Scraped metal and shifted bags suggest recent movement.",
-      "people": [
-        "elias"
-      ]
-    },
-    "tunnel": {
-      "name": "Tunnel Service Point",
-      "art": "res://art/actual/optimized/case01_suspect_keyart.jpg",
-      "description": "A maintenance recess beside the final tunnel. The road cameras lose sight of the bus here.",
-      "people": [
-        "juno"
-      ]
-    },
-    "terminal": {
-      "name": "Final Terminal",
+    "theater": {
+      "name": "Raven Theater",
       "art": "res://art/actual/detective_office.jpg",
-      "description": "Security shutters, arrival screens and one officer waiting before the coach arrives.",
+      "description": "The final rehearsal ended early. Someone left the stage, someone lied about the alarm, and one seat in the front row is still warm.",
       "people": [
-        "rafi"
+        "mira",
+        "anton"
+      ]
+    },
+    "backstage": {
+      "name": "Backstage Corridor",
+      "art": "res://art/actual/evidence_room.jpg",
+      "description": "Costumes, prop tables, and a service door that should have been locked.",
+      "people": [
+        "julian"
+      ]
+    },
+    "office": {
+      "name": "Director's Office",
+      "art": "res://art/actual/final_deduction.jpg",
+      "description": "Contracts, donor records, and a clock that runs two minutes fast.",
+      "people": [
+        "celeste"
+      ]
+    },
+    "alley": {
+      "name": "Stage Door Alley",
+      "art": "res://art/actual/optimized/cafe_exterior_rain.jpg",
+      "description": "Rain, a fire-exit alarm box, and rose petals stuck to the drain.",
+      "people": [
+        "amir"
       ]
     }
   },
   "suspects": {
-    "hassan": {
-      "name": "Hassan Cole",
-      "role": "Bus driver",
+    "mira": {
+      "name": "Mira Vale",
+      "role": "Lead actress",
       "art": "res://art/actual/character_atlas.jpg",
+      "asma_open": "Look at me. She is too calm for someone who says she found the body.",
       "dialogue": [
-        "I never stopped after the last toll gate.",
-        "You keep asking about the tunnel. I slowed down, but I did not stop.",
-        "The service-door warning flickered for three seconds. I thought it was a sensor fault."
+        "I left the stage before the alarm. Anton was still rehearsing.",
+        "You asked me about the rose last time. It was not from me. Check the dressing rooms.",
+        "The rose was part of the final scene, but one was missing before rehearsal began."
       ],
       "contradiction": {
         "needs": [
-          "gps",
-          "door"
-        ],
-        "id": "hassan_stop",
-        "result": "The GPS slowdown and service-door latch prove Hassan's 'no stop' story is incomplete. He did not plan Nadia's disappearance, but he concealed the slowdown to protect his job."
-      }
-    },
-    "meera": {
-      "name": "Meera Shah",
-      "role": "Corporate lawyer",
-      "art": "res://art/actual/character_atlas.jpg",
-      "dialogue": [
-        "I do not know Nadia Reeve.",
-        "I represent many companies. Her name means nothing to me.",
-        "Fine. I knew who she was. That does not mean I touched her."
-      ],
-      "contradiction": {
-        "needs": [
-          "burner",
-          "map"
-        ],
-        "id": "meera_contact",
-        "result": "The burner phone and Nadia's marked tunnel map connect Meera to the threat. She knew Nadia planned to leave the coach before the terminal."
-      }
-    },
-    "elias": {
-      "name": "Elias Ward",
-      "role": "Lecturer",
-      "art": "res://art/actual/character_atlas.jpg",
-      "dialogue": [
-        "I slept through most of the journey.",
-        "I woke when someone opened the luggage hatch.",
-        "I saw Nadia below, alive. She told me not to say anything."
-      ],
-      "contradiction": {
-        "needs": [
-          "blood",
+          "rose",
           "ticket"
         ],
-        "id": "elias_witness",
-        "result": "The blood belongs to Elias, cut while helping Nadia through the luggage hatch. He lied to protect her, not to harm her."
+        "id": "mira_prop",
+        "result": "Mira did not plant the rose. The torn ticket places her in the lobby during the critical window, but she knew a prop rose was missing."
       }
     },
-    "juno": {
-      "name": "Juno Pike",
-      "role": "Travel blogger",
+    "anton": {
+      "name": "Anton Reeve",
+      "role": "Stage manager",
       "art": "res://art/actual/character_atlas.jpg",
+      "asma_open": "Something about his timing bothers me. Listen to the exact words he uses.",
       "dialogue": [
-        "My camera battery died in the tunnel.",
-        "I deleted nothing important.",
-        "Nadia asked me to erase seven minutes. She said someone would kill her if the video survived."
+        "The fire alarm went off at 10:12. I started evacuation immediately.",
+        "Yes, the watch says 10:17. Watches break. Alarm logs do not.",
+        "The alarm panel was serviced that afternoon. Someone could have delayed the local bell without changing the central log."
       ],
       "contradiction": {
         "needs": [
-          "video"
+          "alarm",
+          "service"
         ],
-        "id": "juno_video",
-        "result": "Recovered video metadata proves Juno deliberately deleted the seven-minute segment at Nadia's request."
+        "id": "anton_alarm",
+        "result": "Anton concealed that the local alarm could be delayed. His statement is technically true but intentionally misleading."
       }
     },
-    "rafi": {
-      "name": "Rafi Bennett",
-      "role": "Terminal security officer",
+    "julian": {
+      "name": "Julian Cross",
+      "role": "Prop master",
       "art": "res://art/actual/character_atlas.jpg",
+      "asma_open": "He keeps watching your hands, not mine. He knows we found something.",
       "dialogue": [
-        "I was assigned to this arrival.",
-        "The assignment came through normal channels.",
-        "The order came early. Too early. Someone expected Nadia to arrive."
+        "I was backstage fixing the blood rig. I never touched the stage-door alarm.",
+        "Fine. I moved the pocket watch. It was part of the set and I thought it had been damaged during rehearsal.",
+        "I picked it up before I knew anyone was dead. It was already stopped."
       ],
       "contradiction": {
         "needs": [
-          "order",
-          "burner"
+          "watch"
         ],
-        "id": "rafi_order",
-        "result": "Rafi's assignment was created before the coach crossed the final toll. Someone using the burner phone tipped terminal security in advance."
+        "id": "julian_watch",
+        "result": "Julian moved the watch and contaminated the scene, but his timeline suggests it stopped before he found it."
+      }
+    },
+    "celeste": {
+      "name": "Celeste Ward",
+      "role": "Theater owner",
+      "art": "res://art/actual/character_atlas.jpg",
+      "asma_open": "She wants us to think this is about the theater. I think it is about what the victim knew.",
+      "dialogue": [
+        "The victim threatened to ruin the production. That is all.",
+        "Those donor records are private. They have nothing to do with a rehearsal accident.",
+        "The victim found payments routed through a shell foundation. I was trying to buy time, not kill anyone."
+      ],
+      "contradiction": {
+        "needs": [
+          "ledger",
+          "contract"
+        ],
+        "id": "celeste_money",
+        "result": "Celeste had a financial motive and tried to delay exposure, but the records do not place her at the alarm panel."
+      }
+    },
+    "amir": {
+      "name": "Amir Hale",
+      "role": "Lighting technician",
+      "art": "res://art/actual/character_atlas.jpg",
+      "asma_open": "He says the blackout was accidental. I do not believe accidents repeat this neatly.",
+      "dialogue": [
+        "The lights cut because the old dimmer board tripped.",
+        "You noticed the same flicker in the last loop. That pattern is not random.",
+        "Someone programmed a five-second blackout cue into the rehearsal stack. I did not write it."
+      ],
+      "contradiction": {
+        "needs": [
+          "cue",
+          "service"
+        ],
+        "id": "amir_cue",
+        "result": "The blackout was programmed, not accidental. Amir knew the system well enough to recognize it, but the cue was added under another login."
       }
     }
   },
   "clues": {
-    "ticket": {
-      "name": "Torn Ticket Stub",
-      "art": "res://art/actual/optimized/wet_umbrella.jpg",
-      "location": "coach",
-      "description": "Nadia tore away the seat number and wrote 'service hatch' on the back."
-    },
-    "door": {
-      "name": "Service-Door Latch Marks",
-      "art": "res://art/actual/optimized/red_thread.jpg",
-      "location": "luggage",
-      "description": "Fresh scrape marks show the emergency service hatch was opened during the final tunnel."
-    },
-    "video": {
-      "name": "Deleted Video Segment",
-      "art": "res://art/actual/optimized/voicemail.jpg",
-      "location": "coach",
-      "description": "Seven minutes were manually deleted from Juno's camera, not lost to battery failure."
-    },
-    "blood": {
-      "name": "Blood on Luggage Rail",
-      "art": "res://art/actual/optimized/coffee_receipt.jpg",
-      "location": "luggage",
-      "description": "The blood type does not match Nadia. It belongs to Elias."
-    },
-    "burner": {
-      "name": "Burner Phone",
+    "watch": {
+      "name": "Cracked Pocket Watch",
       "art": "res://art/actual/optimized/broken_watch.jpg",
-      "location": "terminal",
-      "description": "Messages warn: 'She cannot reach the terminal.' One contact is tied to Meera's firm."
+      "location": "theater",
+      "description": "Stopped at 10:17. The crack is fresh, but the mechanism failed before impact.",
+      "loop_min": 1
     },
-    "gps": {
-      "name": "Unscheduled GPS Slowdown",
+    "ticket": {
+      "name": "Torn Theater Ticket",
       "art": "res://art/actual/optimized/wet_umbrella.jpg",
-      "location": "tunnel",
-      "description": "The coach dropped to walking speed for 19 seconds inside the tunnel."
+      "location": "theater",
+      "description": "Seat B14 was scanned at 10:11 and torn again at 10:16.",
+      "loop_min": 1
     },
-    "map": {
-      "name": "Marked Tunnel Map",
+    "rose": {
+      "name": "Blood-Specked White Rose",
       "art": "res://art/actual/optimized/red_thread.jpg",
-      "location": "tunnel",
-      "description": "Nadia marked a service recess exactly where the coach slowed."
+      "location": "backstage",
+      "description": "One prop rose is missing from the final scene. Petals match those in the alley drain.",
+      "loop_min": 2,
+      "locked_hint": "You remember petals near the stage door, but you did not think to compare them before."
     },
-    "order": {
-      "name": "Early Security Assignment",
+    "alarm": {
+      "name": "Central Fire Alarm Log",
       "art": "res://art/actual/optimized/voicemail.jpg",
-      "location": "terminal",
-      "description": "Rafi's assignment was issued before the coach should have been identifiable as Nadia's route."
+      "location": "office",
+      "description": "Central system logged activation at 10:12, five minutes before the watch stopped.",
+      "loop_min": 1
+    },
+    "service": {
+      "name": "Alarm Service Report",
+      "art": "res://art/actual/optimized/coffee_receipt.jpg",
+      "location": "office",
+      "description": "The local bell relay was replaced that afternoon and left in test-delay mode.",
+      "loop_min": 2,
+      "locked_hint": "The alarm panel looked ordinary before. Now you remember the maintenance sticker."
+    },
+    "cue": {
+      "name": "Hidden Lighting Cue",
+      "art": "res://art/actual/optimized/broken_watch.jpg",
+      "location": "backstage",
+      "description": "A five-second blackout cue was inserted into the rehearsal stack under a borrowed login.",
+      "loop_min": 2,
+      "locked_hint": "The blackout pattern feels familiar. You need another loop to notice exactly why."
+    },
+    "ledger": {
+      "name": "Donor Ledger Copy",
+      "art": "res://art/actual/optimized/wet_umbrella.jpg",
+      "location": "office",
+      "description": "Payments were routed through a shell foundation tied to the theater owner.",
+      "loop_min": 1
+    },
+    "contract": {
+      "name": "Unsigned Cancellation Contract",
+      "art": "res://art/actual/optimized/red_thread.jpg",
+      "location": "office",
+      "description": "The victim planned to cancel the production and expose the shell foundation the next morning.",
+      "loop_min": 2,
+      "locked_hint": "A folded document on the desk seems unimportant the first time through."
+    },
+    "keycard": {
+      "name": "Stage Door Keycard Log",
+      "art": "res://art/actual/optimized/voicemail.jpg",
+      "location": "alley",
+      "description": "A duplicate staff card opened the stage door at 10:10, then again at 10:18.",
+      "loop_min": 3,
+      "locked_hint": "The door sensor chirp is easy to miss. By the third loop, you know exactly when to listen."
     }
   },
   "timeline": [
-    "11:18 PM — Nadia boards the coach.",
-    "11:42 PM — Juno begins filming.",
-    "11:55 PM — Meera sends a burner message.",
-    "12:02 AM — Nadia moves toward the rear luggage hatch.",
-    "12:06 AM — Coach slows inside the final tunnel.",
-    "12:07 AM — Seven minutes of video are deleted.",
-    "12:09 AM — Nadia leaves through the service recess.",
-    "12:16 AM — Coach arrives without her."
+    "9:48 PM — Final rehearsal begins.",
+    "10:07 PM — One prop rose is reported missing.",
+    "10:10 PM — Stage door opens with a duplicate staff card.",
+    "10:12 PM — Central fire alarm logs activation.",
+    "10:13 PM — Programmed blackout cue runs for five seconds.",
+    "10:16 PM — Torn ticket is scanned again.",
+    "10:17 PM — Pocket watch stops.",
+    "10:18 PM — Stage door opens a second time.",
+    "10:21 PM — The victim is found.",
+    "10:24 PM — The loop resets."
   ],
-  "culprit": "meera",
+  "culprit": "anton",
   "strong_clues": [
-    "burner",
-    "map",
-    "door",
-    "gps",
-    "order"
+    "alarm",
+    "service",
+    "cue",
+    "keycard",
+    "watch"
   ],
-  "required_contradiction": "meera_contact",
-  "deduction_prompt": "Who forced Nadia Reeve to stage her disappearance, and who knew her escape plan?",
-  "truth": "Nadia discovered Meera's firm had identified her as the source exposing an illegal land-acquisition scheme. Rather than wait to be attacked at the terminal, Nadia planned her own escape through the luggage service hatch during the tunnel slowdown. Elias helped her, Juno erased the video, and Meera's burner messages prove the threat that forced the disappearance.",
-  "partial": "You identify Meera as the threat but fail to prove Nadia escaped voluntarily. The case remains officially unsolved.",
-  "wrong": "Your accusation does not explain the service hatch, the deleted footage and the terminal order. The tunnel lights flash and the journey begins again.",
-  "case_type": "Disappearance / Missing Person",
+  "required_contradiction": "anton_alarm",
+  "deduction_prompt": "Who manipulated the theater timeline, and what were they trying to hide?",
+  "truth": "Anton used the maintenance delay on the local alarm and a programmed blackout cue to create a false timeline around the victim's death. He moved through the stage door with a duplicate card, then relied on the central alarm log to make the later time seem impossible. The deeper reason the loop keeps returning is still unresolved.",
+  "partial": "You identify the false timeline but cannot prove who controlled both the alarm delay and stage-door access.",
+  "wrong": "Your theory leaves the duplicated keycard, delayed alarm, and programmed blackout unexplained. The stage lights flare and the rehearsal starts again.",
+  "case_type": "Murder / Time-Loop Investigation",
   "investigators": [
     "Asma",
-    "Ryan Khan",
-    "Samira"
-  ]
+    "You"
+  ],
+  "loop_reveals": {
+    "2": "You were right about the timing. This loop, do not chase the body first. Watch the alarm panel and the rose.",
+    "3": "I remember the stage-door chirp now. It happened before we ever looked at the alley. Someone is using the loop against the investigation."
+  }
 }
