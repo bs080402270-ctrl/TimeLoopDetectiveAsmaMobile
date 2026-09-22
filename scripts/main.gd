@@ -5,7 +5,12 @@ const CASE_FILES := [
 	"res://data/case_02.json",
 	"res://data/case_03.json",
 	"res://data/case_04.json",
-	"res://data/case_05.json"
+	"res://data/case_05.json",
+	"res://data/case_06.json",
+	"res://data/case_07.json",
+	"res://data/case_08.json",
+	"res://data/case_09.json",
+	"res://data/case_10.json"
 ]
 
 const C_BG := Color("#07111f")
@@ -40,7 +45,12 @@ const CHARACTER_ATLAS_MAP := {
 	"hassan": 15, "meera": 5, "elias": 6, "juno": 9, "rafi": 10,
 	"sofia": 3, "marcus": 4, "ivy": 7, "noah": 13, "elena": 1,
 	"clara": 8, "anton": 18, "gabriel": 12, "rowan": 17, "selene": 11, "nikolai": 14,
-	"morgan": 2, "iris": 16, "leo": 13, "calvin": 1, "mara": 5, "tate": 6
+	"morgan": 2, "iris": 16, "leo": 13, "calvin": 1, "mara": 5, "tate": 6,
+	"nadia": 5, "marcus": 4, "felix": 6, "lena": 9, "victor": 4,
+	"samira": 11, "ethan": 2, "tariq": 12, "julia": 7, "kenji": 10,
+	"nora": 5, "adrian": 4, "milo": 6, "sofia": 3, "evelyn": 14,
+	"celeste": 7, "amir": 12, "daniel": 15, "mira": 9, "julian": 4,
+	"farid": 1, "hassan": 15, "stranger": 18, "viktor": 4, "leila": 3
 }
 
 const CHARACTER_GALLERY := [
@@ -254,7 +264,7 @@ func _show_main_menu() -> void:
 	hv.add_child(big)
 
 	var sub := Label.new()
-	sub.text = "Five mysteries. Three loops each.\nYou are the only one who remembers."
+	sub.text = "Ten mysteries. Three loops each.\nYou are the only one who remembers."
 	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	sub.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	sub.add_theme_font_size_override("font_size",_fs(23))
@@ -798,7 +808,7 @@ func _show_settings() -> void:
 		_show_settings()
 	))
 	body.add_child(_button("CLEAR ALL CASE PROGRESS",func(): _confirm_clear_progress(),false))
-	body.add_child(_button("ABOUT / VERSION 1.1.0",func(): _show_about(),false))
+	body.add_child(_button("ABOUT / VERSION 1.2.0",func(): _show_about(),false))
 	_build_home_nav("SETTINGS")
 
 func _settings_row(label_text: String,value_text: String,description: String,action: Callable) -> Control:
@@ -828,7 +838,7 @@ func _settings_row(label_text: String,value_text: String,description: String,act
 
 func _confirm_clear_progress() -> void:
 	overlay_title.text = "CLEAR ALL PROGRESS?"
-	overlay_body.text = "This removes saved progress for all five cases on this device. This cannot be undone."
+	overlay_body.text = "This removes saved progress for all ten Season 1 cases on this device. This cannot be undone."
 	_clear(overlay_actions)
 	overlay_actions.add_child(_button("CLEAR PROGRESS",func(): _clear_all_progress(),true))
 	overlay_actions.add_child(_button("CANCEL",func(): overlay.visible=false,false))
@@ -844,7 +854,7 @@ func _clear_all_progress() -> void:
 
 func _show_about() -> void:
 	overlay_title.text = "TIME LOOP DETECTIVE"
-	overlay_body.text = "[center][color=#e6b85c][b]Version 1.1.0[/b][/color][/center]\n\nA story-driven detective mystery built for Android and iOS. Investigate five cases, carry knowledge across loops, expose contradictions and make the final deduction."
+	overlay_body.text = "[center][color=#e6b85c][b]Version 1.2.0[/b][/color][/center]\n\nA story-driven detective mystery built for Android and iOS. Investigate ten Season 1 cases, carry knowledge across loops, expose contradictions and uncover the origin of the time loop."
 	_clear(overlay_actions)
 	overlay_actions.add_child(_button("CLOSE",func(): overlay.visible=false,false))
 	overlay.visible = true

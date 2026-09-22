@@ -20,13 +20,13 @@ func _run() -> void:
 	await process_frame
 	await process_frame
 
-	if game.case_catalog.size() != 5:
-		_fail("expected 5 cases, got %d" % game.case_catalog.size())
+	if game.case_catalog.size() != 10:
+		_fail("expected 10 cases, got %d" % game.case_catalog.size())
 		return
 
 	game._show_case_select()
 	await process_frame
-	if game.body.get_child_count() < 6:
+	if game.body.get_child_count() < 11:
 		_fail("case select did not render all cases")
 		return
 
@@ -157,5 +157,5 @@ func _run() -> void:
 
 		game.save_manager.clear(case_id)
 
-	print("FLOW TEST PASSED: menu, onboarding, all difficulty levels, settings, case select, navigation, evidence, interrogation, loop reset, deduction and true endings work for all five cases.")
+	print("FLOW TEST PASSED: menu, onboarding, all difficulty levels, settings, case select, navigation, evidence, interrogation, loop reset, deduction and true endings work for all ten Season 1 cases.")
 	quit(0)

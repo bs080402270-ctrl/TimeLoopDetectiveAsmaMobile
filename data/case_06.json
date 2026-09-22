@@ -1,0 +1,213 @@
+{
+  "id": "case_06",
+  "title": "Case 06: The Silent Broadcast",
+  "subtitle": "A radio host collapses live on air at 11:17 PM. The final thirty seconds of his broadcast repeat word-for-word in every loop.",
+  "start_location": "studio",
+  "max_actions": 9,
+  "loop_reset_text": "The ON AIR lamp flashes backward. The host's last sentence rewinds into his mouth. It is 10:52 PM again.",
+  "locations": {
+    "studio": {
+      "name": "Broadcast Studio",
+      "art": "res://art/actual/detective_office.jpg",
+      "description": "A locked booth, a live microphone and a coffee cup beside a host who should still be speaking.",
+      "people": [
+        "nadia",
+        "marcus"
+      ]
+    },
+    "control": {
+      "name": "Control Room",
+      "art": "res://art/actual/investigation_desk.jpg",
+      "description": "Waveforms, automation logs and one suspiciously perfect thirty-second segment.",
+      "people": [
+        "felix"
+      ]
+    },
+    "rooftop": {
+      "name": "Rooftop Transmitter",
+      "art": "res://art/actual/base64/cafe_exterior_rain.txt",
+      "description": "Rain needles the antenna deck. Access logs place someone here during the crucial minute.",
+      "people": [
+        "lena"
+      ]
+    },
+    "archive": {
+      "name": "Archive Basement",
+      "art": "res://art/actual/evidence_room.jpg",
+      "description": "Old tapes, donor files and a missing recording connect the station's past to tonight's murder.",
+      "people": [
+        "victor"
+      ]
+    }
+  },
+  "suspects": {
+    "nadia": {
+      "name": "Nadia Vale",
+      "role": "Executive producer",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "I never entered the booth after 10:45.",
+        "The host changed his own coffee order.",
+        "You keep asking about the bracelet. It means nothing."
+      ],
+      "contradiction": {
+        "needs": [
+          "poison",
+          "bracelet"
+        ],
+        "id": "nadia_booth",
+        "result": "Chemical residue and the metallic bracelet strike on the mic prove Nadia entered after 11:00 and handled the poisoned drink."
+      }
+    },
+    "marcus": {
+      "name": "Marcus Reed",
+      "role": "Co-host",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "I was in makeup during the final break.",
+        "We argued, but only about airtime.",
+        "The repeated line sounded live to me."
+      ],
+      "contradiction": {
+        "needs": [
+          "makeup",
+          "waveform"
+        ],
+        "id": "marcus_alibi",
+        "result": "Makeup-room timing clears Marcus while the duplicated waveform proves the final segment was not live."
+      }
+    },
+    "felix": {
+      "name": "Felix Grant",
+      "role": "Sound engineer",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "The automation system ran normally.",
+        "Fine, I inserted a prerecorded segment.",
+        "I did it because Nadia said the host needed privacy."
+      ],
+      "contradiction": {
+        "needs": [
+          "waveform",
+          "automation"
+        ],
+        "id": "felix_edit",
+        "result": "Felix manipulated the broadcast, but the edit happened after the poisoning. He covered the timeline, not the murder."
+      }
+    },
+    "lena": {
+      "name": "Lena Park",
+      "role": "Investigative reporter",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "I came for an interview.",
+        "The host promised me documents about the station accounts.",
+        "I was on the roof calling my editor."
+      ],
+      "contradiction": {
+        "needs": [
+          "access",
+          "message"
+        ],
+        "id": "lena_roof",
+        "result": "Rooftop access and the outgoing message confirm Lena's location during the fatal window."
+      }
+    },
+    "victor": {
+      "name": "Victor Crane",
+      "role": "Station owner",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "The host was unstable.",
+        "There is no fraud at this station.",
+        "Nadia handles production finances, not me."
+      ],
+      "contradiction": {
+        "needs": [
+          "ledger",
+          "tape"
+        ],
+        "id": "victor_money",
+        "result": "The missing tape and ledger show Victor hid financial wrongdoing, but the murder method points elsewhere."
+      }
+    }
+  },
+  "clues": {
+    "waveform": {
+      "name": "Duplicated Waveform",
+      "art": "res://art/actual/base64/voicemail.txt",
+      "location": "control",
+      "description": "The final thirty seconds are digitally identical to an earlier rehearsal."
+    },
+    "poison": {
+      "name": "Coffee Cup Residue",
+      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "location": "studio",
+      "description": "A fast-acting toxin coats the inside rim of the host's cup."
+    },
+    "automation": {
+      "name": "Edited Automation Log",
+      "art": "res://art/actual/base64/broken_watch.txt",
+      "location": "control",
+      "description": "A manual insert was scheduled for 11:16:31 PM."
+    },
+    "tape": {
+      "name": "Missing Archive Tape",
+      "art": "res://art/actual/base64/red_thread.txt",
+      "location": "archive",
+      "description": "A tape naming shell-company payments was removed hours before the show."
+    },
+    "access": {
+      "name": "Rooftop Access Card",
+      "art": "res://art/actual/base64/wet_umbrella.txt",
+      "location": "rooftop",
+      "description": "Lena's card opened the transmitter door before the fatal segment."
+    },
+    "message": {
+      "name": "Deleted Editor Message",
+      "art": "res://art/actual/base64/voicemail.txt",
+      "location": "rooftop",
+      "description": "Lena sent her editor a timestamped warning while the murder unfolded."
+    },
+    "bracelet": {
+      "name": "Mic-Stand Audio Click",
+      "art": "res://art/actual/base64/broken_watch.txt",
+      "location": "studio",
+      "description": "A metallic double-click matches Nadia's heavy bracelet striking the microphone stand."
+    },
+    "makeup": {
+      "name": "Makeup Room Timestamp",
+      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "location": "studio",
+      "description": "Marcus appears on an internal camera throughout the poison window."
+    },
+    "ledger": {
+      "name": "Station Payment Ledger",
+      "art": "res://art/actual/base64/red_thread.txt",
+      "location": "archive",
+      "description": "Shell-company transfers connect Victor and Nadia to a hidden account."
+    }
+  },
+  "timeline": [
+    "10:52 PM — Loop begins.",
+    "11:04 PM — Nadia enters the booth.",
+    "11:08 PM — Host drinks from his cup.",
+    "11:13 PM — Felix prepares prerecorded segment.",
+    "11:16 PM — Automation switches from live feed.",
+    "11:17 PM — Host collapses.",
+    "11:18 PM — Loop resets."
+  ],
+  "culprit": "nadia",
+  "strong_clues": [
+    "poison",
+    "bracelet",
+    "waveform",
+    "automation",
+    "ledger"
+  ],
+  "required_contradiction": "nadia_booth",
+  "deduction_prompt": "Who poisoned the host and used the prerecorded broadcast to disguise the real time of death?",
+  "truth": "Nadia poisoned the host after learning he planned to expose the station's hidden finances. Felix's prerecorded segment made the host appear alive after he was already dying, but Nadia's bracelet click and poison residue place her inside the booth during the true murder window.",
+  "partial": "You identify Nadia, but without proving the broadcast was prerecorded the timeline remains vulnerable.",
+  "wrong": "Your theory cannot explain the duplicated waveform, poisoned cup and Nadia's hidden visit. The ON AIR lamp rewinds."
+}

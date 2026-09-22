@@ -1,0 +1,205 @@
+{
+  "id": "case_07",
+  "title": "Case 07: Platform Zero",
+  "subtitle": "A commuter disappears from a moving subway train between stations. CCTV shows him board, but nobody sees him leave.",
+  "start_location": "carriage",
+  "max_actions": 9,
+  "loop_reset_text": "Tunnel lights reverse one by one. The carriage jolts backward to 6:24 AM.",
+  "locations": {
+    "carriage": {
+      "name": "Subway Carriage",
+      "art": "res://art/actual/base64/case01_suspect_keyart.txt",
+      "description": "A sealed train car, folding seats and floor bolts polished by years of commuters.",
+      "people": [
+        "samira",
+        "ethan",
+        "julia"
+      ]
+    },
+    "platform": {
+      "name": "Platform 12",
+      "art": "res://art/actual/base64/cafe_exterior_rain.txt",
+      "description": "Morning crowds hide small movements. A photographer caught more than he realized.",
+      "people": [
+        "kenji"
+      ]
+    },
+    "tunnel": {
+      "name": "Maintenance Tunnel",
+      "art": "res://art/actual/evidence_room.jpg",
+      "description": "An old service hatch runs beneath the carriage line during the signal slowdown.",
+      "people": [
+        "tariq"
+      ]
+    },
+    "control": {
+      "name": "Transit Control",
+      "art": "res://art/actual/investigation_desk.jpg",
+      "description": "Signal logs and surveillance routing reveal a deliberate three-minute blind spot.",
+      "people": []
+    }
+  },
+  "suspects": {
+    "samira": {
+      "name": "Samira Khan",
+      "role": "Transit security officer",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "Nobody left that carriage.",
+        "I warned the victim about a security leak.",
+        "He had a reason to fear someone on the train."
+      ],
+      "contradiction": {
+        "needs": [
+          "radio",
+          "map"
+        ],
+        "id": "samira_warning",
+        "result": "Samira's radio call and maintenance map prove she warned the victim and helped him plan an escape route."
+      }
+    },
+    "ethan": {
+      "name": "Ethan Cole",
+      "role": "Corporate investigator posing as commuter",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "I was just going to work.",
+        "I never left my seat.",
+        "That tunnel dust could belong to anyone."
+      ],
+      "contradiction": {
+        "needs": [
+          "shoeprint",
+          "photo",
+          "sensor"
+        ],
+        "id": "ethan_followed",
+        "result": "Kenji's reflection photo, shoeprint and carriage weight change prove Ethan followed the victim through the hatch."
+      }
+    },
+    "tariq": {
+      "name": "Tariq Malik",
+      "role": "Transit engineer",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "The hatch is obsolete.",
+        "I slowed the train for signal maintenance.",
+        "I did not know anyone would use it."
+      ],
+      "contradiction": {
+        "needs": [
+          "map",
+          "signal"
+        ],
+        "id": "tariq_hatch",
+        "result": "Tariq created the slowdown and unlocked the hatch, but his control-room log keeps him away from the tunnel."
+      }
+    },
+    "julia": {
+      "name": "Julia Mason",
+      "role": "Victim's wife",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "He never told me he was in danger.",
+        "He said he had evidence against a contractor.",
+        "I begged him not to take the train."
+      ],
+      "contradiction": {
+        "needs": [
+          "message"
+        ],
+        "id": "julia_knew",
+        "result": "Julia knew about the danger but her messages show she tried to stop him, not trap him."
+      }
+    },
+    "kenji": {
+      "name": "Kenji Ito",
+      "role": "Street photographer",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "I photographed the morning crowd.",
+        "I did not notice the reflection until you showed me.",
+        "That man was watching the victim before boarding."
+      ],
+      "contradiction": {
+        "needs": [
+          "photo"
+        ],
+        "id": "kenji_photo",
+        "result": "Kenji's image reveals Ethan tracking the victim before the train even departed."
+      }
+    }
+  },
+  "clues": {
+    "bolts": {
+      "name": "Scratched Floor Bolts",
+      "art": "res://art/actual/base64/broken_watch.txt",
+      "location": "carriage",
+      "description": "Fresh tool marks surround the folding seat above the hidden hatch."
+    },
+    "map": {
+      "name": "Old Maintenance Map",
+      "art": "res://art/actual/base64/red_thread.txt",
+      "location": "tunnel",
+      "description": "A discontinued service hatch aligns exactly under the carriage slowdown point."
+    },
+    "sensor": {
+      "name": "Carriage Weight Shift",
+      "art": "res://art/actual/base64/broken_watch.txt",
+      "location": "control",
+      "description": "Two adult-weight drops occur while the train is still moving."
+    },
+    "photo": {
+      "name": "Platform Reflection Photo",
+      "art": "res://art/actual/base64/voicemail.txt",
+      "location": "platform",
+      "description": "A window reflection shows Ethan watching the victim before boarding."
+    },
+    "radio": {
+      "name": "Emergency Radio Call",
+      "art": "res://art/actual/base64/voicemail.txt",
+      "location": "control",
+      "description": "Samira warns the victim to use the hatch if the train slows unexpectedly."
+    },
+    "shoeprint": {
+      "name": "Tunnel Shoeprint",
+      "art": "res://art/actual/base64/wet_umbrella.txt",
+      "location": "tunnel",
+      "description": "A fresh tread matches Ethan's shoes and follows the victim's path."
+    },
+    "signal": {
+      "name": "Signal Slowdown Log",
+      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "location": "control",
+      "description": "Tariq scheduled an unscheduled three-minute crawl through the old service section."
+    },
+    "message": {
+      "name": "Julia's Warning Message",
+      "art": "res://art/actual/base64/voicemail.txt",
+      "location": "carriage",
+      "description": "Julia begged the victim to skip the train after he mentioned being followed."
+    }
+  },
+  "timeline": [
+    "6:24 AM — Victim boards.",
+    "6:27 AM — Samira sends warning.",
+    "6:29 AM — Train enters slowdown.",
+    "6:30 AM — Victim opens service hatch.",
+    "6:30 AM — Ethan follows.",
+    "6:32 AM — Train reaches next station.",
+    "6:33 AM — Loop resets."
+  ],
+  "culprit": "ethan",
+  "strong_clues": [
+    "photo",
+    "shoeprint",
+    "sensor",
+    "map",
+    "radio"
+  ],
+  "required_contradiction": "ethan_followed",
+  "deduction_prompt": "Who followed the victim through the hidden maintenance hatch after his planned escape?",
+  "truth": "The disappearance was voluntary at first. Samira warned the victim, Tariq's slowdown created the opportunity, and the victim escaped through the old hatch. Ethan, working for the company under investigation, followed him into the tunnel and killed him.",
+  "partial": "You identify Ethan but fail to prove the victim escaped voluntarily before being attacked.",
+  "wrong": "Your theory cannot explain the weight shift, the hidden hatch and Ethan's tunnel footprint. The train rolls backward."
+}

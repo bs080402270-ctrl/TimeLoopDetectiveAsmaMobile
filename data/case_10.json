@@ -1,0 +1,239 @@
+{
+  "id": "case_10",
+  "title": "Case 10: The First Loop",
+  "subtitle": "Someone looks directly at Asma and says: 'You've asked me this before.' For the first time, another person remembers.",
+  "start_location": "lab",
+  "max_actions": 11,
+  "loop_reset_text": "The city clock stops. Every sound stretches into silence. Then Asma wakes before the first experiment again.",
+  "locations": {
+    "lab": {
+      "name": "Abandoned Research Lab",
+      "art": "res://art/actual/investigation_desk.jpg",
+      "description": "Burned consoles and a shattered temporal-memory chamber mark where the first loop began.",
+      "people": [
+        "leila",
+        "hassan"
+      ]
+    },
+    "archive": {
+      "name": "Underground Archive",
+      "art": "res://art/actual/evidence_room.jpg",
+      "description": "Project files reveal who funded the experiment and who ordered its safety limits removed.",
+      "people": [
+        "viktor"
+      ]
+    },
+    "clock": {
+      "name": "City Clock Tower",
+      "art": "res://art/actual/base64/cafe_exterior_rain.txt",
+      "description": "The Stranger waits where every loop's clocks briefly agree.",
+      "people": [
+        "stranger",
+        "samira"
+      ]
+    },
+    "vault": {
+      "name": "Police Evidence Vault",
+      "art": "res://art/actual/detective_office.jpg",
+      "description": "Evidence from earlier cases shares the same impossible timing anomalies.",
+      "people": [
+        "farid"
+      ]
+    }
+  },
+  "suspects": {
+    "farid": {
+      "name": "Chief Farid",
+      "role": "Police chief and Asma's mentor",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "I kept the old case sealed to protect you.",
+        "You were at the original lab incident.",
+        "I thought forgetting would save you."
+      ],
+      "contradiction": {
+        "needs": [
+          "vaultlog",
+          "photo"
+        ],
+        "id": "farid_secret",
+        "result": "Farid concealed Asma's connection to the experiment but did not cause the temporal failure."
+      }
+    },
+    "hassan": {
+      "name": "Dr. Hassan",
+      "role": "Temporal systems historian",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "The project preserved memory across catastrophic resets.",
+        "It was never meant to loop an entire district.",
+        "Someone removed the probability governor."
+      ],
+      "contradiction": {
+        "needs": [
+          "governor",
+          "manual"
+        ],
+        "id": "hassan_design",
+        "result": "Hassan's design records show the system was altered after his safety review."
+      }
+    },
+    "samira": {
+      "name": "Samira",
+      "role": "Hacker who remembers fragments",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "I dream events before they happen.",
+        "The same checksum appears in every corrupted camera file.",
+        "The Stranger has been changing small things."
+      ],
+      "contradiction": {
+        "needs": [
+          "checksum",
+          "camera"
+        ],
+        "id": "samira_pattern",
+        "result": "Samira proves the earlier cases share the same temporal corruption signature."
+      }
+    },
+    "stranger": {
+      "name": "The Stranger",
+      "role": "Another survivor of thousands of loops",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "You think breaking the loop saves everyone.",
+        "I have seen the timeline outside it.",
+        "I keep this running because someone dies when it ends."
+      ],
+      "contradiction": {
+        "needs": [
+          "diary",
+          "clock"
+        ],
+        "id": "stranger_keeps_loop",
+        "result": "The Stranger's diary and clock data prove he has deliberately sustained the loop after the original accident."
+      }
+    },
+    "viktor": {
+      "name": "Viktor Malik",
+      "role": "Project financier",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "I funded research, nothing more.",
+        "The safety limits were slowing progress.",
+        "No one could predict the system would fail."
+      ],
+      "contradiction": {
+        "needs": [
+          "order",
+          "governor",
+          "ledger"
+        ],
+        "id": "viktor_sabotage",
+        "result": "Viktor's signed order, removed governor and payment trail prove he forced the unsafe test that caused the first loop."
+      }
+    },
+    "leila": {
+      "name": "Dr. Leila Rahman",
+      "role": "Lead temporal-memory scientist",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "The loop is not happening to you. It is happening around you.",
+        "Your memory survived because you were inside the calibration field.",
+        "Viktor ordered us to bypass the governor."
+      ],
+      "contradiction": {
+        "needs": [
+          "manual",
+          "order"
+        ],
+        "id": "leila_warning",
+        "result": "Leila's notes confirm she warned against the test and documented Viktor's override order."
+      }
+    }
+  },
+  "clues": {
+    "governor": {
+      "name": "Removed Probability Governor",
+      "art": "res://art/actual/base64/broken_watch.txt",
+      "location": "lab",
+      "description": "The key safety module was physically bypassed before the first experiment."
+    },
+    "manual": {
+      "name": "Original Safety Manual",
+      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "location": "lab",
+      "description": "The approved procedure forbids operating without the governor."
+    },
+    "order": {
+      "name": "Viktor's Override Order",
+      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "location": "archive",
+      "description": "A signed directive orders the team to proceed despite failed safety checks."
+    },
+    "ledger": {
+      "name": "Project Funding Ledger",
+      "art": "res://art/actual/base64/red_thread.txt",
+      "location": "archive",
+      "description": "Bonus payments were tied to completing the test before a market event."
+    },
+    "diary": {
+      "name": "The Stranger's Loop Diary",
+      "art": "res://art/actual/base64/voicemail.txt",
+      "location": "clock",
+      "description": "Thousands of loop counts prove someone has remained conscious far longer than Asma."
+    },
+    "clock": {
+      "name": "Synchronized Clock Drift",
+      "art": "res://art/actual/base64/broken_watch.txt",
+      "location": "clock",
+      "description": "All anomaly sites drift by the same impossible fraction before resetting."
+    },
+    "checksum": {
+      "name": "Recurring Corruption Checksum",
+      "art": "res://art/actual/base64/voicemail.txt",
+      "location": "vault",
+      "description": "Camera files from earlier cases share one temporal-error signature."
+    },
+    "camera": {
+      "name": "Cross-Case Camera Archive",
+      "art": "res://art/actual/evidence_room.jpg",
+      "location": "vault",
+      "description": "Frames from five previous cases contain the same one-frame discontinuity."
+    },
+    "vaultlog": {
+      "name": "Sealed Evidence Access Log",
+      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "location": "vault",
+      "description": "Farid repeatedly accessed the original lab file after Asma joined the force."
+    },
+    "photo": {
+      "name": "Original Lab Photograph",
+      "art": "res://art/actual/base64/case01_suspect_keyart.txt",
+      "location": "vault",
+      "description": "Asma appears inside the calibration zone moments before the first failure."
+    }
+  },
+  "timeline": [
+    "T-18 min — Leila objects to unsafe test.",
+    "T-12 min — Viktor signs override.",
+    "T-06 min — Governor is bypassed.",
+    "T-00 — Experiment activates.",
+    "T+04 sec — Calibration field collapses.",
+    "T+11 sec — First district-wide reset.",
+    "Present — The Stranger continues stabilizing the loop."
+  ],
+  "culprit": "viktor",
+  "strong_clues": [
+    "governor",
+    "order",
+    "ledger",
+    "manual",
+    "photo"
+  ],
+  "required_contradiction": "viktor_sabotage",
+  "deduction_prompt": "Who caused the original temporal disaster that trapped Asma and the city inside the repeating probability window?",
+  "truth": "Viktor Malik caused the original disaster by forcing the experiment forward after its safety checks failed and ordering the probability governor bypassed. The Stranger did not create the loop, but later learned to sustain it because the restored timeline costs someone he refuses to lose. Asma finally understands both the cause and the prison.",
+  "partial": "You expose Viktor's role but cannot prove how Asma became the one person who reliably remembers.",
+  "wrong": "Your accusation explains neither the override order nor the missing governor. The city clock stops and the first loop begins again."
+}

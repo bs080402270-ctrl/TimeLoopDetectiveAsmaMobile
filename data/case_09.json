@@ -1,0 +1,208 @@
+{
+  "id": "case_09",
+  "title": "Case 09: The Blackout Floor",
+  "subtitle": "An entire luxury apartment floor loses power for ninety seconds. When the lights return, a businessman is dead inside a biometric-locked penthouse.",
+  "start_location": "penthouse",
+  "max_actions": 10,
+  "loop_reset_text": "Emergency lights blink off in reverse. The elevator descends upward. It is 8:51 PM again.",
+  "locations": {
+    "penthouse": {
+      "name": "Penthouse",
+      "art": "res://art/actual/detective_office.jpg",
+      "description": "A biometric door stayed sealed, yet the victim died while every camera went dark.",
+      "people": [
+        "celeste",
+        "amir"
+      ]
+    },
+    "electrical": {
+      "name": "Electrical Room",
+      "art": "res://art/actual/investigation_desk.jpg",
+      "description": "A deliberate overload caused the blackout, but that does not reveal who used it.",
+      "people": [
+        "daniel"
+      ]
+    },
+    "neighbor": {
+      "name": "Neighboring Apartment",
+      "art": "res://art/actual/base64/case01_daily_bean.txt",
+      "description": "Thin walls, a balcony and a witness who heard the elevator machinery during the blackout.",
+      "people": [
+        "mira"
+      ]
+    },
+    "elevator": {
+      "name": "Elevator Machine Room",
+      "art": "res://art/actual/evidence_room.jpg",
+      "description": "Grease, drywall dust and a hidden service panel reveal another route into the penthouse.",
+      "people": [
+        "julian"
+      ]
+    }
+  },
+  "suspects": {
+    "celeste": {
+      "name": "Celeste Ward",
+      "role": "Victim's wife",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "I caused the blackout to open the safe.",
+        "I wanted documents, not his death.",
+        "I never left the electrical corridor."
+      ],
+      "contradiction": {
+        "needs": [
+          "documents",
+          "breaker"
+        ],
+        "id": "celeste_blackout",
+        "result": "Celeste admits causing the blackout to steal documents, but her route never reaches the murder scene."
+      }
+    },
+    "amir": {
+      "name": "Amir Shah",
+      "role": "Bodyguard",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "The front door never opened.",
+        "I stayed by the elevator lobby.",
+        "I heard a metallic vibration during the outage."
+      ],
+      "contradiction": {
+        "needs": [
+          "biometric",
+          "vibration"
+        ],
+        "id": "amir_door",
+        "result": "Biometric logs confirm Amir's claim that nobody used the front door."
+      }
+    },
+    "daniel": {
+      "name": "Daniel Price",
+      "role": "Building electrician",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "The outage was too clean to be accidental.",
+        "Someone bridged two circuits deliberately.",
+        "I was downstairs when it happened."
+      ],
+      "contradiction": {
+        "needs": [
+          "breaker",
+          "invoice"
+        ],
+        "id": "daniel_work",
+        "result": "Daniel's maintenance invoice shows he previously installed a service panel at Julian's request, but he did not trigger the murder."
+      }
+    },
+    "mira": {
+      "name": "Mira Lane",
+      "role": "Neighbor",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "I heard the elevator motor twice.",
+        "No one crossed my hallway.",
+        "The vibration stopped just before the lights returned."
+      ],
+      "contradiction": {
+        "needs": [
+          "vibration"
+        ],
+        "id": "mira_heard",
+        "result": "A phone recording captures the same machine-room vibration Mira described."
+      }
+    },
+    "julian": {
+      "name": "Julian Cross",
+      "role": "Business partner",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "I was in the lobby.",
+        "I never entered the penthouse.",
+        "That maintenance passage does not reach his apartment."
+      ],
+      "contradiction": {
+        "needs": [
+          "grease",
+          "drywall",
+          "invoice"
+        ],
+        "id": "julian_passage",
+        "result": "Grease, drywall dust and Julian's maintenance request prove he used the hidden service passage during the blackout."
+      }
+    }
+  },
+  "clues": {
+    "breaker": {
+      "name": "Bridged Breaker",
+      "art": "res://art/actual/base64/broken_watch.txt",
+      "location": "electrical",
+      "description": "The blackout was intentionally triggered for exactly ninety seconds."
+    },
+    "grease": {
+      "name": "Elevator Grease",
+      "art": "res://art/actual/base64/wet_umbrella.txt",
+      "location": "penthouse",
+      "description": "Industrial grease appears on the penthouse service wall."
+    },
+    "drywall": {
+      "name": "Fresh Drywall Powder",
+      "art": "res://art/actual/base64/red_thread.txt",
+      "location": "elevator",
+      "description": "A hidden panel was opened moments before the murder."
+    },
+    "biometric": {
+      "name": "Biometric Backup Log",
+      "art": "res://art/actual/base64/broken_watch.txt",
+      "location": "penthouse",
+      "description": "The front door remained sealed through the entire blackout."
+    },
+    "documents": {
+      "name": "Stolen Company Documents",
+      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "location": "penthouse",
+      "description": "Celeste targeted the safe, giving her a motive for the blackout but not the killing."
+    },
+    "invoice": {
+      "name": "Maintenance Invoice",
+      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "location": "electrical",
+      "description": "Julian secretly paid for service access to be widened weeks earlier."
+    },
+    "vibration": {
+      "name": "Elevator Vibration Recording",
+      "art": "res://art/actual/base64/voicemail.txt",
+      "location": "neighbor",
+      "description": "A recording captures movement through the machine room during the outage."
+    },
+    "watch": {
+      "name": "Smartwatch Heart Log",
+      "art": "res://art/actual/base64/broken_watch.txt",
+      "location": "penthouse",
+      "description": "The victim dies halfway through the blackout, not after power returns."
+    }
+  },
+  "timeline": [
+    "8:51 PM — Loop begins.",
+    "8:58 PM — Celeste enters electrical corridor.",
+    "9:03 PM — Blackout starts.",
+    "9:03 PM — Julian enters service passage.",
+    "9:04 PM — Victim dies.",
+    "9:04 PM — Julian exits through machine room.",
+    "9:05 PM — Power returns.",
+    "9:06 PM — Loop resets."
+  ],
+  "culprit": "julian",
+  "strong_clues": [
+    "grease",
+    "drywall",
+    "invoice",
+    "vibration",
+    "biometric"
+  ],
+  "required_contradiction": "julian_passage",
+  "deduction_prompt": "Who used the blackout and hidden elevator passage to enter a penthouse without opening its biometric door?",
+  "truth": "Celeste caused the blackout to steal documents, but Julian exploited it. He had secretly modified the elevator service passage weeks earlier, entered through the wall, killed his partner and escaped before the power returned.",
+  "partial": "You identify Julian but fail to separate his murder route from Celeste's blackout scheme.",
+  "wrong": "Your theory cannot explain the sealed biometric door, elevator grease and hidden service panel. The floor goes dark again."
+}

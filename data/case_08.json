@@ -1,0 +1,208 @@
+{
+  "id": "case_08",
+  "title": "Case 08: The Last Photograph",
+  "subtitle": "A celebrity photographer is found dead in a locked gallery. His camera contains a photograph taken two minutes after his official time of death.",
+  "start_location": "gallery",
+  "max_actions": 9,
+  "loop_reset_text": "The camera shutter clicks in reverse. Wine rises into glasses. The gallery returns to 9:41 PM.",
+  "locations": {
+    "gallery": {
+      "name": "Main Gallery",
+      "art": "res://art/actual/detective_office.jpg",
+      "description": "White walls, expensive canvases and one body beneath a photograph that should not exist.",
+      "people": [
+        "nora",
+        "adrian"
+      ]
+    },
+    "darkroom": {
+      "name": "Digital Darkroom",
+      "art": "res://art/actual/investigation_desk.jpg",
+      "description": "Timers, memory cards and edit stations reveal what the camera was ordered to do after death.",
+      "people": [
+        "milo"
+      ]
+    },
+    "rooftop": {
+      "name": "Rooftop Garden",
+      "art": "res://art/actual/base64/cafe_exterior_rain.txt",
+      "description": "Wet footprints and long shadows expose when the famous final photograph was really staged.",
+      "people": [
+        "sofia"
+      ]
+    },
+    "office": {
+      "name": "Private Gallery Office",
+      "art": "res://art/actual/evidence_room.jpg",
+      "description": "Insurance files and pigment reports hide a stolen-art operation.",
+      "people": [
+        "evelyn"
+      ]
+    }
+  },
+  "suspects": {
+    "nora": {
+      "name": "Nora Blake",
+      "role": "Model and former partner",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "We argued before the show.",
+        "I left the rooftop before nine forty.",
+        "The final photo was not mine."
+      ],
+      "contradiction": {
+        "needs": [
+          "wine",
+          "timer"
+        ],
+        "id": "nora_left",
+        "result": "Nora's prints are on the wine glass, but the camera timer proves the fatal photo was automated after she left."
+      }
+    },
+    "adrian": {
+      "name": "Adrian Frost",
+      "role": "Gallery owner",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "I left before the photographer died.",
+        "The rooftop image proves he was alive later.",
+        "Those paintings are genuine."
+      ],
+      "contradiction": {
+        "needs": [
+          "shadow",
+          "pigment",
+          "alarm"
+        ],
+        "id": "adrian_timeline",
+        "result": "Shadow angle, forged pigment and alarm timing prove Adrian staged the later photograph to manufacture an alibi."
+      }
+    },
+    "milo": {
+      "name": "Milo Chen",
+      "role": "Photographer's assistant",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "The camera had interval mode enabled.",
+        "I never touched the memory card after nine thirty.",
+        "He was documenting something dangerous."
+      ],
+      "contradiction": {
+        "needs": [
+          "timer",
+          "card"
+        ],
+        "id": "milo_camera",
+        "result": "Milo's workstation confirms interval mode and shows the missing card was removed by someone with gallery-office access."
+      }
+    },
+    "sofia": {
+      "name": "Sofia Reyes",
+      "role": "Arts journalist",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "I was interviewing collectors upstairs.",
+        "The photographer told me originals were being swapped for copies.",
+        "The rooftop was empty when I went outside."
+      ],
+      "contradiction": {
+        "needs": [
+          "shadow",
+          "article"
+        ],
+        "id": "sofia_story",
+        "result": "Sofia's draft article and rooftop timing support her claim that she was investigating the same fraud."
+      }
+    },
+    "evelyn": {
+      "name": "Evelyn Cross",
+      "role": "Private collector",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "I bought what the gallery certified.",
+        "I knew nothing about forgeries.",
+        "Adrian handled provenance."
+      ],
+      "contradiction": {
+        "needs": [
+          "pigment",
+          "invoice"
+        ],
+        "id": "evelyn_purchase",
+        "result": "Evelyn bought a forged work unknowingly; invoices point back to Adrian's private office."
+      }
+    }
+  },
+  "clues": {
+    "timer": {
+      "name": "Interval Timer Setting",
+      "art": "res://art/actual/base64/broken_watch.txt",
+      "location": "darkroom",
+      "description": "The camera was programmed to fire automatically after the victim's death."
+    },
+    "shadow": {
+      "name": "Shadow Direction",
+      "art": "res://art/actual/base64/wet_umbrella.txt",
+      "location": "rooftop",
+      "description": "The final photograph's shadows match an earlier time, not its metadata timestamp."
+    },
+    "pigment": {
+      "name": "Forged Painting Pigment",
+      "art": "res://art/actual/base64/red_thread.txt",
+      "location": "office",
+      "description": "Modern pigment appears in a supposedly historic canvas."
+    },
+    "card": {
+      "name": "Missing Memory Card",
+      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "location": "darkroom",
+      "description": "A second card containing provenance photos was removed."
+    },
+    "wine": {
+      "name": "Wine-Glass Print",
+      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "location": "gallery",
+      "description": "Nora handled the glass during an earlier argument but left before the murder window."
+    },
+    "alarm": {
+      "name": "Gallery Alarm Log",
+      "art": "res://art/actual/base64/broken_watch.txt",
+      "location": "office",
+      "description": "Adrian's office opened during the interval before the staged rooftop shot."
+    },
+    "article": {
+      "name": "Unpublished Article",
+      "art": "res://art/actual/base64/voicemail.txt",
+      "location": "rooftop",
+      "description": "Sofia's draft accuses the gallery of swapping originals for copies."
+    },
+    "invoice": {
+      "name": "Private Sale Invoice",
+      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "location": "office",
+      "description": "Forged works were sold through a shell company controlled by Adrian."
+    }
+  },
+  "timeline": [
+    "9:41 PM — Loop begins.",
+    "9:47 PM — Nora argues with victim.",
+    "9:52 PM — Interval timer is armed.",
+    "9:55 PM — Victim is killed.",
+    "9:57 PM — Camera takes staged rooftop image.",
+    "10:01 PM — Body discovered.",
+    "10:02 PM — Loop resets."
+  ],
+  "culprit": "adrian",
+  "strong_clues": [
+    "timer",
+    "shadow",
+    "pigment",
+    "alarm",
+    "invoice"
+  ],
+  "required_contradiction": "adrian_timeline",
+  "deduction_prompt": "Who killed the photographer and used an automated image to make him appear alive after death?",
+  "truth": "Adrian killed the photographer to protect a forged-art scheme, then relied on the camera's interval timer and manipulated metadata to push the apparent time of death later. The rooftop shadows expose the trick.",
+  "partial": "You identify Adrian but cannot fully prove how the post-mortem photograph was created.",
+  "wrong": "Your theory leaves the delayed photograph and forged-art trail unexplained. The shutter rewinds."
+}

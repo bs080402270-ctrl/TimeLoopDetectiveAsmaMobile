@@ -2,13 +2,18 @@
 
 A mobile-first detective mystery built with **Godot 4.7.2**.
 
-## Five playable cases
+## Season 1 — Ten playable cases
 
 1. **The Last Cup** — café murder and blackout.
 2. **The Missing Passenger** — a passenger vanishes inside a tunnel.
 3. **Room 417** — an impossible locked-room hotel death.
 4. **The Midnight Train** — a judge disappears and the wrong passenger is killed.
 5. **The Vanishing Witness** — a protected witness escapes a compromised safe house.
+6. **The Silent Broadcast** — a radio host dies during a broadcast that is not truly live.
+7. **Platform Zero** — a commuter vanishes from a moving subway car.
+8. **The Last Photograph** — a camera takes a photograph after its owner is already dead.
+9. **The Blackout Floor** — a killer enters a biometric-locked penthouse without using the door.
+10. **The First Loop** — Asma discovers who caused the original temporal disaster.
 
 Each case has its own suspects, locations, clues, timeline, contradiction rules, three-loop progression, autosave, and endings.
 
