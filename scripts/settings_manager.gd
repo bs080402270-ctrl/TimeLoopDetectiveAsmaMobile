@@ -13,6 +13,8 @@ var selected_outfit := "classic"
 var detective_credits := 250
 var unlocked_outfits: Array[String] = ["classic"]
 var unlocked_gear: Array[String] = ["handcuffs"]
+var rewarded_cases: Array[String] = []
+var achievements: Array[String] = []
 
 func _init() -> void:
 	load_settings()
@@ -31,6 +33,8 @@ func load_settings() -> void:
 	detective_credits = int(cfg.get_value("economy", "detective_credits", detective_credits))
 	unlocked_outfits = Array(cfg.get_value("economy", "unlocked_outfits", unlocked_outfits), TYPE_STRING, "", null)
 	unlocked_gear = Array(cfg.get_value("economy", "unlocked_gear", unlocked_gear), TYPE_STRING, "", null)
+	rewarded_cases = Array(cfg.get_value("economy", "rewarded_cases", rewarded_cases), TYPE_STRING, "", null)
+	achievements = Array(cfg.get_value("profile", "achievements", achievements), TYPE_STRING, "", null)
 
 func save_settings() -> void:
 	var cfg := ConfigFile.new()
@@ -44,6 +48,8 @@ func save_settings() -> void:
 	cfg.set_value("economy", "detective_credits", detective_credits)
 	cfg.set_value("economy", "unlocked_outfits", unlocked_outfits)
 	cfg.set_value("economy", "unlocked_gear", unlocked_gear)
+	cfg.set_value("economy", "rewarded_cases", rewarded_cases)
+	cfg.set_value("profile", "achievements", achievements)
 	cfg.save(PATH)
 
 func toggle_graphics() -> void:
@@ -139,3 +145,19 @@ func buy_gear(id: String, cost: int) -> bool:
 func add_credits(amount: int) -> void:
 	detective_credits = maxi(0, detective_credits + amount)
 	save_settings()
+
+
+func reward_case_once(case_id: String, amount: int) -> int:
+	if case_id in rewarded_cases:
+		return 0
+	rewarded_cases.append(case_id)
+	detective_credits += maxi(0, amount)
+	save_settings()
+	return maxi(0, amount)
+
+func unlock_achievement(id: String) -> bool:
+	if id in achievements:
+		return false
+	achievements.append(id)
+	save_settings()
+	return true
