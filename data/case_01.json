@@ -8,7 +8,7 @@
   "locations": {
     "cafe": {
       "name": "The Daily Bean",
-      "art": "res://art/actual/base64/case01_daily_bean.txt",
+      "art": "res://art/actual/evidence_room.jpg",
       "description": "Warm light, cooling coffee, and too many people pretending not to watch Daniel Rowan. Every loop begins here.",
       "people": [
         "maya",
@@ -17,13 +17,13 @@
     },
     "office": {
       "name": "Manager's Office",
-      "art": "res://art/actual/base64/case01_suspect_keyart.txt",
+      "art": "res://art/actual/final_deduction.jpg",
       "description": "Paper, graphite and stale espresso. The breaker cabinet hums behind a staff photo.",
       "people": []
     },
     "alley": {
       "name": "Rear Alley",
-      "art": "res://art/actual/base64/cafe_exterior_rain.txt",
+      "art": "res://art/actual/base64/case01_daily_bean.txt",
       "description": "Rain turns the rear alley into a mirror. The back door latch catches fibers and secrets.",
       "people": [
         "lina"
@@ -31,7 +31,7 @@
     },
     "riverside": {
       "name": "Riverside Walk",
-      "art": "res://art/backgrounds/riverside.svg",
+      "art": "res://art/actual/base64/cafe_exterior_rain.txt",
       "description": "The riverside is quieter than the cafe. Omar comes here to review recordings away from Daniel.",
       "people": [
         "omar"
@@ -42,7 +42,7 @@
     "maya": {
       "name": "Maya Cole",
       "role": "Cafe manager",
-      "art": "res://art/actual/base64/maya.txt",
+      "art": "res://art/actual/character_atlas.jpg",
       "dialogue": [
         "Daniel argued with everyone. I stayed behind the counter until the blackout.",
         "You're asking about the order again? The ticket changed after Daniel complained.",
@@ -59,7 +59,7 @@
     "omar": {
       "name": "Omar Hale",
       "role": "Investigative journalist",
-      "art": "res://art/actual/base64/omar.txt",
+      "art": "res://art/actual/character_atlas.jpg",
       "dialogue": [
         "I left before the blackout. I was by the river, working.",
         "Fine. I recorded Daniel. He threatened Lina with an audit.",
@@ -76,7 +76,7 @@
     "lina": {
       "name": "Lina Vale",
       "role": "Daniel's business partner",
-      "art": "res://art/actual/base64/lina.txt",
+      "art": "res://art/actual/character_atlas.jpg",
       "dialogue": [
         "Daniel and I had business disagreements. I never went near the office.",
         "The thread proves I used the back door, not that I harmed Daniel.",
@@ -94,7 +94,7 @@
     "theo": {
       "name": "Theo Marsh",
       "role": "Barista",
-      "art": "res://art/characters/theo.svg",
+      "art": "res://art/actual/character_atlas.jpg",
       "dialogue": [
         "I was cleaning the grinder. I heard the breaker snap.",
         "Yes, I borrowed the office key. I returned it before 8:40.",
@@ -112,49 +112,49 @@
   "clues": {
     "receipt": {
       "name": "Altered Receipt",
-      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "art": "res://art/actual/base64/broken_watch.txt",
       "location": "cafe",
       "description": "Daniel's usual black coffee was changed to an almond syrup drink at 8:31."
     },
     "watch": {
       "name": "Broken Watch",
-      "art": "res://art/actual/base64/broken_watch.txt",
+      "art": "res://art/actual/base64/wet_umbrella.txt",
       "location": "cafe",
       "description": "The watch stopped at exactly 8:47, matching the blackout."
     },
     "umbrella": {
       "name": "Wet Umbrella",
-      "art": "res://art/actual/base64/wet_umbrella.txt",
+      "art": "res://art/actual/base64/red_thread.txt",
       "location": "alley",
       "description": "Fresh rainwater and a violet fiber place someone in the rear alley."
     },
     "thread": {
       "name": "Violet Thread",
-      "art": "res://art/actual/base64/red_thread.txt",
+      "art": "res://art/actual/base64/voicemail.txt",
       "location": "alley",
       "description": "A violet thread is caught on the rear latch. Lina wears the same fabric."
     },
     "voicemail": {
       "name": "Recorded Argument",
-      "art": "res://art/actual/base64/voicemail.txt",
+      "art": "res://art/actual/base64/coffee_receipt.txt",
       "location": "riverside",
       "description": "Omar's recording catches Daniel telling Lina: 'Tomorrow the auditors see everything.'"
     },
     "breaker": {
       "name": "Breaker Dust",
-      "art": "res://art/evidence/breaker.svg",
+      "art": "res://art/actual/base64/broken_watch.txt",
       "location": "office",
       "description": "Fresh graphite dust shows the breaker was deliberately bridged for a timed failure."
     },
     "ledger": {
       "name": "Missing Ledger Page",
-      "art": "res://art/evidence/ledger.svg",
+      "art": "res://art/actual/base64/wet_umbrella.txt",
       "location": "office",
       "description": "A torn page documents transfers approved by Lina to a shell account."
     },
     "key": {
       "name": "Spare Office Key",
-      "art": "res://art/evidence/key.svg",
+      "art": "res://art/actual/base64/red_thread.txt",
       "location": "cafe",
       "description": "Theo returned the spare key before the blackout. His access does not match the murder window."
     }

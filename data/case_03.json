@@ -1,34 +1,189 @@
 {
-  "id":"case_03",
-  "title":"Case 03: Room 417",
-  "subtitle":"A software founder dies inside a hotel room chained from the inside. No one enters during the murder window.",
-  "start_location":"hall",
-  "max_actions":9,
-  "loop_reset_text":"The hotel clock flips from 2:17 AM back to 1:40 AM. Room 417 seals itself again.",
-  "locations":{
-    "hall":{"name":"Fourth-Floor Hall","art":"res://art/cases/case03_hall.svg","description":"Thick carpet, silent doors and a camera watching a corridor where nobody seems to enter Room 417.","people":["sofia","ivy"]},
-    "room":{"name":"Room 417","art":"res://art/cases/case03_room.svg","description":"The door chain hangs inside. The minibar is open. The room is colder than the hallway.","people":["marcus"]},
-    "maintenance":{"name":"HVAC Maintenance","art":"res://art/cases/case03_maintenance.svg","description":"Filters, ducts and service controls feed the fourth floor. Someone has recently opened panel 4B.","people":["noah"]},
-    "conference":{"name":"Conference Lounge","art":"res://art/cases/case03_conference.svg","description":"Investor badges, coffee trays and private meeting schedules from the evening's conference.","people":["elena"]}
+  "id": "case_03",
+  "title": "Case 03: Room 417",
+  "subtitle": "A software founder dies inside a hotel room chained from the inside. No one enters during the murder window.",
+  "start_location": "hall",
+  "max_actions": 9,
+  "loop_reset_text": "The hotel clock flips from 2:17 AM back to 1:40 AM. Room 417 seals itself again.",
+  "locations": {
+    "hall": {
+      "name": "Fourth-Floor Hall",
+      "art": "res://art/actual/base64/case01_suspect_keyart.txt",
+      "description": "Thick carpet, silent doors and a camera watching a corridor where nobody seems to enter Room 417.",
+      "people": [
+        "sofia",
+        "ivy"
+      ]
+    },
+    "room": {
+      "name": "Room 417",
+      "art": "res://art/actual/detective_office.jpg",
+      "description": "The door chain hangs inside. The minibar is open. The room is colder than the hallway.",
+      "people": [
+        "marcus"
+      ]
+    },
+    "maintenance": {
+      "name": "HVAC Maintenance",
+      "art": "res://art/actual/investigation_desk.jpg",
+      "description": "Filters, ducts and service controls feed the fourth floor. Someone has recently opened panel 4B.",
+      "people": [
+        "noah"
+      ]
+    },
+    "conference": {
+      "name": "Conference Lounge",
+      "art": "res://art/actual/evidence_room.jpg",
+      "description": "Investor badges, coffee trays and private meeting schedules from the evening's conference.",
+      "people": [
+        "elena"
+      ]
+    }
   },
-  "suspects":{
-    "sofia":{"name":"Sofia Cross","role":"Estranged wife","art":"res://art/cases/case03_sofia.svg","dialogue":["I left Adrian before two.","I met him, argued, and left. He was alive.","I wanted a divorce, not his death."],"contradiction":{"needs":["camera","keylog"],"id":"sofia_left","result":"Camera timing and key logs show Sofia left before the lethal system cycle. Her argument is real, but the locked-room setup predates it."}},
-    "marcus":{"name":"Marcus Vale","role":"Business partner","art":"res://art/cases/case03_marcus.svg","dialogue":["I never entered 417 tonight.","The board was removing me, yes, but Adrian and I still had business to finish.","Someone used a cloned conference badge to access the service floor."],"contradiction":{"needs":["badge","camera"],"id":"marcus_badge","result":"Marcus's badge was cloned. The access event cannot prove he entered maintenance."}},
-    "ivy":{"name":"Ivy Chen","role":"Hotel manager","art":"res://art/cases/case03_ivy.svg","dialogue":["Only engineering can alter ventilation.","Housekeeping inspected the room at six.","The minibar inventory was wrong before Adrian checked in."],"contradiction":{"needs":["minibar","schedule"],"id":"ivy_inventory","result":"The housekeeping schedule and minibar discrepancy prove Room 417 was prepared hours before Adrian arrived."}},
-    "noah":{"name":"Noah Reed","role":"Conference technician","art":"res://art/cases/case03_noah.svg","dialogue":["I work audiovisual, not HVAC.","I borrowed a service tablet to fix a projector.","The same tablet can reach building controls. I did not know that."],"contradiction":{"needs":["tablet","badge"],"id":"noah_access","result":"Noah's service tablet was used, but a cloned badge authenticated the command. Someone exploited his device."}},
-    "elena":{"name":"Dr. Elena Hart","role":"Investor and former chemist","art":"res://art/cases/case03_elena.svg","dialogue":["I invested in Adrian's company. That is all.","I know chemistry, so of course everyone looks at me.","Adrian discovered I had used his company to hide a toxic-materials contract."],"contradiction":{"needs":["filter","residue","tablet"],"id":"elena_method","result":"The missing filter, residue and remote HVAC command establish Elena's method: the room itself became the delivery system."}}
+  "suspects": {
+    "sofia": {
+      "name": "Sofia Cross",
+      "role": "Estranged wife",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "I left Adrian before two.",
+        "I met him, argued, and left. He was alive.",
+        "I wanted a divorce, not his death."
+      ],
+      "contradiction": {
+        "needs": [
+          "camera",
+          "keylog"
+        ],
+        "id": "sofia_left",
+        "result": "Camera timing and key logs show Sofia left before the lethal system cycle. Her argument is real, but the locked-room setup predates it."
+      }
+    },
+    "marcus": {
+      "name": "Marcus Vale",
+      "role": "Business partner",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "I never entered 417 tonight.",
+        "The board was removing me, yes, but Adrian and I still had business to finish.",
+        "Someone used a cloned conference badge to access the service floor."
+      ],
+      "contradiction": {
+        "needs": [
+          "badge",
+          "camera"
+        ],
+        "id": "marcus_badge",
+        "result": "Marcus's badge was cloned. The access event cannot prove he entered maintenance."
+      }
+    },
+    "ivy": {
+      "name": "Ivy Chen",
+      "role": "Hotel manager",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "Only engineering can alter ventilation.",
+        "Housekeeping inspected the room at six.",
+        "The minibar inventory was wrong before Adrian checked in."
+      ],
+      "contradiction": {
+        "needs": [
+          "minibar",
+          "schedule"
+        ],
+        "id": "ivy_inventory",
+        "result": "The housekeeping schedule and minibar discrepancy prove Room 417 was prepared hours before Adrian arrived."
+      }
+    },
+    "noah": {
+      "name": "Noah Reed",
+      "role": "Conference technician",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "I work audiovisual, not HVAC.",
+        "I borrowed a service tablet to fix a projector.",
+        "The same tablet can reach building controls. I did not know that."
+      ],
+      "contradiction": {
+        "needs": [
+          "tablet",
+          "badge"
+        ],
+        "id": "noah_access",
+        "result": "Noah's service tablet was used, but a cloned badge authenticated the command. Someone exploited his device."
+      }
+    },
+    "elena": {
+      "name": "Dr. Elena Hart",
+      "role": "Investor and former chemist",
+      "art": "res://art/actual/character_atlas.jpg",
+      "dialogue": [
+        "I invested in Adrian's company. That is all.",
+        "I know chemistry, so of course everyone looks at me.",
+        "Adrian discovered I had used his company to hide a toxic-materials contract."
+      ],
+      "contradiction": {
+        "needs": [
+          "filter",
+          "residue",
+          "tablet"
+        ],
+        "id": "elena_method",
+        "result": "The missing filter, residue and remote HVAC command establish Elena's method: the room itself became the delivery system."
+      }
+    }
   },
-  "clues":{
-    "minibar":{"name":"Minibar Inventory Gap","art":"res://art/evidence/receipt.svg","location":"room","description":"Two solvent-containing minibar items were replaced before check-in."},
-    "residue":{"name":"Meltwater Residue","art":"res://art/evidence/thread.svg","location":"room","description":"The ice bucket contains residue that becomes dangerous when aerosolized with the missing filter compound."},
-    "keylog":{"name":"Digital Key Log","art":"res://art/evidence/key.svg","location":"hall","description":"No guest key opens Room 417 during the lethal window."},
-    "schedule":{"name":"Housekeeping Schedule","art":"res://art/evidence/ledger.svg","location":"hall","description":"Room 417 was serviced hours before Adrian arrived, leaving time to prepare it."},
-    "camera":{"name":"Hallway Camera","art":"res://art/evidence/phone.svg","location":"hall","description":"The corridor remains empty when the poisoning begins."},
-    "filter":{"name":"Missing Ventilation Filter","art":"res://art/evidence/breaker.svg","location":"maintenance","description":"Panel 4B is missing a specialized filter cartridge."},
-    "tablet":{"name":"Remote HVAC Command","art":"res://art/evidence/phone.svg","location":"maintenance","description":"A service tablet scheduled a 2:11 AM ventilation cycle for Room 417."},
-    "badge":{"name":"Cloned Conference Badge","art":"res://art/evidence/key.svg","location":"conference","description":"A cloned badge authorized access under Marcus's identity."}
+  "clues": {
+    "minibar": {
+      "name": "Minibar Inventory Gap",
+      "art": "res://art/actual/base64/red_thread.txt",
+      "location": "room",
+      "description": "Two solvent-containing minibar items were replaced before check-in."
+    },
+    "residue": {
+      "name": "Meltwater Residue",
+      "art": "res://art/actual/base64/voicemail.txt",
+      "location": "room",
+      "description": "The ice bucket contains residue that becomes dangerous when aerosolized with the missing filter compound."
+    },
+    "keylog": {
+      "name": "Digital Key Log",
+      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "location": "hall",
+      "description": "No guest key opens Room 417 during the lethal window."
+    },
+    "schedule": {
+      "name": "Housekeeping Schedule",
+      "art": "res://art/actual/base64/broken_watch.txt",
+      "location": "hall",
+      "description": "Room 417 was serviced hours before Adrian arrived, leaving time to prepare it."
+    },
+    "camera": {
+      "name": "Hallway Camera",
+      "art": "res://art/actual/base64/wet_umbrella.txt",
+      "location": "hall",
+      "description": "The corridor remains empty when the poisoning begins."
+    },
+    "filter": {
+      "name": "Missing Ventilation Filter",
+      "art": "res://art/actual/base64/red_thread.txt",
+      "location": "maintenance",
+      "description": "Panel 4B is missing a specialized filter cartridge."
+    },
+    "tablet": {
+      "name": "Remote HVAC Command",
+      "art": "res://art/actual/base64/voicemail.txt",
+      "location": "maintenance",
+      "description": "A service tablet scheduled a 2:11 AM ventilation cycle for Room 417."
+    },
+    "badge": {
+      "name": "Cloned Conference Badge",
+      "art": "res://art/actual/base64/coffee_receipt.txt",
+      "location": "conference",
+      "description": "A cloned badge authorized access under Marcus's identity."
+    }
   },
-  "timeline":[
+  "timeline": [
     "1:40 AM — Adrian returns to Room 417.",
     "1:48 AM — Sofia visits and leaves.",
     "1:55 AM — Cloned badge accesses maintenance.",
@@ -37,11 +192,17 @@
     "2:14 AM — Adrian becomes incapacitated.",
     "2:17 AM — Loop resets."
   ],
-  "culprit":"elena",
-  "strong_clues":["residue","filter","tablet","badge","minibar"],
-  "required_contradiction":"elena_method",
-  "deduction_prompt":"Who prepared Room 417 so the victim could die without the killer entering during the murder window?",
-  "truth":"Elena prepared Room 417 before Adrian checked in, using substituted minibar chemicals and a modified ventilation filter. She later used Noah's service tablet and a cloned Marcus badge to trigger the lethal HVAC cycle remotely. The locked door was genuine because the murder mechanism was already inside.",
-  "partial":"You name Elena but cannot fully explain how the locked room worked. The prosecution has motive, but the mechanism remains vulnerable to doubt.",
-  "wrong":"The room remains logically impossible under your theory. At 2:17 AM the hotel resets."
+  "culprit": "elena",
+  "strong_clues": [
+    "residue",
+    "filter",
+    "tablet",
+    "badge",
+    "minibar"
+  ],
+  "required_contradiction": "elena_method",
+  "deduction_prompt": "Who prepared Room 417 so the victim could die without the killer entering during the murder window?",
+  "truth": "Elena prepared Room 417 before Adrian checked in, using substituted minibar chemicals and a modified ventilation filter. She later used Noah's service tablet and a cloned Marcus badge to trigger the lethal HVAC cycle remotely. The locked door was genuine because the murder mechanism was already inside.",
+  "partial": "You name Elena but cannot fully explain how the locked room worked. The prosecution has motive, but the mechanism remains vulnerable to doubt.",
+  "wrong": "The room remains logically impossible under your theory. At 2:17 AM the hotel resets."
 }
