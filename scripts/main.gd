@@ -33,6 +33,7 @@ const ART_SETTINGS := "res://art/actual/detective_office.jpg"
 const ART_INTRO := "res://art/actual/investigation_desk.jpg"
 const ART_DIFFICULTY := "res://art/actual/investigation_desk.jpg"
 const ART_CHARACTER_ATLAS := "res://art/actual/character_atlas.jpg"
+const ART_SEASON2_TEASER := "res://art/actual/season2_teaser.jpg"
 
 const CHARACTER_REAL_ART := {
 	"maya": "res://art/actual/base64/maya.txt",
@@ -300,7 +301,34 @@ func _show_main_menu() -> void:
 	body.add_child(_button("START INVESTIGATION  →",func(): _show_intro(),true))
 	body.add_child(_button("CHARACTERS",func(): _show_character_gallery(),false))
 	body.add_child(_button("HOW TO PLAY",func(): _show_help(),false))
+	body.add_child(_button("SEASON 2 TEASER",func(): _show_season2_teaser(),false))
 	_build_home_nav("HOME")
+
+func _show_season2_teaser() -> void:
+	_clear(body)
+	_clear(nav)
+	overlay.visible = false
+	_set_polished_background(ART_SEASON2_TEASER,0.30)
+	title_label.text = "SEASON 2"
+	status_label.text = "A NEW LOOP BEGINS."
+
+	var teaser := TextureRect.new()
+	teaser.texture = _load_tex(ART_SEASON2_TEASER)
+	teaser.custom_minimum_size = Vector2(0,760)
+	teaser.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	teaser.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	body.add_child(teaser)
+
+	var copy := Label.new()
+	copy.text = "Different people. Deeper questions. Same city. New truths.\nCOMING SOON"
+	copy.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	copy.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	copy.add_theme_font_size_override("font_size",_fs(24))
+	copy.add_theme_color_override("font_color",C_GOLD)
+	body.add_child(copy)
+
+	body.add_child(_button("BACK TO SEASON 1",func(): _show_main_menu(),true))
+	_build_home_nav("")
 
 func _show_intro() -> void:
 	_clear(body)
@@ -947,6 +975,11 @@ func _finish(kind: String) -> void:
 	else:
 		overlay_body.text = "[center][color=#e32636][b]WRONG ACCUSATION[/b][/color][/center]\n\n"+str(case_data.get("wrong","Wrong accusation."))
 	_clear(overlay_actions)
+	if kind == "true" and current_case_id == "case_10":
+		overlay_actions.add_child(_button("SEASON 2 TEASER  →",func():
+			overlay.visible = false
+			_show_season2_teaser()
+		,true))
 	overlay_actions.add_child(_button("RESTART CASE",func(): _restart_case(),true))
 	overlay_actions.add_child(_button("CASE SELECT",func(): _show_case_select_from_overlay(),false))
 	overlay.visible = true
