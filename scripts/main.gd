@@ -993,6 +993,8 @@ func _person_card(id: String) -> Control:
 func _clue_card(id: String) -> Control:
 	var data: Dictionary = case_data.clues[id]
 	var found: bool = id in state.clues
+	var loop_min := int(data.get("loop_min",1))
+	var locked_by_loop := int(state.loop) < loop_min
 	var card := PanelContainer.new()
 	card.add_theme_stylebox_override("panel",_panel_style(C_PANEL,14,C_GOLD if found else Color("#174b78"),2,12))
 
@@ -1018,15 +1020,20 @@ func _clue_card(id: String) -> Control:
 	vb.add_child(n)
 
 	var d := Label.new()
-	d.text = str(data.get("description","")) if found else _clue_hint_text(data)
+	if found:
+		d.text = str(data.get("description",""))
+	elif locked_by_loop:
+		d.text = str(data.get("locked_hint","Something about this clue does not make sense yet."))
+	else:
+		d.text = _clue_hint_text(data)
 	d.add_theme_font_size_override("font_size",_fs(19))
 	d.add_theme_color_override("font_color",C_MUTED)
 	d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vb.add_child(d)
 
 	var cid: String = id
-	var b := _button("RECORDED" if found else "INSPECT",func(): _collect_clue(cid),false)
-	b.disabled = found
+	var b := _button("RECORDED" if found else ("LOCKED UNTIL NEXT LOOP" if locked_by_loop else "INSPECT"),func(): _collect_clue(cid),false)
+	b.disabled = found or locked_by_loop
 	b.custom_minimum_size = Vector2(145,72)
 	row.add_child(b)
 	return card
@@ -1036,12 +1043,16 @@ func _interrogate(id: String) -> void:
 	var lines: Array = data.get("dialogue",[])
 	var idx := clampi(int(state.loop)-1,0,maxi(0,lines.size()-1))
 	var suspect_line := str(lines[idx]) if lines.size() > 0 else "They watch you carefully."
+	var remembered_topic := str(state.get("partner_choices",{}).get(id,""))
+	var asma_open := str(data.get("asma_open","Look at me. Something is wrong here."))
+	if remembered_topic != "" and int(state.loop) > 1:
+		asma_open = "Last loop you pushed on %s. I remember. Let's see what changes this time." % remembered_topic.replace("_"," ")
 
 	# Manga / visual-novel presentation: Asma and the suspect share the scene.
 	background.texture = _character_portrait(id,str(data.get("art","")))
 	background.modulate = Color(0.82,0.88,0.96,0.32)
 	overlay_title.text = str(data.get("name",id)) + " • INTERROGATION"
-	overlay_body.text = "[color=#e6b85c][b]ASMA[/b][/color]\nTell me what really happened. Small details matter in a loop.\n\n[color=#9db1c7][b]%s[/b][/color]\n%s" % [str(data.get("name",id)),suspect_line]
+	overlay_body.text = "[color=#e6b85c][b]ASMA[/b][/color]\n%s\n\n[color=#9db1c7][b]%s[/b][/color]\n%s" % [asma_open,str(data.get("name",id)),suspect_line]
 	_clear(overlay_actions)
 	overlay_actions.add_child(_manga_portrait_strip(id))
 
@@ -1090,6 +1101,10 @@ func _manga_portrait_strip(id: String) -> Control:
 
 func _manga_followup(id: String,topic: String) -> void:
 	var data: Dictionary = case_data.suspects[id]
+	var choices: Dictionary = state.get("partner_choices",{})
+	choices[id] = topic
+	state.partner_choices = choices
+	_save()
 	var lines: Array = data.get("dialogue",[])
 	var base_idx := clampi(int(state.loop)-1,0,maxi(0,lines.size()-1))
 	var response := str(lines[base_idx]) if lines.size() > 0 else "I have already told you what I know."
@@ -1097,7 +1112,8 @@ func _manga_followup(id: String,topic: String) -> void:
 		response = str(lines[(base_idx + 1) % lines.size()])
 
 	var question := "Walk me through the exact timeline again." if topic == "timeline" else "What did you have to gain from what happened?"
-	overlay_body.text = "[color=#e6b85c][b]ASMA[/b][/color]\n%s\n\n[color=#9db1c7][b]%s[/b][/color]\n%s" % [question,str(data.get("name",id)),response]
+	var partner_reaction := "Good catch. Let's test that." if topic == "timeline" else "I see why you think motive matters. I am not convinced yet."
+	overlay_body.text = "[color=#e6b85c][b]ASMA[/b][/color]\n%s\n%s\n\n[color=#9db1c7][b]%s[/b][/color]\n%s" % [partner_reaction,question,str(data.get("name",id)),response]
 
 func _press_suspect(id: String) -> void:
 	var data: Dictionary = case_data.suspects[id]
@@ -1146,9 +1162,16 @@ func _reset_loop() -> void:
 	state.loop = int(state.loop)+1
 	state.action = 0
 	state.location = str(case_data.get("start_location",""))
+	var memories: Array = state.get("loop_memories",[])
+	memories.append("Loop %d ended with %d clues and %d contradictions." % [int(state.loop)-1,state.clues.size(),state.contradictions.size()])
+	state.loop_memories = memories
 	_save()
 	overlay_title.text = "↻  TIME LOOP RESET"
+	var reveal_map: Dictionary = case_data.get("loop_reveals",{})
+	var reveal := str(reveal_map.get(str(state.loop),""))
 	overlay_body.text = "[center][font_size=28][color=#2c8cff]YOU KEEP THE KNOWLEDGE.\nTHE WORLD RESETS.[/color][/font_size][/center]\n\n" + str(case_data.get("loop_reset_text","Time folds backward. You remember."))
+	if reveal != "":
+		overlay_body.text += "\n\n[color=#e6b85c][b]ASMA[/b][/color]\n" + reveal
 	_clear(overlay_actions)
 	overlay_actions.add_child(_button("START LOOP %d  →" % int(state.loop),func(): _close_and_refresh(),true))
 	overlay.visible = true
