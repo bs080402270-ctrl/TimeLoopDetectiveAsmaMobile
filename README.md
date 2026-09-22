@@ -122,3 +122,7 @@ See:
 ## Next content milestone
 
 After Case 01 is tested on real Android devices, the reusable case/data structure can be expanded into Case 02 without replacing the core game systems.
+
+## Character artwork
+
+Season 1 includes **20 dedicated character portrait resources** under `art/actual/characters/`. Each Godot AtlasTexture resource is wired to the generated real-character atlas, providing stable reusable portrait paths for current and future cases.

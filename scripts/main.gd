@@ -37,7 +37,32 @@ const ART_CHARACTER_ATLAS := "res://art/actual/character_atlas.jpg"
 const CHARACTER_REAL_ART := {
 	"maya": "res://art/actual/base64/maya.txt",
 	"omar": "res://art/actual/base64/omar.txt",
-	"lina": "res://art/actual/base64/lina.txt"
+	"lina": "res://art/actual/base64/lina.txt",
+	"asma": "res://art/actual/characters/asma.tres",
+	"chief_farid": "res://art/actual/characters/chief_farid.tres",
+	"ryan_khan": "res://art/actual/characters/ryan_khan.tres",
+	"dr_leila": "res://art/actual/characters/dr_leila.tres",
+	"viktor_malik": "res://art/actual/characters/viktor_malik.tres",
+	"nora_said": "res://art/actual/characters/nora_said.tres",
+	"imran": "res://art/actual/characters/imran.tres",
+	"mrs_zahra": "res://art/actual/characters/mrs_zahra.tres",
+	"marco": "res://art/actual/characters/marco.tres",
+	"ayumi": "res://art/actual/characters/ayumi.tres",
+	"the_fixer": "res://art/actual/characters/the_fixer.tres",
+	"samira": "res://art/actual/characters/samira.tres",
+	"colonel_rashid": "res://art/actual/characters/colonel_rashid.tres",
+	"kareem": "res://art/actual/characters/kareem.tres",
+	"ayesha": "res://art/actual/characters/ayesha.tres",
+	"dr_hassan": "res://art/actual/characters/dr_hassan.tres",
+	"officer_lina": "res://art/actual/characters/officer_lina.tres",
+	"the_mayor": "res://art/actual/characters/the_mayor.tres",
+	"the_stranger": "res://art/actual/characters/the_stranger.tres",
+	"young_omar": "res://art/actual/characters/young_omar.tres",
+	"farid": "res://art/actual/characters/chief_farid.tres",
+	"leila": "res://art/actual/characters/dr_leila.tres",
+	"viktor": "res://art/actual/characters/viktor_malik.tres",
+	"hassan": "res://art/actual/characters/dr_hassan.tres",
+	"stranger": "res://art/actual/characters/the_stranger.tres"
 }
 
 const CHARACTER_ATLAS_MAP := {
@@ -54,26 +79,26 @@ const CHARACTER_ATLAS_MAP := {
 }
 
 const CHARACTER_GALLERY := [
-	{"name":"Asma","role":"Detective trapped in the time loop","index":0},
-	{"name":"Chief Farid","role":"Police chief and mentor","index":1},
-	{"name":"Ryan Khan","role":"Detective with secrets","index":2},
-	{"name":"Dr. Leila","role":"Forensic analyst","index":3},
-	{"name":"Viktor Malik","role":"Influential businessman","index":4},
-	{"name":"Nora Said","role":"Socialite with hidden motives","index":5},
-	{"name":"Imran","role":"Street informant","index":6},
-	{"name":"Mrs. Zahra","role":"Hotel owner","index":7},
-	{"name":"Marco","role":"Bartender and observer","index":8},
-	{"name":"Ayumi","role":"Independent journalist","index":9},
-	{"name":"The Fixer","role":"Underground contact","index":10},
-	{"name":"Samira","role":"Hacker","index":11},
-	{"name":"Colonel Rashid","role":"Retired military officer","index":12},
-	{"name":"Kareem","role":"Street vendor and witness","index":13},
-	{"name":"Ayesha","role":"Hotel staff","index":14},
-	{"name":"Dr. Hassan","role":"Historian","index":15},
-	{"name":"Officer Lina","role":"Police officer","index":16},
-	{"name":"The Mayor","role":"Public official with secrets","index":17},
-	{"name":"The Stranger","role":"Unknown figure in every loop","index":18},
-	{"name":"Young Omar","role":"Witness","index":19}
+	{"id":"asma","name":"Asma","role":"Detective trapped in the time loop","index":0},
+	{"id":"chief_farid","name":"Chief Farid","role":"Police chief and mentor","index":1},
+	{"id":"ryan_khan","name":"Ryan Khan","role":"Detective with secrets","index":2},
+	{"id":"dr_leila","name":"Dr. Leila","role":"Forensic analyst","index":3},
+	{"id":"viktor_malik","name":"Viktor Malik","role":"Influential businessman","index":4},
+	{"id":"nora_said","name":"Nora Said","role":"Socialite with hidden motives","index":5},
+	{"id":"imran","name":"Imran","role":"Street informant","index":6},
+	{"id":"mrs_zahra","name":"Mrs. Zahra","role":"Hotel owner","index":7},
+	{"id":"marco","name":"Marco","role":"Bartender and observer","index":8},
+	{"id":"ayumi","name":"Ayumi","role":"Independent journalist","index":9},
+	{"id":"the_fixer","name":"The Fixer","role":"Underground contact","index":10},
+	{"id":"samira","name":"Samira","role":"Hacker","index":11},
+	{"id":"colonel_rashid","name":"Colonel Rashid","role":"Retired military officer","index":12},
+	{"id":"kareem","name":"Kareem","role":"Street vendor and witness","index":13},
+	{"id":"ayesha","name":"Ayesha","role":"Hotel staff","index":14},
+	{"id":"dr_hassan","name":"Dr. Hassan","role":"Historian","index":15},
+	{"id":"officer_lina","name":"Officer Lina","role":"Police officer","index":16},
+	{"id":"the_mayor","name":"The Mayor","role":"Public official with secrets","index":17},
+	{"id":"the_stranger","name":"The Stranger","role":"Unknown figure in every loop","index":18},
+	{"id":"young_omar","name":"Young Omar","role":"Witness","index":19}
 ]
 
 var case_catalog: Array[Dictionary] = []
@@ -397,7 +422,7 @@ func _show_character_gallery() -> void:
 		card.add_child(row)
 
 		var portrait := TextureRect.new()
-		portrait.texture = _atlas_portrait(int(item.index))
+		portrait.texture = _character_portrait(str(item.id), "")
 		portrait.custom_minimum_size = Vector2(150,210)
 		portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
