@@ -106,7 +106,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p build
-          godot --headless --path . --export-release "Android Release" build/TimeLoopDetective.aab
+          godot --headless --path . --install-android-build-template --export-release "Android Release" build/TimeLoopDetective.aab
           test -s build/TimeLoopDetective.aab
 
       - name: Upload AAB
