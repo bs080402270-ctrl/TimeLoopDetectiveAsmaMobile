@@ -380,7 +380,28 @@ func _show_main_menu() -> void:
 	profile.add_theme_color_override("font_color",C_GOLD)
 	body.add_child(profile)
 
-	body.add_child(_button("START INVESTIGATION  →",func(): _show_intro(),true))
+	# HOME CASE PREVIEW: real packaged content is visible immediately on mobile.
+	_add_section_title("CASES")
+	if case_catalog.is_empty():
+		var missing := Label.new()
+		missing.text = "CASE DATA COULD NOT BE LOADED. Please install the latest complete APK."
+		missing.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		missing.add_theme_font_size_override("font_size",_fs(20))
+		missing.add_theme_color_override("font_color",C_RED)
+		body.add_child(missing)
+	else:
+		var preview_count: int = mini(3,case_catalog.size())
+		for i in range(preview_count):
+			body.add_child(_case_card(case_catalog[i],i+1))
+		var loaded := Label.new()
+		loaded.text = "%d CASES LOADED • artwork ready" % case_catalog.size()
+		loaded.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		loaded.add_theme_font_size_override("font_size",_fs(15))
+		loaded.add_theme_color_override("font_color",C_GOLD)
+		body.add_child(loaded)
+
+	body.add_child(_button("PLAY CASES NOW  →",func(): _show_case_select(),true))
+	body.add_child(_button("HOW THE LOOP WORKS",func(): _show_intro(),false))
 	body.add_child(_button("CHOOSE INVESTIGATOR",func(): _show_investigator_select(),false))
 	body.add_child(_button("DETECTIVE STORE",func(): _show_store(),false))
 	body.add_child(_button("ACHIEVEMENTS",func(): _show_achievements(),false))
@@ -794,6 +815,17 @@ func _show_case_select() -> void:
 	title_label.text = "SELECT A CASE"
 	status_label.text = "Each case is a loop. Each truth changes everything."
 
+	var ready := PanelContainer.new()
+	ready.add_theme_stylebox_override("panel",_panel_style(Color("#0b1828"),14,C_GOLD,2,12))
+	var ready_text := Label.new()
+	ready_text.text = "PACKAGED GAME CONTENT • %d CASES • OFFLINE ART ENABLED" % case_catalog.size()
+	ready_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	ready_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	ready_text.add_theme_font_size_override("font_size",_fs(16))
+	ready_text.add_theme_color_override("font_color",C_GOLD)
+	ready.add_child(ready_text)
+	body.add_child(ready)
+
 	var index := 1
 	for data in case_catalog:
 		var case_id := str(data.get("id",""))
@@ -819,6 +851,8 @@ func _case_card(data: Dictionary,index: int) -> Control:
 
 	var start_id := str(data.get("start_location",""))
 	var thumb_path := str(data.get("locations",{}).get(start_id,{}).get("art",""))
+	if thumb_path == "":
+		thumb_path = ART_CASES
 	var thumb := TextureRect.new()
 	thumb.texture = _load_tex(thumb_path)
 	thumb.custom_minimum_size = Vector2(116,92)
@@ -1504,7 +1538,7 @@ func _show_settings() -> void:
 		_show_visual_service_info()
 	))
 	body.add_child(_button("CLEAR ALL CASE PROGRESS",func(): _confirm_clear_progress(),false))
-	body.add_child(_button("ABOUT / VERSION 1.5.1",func(): _show_about(),false))
+	body.add_child(_button("ABOUT / VERSION 1.5.2",func(): _show_about(),false))
 	_build_home_nav("SETTINGS")
 
 func _dynamic_visual_status() -> String:
@@ -1567,7 +1601,7 @@ func _clear_all_progress() -> void:
 
 func _show_about() -> void:
 	overlay_title.text = "TIME LOOP DETECTIVE"
-	overlay_body.text = "[center][color=#e6b85c][b]Version 1.5.1[/b][/color][/center]\n\nA story-driven detective mystery built for Android and iOS. Investigate ten Season 1 cases, choose your investigator, use outfits and equipment, request hints, expose contradictions, confront culprits and uncover the origin of the time loop."
+	overlay_body.text = "[center][color=#e6b85c][b]Version 1.5.2[/b][/color][/center]\n\nA story-driven detective mystery built for Android and iOS. Investigate ten Season 1 cases, choose your investigator, use outfits and equipment, request hints, expose contradictions, confront culprits and uncover the origin of the time loop."
 	_clear(overlay_actions)
 	overlay_actions.add_child(_button("CLOSE",func(): overlay.visible=false,false))
 	overlay.visible = true
