@@ -1495,9 +1495,28 @@ func _show_settings() -> void:
 		_vibrate(25)
 		_show_settings()
 	))
+	body.add_child(_settings_row("AI VISUALS",_dynamic_visual_status(),"When online, important current scenes can be generated dynamically. If unavailable, gameplay continues instantly with built-in artwork.",func():
+		_show_visual_service_info()
+	))
 	body.add_child(_button("CLEAR ALL CASE PROGRESS",func(): _confirm_clear_progress(),false))
 	body.add_child(_button("ABOUT / VERSION 1.5.0",func(): _show_about(),false))
 	_build_home_nav("SETTINGS")
+
+func _dynamic_visual_status() -> String:
+	if dynamic_image_client != null and dynamic_image_client.enabled:
+		return "ONLINE"
+	return "OFFLINE FALLBACK"
+
+func _show_visual_service_info() -> void:
+	overlay_title.text = "AI VISUALS"
+	var online := dynamic_image_client != null and dynamic_image_client.enabled
+	if online:
+		overlay_body.text = "[color=#e6b85c][b]ONLINE[/b][/color]\n\nImportant current scenes can request a dynamic visual. The game never generates future scenes in advance. Gameplay continues immediately with fallback art while the image is being generated."
+	else:
+		overlay_body.text = "[color=#9db1c7][b]OFFLINE FALLBACK[/b][/color]\n\nThe image service is not active yet. All cases remain fully playable with built-in artwork. Once the secure backend endpoint is configured, live scene generation activates automatically."
+	_clear(overlay_actions)
+	overlay_actions.add_child(_button("CLOSE",func(): overlay.visible=false,false))
+	overlay.visible = true
 
 func _settings_row(label_text: String,value_text: String,description: String,action: Callable) -> Control:
 	var card := PanelContainer.new()
