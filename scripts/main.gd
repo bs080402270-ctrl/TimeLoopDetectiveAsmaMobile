@@ -128,12 +128,16 @@ var title_label: Label
 var status_label: Label
 var body: VBoxContainer
 var main_scroll: ScrollContainer
+var overlay_scroll: ScrollContainer
 var nav: GridContainer
 var texture_cache: Dictionary = {}
 var overlay: PanelContainer
 var overlay_title: Label
 var overlay_body: RichTextLabel
 var overlay_actions: VBoxContainer
+var touch_scroll: ScrollContainer
+var touch_scroll_last_position := Vector2.ZERO
+var touch_scroll_dragging := false
 
 func _ready() -> void:
 	# Build the essential UI first. Optional online/story systems must never
@@ -175,6 +179,20 @@ func _on_dynamic_image_failed(_scene_id: String,_reason: String) -> void:
 	pass
 
 func _input(event: InputEvent) -> void:
+	if event is InputEventScreenTouch:
+		if event.pressed:
+			touch_scroll = _scroll_container_at(event.position)
+			touch_scroll_last_position = event.position
+			touch_scroll_dragging = touch_scroll != null
+		else:
+			touch_scroll = null
+			touch_scroll_dragging = false
+		return
+	if event is InputEventScreenDrag and touch_scroll_dragging and touch_scroll != null:
+		touch_scroll.scroll_vertical = maxi(0,touch_scroll.scroll_vertical - roundi(event.relative.y))
+		touch_scroll_last_position = event.position
+		get_viewport().set_input_as_handled()
+		return
 	if event.is_action_pressed("back"):
 		get_viewport().set_input_as_handled()
 		if overlay != null and overlay.visible:
@@ -263,6 +281,7 @@ func _build_shell() -> void:
 	main_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	main_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	main_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+	main_scroll.scroll_deadzone = 8
 	root.add_child(main_scroll)
 
 	body = VBoxContainer.new()
@@ -295,13 +314,20 @@ func _build_shell() -> void:
 	overlay_title.add_theme_color_override("font_color",C_TEXT)
 	ov.add_child(overlay_title)
 
+	overlay_scroll = ScrollContainer.new()
+	overlay_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	overlay_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	overlay_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+	overlay_scroll.scroll_deadzone = 8
+	ov.add_child(overlay_scroll)
+
 	overlay_body = RichTextLabel.new()
 	overlay_body.bbcode_enabled = true
-	overlay_body.fit_content = false
-	overlay_body.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	overlay_body.fit_content = true
+	overlay_body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	overlay_body.add_theme_font_size_override("normal_font_size",_fs(25))
 	overlay_body.add_theme_color_override("default_color",C_TEXT)
-	ov.add_child(overlay_body)
+	overlay_scroll.add_child(overlay_body)
 
 	overlay_actions = VBoxContainer.new()
 	overlay_actions.add_theme_constant_override("separation",10)
@@ -1870,6 +1896,13 @@ func _scroll_to_top() -> void:
 	if main_scroll != null:
 		main_scroll.scroll_vertical = 0
 		main_scroll.call_deferred("set_v_scroll",0)
+
+func _scroll_container_at(position: Vector2) -> ScrollContainer:
+	if overlay != null and overlay.visible and overlay_scroll != null and overlay_scroll.get_global_rect().has_point(position):
+		return overlay_scroll
+	if main_scroll != null and main_scroll.get_global_rect().has_point(position):
+		return main_scroll
+	return null
 
 func _ensure_audio() -> void:
 	if audio == null:
