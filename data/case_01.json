@@ -8,38 +8,38 @@
   "locations": {
     "cafe": {
       "name": "The Daily Bean",
-      "art": "res://art/noir_generated/case01_vanishing_witness.jpg",
+      "art": "res://art/noir_latest/rainy_noir_detective_office.jpg",
       "description": "Warm light, cooling coffee, and too many people pretending not to watch Daniel Rowan. Every loop begins here.",
       "people": [
         "maya",
         "theo"
       ],
-      "visual": "res://art/noir_generated/case01_vanishing_witness.jpg"
+      "visual": "res://art/noir_latest/rainy_noir_detective_office.jpg"
     },
     "office": {
       "name": "Manager's Office",
-      "art": "res://art/backgrounds/office.svg",
+      "art": "res://art/noir_latest/rainy_noir_detective_office.jpg",
       "description": "Paper, graphite and stale espresso. The breaker cabinet hums behind a staff photo.",
       "people": [],
-      "visual": "res://art/backgrounds/office.svg"
+      "visual": "res://art/noir_latest/rainy_noir_detective_office.jpg"
     },
     "alley": {
       "name": "Rear Alley",
-      "art": "res://art/backgrounds/alley.svg",
+      "art": "res://art/noir_latest/rainy_noir_detective_office.jpg",
       "description": "Rain turns the rear alley into a mirror. The back door latch catches fibers and secrets.",
       "people": [
         "lina"
       ],
-      "visual": "res://art/backgrounds/alley.svg"
+      "visual": "res://art/noir_latest/rainy_noir_detective_office.jpg"
     },
     "riverside": {
       "name": "Riverside Walk",
-      "art": "res://art/backgrounds/riverside.svg",
+      "art": "res://art/noir_latest/rainy_noir_detective_office.jpg",
       "description": "The riverside is quieter than the cafe. Omar comes here to review recordings away from Daniel.",
       "people": [
         "omar"
       ],
-      "visual": "res://art/backgrounds/riverside.svg"
+      "visual": "res://art/noir_latest/rainy_noir_detective_office.jpg"
     }
   },
   "suspects": {
@@ -65,11 +65,11 @@
         "This time Maya Cole reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Maya Cole tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/polished/interrogation.svg",
+      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
       "pressure_line": "You should not know that part yet.",
       "shadow_reveal": "Maya Cole changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "receipt",
-      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
+      "pursuit_art": "res://art/noir_latest/neon_rain_detective_chase.jpg"
     },
     "omar": {
       "name": "Omar Hale",
@@ -93,11 +93,11 @@
         "This time Omar Hale reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Omar Hale tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/polished/interrogation.svg",
+      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Omar Hale changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "thread",
-      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
+      "pursuit_art": "res://art/noir_latest/neon_rain_detective_chase.jpg"
     },
     "lina": {
       "name": "Lina Vale",
@@ -122,11 +122,11 @@
         "This time Lina Vale reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Lina Vale tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/polished/interrogation.svg",
+      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Lina Vale changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "voicemail",
-      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
+      "pursuit_art": "res://art/noir_latest/neon_rain_detective_chase.jpg"
     },
     "theo": {
       "name": "Theo Marsh",
@@ -150,83 +150,83 @@
         "This time Theo Marsh reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Theo Marsh tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/polished/interrogation.svg",
+      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Theo Marsh changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "ledger",
-      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
+      "pursuit_art": "res://art/noir_latest/neon_rain_detective_chase.jpg"
     }
   },
   "clues": {
     "receipt": {
       "name": "Altered Receipt",
-      "art": "res://art/actual/optimized/broken_watch.jpg",
+      "art": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "location": "cafe",
       "description": "Daniel's usual black coffee was changed to an almond syrup drink at 8:31.",
       "loop_min": 1,
-      "visual": "res://art/actual/optimized/broken_watch.jpg",
+      "visual": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "season_fragment": "loop_signature_1_1"
     },
     "watch": {
       "name": "Broken Watch",
-      "art": "res://art/actual/optimized/wet_umbrella.jpg",
+      "art": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "location": "cafe",
       "description": "The watch stopped at exactly 8:47, matching the blackout.",
       "loop_min": 1,
-      "visual": "res://art/actual/optimized/wet_umbrella.jpg"
+      "visual": "res://art/noir_latest/noir_evidence_room_investigation.jpg"
     },
     "umbrella": {
       "name": "Wet Umbrella",
-      "art": "res://art/actual/optimized/red_thread.jpg",
+      "art": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "location": "alley",
       "description": "Fresh rainwater and a violet fiber place someone in the rear alley.",
       "loop_min": 1,
-      "visual": "res://art/actual/optimized/red_thread.jpg"
+      "visual": "res://art/noir_latest/noir_evidence_room_investigation.jpg"
     },
     "thread": {
       "name": "Violet Thread",
-      "art": "res://art/actual/optimized/voicemail.jpg",
+      "art": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "location": "alley",
       "description": "A violet thread is caught on the rear latch. Lina wears the same fabric.",
       "loop_min": 2,
-      "visual": "res://art/actual/optimized/voicemail.jpg",
+      "visual": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "locked_hint": "You have seen this place before, but not from the right angle yet.",
       "season_fragment": "loop_signature_1_2"
     },
     "voicemail": {
       "name": "Recorded Argument",
-      "art": "res://art/evidence/receipt.svg",
+      "art": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "location": "riverside",
       "description": "Omar's recording catches Daniel telling Lina: 'Tomorrow the auditors see everything.'",
       "loop_min": 2,
-      "visual": "res://art/evidence/receipt.svg",
+      "visual": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "breaker": {
       "name": "Breaker Dust",
-      "art": "res://art/actual/optimized/broken_watch.jpg",
+      "art": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "location": "office",
       "description": "Fresh graphite dust shows the breaker was deliberately bridged for a timed failure.",
       "loop_min": 2,
-      "visual": "res://art/actual/optimized/broken_watch.jpg",
+      "visual": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "ledger": {
       "name": "Missing Ledger Page",
-      "art": "res://art/actual/optimized/wet_umbrella.jpg",
+      "art": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "location": "office",
       "description": "A torn page documents transfers approved by Lina to a shell account.",
       "loop_min": 3,
-      "visual": "res://art/actual/optimized/wet_umbrella.jpg",
+      "visual": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "locked_hint": "A detail from the earlier loops tells you to return here later."
     },
     "key": {
       "name": "Spare Office Key",
-      "art": "res://art/actual/optimized/red_thread.jpg",
+      "art": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "location": "cafe",
       "description": "Theo returned the spare key before the blackout. His access does not match the murder window.",
       "loop_min": 3,
-      "visual": "res://art/actual/optimized/red_thread.jpg",
+      "visual": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "locked_hint": "A detail from the earlier loops tells you to return here later."
     }
   },
@@ -259,17 +259,17 @@
     "You"
   ],
   "visual_scenes": {
-    "crime_scene": "res://art/polished/casebook.svg",
-    "location": "res://art/noir_generated/case01_vanishing_witness.jpg",
-    "interrogation": "res://art/noir_generated/interrogation_evidence_noir.jpg",
-    "clue": "res://art/polished/casebook.svg",
-    "search": "res://art/actual/evidence_room.jpg",
-    "chase": "res://art/noir_generated/neon_alley_chase.jpg",
-    "pursuit": "res://art/noir_generated/neon_alley_chase.jpg",
-    "cover": "res://art/noir_generated/neon_alley_chase.jpg",
-    "confrontation": "res://art/polished/deduction.svg",
-    "capture": "res://art/polished/deduction.svg",
-    "loop": "res://art/polished/reset.svg"
+    "crime_scene": "res://art/noir_latest/rainy_noir_detective_standoff.jpg",
+    "location": "res://art/noir_latest/rainy_noir_detective_office.jpg",
+    "interrogation": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+    "clue": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
+    "search": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
+    "chase": "res://art/noir_latest/neon_rain_detective_chase.jpg",
+    "pursuit": "res://art/noir_latest/neon_rain_detective_chase.jpg",
+    "cover": "res://art/noir_latest/noir_safehouse_investigation.jpg",
+    "confrontation": "res://art/noir_latest/rainlit_warehouse_standoff.jpg",
+    "capture": "res://art/noir_latest/rainy_noir_detective_standoff.jpg",
+    "loop": "res://art/noir_latest/shattered_time_detective_in_the_rain.jpg"
   },
   "loop_reveals": {
     "2": "Look at me. We already know Altered Receipt does not fit. This time, watch Violet Thread before anyone knows we are suspicious.",
