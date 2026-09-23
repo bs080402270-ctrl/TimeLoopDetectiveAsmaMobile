@@ -142,6 +142,7 @@ var state: Dictionary = {}
 var save_manager := SaveManager.new()
 var settings_manager := SettingsManager.new()
 var audio: AudioManager
+var story_director := StoryDirector.new()
 var current_case_id := ""
 
 var background: TextureRect
@@ -157,6 +158,7 @@ var overlay_body: RichTextLabel
 var overlay_actions: VBoxContainer
 
 func _ready() -> void:
+	story_director.initialize()
 	_load_catalog()
 	_build_shell()
 	_show_main_menu()
@@ -972,7 +974,11 @@ func _field_action(beat: Dictionary) -> void:
 	flags.append(id)
 	state.branch_flags = flags
 	var kind := str(beat.get("kind","search"))
-	_apply_scene_visual(kind,str(beat.get("visual","")),0.52)
+	var field_request := _request_dynamic_visual(kind,str(beat.get("visual","")),{
+		"action":str(beat.get("text","")),
+		"force_visual":true
+	})
+	_set_polished_background(str(field_request.get("fallback_art",ART_CASES)),0.52)
 	overlay_title.text = str(beat.get("title",kind.replace("_"," ").to_upper()))
 	overlay_body.text = str(beat.get("text","You and Asma move before the moment can repeat."))
 	var reveal_clue := str(beat.get("reveal_clue",""))
@@ -1025,6 +1031,43 @@ func _shadow_suspect(id: String) -> void:
 	_remember_action("shadow_" + id)
 	_save()
 
+func _dynamic_scene_context(kind: String,preferred: String = "",extra: Dictionary = {}) -> Dictionary:
+	var loc_id := str(state.get("location",""))
+	var loc: Dictionary = case_data.get("locations",{}).get(loc_id,{})
+	var visible: Array[String] = []
+	for clue_id in state.get("clues",[]):
+		var clue: Dictionary = case_data.get("clues",{}).get(str(clue_id),{})
+		if str(clue.get("location","")) == loc_id:
+			visible.append(str(clue.get("name",clue_id)))
+	var changes: Array[String] = []
+	if int(state.get("loop",1)) > 1:
+		var reveal_map: Dictionary = case_data.get("loop_reveals",{})
+		var reveal := str(reveal_map.get(str(state.get("loop",1)),""))
+		if reveal != "":
+			changes.append(reveal)
+	var context := {
+		"scene_id": "%s_%s_loop_%d" % [current_case_id,kind,int(state.get("loop",1))],
+		"location_name": str(loc.get("name","Unknown location")),
+		"loop": int(state.get("loop",1)),
+		"characters": ["Detective Asma","the player detective partner"],
+		"visible_clues": visible,
+		"loop_changes": changes,
+		"fallback_art": _resolve_scene_art(kind,preferred),
+		"significant_change": kind in ["time_loop_reset","important_clue_found","chase","pursuit","cover","danger","confrontation","capture"]
+	}
+	for key in extra.keys():
+		context[key] = extra[key]
+	return context
+
+func _request_dynamic_visual(kind: String,preferred: String = "",extra: Dictionary = {}) -> Dictionary:
+	var context := _dynamic_scene_context(kind,preferred,extra)
+	var request := story_director.make_scene(kind,context)
+	state["last_visual_scene"] = str(request.get("scene_id",""))
+	state["last_visual_prompt"] = str(request.get("prompt",""))
+	state["last_visual_requested"] = bool(request.get("should_generate",false))
+	_save()
+	return request
+
 func _resolve_scene_art(kind: String,preferred: String = "") -> String:
 	if preferred != "" and ResourceLoader.exists(preferred):
 		return preferred
@@ -1047,7 +1090,14 @@ func _resolve_scene_art(kind: String,preferred: String = "") -> String:
 			return ART_MENU
 
 func _apply_scene_visual(kind: String,preferred: String = "",alpha := 0.40) -> void:
-	_set_polished_background(_resolve_scene_art(kind,preferred),alpha)
+	var scene_type := kind
+	if kind == "loop":
+		scene_type = "time_loop_reset"
+	elif kind == "clue":
+		scene_type = "important_clue_found"
+	var request := _request_dynamic_visual(scene_type,preferred)
+	var fallback := str(request.get("fallback_art",_resolve_scene_art(kind,preferred)))
+	_set_polished_background(fallback,alpha)
 
 func _remember_action(action_id: String) -> void:
 	var history: Array = state.get("action_history",[])
@@ -1187,8 +1237,14 @@ func _interrogate(id: String) -> void:
 	if remembered_topic != "" and int(state.loop) > 1:
 		asma_open = "Last loop you pushed on %s. I remember. Let's see what changes this time." % remembered_topic.replace("_"," ")
 
-	# Manga / visual-novel presentation: Asma and the suspect share the scene.
-	_apply_scene_visual("interrogation",str(data.get("scene_art","")),0.44)
+	# Dynamic visual request for the current conversation only.
+	var talk_request := _request_dynamic_visual("face_to_face_talk",str(data.get("scene_art","")),{
+		"characters":["Detective Asma","the player detective partner",str(data.get("name",id))],
+		"face_to_face":true,
+		"action":"questioning %s together" % str(data.get("name",id)),
+		"mood":"close, tense, observant detective conversation"
+	})
+	_set_polished_background(str(talk_request.get("fallback_art",ART_INTERROGATION)),0.44)
 	overlay_title.text = str(data.get("name",id)) + " • INTERROGATION"
 	overlay_body.text = "[color=#e6b85c][b]ASMA[/b][/color]\n%s\n\n[color=#9db1c7][b]%s[/b][/color]\n%s" % [asma_open,str(data.get("name",id)),suspect_line]
 	_clear(overlay_actions)
@@ -1306,7 +1362,14 @@ func _collect_clue(id: String) -> void:
 
 func _reset_loop() -> void:
 	_play_loop_reset()
-	_apply_scene_visual("loop","",0.48)
+	var next_loop := mini(3,int(state.get("loop",1))+1)
+	var reset_reveal := str(case_data.get("loop_reveals",{}).get(str(next_loop),""))
+	var reset_request := _request_dynamic_visual("time_loop_reset","",{
+		"force_visual":true,
+		"loop":next_loop,
+		"loop_changes":[reset_reveal] if reset_reveal != "" else []
+	})
+	_set_polished_background(str(reset_request.get("fallback_art",ART_RESET)),0.48)
 	if int(state.loop) >= 3:
 		_show_deduction()
 		return
@@ -1550,8 +1613,13 @@ func _accuse(id: String) -> void:
 		_finish("wrong")
 
 func _start_confrontation(culprit_id: String) -> void:
-	_apply_scene_visual("confrontation","",0.50)
 	var culprit_name := str(case_data.suspects.get(culprit_id,{}).get("name","the suspect"))
+	var confrontation_request := _request_dynamic_visual("confrontation","",{
+		"characters":["Detective Asma","the player detective partner",culprit_name],
+		"action":"the culprit attempts to escape after the accusation",
+		"force_visual":true
+	})
+	_set_polished_background(str(confrontation_request.get("fallback_art",ART_DEDUCTION)),0.50)
 	overlay_title.text = "FINAL CONFRONTATION"
 	overlay_body.text = "[center][color=#e32636][font_size=30][b]%s tries to escape.[/b][/font_size][/color][/center]\n\nYou solved the case. Now choose how your investigator brings the culprit into custody." % culprit_name
 	_clear(overlay_actions)

@@ -1,0 +1,112 @@
+{
+  "version": 1,
+  "player_role": "Asma's detective partner, physically present in the story",
+  "pacing": {
+    "short_dialogue": true,
+    "short_scene_descriptions": true,
+    "no_story_dump": true,
+    "wait_for_player_decision": true,
+    "remember_previous_decisions": true,
+    "asma_may_disagree_with_player": true
+  },
+  "time_loop": {
+    "required": true,
+    "retain_knowledge": true,
+    "retain_evidence": true,
+    "reveal_new_information_each_loop": true,
+    "hide_full_explanation_until_late": true,
+    "visualize_important_resets": true,
+    "visualize_changed_details": true
+  },
+  "dynamic_images": {
+    "enabled": true,
+    "gameplay_not_decoration": true,
+    "generate_only_current_scene": true,
+    "never_pre_generate_future_story": true,
+    "continue_story_after_visual": true,
+    "fallback_to_static_art": true,
+    "fallback_to_text_if_unavailable": true,
+    "minimum_significance": "medium"
+  },
+  "triggers": {
+    "face_to_face_talk": {
+      "enabled": true,
+      "priority": "high",
+      "show_both_characters": true
+    },
+    "important_suspect_intro": {
+      "enabled": true,
+      "priority": "medium"
+    },
+    "new_location": {
+      "enabled": true,
+      "priority": "medium"
+    },
+    "important_clue_found": {
+      "enabled": true,
+      "priority": "high"
+    },
+    "time_loop_reset": {
+      "enabled": true,
+      "priority": "high"
+    },
+    "loop_difference_discovered": {
+      "enabled": true,
+      "priority": "high"
+    },
+    "chase": {
+      "enabled": true,
+      "priority": "high"
+    },
+    "pursuit": {
+      "enabled": true,
+      "priority": "high"
+    },
+    "cover": {
+      "enabled": true,
+      "priority": "high"
+    },
+    "danger": {
+      "enabled": true,
+      "priority": "high"
+    },
+    "police_investigation": {
+      "enabled": true,
+      "priority": "medium"
+    },
+    "confrontation": {
+      "enabled": true,
+      "priority": "high"
+    },
+    "capture": {
+      "enabled": true,
+      "priority": "high"
+    },
+    "search": {
+      "enabled": true,
+      "priority": "medium"
+    }
+  },
+  "visual_consistency": {
+    "style": "original cinematic Korean manhwa/webtoon-inspired detective thriller",
+    "orientation": "portrait 9:16",
+    "asma": {
+      "appearance": "Detective Asma, long dark wavy hair, sharp observant eyes, dark detective blazer or coat, subtle gold earrings, calm but intense expression"
+    },
+    "player_partner": {
+      "appearance": "consistent detective partner, physically present beside or opposite Asma; use POV-compatible framing when identity is not shown"
+    },
+    "continuity": [
+      "same character faces across scenes",
+      "same clothing within a case unless story changes it",
+      "same location architecture across loops",
+      "visible loop differences must be intentional"
+    ]
+  },
+  "prompt_safety": {
+    "avoid_future_spoilers": true,
+    "include_only_current_known_clues": true,
+    "do_not_name_hidden_culprit": true,
+    "do_not_visualize_unfound_evidence": true
+  }
+}

@@ -20,6 +20,10 @@ func _run() -> void:
 	await process_frame
 	await process_frame
 
+	if game.story_director.rules.is_empty():
+		_fail("story director rules were not loaded")
+		return
+
 	if game.case_catalog.size() != 10:
 		_fail("expected 10 cases, got %d" % game.case_catalog.size())
 		return
@@ -112,6 +116,9 @@ func _run() -> void:
 		var first_suspect := str(suspect_ids[0])
 		game._interrogate(first_suspect)
 		await process_frame
+		if str(game.state.get("last_visual_prompt","")) == "":
+			_fail(case_id + " did not build a dynamic face-to-face image prompt")
+			return
 		if not game.overlay.visible:
 			_fail(case_id + " interrogation did not open dialog overlay")
 			return
@@ -173,6 +180,9 @@ func _run() -> void:
 		var clues_before_reset: Array = game.state.clues.duplicate()
 		game._reset_loop()
 		await process_frame
+		if str(game.state.get("last_visual_scene","")).find("time_loop_reset") == -1:
+			_fail(case_id + " did not request a dynamic time-loop visual")
+			return
 		if int(game.state.loop) != 2:
 			_fail(case_id + " loop reset failed")
 			return
