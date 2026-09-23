@@ -8,40 +8,40 @@
   "locations": {
     "theater": {
       "name": "Raven Theater",
-      "art": "res://art/cases/case02_coach.svg",
+      "art": "res://art/noir_latest/noir_nightclub_investigation.jpg",
       "description": "The final rehearsal ended early. Someone left the stage, someone lied about the alarm, and one seat in the front row is still warm.",
       "people": [
         "mira",
         "anton"
       ],
-      "visual": "res://art/cases/case02_coach.svg"
+      "visual": "res://art/noir_latest/noir_nightclub_investigation.jpg"
     },
     "backstage": {
       "name": "Backstage Corridor",
-      "art": "res://art/cases/case02_luggage.svg",
+      "art": "res://art/noir_latest/noir_nightclub_investigation.jpg",
       "description": "Costumes, prop tables, and a service door that should have been locked.",
       "people": [
         "julian"
       ],
-      "visual": "res://art/cases/case02_luggage.svg"
+      "visual": "res://art/noir_latest/noir_nightclub_investigation.jpg"
     },
     "office": {
       "name": "Director's Office",
-      "art": "res://art/cases/case02_terminal.svg",
+      "art": "res://art/noir_latest/noir_nightclub_investigation.jpg",
       "description": "Contracts, donor records, and a clock that runs two minutes fast.",
       "people": [
         "celeste"
       ],
-      "visual": "res://art/cases/case02_terminal.svg"
+      "visual": "res://art/noir_latest/noir_nightclub_investigation.jpg"
     },
     "alley": {
       "name": "Stage Door Alley",
-      "art": "res://art/cases/case02_tunnel.svg",
+      "art": "res://art/noir_latest/noir_nightclub_investigation.jpg",
       "description": "Rain, a fire-exit alarm box, and rose petals stuck to the drain.",
       "people": [
         "amir"
       ],
-      "visual": "res://art/cases/case02_tunnel.svg"
+      "visual": "res://art/noir_latest/noir_nightclub_investigation.jpg"
     }
   },
   "suspects": {
@@ -68,11 +68,11 @@
         "This time Mira Vale reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Mira Vale tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg",
+      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
       "pressure_line": "You should not know that part yet.",
       "shadow_reveal": "Mira Vale changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "alarm",
-      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
+      "pursuit_art": "res://art/noir_latest/neon_rain_detective_chase.jpg"
     },
     "anton": {
       "name": "Anton Reeve",
@@ -97,11 +97,11 @@
         "This time Anton Reeve reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Anton Reeve tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg",
+      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Anton Reeve changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "service",
-      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
+      "pursuit_art": "res://art/noir_latest/neon_rain_detective_chase.jpg"
     },
     "julian": {
       "name": "Julian Cross",
@@ -125,11 +125,11 @@
         "This time Julian Cross reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Julian Cross tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg",
+      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Julian Cross changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "cue",
-      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
+      "pursuit_art": "res://art/noir_latest/neon_rain_detective_chase.jpg"
     },
     "celeste": {
       "name": "Celeste Ward",
@@ -154,11 +154,11 @@
         "This time Celeste Ward reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Celeste Ward tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg",
+      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Celeste Ward changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "keycard",
-      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
+      "pursuit_art": "res://art/noir_latest/neon_rain_detective_chase.jpg"
     },
     "amir": {
       "name": "Amir Hale",
@@ -183,92 +183,92 @@
         "This time Amir Hale reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Amir Hale tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg",
+      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Amir Hale changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "watch",
-      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
+      "pursuit_art": "res://art/noir_latest/neon_rain_detective_chase.jpg"
     }
   },
   "clues": {
     "watch": {
       "name": "Cracked Pocket Watch",
-      "art": "res://art/actual/optimized/broken_watch.jpg",
+      "art": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "location": "theater",
       "description": "Stopped at 10:17. The crack is fresh, but the mechanism failed before impact.",
       "loop_min": 1,
-      "visual": "res://art/actual/optimized/broken_watch.jpg"
+      "visual": "res://art/noir_latest/noir_evidence_room_investigation.jpg"
     },
     "ticket": {
       "name": "Torn Theater Ticket",
-      "art": "res://art/actual/optimized/wet_umbrella.jpg",
+      "art": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "location": "theater",
       "description": "Seat B14 was scanned at 10:11 and torn again at 10:16.",
       "loop_min": 1,
-      "visual": "res://art/actual/optimized/wet_umbrella.jpg"
+      "visual": "res://art/noir_latest/noir_evidence_room_investigation.jpg"
     },
     "rose": {
       "name": "Blood-Specked White Rose",
-      "art": "res://art/actual/optimized/red_thread.jpg",
+      "art": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "location": "backstage",
       "description": "One prop rose is missing from the final scene. Petals match those in the alley drain.",
       "loop_min": 2,
       "locked_hint": "You remember petals near the stage door, but you did not think to compare them before.",
-      "visual": "res://art/actual/optimized/red_thread.jpg"
+      "visual": "res://art/noir_latest/noir_evidence_room_investigation.jpg"
     },
     "alarm": {
       "name": "Central Fire Alarm Log",
-      "art": "res://art/actual/optimized/voicemail.jpg",
+      "art": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "location": "office",
       "description": "Central system logged activation at 10:12, five minutes before the watch stopped.",
       "loop_min": 1,
-      "visual": "res://art/actual/optimized/voicemail.jpg",
+      "visual": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "season_fragment": "loop_signature_2_1"
     },
     "service": {
       "name": "Alarm Service Report",
-      "art": "res://art/evidence/receipt.svg",
+      "art": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "location": "office",
       "description": "The local bell relay was replaced that afternoon and left in test-delay mode.",
       "loop_min": 2,
       "locked_hint": "The alarm panel looked ordinary before. Now you remember the maintenance sticker.",
-      "visual": "res://art/evidence/receipt.svg",
+      "visual": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "season_fragment": "loop_signature_2_2"
     },
     "cue": {
       "name": "Hidden Lighting Cue",
-      "art": "res://art/actual/optimized/broken_watch.jpg",
+      "art": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "location": "backstage",
       "description": "A five-second blackout cue was inserted into the rehearsal stack under a borrowed login.",
       "loop_min": 2,
       "locked_hint": "The blackout pattern feels familiar. You need another loop to notice exactly why.",
-      "visual": "res://art/actual/optimized/broken_watch.jpg"
+      "visual": "res://art/noir_latest/noir_evidence_room_investigation.jpg"
     },
     "ledger": {
       "name": "Donor Ledger Copy",
-      "art": "res://art/actual/optimized/wet_umbrella.jpg",
+      "art": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "location": "office",
       "description": "Payments were routed through a shell foundation tied to the theater owner.",
       "loop_min": 1,
-      "visual": "res://art/actual/optimized/wet_umbrella.jpg"
+      "visual": "res://art/noir_latest/noir_evidence_room_investigation.jpg"
     },
     "contract": {
       "name": "Unsigned Cancellation Contract",
-      "art": "res://art/actual/optimized/red_thread.jpg",
+      "art": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "location": "office",
       "description": "The victim planned to cancel the production and expose the shell foundation the next morning.",
       "loop_min": 2,
       "locked_hint": "A folded document on the desk seems unimportant the first time through.",
-      "visual": "res://art/actual/optimized/red_thread.jpg"
+      "visual": "res://art/noir_latest/noir_evidence_room_investigation.jpg"
     },
     "keycard": {
       "name": "Stage Door Keycard Log",
-      "art": "res://art/actual/optimized/voicemail.jpg",
+      "art": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "location": "alley",
       "description": "A duplicate staff card opened the stage door at 10:10, then again at 10:18.",
       "loop_min": 3,
       "locked_hint": "The door sensor chirp is easy to miss. By the third loop, you know exactly when to listen.",
-      "visual": "res://art/actual/optimized/voicemail.jpg"
+      "visual": "res://art/noir_latest/noir_evidence_room_investigation.jpg"
     }
   },
   "timeline": [
@@ -306,17 +306,17 @@
     "3": "I remember the stage-door chirp now. It happened before we ever looked at the alley. Someone is using the loop against the investigation."
   },
   "visual_scenes": {
-    "crime_scene": "res://art/polished/casebook.svg",
-    "location": "res://art/noir_generated/case02_midnight_interrogation.jpg",
-    "interrogation": "res://art/noir_generated/case02_midnight_interrogation.jpg",
-    "clue": "res://art/noir_generated/interrogation_evidence_noir.jpg",
-    "search": "res://art/noir_generated/interrogation_evidence_noir.jpg",
-    "chase": "res://art/actual/optimized/cafe_exterior_rain.jpg",
-    "pursuit": "res://art/actual/optimized/cafe_exterior_rain.jpg",
-    "cover": "res://art/polished/reset.svg",
-    "confrontation": "res://art/polished/deduction.svg",
-    "capture": "res://art/polished/deduction.svg",
-    "loop": "res://art/polished/reset.svg"
+    "crime_scene": "res://art/noir_latest/rainy_noir_detective_standoff.jpg",
+    "location": "res://art/noir_latest/noir_nightclub_investigation.jpg",
+    "interrogation": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+    "clue": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
+    "search": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
+    "chase": "res://art/noir_latest/neon_rain_detective_chase.jpg",
+    "pursuit": "res://art/noir_latest/neon_rain_detective_chase.jpg",
+    "cover": "res://art/noir_latest/noir_safehouse_investigation.jpg",
+    "confrontation": "res://art/noir_latest/rainlit_warehouse_standoff.jpg",
+    "capture": "res://art/noir_latest/rainy_noir_detective_standoff.jpg",
+    "loop": "res://art/noir_latest/shattered_time_detective_in_the_rain.jpg"
   },
   "season_fragment": "season_case_02",
   "action_beats": [

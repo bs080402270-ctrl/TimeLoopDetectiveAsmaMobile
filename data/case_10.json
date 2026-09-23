@@ -8,37 +8,41 @@
   "locations": {
     "lab": {
       "name": "Abandoned Research Lab",
-      "art": "res://art/polished/casebook.svg",
+      "art": "res://art/noir_latest/shattered_time_detective_in_the_rain.jpg",
       "description": "Burned consoles and a shattered temporal-memory chamber mark where the first loop began.",
       "people": [
         "leila",
         "hassan"
-      ]
+      ],
+      "visual": "res://art/noir_latest/shattered_time_detective_in_the_rain.jpg"
     },
     "archive": {
       "name": "Underground Archive",
-      "art": "res://art/actual/evidence_room.jpg",
+      "art": "res://art/noir_latest/shattered_time_detective_in_the_rain.jpg",
       "description": "Project files reveal who funded the experiment and who ordered its safety limits removed.",
       "people": [
         "viktor"
-      ]
+      ],
+      "visual": "res://art/noir_latest/shattered_time_detective_in_the_rain.jpg"
     },
     "clock": {
       "name": "City Clock Tower",
-      "art": "res://art/actual/optimized/cafe_exterior_rain.jpg",
+      "art": "res://art/noir_latest/shattered_time_detective_in_the_rain.jpg",
       "description": "The Stranger waits where every loop's clocks briefly agree.",
       "people": [
         "stranger",
         "samira"
-      ]
+      ],
+      "visual": "res://art/noir_latest/shattered_time_detective_in_the_rain.jpg"
     },
     "vault": {
       "name": "Police Evidence Vault",
-      "art": "res://art/actual/detective_office.jpg",
+      "art": "res://art/noir_latest/shattered_time_detective_in_the_rain.jpg",
       "description": "Evidence from earlier cases shares the same impossible timing anomalies.",
       "people": [
         "farid"
-      ]
+      ],
+      "visual": "res://art/noir_latest/shattered_time_detective_in_the_rain.jpg"
     }
   },
   "suspects": {
@@ -65,11 +69,11 @@
         "This time Chief Farid reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Chief Farid tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg",
+      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
       "pressure_line": "You should not know that part yet.",
       "shadow_reveal": "Chief Farid changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "governor",
-      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
+      "pursuit_art": "res://art/noir_latest/neon_rain_detective_chase.jpg"
     },
     "hassan": {
       "name": "Dr. Hassan",
@@ -94,11 +98,11 @@
         "This time Dr. Hassan reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Dr. Hassan tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg",
+      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Dr. Hassan changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "order",
-      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
+      "pursuit_art": "res://art/noir_latest/neon_rain_detective_chase.jpg"
     },
     "samira": {
       "name": "Samira",
@@ -123,11 +127,11 @@
         "This time Samira reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Samira tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg",
+      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Samira changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "ledger",
-      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
+      "pursuit_art": "res://art/noir_latest/neon_rain_detective_chase.jpg"
     },
     "stranger": {
       "name": "The Stranger",
@@ -152,11 +156,11 @@
         "This time The Stranger reacts before you finish the question. They remember nothing, but the pattern changed.",
         "The Stranger tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg",
+      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "The Stranger changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "manual",
-      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
+      "pursuit_art": "res://art/noir_latest/neon_rain_detective_chase.jpg"
     },
     "viktor": {
       "name": "Viktor Malik",
@@ -182,11 +186,11 @@
         "This time Viktor Malik reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Viktor Malik tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg",
+      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Viktor Malik changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "photo",
-      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
+      "pursuit_art": "res://art/noir_latest/neon_rain_detective_chase.jpg"
     },
     "leila": {
       "name": "Dr. Leila Rahman",
@@ -211,100 +215,100 @@
         "This time Dr. Leila Rahman reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Dr. Leila Rahman tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/actual/detective_office.jpg",
+      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Dr. Leila Rahman changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "photo",
-      "pursuit_art": "res://art/actual/optimized/cafe_exterior_rain.jpg"
+      "pursuit_art": "res://art/noir_latest/neon_rain_detective_chase.jpg"
     }
   },
   "clues": {
     "governor": {
       "name": "Removed Probability Governor",
-      "art": "res://art/actual/optimized/broken_watch.jpg",
+      "art": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "location": "lab",
       "description": "The key safety module was physically bypassed before the first experiment.",
       "loop_min": 1,
-      "visual": "res://art/actual/optimized/broken_watch.jpg",
+      "visual": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "season_fragment": "loop_signature_10_1"
     },
     "manual": {
       "name": "Original Safety Manual",
-      "art": "res://art/evidence/receipt.svg",
+      "art": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "location": "lab",
       "description": "The approved procedure forbids operating without the governor.",
       "loop_min": 1,
-      "visual": "res://art/evidence/receipt.svg"
+      "visual": "res://art/noir_latest/noir_evidence_room_investigation.jpg"
     },
     "order": {
       "name": "Viktor's Override Order",
-      "art": "res://art/evidence/receipt.svg",
+      "art": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "location": "archive",
       "description": "A signed directive orders the team to proceed despite failed safety checks.",
       "loop_min": 1,
-      "visual": "res://art/evidence/receipt.svg",
+      "visual": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "season_fragment": "loop_signature_10_2"
     },
     "ledger": {
       "name": "Project Funding Ledger",
-      "art": "res://art/actual/optimized/red_thread.jpg",
+      "art": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "location": "archive",
       "description": "Bonus payments were tied to completing the test before a market event.",
       "loop_min": 1,
-      "visual": "res://art/actual/optimized/red_thread.jpg"
+      "visual": "res://art/noir_latest/noir_evidence_room_investigation.jpg"
     },
     "diary": {
       "name": "The Stranger's Loop Diary",
-      "art": "res://art/actual/optimized/voicemail.jpg",
+      "art": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "location": "clock",
       "description": "Thousands of loop counts prove someone has remained conscious far longer than Asma.",
       "loop_min": 2,
-      "visual": "res://art/actual/optimized/voicemail.jpg",
+      "visual": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "clock": {
       "name": "Synchronized Clock Drift",
-      "art": "res://art/actual/optimized/broken_watch.jpg",
+      "art": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "location": "clock",
       "description": "All anomaly sites drift by the same impossible fraction before resetting.",
       "loop_min": 2,
-      "visual": "res://art/actual/optimized/broken_watch.jpg",
+      "visual": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "checksum": {
       "name": "Recurring Corruption Checksum",
-      "art": "res://art/actual/optimized/voicemail.jpg",
+      "art": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "location": "vault",
       "description": "Camera files from earlier cases share one temporal-error signature.",
       "loop_min": 2,
-      "visual": "res://art/actual/optimized/voicemail.jpg",
+      "visual": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "locked_hint": "You have seen this place before, but not from the right angle yet."
     },
     "camera": {
       "name": "Cross-Case Camera Archive",
-      "art": "res://art/actual/evidence_room.jpg",
+      "art": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "location": "vault",
       "description": "Frames from five previous cases contain the same one-frame discontinuity.",
       "loop_min": 3,
-      "visual": "res://art/actual/evidence_room.jpg",
+      "visual": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "locked_hint": "A detail from the earlier loops tells you to return here later."
     },
     "vaultlog": {
       "name": "Sealed Evidence Access Log",
-      "art": "res://art/evidence/receipt.svg",
+      "art": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "location": "vault",
       "description": "Farid repeatedly accessed the original lab file after Asma joined the force.",
       "loop_min": 3,
-      "visual": "res://art/evidence/receipt.svg",
+      "visual": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "locked_hint": "A detail from the earlier loops tells you to return here later."
     },
     "photo": {
       "name": "Original Lab Photograph",
-      "art": "res://art/polished/interrogation.svg",
+      "art": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "location": "vault",
       "description": "Asma appears inside the calibration zone moments before the first failure.",
       "loop_min": 3,
-      "visual": "res://art/polished/interrogation.svg",
+      "visual": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
       "locked_hint": "A detail from the earlier loops tells you to return here later."
     }
   },
@@ -336,17 +340,17 @@
     "You"
   ],
   "visual_scenes": {
-    "crime_scene": "res://art/polished/casebook.svg",
-    "location": "res://art/noir_generated/season_conspiracy_noir.jpg",
-    "interrogation": "res://art/noir_generated/interrogation_evidence_noir.jpg",
-    "clue": "res://art/polished/casebook.svg",
-    "search": "res://art/polished/casebook.svg",
-    "chase": "res://art/noir_generated/neon_alley_chase.jpg",
-    "pursuit": "res://art/polished/cases.svg",
-    "cover": "res://art/polished/reset.svg",
-    "confrontation": "res://art/noir_generated/season_conspiracy_noir.jpg",
-    "capture": "res://art/noir_generated/season_conspiracy_noir.jpg",
-    "loop": "res://art/polished/reset.svg"
+    "crime_scene": "res://art/noir_latest/rainy_noir_detective_standoff.jpg",
+    "location": "res://art/noir_latest/shattered_time_detective_in_the_rain.jpg",
+    "interrogation": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+    "clue": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
+    "search": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
+    "chase": "res://art/noir_latest/neon_rain_detective_chase.jpg",
+    "pursuit": "res://art/noir_latest/neon_rain_detective_chase.jpg",
+    "cover": "res://art/noir_latest/noir_safehouse_investigation.jpg",
+    "confrontation": "res://art/noir_latest/rainlit_warehouse_standoff.jpg",
+    "capture": "res://art/noir_latest/rainy_noir_detective_standoff.jpg",
+    "loop": "res://art/noir_latest/shattered_time_detective_in_the_rain.jpg"
   },
   "loop_reveals": {
     "2": "Look at me. We already know Removed Probability Governor does not fit. This time, watch Viktor's Override Order before anyone knows we are suspicious.",
