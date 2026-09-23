@@ -8,13 +8,13 @@
   "locations": {
     "cafe": {
       "name": "The Daily Bean",
-      "art": "res://art/backgrounds/cafe.svg",
+      "art": "res://art/noir_generated/case01_vanishing_witness.jpg",
       "description": "Warm light, cooling coffee, and too many people pretending not to watch Daniel Rowan. Every loop begins here.",
       "people": [
         "maya",
         "theo"
       ],
-      "visual": "res://art/backgrounds/cafe.svg"
+      "visual": "res://art/noir_generated/case01_vanishing_witness.jpg"
     },
     "office": {
       "name": "Manager's Office",
@@ -260,13 +260,13 @@
   ],
   "visual_scenes": {
     "crime_scene": "res://art/polished/casebook.svg",
-    "location": "res://art/actual/detective_office.jpg",
-    "interrogation": "res://art/actual/detective_office.jpg",
+    "location": "res://art/noir_generated/case01_vanishing_witness.jpg",
+    "interrogation": "res://art/noir_generated/interrogation_evidence_noir.jpg",
     "clue": "res://art/polished/casebook.svg",
     "search": "res://art/actual/evidence_room.jpg",
-    "chase": "res://art/actual/optimized/cafe_exterior_rain.jpg",
-    "pursuit": "res://art/actual/optimized/cafe_exterior_rain.jpg",
-    "cover": "res://art/actual/optimized/cafe_exterior_rain.jpg",
+    "chase": "res://art/noir_generated/neon_alley_chase.jpg",
+    "pursuit": "res://art/noir_generated/neon_alley_chase.jpg",
+    "cover": "res://art/noir_generated/neon_alley_chase.jpg",
     "confrontation": "res://art/polished/deduction.svg",
     "capture": "res://art/polished/deduction.svg",
     "loop": "res://art/polished/reset.svg"

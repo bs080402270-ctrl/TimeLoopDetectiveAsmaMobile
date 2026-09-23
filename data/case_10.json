@@ -337,15 +337,15 @@
   ],
   "visual_scenes": {
     "crime_scene": "res://art/polished/casebook.svg",
-    "location": "res://art/polished/casebook.svg",
-    "interrogation": "res://art/polished/interrogation.svg",
+    "location": "res://art/noir_generated/season_conspiracy_noir.jpg",
+    "interrogation": "res://art/noir_generated/interrogation_evidence_noir.jpg",
     "clue": "res://art/polished/casebook.svg",
     "search": "res://art/polished/casebook.svg",
-    "chase": "res://art/polished/cases.svg",
+    "chase": "res://art/noir_generated/neon_alley_chase.jpg",
     "pursuit": "res://art/polished/cases.svg",
     "cover": "res://art/polished/reset.svg",
-    "confrontation": "res://art/polished/deduction.svg",
-    "capture": "res://art/polished/deduction.svg",
+    "confrontation": "res://art/noir_generated/season_conspiracy_noir.jpg",
+    "capture": "res://art/noir_generated/season_conspiracy_noir.jpg",
     "loop": "res://art/polished/reset.svg"
   },
   "loop_reveals": {
