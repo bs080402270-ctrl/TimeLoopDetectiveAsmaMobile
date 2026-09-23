@@ -135,6 +135,7 @@ var overlay: PanelContainer
 var overlay_title: Label
 var overlay_body: RichTextLabel
 var overlay_actions: VBoxContainer
+var overlay_content: VBoxContainer
 var touch_scroll: ScrollContainer
 var touch_scroll_last_position := Vector2.ZERO
 var touch_scroll_dragging := false
@@ -252,7 +253,7 @@ func _build_shell() -> void:
 	margin.add_theme_constant_override("margin_left",20)
 	margin.add_theme_constant_override("margin_right",20)
 	margin.add_theme_constant_override("margin_top",24)
-	margin.add_theme_constant_override("margin_bottom",56)
+	margin.add_theme_constant_override("margin_bottom",80)
 	add_child(margin)
 
 	var root := VBoxContainer.new()
@@ -282,6 +283,7 @@ func _build_shell() -> void:
 	main_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	main_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
 	main_scroll.scroll_deadzone = 8
+	main_scroll.get_v_scroll_bar().custom_minimum_size = Vector2(12,0)
 	root.add_child(main_scroll)
 
 	body = VBoxContainer.new()
@@ -319,7 +321,13 @@ func _build_shell() -> void:
 	overlay_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	overlay_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
 	overlay_scroll.scroll_deadzone = 8
+	overlay_scroll.get_v_scroll_bar().custom_minimum_size = Vector2(12,0)
 	ov.add_child(overlay_scroll)
+
+	overlay_content = VBoxContainer.new()
+	overlay_content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	overlay_content.add_theme_constant_override("separation",10)
+	overlay_scroll.add_child(overlay_content)
 
 	overlay_body = RichTextLabel.new()
 	overlay_body.bbcode_enabled = true
@@ -327,11 +335,11 @@ func _build_shell() -> void:
 	overlay_body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	overlay_body.add_theme_font_size_override("normal_font_size",_fs(25))
 	overlay_body.add_theme_color_override("default_color",C_TEXT)
-	overlay_scroll.add_child(overlay_body)
+	overlay_content.add_child(overlay_body)
 
 	overlay_actions = VBoxContainer.new()
 	overlay_actions.add_theme_constant_override("separation",10)
-	ov.add_child(overlay_actions)
+	overlay_content.add_child(overlay_actions)
 	overlay.visible = false
 
 func _show_main_menu() -> void:
@@ -434,7 +442,7 @@ func _show_investigator_select() -> void:
 		var id := str(member.get("id","asma"))
 		var card := PanelContainer.new()
 		card.add_theme_stylebox_override("panel",_panel_style(C_PANEL,16,C_GOLD if id == settings_manager.selected_investigator else C_LINE,2,14))
-		var row := HBoxContainer.new()
+		var row: BoxContainer = _responsive_box()
 		row.add_theme_constant_override("separation",12)
 		card.add_child(row)
 
@@ -625,7 +633,7 @@ func _show_intro() -> void:
 	for step in steps:
 		var card := PanelContainer.new()
 		card.add_theme_stylebox_override("panel",_panel_style(Color("#0d131a"),18,C_GOLD,2,18))
-		var row := HBoxContainer.new()
+		var row: BoxContainer = _responsive_box()
 		row.add_theme_constant_override("separation",16)
 		card.add_child(row)
 		var badge := Label.new()
@@ -679,7 +687,7 @@ func _difficulty_card(id: String,label_text: String,description: String) -> Cont
 	var selected := settings_manager.difficulty == id
 	var card := PanelContainer.new()
 	card.add_theme_stylebox_override("panel",_panel_style(Color("#17140f") if selected else Color("#0d131a"),18,C_GOLD if selected else Color("#765a3a"),3 if selected else 2,16))
-	var row := HBoxContainer.new()
+	var row: BoxContainer = _responsive_box()
 	row.add_theme_constant_override("separation",14)
 	card.add_child(row)
 	var icon := Label.new()
@@ -727,7 +735,7 @@ func _show_investigation_team() -> void:
 	for member in INVESTIGATION_TEAM:
 		var card := PanelContainer.new()
 		card.add_theme_stylebox_override("panel",_panel_style(C_PANEL,16,C_GOLD,2,14))
-		var row := HBoxContainer.new()
+		var row: BoxContainer = _responsive_box()
 		row.add_theme_constant_override("separation",14)
 		card.add_child(row)
 
@@ -778,7 +786,7 @@ func _show_character_gallery() -> void:
 	for item in CHARACTER_GALLERY:
 		var card := PanelContainer.new()
 		card.add_theme_stylebox_override("panel",_panel_style(C_PANEL,16,C_GOLD,2,14))
-		var row := HBoxContainer.new()
+		var row: BoxContainer = _responsive_box()
 		row.add_theme_constant_override("separation",14)
 		card.add_child(row)
 
@@ -848,7 +856,7 @@ func _case_card(data: Dictionary,index: int) -> Control:
 	stack.add_theme_constant_override("separation",10)
 	card.add_child(stack)
 
-	var top := HBoxContainer.new()
+	var top: BoxContainer = _responsive_box()
 	top.add_theme_constant_override("separation",12)
 	stack.add_child(top)
 
@@ -1206,7 +1214,7 @@ func _person_card(id: String) -> Control:
 	var card := PanelContainer.new()
 	card.add_theme_stylebox_override("panel",_panel_style(Color(0.035,0.095,0.155,0.94),16,Color("#194d78"),2,12))
 
-	var row := HBoxContainer.new()
+	var row: BoxContainer = _responsive_box()
 	row.add_theme_constant_override("separation",14)
 	card.add_child(row)
 
@@ -1266,7 +1274,7 @@ func _clue_card(id: String) -> Control:
 	var card := PanelContainer.new()
 	card.add_theme_stylebox_override("panel",_panel_style(C_PANEL,14,C_GOLD if found else Color("#174b78"),2,12))
 
-	var row := HBoxContainer.new()
+	var row: BoxContainer = _responsive_box()
 	row.add_theme_constant_override("separation",12)
 	card.add_child(row)
 
@@ -1345,7 +1353,7 @@ func _interrogate(id: String) -> void:
 func _manga_portrait_strip(id: String) -> Control:
 	var panel := PanelContainer.new()
 	panel.add_theme_stylebox_override("panel",_panel_style(Color("#07111f"),14,C_GOLD,2,10))
-	var row := HBoxContainer.new()
+	var row: BoxContainer = _responsive_box()
 	row.add_theme_constant_override("separation",10)
 	panel.add_child(row)
 
@@ -1941,6 +1949,14 @@ func _effective_max_actions() -> int:
 			return maxi(4,base - 2)
 		_:
 			return base
+
+func _is_narrow_mobile() -> bool:
+	return get_viewport().get_visible_rect().size.x < 560.0
+
+func _responsive_box() -> BoxContainer:
+	var box: BoxContainer = VBoxContainer.new() if _is_narrow_mobile() else HBoxContainer.new()
+	box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	return box
 
 func _required_strong_count() -> int:
 	var available: int = int(case_data.get("strong_clues",[]).size())
