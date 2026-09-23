@@ -2,17 +2,19 @@ name: Build Time Loop Detective
 
 on:
   push:
-    branches: [main, feature/case-one-rebuild, feature/cases-2-to-5]
-  pull_request:
     branches: [main]
   workflow_dispatch:
+
+concurrency:
+  group: android-main-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   android:
     runs-on: ubuntu-24.04
     env:
-      ANDROID_PLATFORM: "35"
-      ANDROID_BUILD_TOOLS: "35.0.0"
+      ANDROID_PLATFORM: "36"
+      ANDROID_BUILD_TOOLS: "36.1.0"
       ANDROID_NDK: "29.0.14206865"
       ANDROID_CMAKE: "3.22.1"
 
@@ -65,7 +67,7 @@ jobs:
       - name: Setup Godot
         uses: chickensoft-games/setup-godot@v2
         with:
-          version: 4.5.1
+          version: 4.7.2
           use-dotnet: false
           include-templates: true
 
@@ -81,7 +83,6 @@ jobs:
             printf '\nexport/android/android_sdk_path = "%s"\n' "${ANDROID_SDK_ROOT}" >> "$SETTINGS_FILE"
             printf 'export/android/java_sdk_path = "%s"\n' "${JAVA_HOME}" >> "$SETTINGS_FILE"
           fi
-
 
       - name: Import project
         run: godot --headless --editor --path . --quit
@@ -105,20 +106,64 @@ jobs:
         run: |
           mkdir -p build
           godot --headless --path . --export-debug "Android Debug" build/TimeLoopDetective.apk
+          test -s build/TimeLoopDetective.apk
 
       - name: Verify APK packaged content
         shell: bash
         run: |
-          test -s build/TimeLoopDetective.apk
           unzip -l build/TimeLoopDetective.apk > apk-contents.txt
           grep -q "case_01.json" apk-contents.txt
           grep -q "case_10.json" apk-contents.txt
           grep -q "detective_office" apk-contents.txt
           echo "APK CONTENT VERIFIED: cases and artwork are packaged."
 
+      - name: Detect Play signing secrets
+        id: signing
+        shell: bash
+        env:
+          KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          if [ -n "$KEYSTORE_B64" ] && [ -n "$KEY_ALIAS" ] && [ -n "$KEY_PASSWORD" ]; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "available=false" >> "$GITHUB_OUTPUT"
+            echo "Play signing secrets are not configured; signed AAB will be skipped."
+          fi
+
+      - name: Configure Play release signing
+        if: steps.signing.outputs.available == 'true'
+        shell: bash
+        env:
+          KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          mkdir -p build/signing
+          printf '%s' "$KEYSTORE_B64" | base64 --decode > build/signing/release.keystore
+          sed -i "s|__RELEASE_KEYSTORE__|$GITHUB_WORKSPACE/build/signing/release.keystore|g" export_presets.cfg
+          sed -i "s|__RELEASE_ALIAS__|$KEY_ALIAS|g" export_presets.cfg
+          sed -i "s|__RELEASE_PASSWORD__|$KEY_PASSWORD|g" export_presets.cfg
+
+      - name: Export signed Play Store AAB
+        if: steps.signing.outputs.available == 'true'
+        shell: bash
+        run: |
+          godot --headless --path . --export-release "Android Release" build/TimeLoopDetective.aab
+          test -s build/TimeLoopDetective.aab
+
       - name: Upload APK
         uses: actions/upload-artifact@v7
         with:
-          name: TimeLoopDetective-Android
+          name: TimeLoopDetective-Android-1.6.0
           path: build/TimeLoopDetective.apk
+          if-no-files-found: error
+
+      - name: Upload signed Play Store AAB
+        if: steps.signing.outputs.available == 'true'
+        uses: actions/upload-artifact@v7
+        with:
+          name: TimeLoopDetective-Play-AAB-1.6.0
+          path: build/TimeLoopDetective.aab
           if-no-files-found: error

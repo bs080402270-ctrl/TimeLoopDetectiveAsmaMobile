@@ -1,6 +1,6 @@
 # Time Loop Detective: Asma
 
-A mobile-first, conversation-driven detective mystery built with **Godot 4.5.1**.
+A mobile-first, conversation-driven detective mystery built with **Godot 4.7.2**.
 
 You are physically present as **Asma's detective partner**. Cases unfold through short conversations, investigation, clues, choices, suspense, action, and repeated time loops rather than long narration or early explanations.
 
@@ -24,11 +24,11 @@ You are physically present as **Asma's detective partner**. Cases unfold through
 Each case defines `visual_scenes`. Locations may define `visual`, suspects `scene_art`, and clues `visual`. The engine uses dedicated artwork when available and safe fallbacks when it is not, so important actions never show a blank scene.
 
 ## Android
-CI uses Godot 4.5.1, Java 17, Android API 35, Build Tools 35.0.0 and NDK 29.
+CI uses Godot 4.7.2, Java 17, Android API 36, Build Tools 36.1.0 and NDK 29.
 
 Package: `com.zetarank.timeloopdetective`
 
-Current release line: **1.5.0 (version code 12)**.
+Current release line: **1.6.0 (version code 16)**.
 
 The normal workflow builds a debug APK. The manual release workflow builds a signed AAB once your private keystore/alias/password are supplied securely as GitHub Actions secrets.
 

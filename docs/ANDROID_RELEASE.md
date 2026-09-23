@@ -4,39 +4,40 @@
 `com.zetarank.timeloopdetective`
 
 ## Current version
-- Version name: 1.5.0
-- Version code: 12
+- Version name: 1.6.0
+- Version code: 16
+- Minimum Android: API 24 (Android 7.0)
+- Target Android: API 36 (Android 16)
+- Architectures: ARMv7, ARM64, x86, x86_64
+- Godot: 4.7.2 stable
+- Android Build Tools: 36.1.0
 
 ## Debug APK
-The normal GitHub Actions workflow builds and tests a debug APK on every push to `main`.
+The main GitHub Actions workflow builds and tests a debug APK on every push to `main`.
 
 Artifact name:
-`TimeLoopDetective-Android`
+`TimeLoopDetective-Android-1.6.0`
 
 ## Signed Play Store AAB
-The manual workflow `.github/workflows/android-release.yml` builds a release AAB.
+A signed AAB is built from `main` when the Play signing secrets are configured. The manual workflow `.github/workflows/android-release.yml` can also be run when a fresh signed AAB is needed.
 
-Before running it, add these GitHub Actions secrets:
-
-- `ANDROID_KEYSTORE_BASE64` — base64 of the private Android keystore file
-- `ANDROID_KEY_ALIAS` — signing key alias
-- `ANDROID_KEY_PASSWORD` — signing password
+Required GitHub Actions secrets:
+- `ANDROID_KEYSTORE_BASE64`
+- `ANDROID_KEY_ALIAS`
+- `ANDROID_KEY_PASSWORD`
 
 Never commit the keystore or password to Git.
 
-Run:
-Actions → Build Signed Android AAB → Run workflow.
-
 Expected artifact:
-`TimeLoopDetective-Android-AAB`
+`TimeLoopDetective-Play-AAB-1.6.0`
 
 ## Google Play sequence
-1. Build the signed AAB.
+1. Build the signed AAB from `main`.
 2. Upload to Play Console Internal testing.
-3. Install from Play on at least one real phone.
+3. Install from Play on real devices.
 4. Complete the real-device checklist.
 5. Review screenshots, privacy policy and store copy.
 6. Promote the tested build to the desired release track.
 
 ## Versioning
-Increase `version/code` for every new Play upload. Keep `version/name` aligned with the public release version.
+Increase `version/code` for every Google Play upload. Keep `version/name` aligned with the public release version.
