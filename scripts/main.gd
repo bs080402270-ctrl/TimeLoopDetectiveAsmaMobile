@@ -23,9 +23,9 @@ const C_RED := Color("#26a7ff")
 const C_RED_DARK := Color("#0b4d80")
 const C_GOLD := Color("#8fd3ff")
 const C_BLUE := Color("#36aef5")
-const ART_MENU := "res://art/actual/detective_office.jpg"
-const ART_CASES := "res://art/actual/optimized/cafe_exterior_rain.jpg"
-const ART_INTERROGATION := "res://art/actual/detective_office.jpg"
+const ART_MENU := "res://art/noir_generated/season_conspiracy_noir.jpg"
+const ART_CASES := "res://art/noir_generated/neon_alley_chase.jpg"
+const ART_INTERROGATION := "res://art/noir_generated/interrogation_evidence_noir.jpg"
 const ART_CASEBOOK := "res://art/actual/evidence_room.jpg"
 const ART_RESET := "res://art/polished/reset.svg"
 const ART_DEDUCTION := "res://art/polished/deduction.svg"
@@ -33,9 +33,9 @@ const ART_SETTINGS := "res://art/polished/settings.svg"
 const ART_INTRO := "res://art/polished/intro.svg"
 const ART_DIFFICULTY := "res://art/polished/difficulty.svg"
 const ART_CHARACTER_ATLAS := "res://art/actual/optimized/maya.jpg"
-const ART_SEASON2_TEASER := "res://art/polished/cases.svg"
+const ART_SEASON2_TEASER := "res://art/noir_generated/season_conspiracy_noir.jpg"
 const ART_GENERATED_STORY_BOARD := "res://art/polished/interrogation.svg"
-const ART_MANHWA_MAIN := "res://art/actual/optimized/cafe_exterior_rain.jpg"
+const ART_MANHWA_MAIN := "res://art/noir_generated/case01_vanishing_witness.jpg"
 
 const CHARACTER_REAL_ART := {
 	"maya": "res://art/actual/optimized/maya.jpg",
