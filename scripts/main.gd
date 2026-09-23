@@ -24,6 +24,9 @@ const C_RED_DARK := Color("#0b4d80")
 const C_GOLD := Color("#8fd3ff")
 const C_BLUE := Color("#36aef5")
 const ART_MENU := "res://art/actual/detective_office.jpg"
+const NOIR_CASE01_OFFICE := "res://art/generated/noir/case01_office_noir.jpg"
+const NOIR_CASE02_INTERROGATION := "res://art/generated/noir/case02_interrogation_noir.jpg"
+const NOIR_CASE03_ALLEY := "res://art/generated/noir/case03_alley_noir.jpg"
 const ART_CASES := "res://art/actual/optimized/cafe_exterior_rain.jpg"
 const ART_INTERROGATION := "res://art/actual/detective_office.jpg"
 const ART_CASEBOOK := "res://art/actual/evidence_room.jpg"
@@ -1145,6 +1148,14 @@ func _request_dynamic_visual(kind: String,preferred: String = "",extra: Dictiona
 	return request
 
 func _resolve_scene_art(kind: String,preferred: String = "") -> String:
+	# Case-specific cinematic noir backgrounds approved for the mobile game.
+	# These take priority for the matching gameplay moments.
+	if current_case_id == "case_01" and kind in ["interrogation","suspect"] and ResourceLoader.exists(NOIR_CASE01_OFFICE):
+		return NOIR_CASE01_OFFICE
+	if current_case_id == "case_02" and kind in ["interrogation","suspect"] and ResourceLoader.exists(NOIR_CASE02_INTERROGATION):
+		return NOIR_CASE02_INTERROGATION
+	if current_case_id == "case_03" and kind in ["chase","pursuit","escape","cover"] and ResourceLoader.exists(NOIR_CASE03_ALLEY):
+		return NOIR_CASE03_ALLEY
 	if preferred != "" and ResourceLoader.exists(preferred):
 		return preferred
 	var visuals: Dictionary = case_data.get("visual_scenes",{})
