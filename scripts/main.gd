@@ -27,21 +27,20 @@ const ART_MENU := "res://art/noir_generated/season_conspiracy_noir.jpg"
 const ART_CASES := "res://art/noir_generated/neon_alley_chase.jpg"
 const ART_INTERROGATION := "res://art/noir_generated/interrogation_evidence_noir.jpg"
 const ART_CASEBOOK := "res://art/actual/evidence_room.jpg"
-const ART_RESET := "res://art/polished/reset.svg"
-const ART_DEDUCTION := "res://art/polished/deduction.svg"
-const ART_SETTINGS := "res://art/polished/settings.svg"
-const ART_INTRO := "res://art/polished/intro.svg"
-const ART_DIFFICULTY := "res://art/polished/difficulty.svg"
-const ART_CHARACTER_ATLAS := "res://art/actual/optimized/maya.jpg"
+const ART_RESET := "res://art/noir_latest/shattered_time_detective_in_the_rain.jpg"
+const ART_DEDUCTION := "res://art/noir_latest/rainlit_warehouse_standoff.jpg"
+const ART_SETTINGS := "res://art/noir_latest/rainy_noir_detective_office.jpg"
+const ART_INTRO := "res://art/noir_generated/case01_vanishing_witness.jpg"
+const ART_DIFFICULTY := "res://art/noir_latest/noir_evidence_room_investigation.jpg"
+const ART_CHARACTER_ATLAS := "res://art/noir_latest/generated_character_atlas.png"
 const ART_SEASON2_TEASER := "res://art/noir_generated/season_conspiracy_noir.jpg"
-const ART_GENERATED_STORY_BOARD := "res://art/polished/interrogation.svg"
+const ART_GENERATED_STORY_BOARD := "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg"
 const ART_MANHWA_MAIN := "res://art/noir_generated/case01_vanishing_witness.jpg"
 
 const CHARACTER_REAL_ART := {
 	"maya": "res://art/actual/optimized/maya.jpg",
 	"omar": "res://art/actual/optimized/omar.jpg",
 	"lina": "res://art/actual/optimized/lina.jpg",
-	"theo": "res://art/characters/theo.svg",
 	"asma": "res://art/actual/optimized/maya.jpg",
 	"chief_farid": "res://art/actual/optimized/omar.jpg",
 	"ryan_khan": "res://art/actual/optimized/lina.jpg",
@@ -51,29 +50,7 @@ const CHARACTER_REAL_ART := {
 	"leila": "res://art/actual/optimized/maya.jpg",
 	"viktor": "res://art/actual/optimized/omar.jpg",
 	"hassan": "res://art/actual/optimized/omar.jpg",
-	"stranger": "res://art/actual/optimized/lina.jpg",
-	"hassan_case2": "res://art/cases/case02_hassan.svg",
-	"meera": "res://art/cases/case02_meera.svg",
-	"elias": "res://art/cases/case02_elias.svg",
-	"juno": "res://art/cases/case02_juno.svg",
-	"rafi": "res://art/cases/case02_rafi.svg",
-	"sofia": "res://art/cases/case03_sofia.svg",
-	"marcus": "res://art/cases/case03_marcus.svg",
-	"ivy": "res://art/cases/case03_ivy.svg",
-	"noah": "res://art/cases/case03_noah.svg",
-	"elena": "res://art/cases/case03_elena.svg",
-	"clara": "res://art/cases/case04_clara.svg",
-	"anton": "res://art/cases/case04_anton.svg",
-	"gabriel": "res://art/cases/case04_gabriel.svg",
-	"rowan": "res://art/cases/case04_rowan.svg",
-	"selene": "res://art/cases/case04_selene.svg",
-	"nikolai": "res://art/cases/case04_nikolai.svg",
-	"morgan": "res://art/cases/case05_morgan.svg",
-	"iris": "res://art/cases/case05_iris.svg",
-	"leo": "res://art/cases/case05_leo.svg",
-	"calvin": "res://art/cases/case05_calvin.svg",
-	"mara": "res://art/cases/case05_mara.svg",
-	"tate": "res://art/cases/case05_tate.svg"
+	"stranger": "res://art/actual/optimized/lina.jpg"
 }
 
 const CHARACTER_ATLAS_MAP := {
@@ -1844,28 +1821,27 @@ func _atlas_portrait(index: int) -> Texture2D:
 	var atlas := _load_tex(ART_CHARACTER_ATLAS)
 	if atlas == null:
 		return null
-	var col := index % 10
-	var row := index / 10
-	var x := float(col) * 76.8 + 5.0
-	var y := 55.0 if row == 0 else 252.0
-	var h := 136.0 if row == 0 else 139.0
+	var safe_index := posmod(index,20)
+	var col := safe_index % 10
+	var row := safe_index / 10
+	var cell_w := float(atlas.get_width()) / 10.0
+	var x := float(col) * cell_w + 5.0
+	var y := 0.0 if row == 0 else 260.0
+	var h := 198.0 if row == 0 else 185.0
 	var tex := AtlasTexture.new()
 	tex.atlas = atlas
-	tex.region = Rect2(x,y,69.0,h)
+	tex.region = Rect2(x,y,cell_w - 10.0,h)
 	return tex
 
 func _character_portrait(id: String,fallback_path: String) -> Texture2D:
 	if CHARACTER_REAL_ART.has(id):
 		return _load_tex(str(CHARACTER_REAL_ART[id]))
+	if CHARACTER_ATLAS_MAP.has(id):
+		return _atlas_portrait(int(CHARACTER_ATLAS_MAP[id]))
 	if fallback_path != "" and ResourceLoader.exists(fallback_path):
 		return _load_tex(fallback_path)
-	var stable: Array[String] = [
-		"res://art/actual/optimized/maya.jpg",
-		"res://art/actual/optimized/omar.jpg",
-		"res://art/actual/optimized/lina.jpg"
-	]
-	var pick: int = abs(id.hash()) % stable.size()
-	return _load_tex(stable[pick])
+	var atlas_pick: int = abs(id.hash()) % 20
+	return _atlas_portrait(atlas_pick)
 
 func _load_tex(path: String) -> Texture2D:
 	if texture_cache.has(path):
