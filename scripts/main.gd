@@ -159,11 +159,16 @@ var overlay_body: RichTextLabel
 var overlay_actions: VBoxContainer
 
 func _ready() -> void:
+	# Build the essential UI first. Optional online/story systems must never
+	# prevent the menu from appearing on a real Android device.
+	_build_shell()
+	_load_catalog()
+	_show_main_menu()
 	story_director.initialize()
 	_setup_dynamic_image_client()
-	_load_catalog()
-	_build_shell()
-	_show_main_menu()
+	var boot := get_node_or_null("BootSafe")
+	if boot != null:
+		boot.visible = false
 
 func _setup_dynamic_image_client() -> void:
 	dynamic_image_client = DynamicImageClient.new()

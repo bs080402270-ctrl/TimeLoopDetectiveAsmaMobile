@@ -21,41 +21,91 @@ var completed_cases: Array[String] = []
 func _init() -> void:
 	load_settings()
 
+func _safe_string_array(value, fallback: Array[String]) -> Array[String]:
+	var result: Array[String] = []
+	if typeof(value) == TYPE_ARRAY:
+		for item in value:
+			result.append(str(item))
+		return result
+	if typeof(value) == TYPE_PACKED_STRING_ARRAY:
+		for item in value:
+			result.append(str(item))
+		return result
+	return fallback.duplicate()
+
+func _safe_bool(value, fallback: bool) -> bool:
+	match typeof(value):
+		TYPE_BOOL:
+			return bool(value)
+		TYPE_INT, TYPE_FLOAT:
+			return int(value) != 0
+		TYPE_STRING:
+			var s := str(value).to_lower()
+			if s in ["true","1","yes","on"]:
+				return true
+			if s in ["false","0","no","off"]:
+				return false
+	return fallback
+
+func _safe_int(value, fallback: int) -> int:
+	if typeof(value) in [TYPE_INT,TYPE_FLOAT]:
+		return int(value)
+	if typeof(value) == TYPE_STRING and str(value).is_valid_int():
+		return int(str(value))
+	return fallback
+
 func load_settings() -> void:
 	var cfg := ConfigFile.new()
-	if cfg.load(PATH) != OK:
+	var err := cfg.load(PATH)
+	if err != OK:
 		return
-	graphics_quality = str(cfg.get_value("display", "graphics_quality", graphics_quality))
-	vibration_enabled = bool(cfg.get_value("accessibility", "vibration_enabled", vibration_enabled))
-	text_size = str(cfg.get_value("accessibility", "text_size", text_size))
-	difficulty = str(cfg.get_value("gameplay", "difficulty", difficulty))
-	tutorial_seen = bool(cfg.get_value("gameplay", "tutorial_seen", tutorial_seen))
-	selected_investigator = str(cfg.get_value("profile", "selected_investigator", selected_investigator))
-	selected_outfit = str(cfg.get_value("profile", "selected_outfit", selected_outfit))
-	detective_credits = int(cfg.get_value("economy", "detective_credits", detective_credits))
-	unlocked_outfits = Array(cfg.get_value("economy", "unlocked_outfits", unlocked_outfits), TYPE_STRING, "", null)
-	unlocked_gear = Array(cfg.get_value("economy", "unlocked_gear", unlocked_gear), TYPE_STRING, "", null)
-	rewarded_cases = Array(cfg.get_value("economy", "rewarded_cases", rewarded_cases), TYPE_STRING, "", null)
-	achievements = Array(cfg.get_value("profile", "achievements", achievements), TYPE_STRING, "", null)
-	season_fragments = Array(cfg.get_value("story", "season_fragments", season_fragments), TYPE_STRING, "", null)
-	completed_cases = Array(cfg.get_value("story", "completed_cases", completed_cases), TYPE_STRING, "", null)
+
+	graphics_quality = str(cfg.get_value("display","graphics_quality",graphics_quality))
+	if graphics_quality not in ["enhanced","performance"]:
+		graphics_quality = "enhanced"
+
+	vibration_enabled = _safe_bool(cfg.get_value("accessibility","vibration_enabled",vibration_enabled),vibration_enabled)
+
+	text_size = str(cfg.get_value("accessibility","text_size",text_size))
+	if text_size not in ["normal","large","extra_large"]:
+		text_size = "normal"
+
+	difficulty = str(cfg.get_value("gameplay","difficulty",difficulty))
+	if difficulty not in ["easy","hard","hardest"]:
+		difficulty = "hard"
+
+	tutorial_seen = _safe_bool(cfg.get_value("gameplay","tutorial_seen",tutorial_seen),tutorial_seen)
+	selected_investigator = str(cfg.get_value("profile","selected_investigator",selected_investigator))
+	selected_outfit = str(cfg.get_value("profile","selected_outfit",selected_outfit))
+	detective_credits = maxi(0,_safe_int(cfg.get_value("economy","detective_credits",detective_credits),detective_credits))
+
+	unlocked_outfits = _safe_string_array(cfg.get_value("economy","unlocked_outfits",unlocked_outfits),["classic"])
+	if "classic" not in unlocked_outfits:
+		unlocked_outfits.append("classic")
+	unlocked_gear = _safe_string_array(cfg.get_value("economy","unlocked_gear",unlocked_gear),["handcuffs"])
+	if "handcuffs" not in unlocked_gear:
+		unlocked_gear.append("handcuffs")
+	rewarded_cases = _safe_string_array(cfg.get_value("economy","rewarded_cases",rewarded_cases),[])
+	achievements = _safe_string_array(cfg.get_value("profile","achievements",achievements),[])
+	season_fragments = _safe_string_array(cfg.get_value("story","season_fragments",season_fragments),[])
+	completed_cases = _safe_string_array(cfg.get_value("story","completed_cases",completed_cases),[])
 
 func save_settings() -> void:
 	var cfg := ConfigFile.new()
-	cfg.set_value("display", "graphics_quality", graphics_quality)
-	cfg.set_value("accessibility", "vibration_enabled", vibration_enabled)
-	cfg.set_value("accessibility", "text_size", text_size)
-	cfg.set_value("gameplay", "difficulty", difficulty)
-	cfg.set_value("gameplay", "tutorial_seen", tutorial_seen)
-	cfg.set_value("profile", "selected_investigator", selected_investigator)
-	cfg.set_value("profile", "selected_outfit", selected_outfit)
-	cfg.set_value("economy", "detective_credits", detective_credits)
-	cfg.set_value("economy", "unlocked_outfits", unlocked_outfits)
-	cfg.set_value("economy", "unlocked_gear", unlocked_gear)
-	cfg.set_value("economy", "rewarded_cases", rewarded_cases)
-	cfg.set_value("profile", "achievements", achievements)
-	cfg.set_value("story", "season_fragments", season_fragments)
-	cfg.set_value("story", "completed_cases", completed_cases)
+	cfg.set_value("display","graphics_quality",graphics_quality)
+	cfg.set_value("accessibility","vibration_enabled",vibration_enabled)
+	cfg.set_value("accessibility","text_size",text_size)
+	cfg.set_value("gameplay","difficulty",difficulty)
+	cfg.set_value("gameplay","tutorial_seen",tutorial_seen)
+	cfg.set_value("profile","selected_investigator",selected_investigator)
+	cfg.set_value("profile","selected_outfit",selected_outfit)
+	cfg.set_value("economy","detective_credits",detective_credits)
+	cfg.set_value("economy","unlocked_outfits",unlocked_outfits)
+	cfg.set_value("economy","unlocked_gear",unlocked_gear)
+	cfg.set_value("economy","rewarded_cases",rewarded_cases)
+	cfg.set_value("profile","achievements",achievements)
+	cfg.set_value("story","season_fragments",season_fragments)
+	cfg.set_value("story","completed_cases",completed_cases)
 	cfg.save(PATH)
 
 func toggle_graphics() -> void:
@@ -68,34 +118,25 @@ func toggle_vibration() -> void:
 
 func cycle_text_size() -> void:
 	match text_size:
-		"normal":
-			text_size = "large"
-		"large":
-			text_size = "extra_large"
-		_:
-			text_size = "normal"
+		"normal": text_size = "large"
+		"large": text_size = "extra_large"
+		_: text_size = "normal"
 	save_settings()
 
 func font_scale() -> float:
 	match text_size:
-		"large":
-			return 1.12
-		"extra_large":
-			return 1.24
-		_:
-			return 1.0
+		"large": return 1.12
+		"extra_large": return 1.24
+		_: return 1.0
 
 func graphics_label() -> String:
 	return "ENHANCED" if graphics_quality == "enhanced" else "PERFORMANCE"
 
 func text_size_label() -> String:
 	match text_size:
-		"large":
-			return "LARGE"
-		"extra_large":
-			return "EXTRA LARGE"
-		_:
-			return "NORMAL"
+		"large": return "LARGE"
+		"extra_large": return "EXTRA LARGE"
+		_: return "NORMAL"
 
 func set_difficulty(value: String) -> void:
 	if value not in ["easy","hard","hardest"]:
@@ -109,7 +150,6 @@ func difficulty_label() -> String:
 func mark_tutorial_seen() -> void:
 	tutorial_seen = true
 	save_settings()
-
 
 func set_investigator(id: String) -> void:
 	selected_investigator = id
@@ -130,7 +170,7 @@ func spend_credits(cost: int) -> bool:
 	save_settings()
 	return true
 
-func buy_outfit(id: String, cost: int) -> bool:
+func buy_outfit(id: String,cost: int) -> bool:
 	if id in unlocked_outfits:
 		return true
 	if not spend_credits(cost):
@@ -139,7 +179,7 @@ func buy_outfit(id: String, cost: int) -> bool:
 	save_settings()
 	return true
 
-func buy_gear(id: String, cost: int) -> bool:
+func buy_gear(id: String,cost: int) -> bool:
 	if id in unlocked_gear:
 		return true
 	if not spend_credits(cost):
@@ -149,17 +189,16 @@ func buy_gear(id: String, cost: int) -> bool:
 	return true
 
 func add_credits(amount: int) -> void:
-	detective_credits = maxi(0, detective_credits + amount)
+	detective_credits = maxi(0,detective_credits + amount)
 	save_settings()
 
-
-func reward_case_once(case_id: String, amount: int) -> int:
+func reward_case_once(case_id: String,amount: int) -> int:
 	if case_id in rewarded_cases:
 		return 0
 	rewarded_cases.append(case_id)
-	detective_credits += maxi(0, amount)
+	detective_credits += maxi(0,amount)
 	save_settings()
-	return maxi(0, amount)
+	return maxi(0,amount)
 
 func unlock_achievement(id: String) -> bool:
 	if id in achievements:
@@ -167,7 +206,6 @@ func unlock_achievement(id: String) -> bool:
 	achievements.append(id)
 	save_settings()
 	return true
-
 
 func unlock_season_fragment(id: String) -> bool:
 	if id == "" or id in season_fragments:
