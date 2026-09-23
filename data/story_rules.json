@@ -88,7 +88,7 @@
     }
   },
   "visual_consistency": {
-    "style": "original cinematic Korean manhwa/webtoon-inspired detective thriller",
+    "style": "cinematic dark blue-black noir manhwa/webtoon detective thriller, highly detailed rainy city reflections, warm amber practical lights, deep navy shadows, subtle electric-blue accents, premium mobile visual novel composition",
     "orientation": "portrait 9:16",
     "asma": {
       "appearance": "Detective Asma, long dark wavy hair, sharp observant eyes, dark detective blazer or coat, subtle gold earrings, calm but intense expression"
@@ -97,10 +97,11 @@
       "appearance": "consistent detective partner, physically present beside or opposite Asma; use POV-compatible framing when identity is not shown"
     },
     "continuity": [
-      "same character faces across scenes",
-      "same clothing within a case unless story changes it",
-      "same location architecture across loops",
-      "visible loop differences must be intentional"
+      "Detective Asma keeps the same face, long dark wavy hair, gold hoop earrings and black detective blazer across scenes",
+      "the player detective partner remains visually consistent when shown",
+      "same location architecture and props persist across loops unless the story explicitly changes them",
+      "loop differences are visually obvious but limited to facts the player has discovered",
+      "leave clear lower-screen negative space for dialogue and choice UI"
     ]
   },
   "prompt_safety": {

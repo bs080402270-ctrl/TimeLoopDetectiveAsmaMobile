@@ -16,18 +16,18 @@ const CASE_FILES := [
 const C_BG := Color("#07111f")
 const C_PANEL := Color("#0a1119")
 const C_PANEL_2 := Color("#15130f")
-const C_LINE := Color("#8a6437")
+const C_LINE := Color("#1a5f96")
 const C_TEXT := Color("#f4f7fb")
 const C_MUTED := Color("#9db1c7")
-const C_RED := Color("#e32636")
-const C_RED_DARK := Color("#a51220")
-const C_GOLD := Color("#e6b85c")
-const C_BLUE := Color("#f0b85f")
+const C_RED := Color("#26a7ff")
+const C_RED_DARK := Color("#0b4d80")
+const C_GOLD := Color("#8fd3ff")
+const C_BLUE := Color("#36aef5")
 const ART_MENU := "res://art/actual/detective_office.jpg"
-const ART_CASES := "res://art/actual/detective_office.jpg"
+const ART_CASES := "res://art/actual/optimized/cafe_exterior_rain.jpg"
 const ART_INTERROGATION := "res://art/actual/detective_office.jpg"
 const ART_CASEBOOK := "res://art/actual/evidence_room.jpg"
-const ART_RESET := "res://art/actual/evidence_room.jpg"
+const ART_RESET := "res://art/polished/reset.svg"
 const ART_DEDUCTION := "res://art/polished/deduction.svg"
 const ART_SETTINGS := "res://art/polished/settings.svg"
 const ART_INTRO := "res://art/polished/intro.svg"
@@ -35,7 +35,7 @@ const ART_DIFFICULTY := "res://art/polished/difficulty.svg"
 const ART_CHARACTER_ATLAS := "res://art/actual/optimized/maya.jpg"
 const ART_SEASON2_TEASER := "res://art/polished/cases.svg"
 const ART_GENERATED_STORY_BOARD := "res://art/polished/interrogation.svg"
-const ART_MANHWA_MAIN := "res://art/actual/detective_office.jpg"
+const ART_MANHWA_MAIN := "res://art/actual/optimized/cafe_exterior_rain.jpg"
 
 const CHARACTER_REAL_ART := {
 	"maya": "res://art/actual/optimized/maya.jpg",
@@ -1538,7 +1538,7 @@ func _show_settings() -> void:
 		_show_visual_service_info()
 	))
 	body.add_child(_button("CLEAR ALL CASE PROGRESS",func(): _confirm_clear_progress(),false))
-	body.add_child(_button("ABOUT / VERSION 1.5.2",func(): _show_about(),false))
+	body.add_child(_button("ABOUT / VERSION 1.5.3",func(): _show_about(),false))
 	_build_home_nav("SETTINGS")
 
 func _dynamic_visual_status() -> String:
@@ -1601,7 +1601,7 @@ func _clear_all_progress() -> void:
 
 func _show_about() -> void:
 	overlay_title.text = "TIME LOOP DETECTIVE"
-	overlay_body.text = "[center][color=#e6b85c][b]Version 1.5.2[/b][/color][/center]\n\nA story-driven detective mystery built for Android and iOS. Investigate ten Season 1 cases, choose your investigator, use outfits and equipment, request hints, expose contradictions, confront culprits and uncover the origin of the time loop."
+	overlay_body.text = "[center][color=#e6b85c][b]Version 1.5.3[/b][/color][/center]\n\nA story-driven detective mystery built for Android and iOS. Investigate ten Season 1 cases, choose your investigator, use outfits and equipment, request hints, expose contradictions, confront culprits and uncover the origin of the time loop."
 	_clear(overlay_actions)
 	overlay_actions.add_child(_button("CLOSE",func(): overlay.visible=false,false))
 	overlay.visible = true
@@ -1833,7 +1833,7 @@ func _save() -> void:
 func _set_background(path: String) -> void:
 	background.texture = _load_tex(path)
 	var strength := 0.58 if settings_manager.graphics_quality == "enhanced" else 0.42
-	background.modulate = Color(0.82,0.88,0.96,strength)
+	background.modulate = Color(0.94,0.97,1.0,strength)
 
 func _set_polished_background(path: String,alpha := 0.40) -> void:
 	background.texture = _load_tex(path)

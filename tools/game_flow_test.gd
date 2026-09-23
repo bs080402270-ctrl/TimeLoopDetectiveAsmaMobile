@@ -23,6 +23,12 @@ func _run() -> void:
 	if game.story_director.rules.is_empty():
 		_fail("story director rules were not loaded")
 		return
+	if game.case_catalog.size() != 10:
+		_fail("main menu did not load all 10 packaged cases")
+		return
+	if game.background == null or game.background.texture == null:
+		_fail("main menu background did not render")
+		return
 
 	if game.case_catalog.size() != 10:
 		_fail("expected 10 cases, got %d" % game.case_catalog.size())

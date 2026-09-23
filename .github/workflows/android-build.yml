@@ -78,8 +78,8 @@ jobs:
           if [ -n "$SETTINGS_FILE" ]; then
             sed -i '/export\/android\/android_sdk_path/d' "$SETTINGS_FILE"
             sed -i '/export\/android\/java_sdk_path/d' "$SETTINGS_FILE"
-            sed -i '$i export/android/android_sdk_path = "'"${ANDROID_SDK_ROOT}"'"' "$SETTINGS_FILE"
-            sed -i '$i export/android/java_sdk_path = "'"${JAVA_HOME}"'"' "$SETTINGS_FILE"
+            printf '\nexport/android/android_sdk_path = "%s"\n' "${ANDROID_SDK_ROOT}" >> "$SETTINGS_FILE"
+            printf 'export/android/java_sdk_path = "%s"\n' "${JAVA_HOME}" >> "$SETTINGS_FILE"
           fi
 
 
@@ -105,6 +105,16 @@ jobs:
         run: |
           mkdir -p build
           godot --headless --path . --export-debug "Android Debug" build/TimeLoopDetective.apk
+
+      - name: Verify APK packaged content
+        shell: bash
+        run: |
+          test -s build/TimeLoopDetective.apk
+          unzip -l build/TimeLoopDetective.apk > apk-contents.txt
+          grep -q "case_01.json" apk-contents.txt
+          grep -q "case_10.json" apk-contents.txt
+          grep -q "detective_office" apk-contents.txt
+          echo "APK CONTENT VERIFIED: cases and artwork are packaged."
 
       - name: Upload APK
         uses: actions/upload-artifact@v7

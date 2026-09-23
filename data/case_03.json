@@ -294,13 +294,13 @@
   ],
   "visual_scenes": {
     "crime_scene": "res://art/polished/casebook.svg",
-    "location": "res://art/cases/case03_hall.svg",
+    "location": "res://art/actual/optimized/cafe_exterior_rain.jpg",
     "interrogation": "res://art/polished/interrogation.svg",
     "clue": "res://art/polished/casebook.svg",
     "search": "res://art/polished/casebook.svg",
-    "chase": "res://art/polished/cases.svg",
-    "pursuit": "res://art/polished/cases.svg",
-    "cover": "res://art/polished/reset.svg",
+    "chase": "res://art/actual/optimized/cafe_exterior_rain.jpg",
+    "pursuit": "res://art/actual/optimized/cafe_exterior_rain.jpg",
+    "cover": "res://art/actual/optimized/cafe_exterior_rain.jpg",
     "confrontation": "res://art/polished/deduction.svg",
     "capture": "res://art/polished/deduction.svg",
     "loop": "res://art/polished/reset.svg"
