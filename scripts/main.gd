@@ -1504,7 +1504,7 @@ func _show_settings() -> void:
 		_show_visual_service_info()
 	))
 	body.add_child(_button("CLEAR ALL CASE PROGRESS",func(): _confirm_clear_progress(),false))
-	body.add_child(_button("ABOUT / VERSION 1.5.0",func(): _show_about(),false))
+	body.add_child(_button("ABOUT / VERSION 1.5.1",func(): _show_about(),false))
 	_build_home_nav("SETTINGS")
 
 func _dynamic_visual_status() -> String:
@@ -1567,7 +1567,7 @@ func _clear_all_progress() -> void:
 
 func _show_about() -> void:
 	overlay_title.text = "TIME LOOP DETECTIVE"
-	overlay_body.text = "[center][color=#e6b85c][b]Version 1.5.0[/b][/color][/center]\n\nA story-driven detective mystery built for Android and iOS. Investigate ten Season 1 cases, choose your investigator, use outfits and equipment, request hints, expose contradictions, confront culprits and uncover the origin of the time loop."
+	overlay_body.text = "[center][color=#e6b85c][b]Version 1.5.1[/b][/color][/center]\n\nA story-driven detective mystery built for Android and iOS. Investigate ten Season 1 cases, choose your investigator, use outfits and equipment, request hints, expose contradictions, confront culprits and uncover the origin of the time loop."
 	_clear(overlay_actions)
 	overlay_actions.add_child(_button("CLOSE",func(): overlay.visible=false,false))
 	overlay.visible = true
