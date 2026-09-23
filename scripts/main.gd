@@ -143,6 +143,7 @@ var save_manager := SaveManager.new()
 var settings_manager := SettingsManager.new()
 var audio: AudioManager
 var story_director := StoryDirector.new()
+var dynamic_image_client: DynamicImageClient
 var current_case_id := ""
 
 var background: TextureRect
@@ -159,9 +160,37 @@ var overlay_actions: VBoxContainer
 
 func _ready() -> void:
 	story_director.initialize()
+	_setup_dynamic_image_client()
 	_load_catalog()
 	_build_shell()
 	_show_main_menu()
+
+func _setup_dynamic_image_client() -> void:
+	dynamic_image_client = DynamicImageClient.new()
+	add_child(dynamic_image_client)
+	dynamic_image_client.image_ready.connect(_on_dynamic_image_ready)
+	dynamic_image_client.image_failed.connect(_on_dynamic_image_failed)
+
+	var file := FileAccess.open("res://data/image_service.json",FileAccess.READ)
+	if file == null:
+		return
+	var parsed = JSON.parse_string(file.get_as_text())
+	if typeof(parsed) != TYPE_DICTIONARY:
+		return
+	if not bool(parsed.get("enabled",false)):
+		return
+	dynamic_image_client.configure(str(parsed.get("endpoint","")),str(parsed.get("game_token","")))
+	story_director.set_image_generation_available(dynamic_image_client.enabled)
+
+func _on_dynamic_image_ready(scene_id: String,texture: Texture2D) -> void:
+	if str(state.get("last_visual_scene","")) != scene_id:
+		return
+	background.texture = texture
+	background.modulate = Color(0.90,0.94,1.0,0.72 if settings_manager.graphics_quality == "enhanced" else 0.52)
+
+func _on_dynamic_image_failed(_scene_id: String,_reason: String) -> void:
+	# Intentional no-op: gameplay already continues with the local fallback art.
+	pass
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("back"):
@@ -1062,10 +1091,18 @@ func _dynamic_scene_context(kind: String,preferred: String = "",extra: Dictionar
 func _request_dynamic_visual(kind: String,preferred: String = "",extra: Dictionary = {}) -> Dictionary:
 	var context := _dynamic_scene_context(kind,preferred,extra)
 	var request := story_director.make_scene(kind,context)
-	state["last_visual_scene"] = str(request.get("scene_id",""))
-	state["last_visual_prompt"] = str(request.get("prompt",""))
+	var scene_id := str(request.get("scene_id",""))
+	var prompt := str(request.get("prompt",""))
+	state["last_visual_scene"] = scene_id
+	state["last_visual_prompt"] = prompt
 	state["last_visual_requested"] = bool(request.get("should_generate",false))
 	_save()
+
+	# Never block gameplay. Fallback art is displayed immediately; an online
+	# generated image can replace it later only while this scene is still active.
+	if bool(request.get("should_generate",false)) and dynamic_image_client != null and dynamic_image_client.enabled:
+		dynamic_image_client.request_scene(scene_id,prompt)
+
 	return request
 
 func _resolve_scene_art(kind: String,preferred: String = "") -> String:

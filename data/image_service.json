@@ -1,0 +1,5 @@
+{
+  "enabled": false,
+  "endpoint": "https://YOUR-DOMAIN.example/api/game-image",
+  "game_token": ""
+}
