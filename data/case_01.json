@@ -46,7 +46,7 @@
     "maya": {
       "name": "Maya Cole",
       "role": "Cafe manager",
-      "art": "res://art/characters/maya.svg",
+      "art": "res://art/actual/optimized/maya.jpg",
       "dialogue": [
         "Daniel argued with everyone. I stayed behind the counter until the blackout.",
         "You're asking about the order again? The ticket changed after Daniel complained.",
@@ -74,7 +74,7 @@
     "omar": {
       "name": "Omar Hale",
       "role": "Investigative journalist",
-      "art": "res://art/characters/omar.svg",
+      "art": "res://art/actual/optimized/omar.jpg",
       "dialogue": [
         "I left before the blackout. I was by the river, working.",
         "Fine. I recorded Daniel. He threatened Lina with an audit.",
@@ -102,7 +102,7 @@
     "lina": {
       "name": "Lina Vale",
       "role": "Daniel's business partner",
-      "art": "res://art/characters/lina.svg",
+      "art": "res://art/actual/optimized/lina.jpg",
       "dialogue": [
         "Daniel and I had business disagreements. I never went near the office.",
         "The thread proves I used the back door, not that I harmed Daniel.",
@@ -131,7 +131,7 @@
     "theo": {
       "name": "Theo Marsh",
       "role": "Barista",
-      "art": "res://art/characters/theo.svg",
+      "art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
       "dialogue": [
         "I was cleaning the grinder. I heard the breaker snap.",
         "Yes, I borrowed the office key. I returned it before 8:40.",
