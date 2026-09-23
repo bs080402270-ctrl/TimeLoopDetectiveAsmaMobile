@@ -7,7 +7,8 @@ func build(scene: Dictionary, rules: Dictionary) -> String:
 	var parts: Array[String] = []
 	var style := str(rules.get("visual_consistency",{}).get("style",DEFAULT_STYLE))
 	parts.append(style)
-	parts.append("Current gameplay moment only. Do not reveal future story information.")\n\tparts.append("Compose as a full-screen mobile gameplay background: cinematic characters and environment in the upper and middle frame, with darker uncluttered lower space reserved for dialogue and choice panels. No UI text inside the generated artwork.")
+	parts.append("Current gameplay moment only. Do not reveal future story information.")
+	parts.append("Compose as a full-screen mobile gameplay background: cinematic characters and environment in the upper and middle frame, with darker uncluttered lower space reserved for dialogue and choice panels. No UI text inside the generated artwork.")
 	parts.append("Scene type: %s." % str(scene.get("type","story")))
 	parts.append("Location: %s." % str(scene.get("location_name","current location")))
 	parts.append("Time loop: %d." % int(scene.get("loop",1)))
