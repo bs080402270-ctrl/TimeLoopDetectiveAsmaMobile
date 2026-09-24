@@ -68,7 +68,7 @@
         "This time Nadia Vale reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Nadia Vale tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+      "scene_art": "res://art/evidence_generated/interrogation_room.jpg",
       "pressure_line": "You should not know that part yet.",
       "shadow_reveal": "Nadia Vale changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "poison",
@@ -97,7 +97,7 @@
         "This time Marcus Reed reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Marcus Reed tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+      "scene_art": "res://art/evidence_generated/interrogation_room.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Marcus Reed changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "bracelet",
@@ -126,7 +126,7 @@
         "This time Felix Grant reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Felix Grant tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+      "scene_art": "res://art/evidence_generated/interrogation_room.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Felix Grant changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "waveform",
@@ -155,7 +155,7 @@
         "This time Lena Park reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Lena Park tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+      "scene_art": "res://art/evidence_generated/interrogation_room.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Lena Park changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "automation",
@@ -184,7 +184,7 @@
         "This time Victor Crane reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Victor Crane tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+      "scene_art": "res://art/evidence_generated/interrogation_room.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Victor Crane changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "ledger",
@@ -303,9 +303,9 @@
   "visual_scenes": {
     "crime_scene": "res://art/noir_latest/rainy_noir_detective_standoff.jpg",
     "location": "res://art/noir_latest/rainy_noir_detective_office.jpg",
-    "interrogation": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+    "interrogation": "res://art/evidence_generated/interrogation_room.jpg",
     "clue": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
-    "search": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
+    "search": "res://art/evidence_generated/evidence_room.jpg",
     "chase": "res://art/noir_latest/neon_rain_detective_chase.jpg",
     "pursuit": "res://art/noir_latest/neon_rain_detective_chase.jpg",
     "cover": "res://art/noir_latest/noir_safehouse_investigation.jpg",
