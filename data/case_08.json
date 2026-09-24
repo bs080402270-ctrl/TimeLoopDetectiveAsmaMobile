@@ -68,7 +68,7 @@
         "This time Nora Blake reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Nora Blake tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+      "scene_art": "res://art/evidence_generated/interrogation_room.jpg",
       "pressure_line": "You should not know that part yet.",
       "shadow_reveal": "Nora Blake changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "timer",
@@ -98,7 +98,7 @@
         "This time Adrian Frost reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Adrian Frost tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+      "scene_art": "res://art/evidence_generated/interrogation_room.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Adrian Frost changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "shadow",
@@ -127,7 +127,7 @@
         "This time Milo Chen reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Milo Chen tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+      "scene_art": "res://art/evidence_generated/interrogation_room.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Milo Chen changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "pigment",
@@ -156,7 +156,7 @@
         "This time Sofia Reyes reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Sofia Reyes tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+      "scene_art": "res://art/evidence_generated/interrogation_room.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Sofia Reyes changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "alarm",
@@ -185,7 +185,7 @@
         "This time Evelyn Cross reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Evelyn Cross tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+      "scene_art": "res://art/evidence_generated/interrogation_room.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Evelyn Cross changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "invoice",
@@ -295,9 +295,9 @@
   "visual_scenes": {
     "crime_scene": "res://art/noir_latest/rainy_noir_detective_standoff.jpg",
     "location": "res://art/noir_latest/rainlit_warehouse_standoff.jpg",
-    "interrogation": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+    "interrogation": "res://art/evidence_generated/interrogation_room.jpg",
     "clue": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
-    "search": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
+    "search": "res://art/evidence_generated/evidence_room.jpg",
     "chase": "res://art/noir_latest/neon_rain_detective_chase.jpg",
     "pursuit": "res://art/noir_latest/neon_rain_detective_chase.jpg",
     "cover": "res://art/noir_latest/noir_safehouse_investigation.jpg",

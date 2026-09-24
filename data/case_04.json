@@ -69,7 +69,7 @@
         "This time Clara Hale reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Clara Hale tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+      "scene_art": "res://art/evidence_generated/interrogation_room.jpg",
       "pressure_line": "You should not know that part yet.",
       "shadow_reveal": "Clara Hale changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "keys",
@@ -98,7 +98,7 @@
         "This time Anton Voss reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Anton Voss tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+      "scene_art": "res://art/evidence_generated/interrogation_room.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Anton Voss changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "masterkey",
@@ -126,7 +126,7 @@
         "This time Father Gabriel reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Father Gabriel tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+      "scene_art": "res://art/evidence_generated/interrogation_room.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Father Gabriel changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "tea",
@@ -156,7 +156,7 @@
         "This time Inspector Rowan reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Inspector Rowan tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+      "scene_art": "res://art/evidence_generated/interrogation_room.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Inspector Rowan changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "message",
@@ -184,7 +184,7 @@
         "This time Selene Marr reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Selene Marr tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+      "scene_art": "res://art/evidence_generated/interrogation_room.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Selene Marr changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "compartment",
@@ -213,7 +213,7 @@
         "This time Nikolai Finch reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Nikolai Finch tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+      "scene_art": "res://art/evidence_generated/interrogation_room.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Nikolai Finch changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "compartment",
@@ -323,9 +323,9 @@
   "visual_scenes": {
     "crime_scene": "res://art/noir_latest/rainy_noir_detective_standoff.jpg",
     "location": "res://art/noir_latest/rainlit_warehouse_standoff.jpg",
-    "interrogation": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+    "interrogation": "res://art/evidence_generated/interrogation_room.jpg",
     "clue": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
-    "search": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
+    "search": "res://art/evidence_generated/evidence_room.jpg",
     "chase": "res://art/noir_latest/neon_rain_detective_chase.jpg",
     "pursuit": "res://art/noir_latest/neon_rain_detective_chase.jpg",
     "cover": "res://art/noir_latest/noir_safehouse_investigation.jpg",

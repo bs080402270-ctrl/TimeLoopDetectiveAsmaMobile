@@ -68,7 +68,7 @@
         "This time Celeste Ward reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Celeste Ward tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+      "scene_art": "res://art/evidence_generated/interrogation_room.jpg",
       "pressure_line": "You should not know that part yet.",
       "shadow_reveal": "Celeste Ward changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "grease",
@@ -97,7 +97,7 @@
         "This time Amir Shah reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Amir Shah tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+      "scene_art": "res://art/evidence_generated/interrogation_room.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Amir Shah changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "drywall",
@@ -126,7 +126,7 @@
         "This time Daniel Price reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Daniel Price tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+      "scene_art": "res://art/evidence_generated/interrogation_room.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Daniel Price changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "invoice",
@@ -154,7 +154,7 @@
         "This time Mira Lane reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Mira Lane tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+      "scene_art": "res://art/evidence_generated/interrogation_room.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Mira Lane changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "vibration",
@@ -184,7 +184,7 @@
         "This time Julian Cross reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Julian Cross tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+      "scene_art": "res://art/evidence_generated/interrogation_room.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Julian Cross changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "biometric",
@@ -295,9 +295,9 @@
   "visual_scenes": {
     "crime_scene": "res://art/noir_latest/rainy_noir_detective_standoff.jpg",
     "location": "res://art/noir_latest/noir_detective_against_the_conspiracy_wall.jpg",
-    "interrogation": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+    "interrogation": "res://art/evidence_generated/interrogation_room.jpg",
     "clue": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
-    "search": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
+    "search": "res://art/evidence_generated/evidence_room.jpg",
     "chase": "res://art/noir_latest/neon_rain_detective_chase.jpg",
     "pursuit": "res://art/noir_latest/neon_rain_detective_chase.jpg",
     "cover": "res://art/noir_latest/noir_safehouse_investigation.jpg",

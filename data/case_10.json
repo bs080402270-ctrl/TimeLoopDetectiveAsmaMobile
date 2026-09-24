@@ -69,7 +69,7 @@
         "This time Chief Farid reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Chief Farid tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+      "scene_art": "res://art/evidence_generated/interrogation_room.jpg",
       "pressure_line": "You should not know that part yet.",
       "shadow_reveal": "Chief Farid changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "governor",
@@ -98,7 +98,7 @@
         "This time Dr. Hassan reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Dr. Hassan tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+      "scene_art": "res://art/evidence_generated/interrogation_room.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Dr. Hassan changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "order",
@@ -127,7 +127,7 @@
         "This time Samira reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Samira tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+      "scene_art": "res://art/evidence_generated/interrogation_room.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Samira changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "ledger",
@@ -156,7 +156,7 @@
         "This time The Stranger reacts before you finish the question. They remember nothing, but the pattern changed.",
         "The Stranger tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+      "scene_art": "res://art/evidence_generated/interrogation_room.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "The Stranger changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "manual",
@@ -186,7 +186,7 @@
         "This time Viktor Malik reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Viktor Malik tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+      "scene_art": "res://art/evidence_generated/interrogation_room.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Viktor Malik changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "photo",
@@ -215,7 +215,7 @@
         "This time Dr. Leila Rahman reacts before you finish the question. They remember nothing, but the pattern changed.",
         "Dr. Leila Rahman tries to repeat the same wording. One detail is different."
       ],
-      "scene_art": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+      "scene_art": "res://art/evidence_generated/interrogation_room.jpg",
       "pressure_line": "That is not what I said before.",
       "shadow_reveal": "Dr. Leila Rahman changes route after the interview and briefly checks a place they never mentioned.",
       "shadow_clue": "photo",
@@ -342,9 +342,9 @@
   "visual_scenes": {
     "crime_scene": "res://art/noir_latest/rainy_noir_detective_standoff.jpg",
     "location": "res://art/noir_latest/shattered_time_detective_in_the_rain.jpg",
-    "interrogation": "res://art/noir_latest/noir_interrogation_under_harsh_light.jpg",
+    "interrogation": "res://art/evidence_generated/interrogation_room.jpg",
     "clue": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
-    "search": "res://art/noir_latest/noir_evidence_room_investigation.jpg",
+    "search": "res://art/evidence_generated/evidence_room.jpg",
     "chase": "res://art/noir_latest/neon_rain_detective_chase.jpg",
     "pursuit": "res://art/noir_latest/neon_rain_detective_chase.jpg",
     "cover": "res://art/noir_latest/noir_safehouse_investigation.jpg",
