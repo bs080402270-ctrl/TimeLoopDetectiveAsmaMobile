@@ -939,11 +939,12 @@ func _case_card(data: Dictionary,index: int) -> Control:
 	head.add_child(case_type)
 
 	var state_text := Label.new()
+	var mastery_text := settings_manager.mastery_symbol(case_id) + " " + settings_manager.mastery_label(case_id)
 	if settings_manager.is_recovery_case(case_id):
 		state_text.text = "⚠ RECOVERY CASE • TEMPORAL VARIATION %d" % settings_manager.case_variation_count(case_id)
 		state_text.add_theme_color_override("font_color",C_RED)
 	elif unlocked:
-		state_text.text = "CONTINUE INVESTIGATION" if save_manager.has_save(case_id) else "NEW INVESTIGATION"
+		state_text.text = ("%s • " % mastery_text) + ("CONTINUE INVESTIGATION" if save_manager.has_save(case_id) else "NEW INVESTIGATION")
 		state_text.add_theme_color_override("font_color",C_RED if save_manager.has_save(case_id) else C_GOLD)
 	else:
 		state_text.text = "LOCKED • SOLVE CASE %02d FIRST" % (index - 1)
@@ -1733,21 +1734,66 @@ func _show_casebook() -> void:
 	overlay.visible = true
 
 func _show_evidence_board() -> void:
+	_set_polished_background(ART_CASEBOOK,0.42)
 	overlay_title.text = "EVIDENCE BOARD"
-	var text := "[color=#e6b85c][b]KNOWN CONNECTIONS[/b][/color]\n\n"
+
+	var text := "[center][color=#e6b85c][font_size=30][b]CASE CONNECTION MAP[/b][/font_size][/color][/center]\n\n"
+	text += "[color=#9db1c7]Follow the chain: evidence → location → suspect → contradiction.[/color]\n\n"
+
 	var found_count := 0
 	for clue_id in state.clues:
 		var clue: Dictionary = case_data.clues.get(str(clue_id),{})
-		var loc_name := str(case_data.locations.get(str(clue.get("location","")),{}).get("name","Unknown"))
-		text += "• %s  →  %s\n" % [str(clue.get("name",clue_id)),loc_name]
+		var loc_id := str(clue.get("location",""))
+		var loc_name := str(case_data.locations.get(loc_id,{}).get("name","Unknown Location"))
+		text += "[color=#e6b85c][b]%s[/b][/color]  →  [color=#2c8cff]%s[/color]\n" % [str(clue.get("name",clue_id)),loc_name]
 		found_count += 1
-	text += "\n[color=#9db1c7]Suspects interviewed: %d/%d[/color]" % [state.talked.size(),case_data.suspects.size()]
-	text += "\n[color=#9db1c7]Contradictions exposed: %d[/color]" % state.contradictions.size()
-	text += "\n[color=#9db1c7]Evidence collected: %d/%d[/color]" % [found_count,case_data.clues.size()]
+
+		var linked_suspects: Array[String] = []
+		for suspect_id in case_data.suspects.keys():
+			var suspect: Dictionary = case_data.suspects[suspect_id]
+			var needs: Array = suspect.get("contradiction",{}).get("needs",[])
+			if str(clue_id) in needs:
+				linked_suspects.append(str(suspect.get("name",suspect_id)))
+		if linked_suspects.size() > 0:
+			text += "   ↳ [color=#9db1c7]LINKED TO: %s[/color]\n" % ", ".join(linked_suspects)
+		text += "\n"
+
+	text += "[color=#e6b85c][b]SUSPECT STATUS[/b][/color]\n"
+	for suspect_id in case_data.suspects.keys():
+		var suspect: Dictionary = case_data.suspects[suspect_id]
+		var interviewed := str(suspect_id) in state.talked
+		var contradiction_id := str(suspect.get("contradiction",{}).get("id",""))
+		var broken := contradiction_id != "" and contradiction_id in state.contradictions
+		var marker := "✓" if interviewed else "○"
+		var status := "CONTRADICTION EXPOSED" if broken else ("INTERVIEWED" if interviewed else "NOT INTERVIEWED")
+		text += "%s %s — [color=%s]%s[/color]\n" % [marker,str(suspect.get("name",suspect_id)),"#e32636" if broken else "#9db1c7",status]
+
+	text += "\n[color=#e6b85c][b]MASTERY TARGETS[/b][/color]\n"
+	text += "★ BRONZE — Solve the case\n"
+	text += "★★ SILVER — Solve with no hints OR all strong evidence\n"
+	text += "★★★ GOLD — Solve with no hints, all strong evidence, and within 2 loops\n"
+	text += "\n[color=#2c8cff]Current best: %s %s[/color]" % [settings_manager.mastery_symbol(current_case_id),settings_manager.mastery_label(current_case_id)]
+	text += "\n[color=#9db1c7]Evidence %d/%d • Interviews %d/%d • Contradictions %d[/color]" % [found_count,case_data.clues.size(),state.talked.size(),case_data.suspects.size(),state.contradictions.size()]
+
 	overlay_body.text = text
 	_clear(overlay_actions)
 	overlay_actions.add_child(_button("BACK TO CASEBOOK",func(): _show_casebook(),true))
 	overlay.visible = true
+
+func _calculate_case_mastery() -> int:
+	var strong: Array = case_data.get("strong_clues",[])
+	var strong_found := 0
+	for clue_id in strong:
+		if str(clue_id) in state.clues:
+			strong_found += 1
+	var all_strong := strong.size() > 0 and strong_found >= strong.size()
+	var no_hints := int(state.get("hints_used",0)) == 0
+	var fast_loops := int(state.get("loop",1)) <= 2
+	if no_hints and all_strong and fast_loops:
+		return 3
+	if no_hints or all_strong:
+		return 2
+	return 1
 
 func _use_hint() -> void:
 	var used := int(state.get("hints_used",0))
@@ -1873,6 +1919,8 @@ func _finish(kind: String) -> void:
 		var performance_rank := _detective_rank()
 		var reward := settings_manager.reward_case_once(current_case_id,50)
 		var newly_completed := settings_manager.mark_case_completed(current_case_id)
+		var mastery := _calculate_case_mastery()
+		var improved_mastery := settings_manager.record_case_mastery(current_case_id,mastery)
 		var case_fragment := str(case_data.get("season_fragment",""))
 		if case_fragment != "":
 			settings_manager.unlock_season_fragment(case_fragment)
@@ -1885,6 +1933,9 @@ func _finish(kind: String) -> void:
 			settings_manager.unlock_achievement("season_one")
 
 		overlay_body.text = "[center][font_size=34][color=#e6b85c][b]TRUE ENDING[/b][/color][/font_size]\nCASE PERFORMANCE: [b]%s[/b][/center]\n\n%s" % [performance_rank,str(case_data.get("truth",""))]
+		overlay_body.text += "\n\n[center][color=#e6b85c][font_size=28][b]CASE MASTERY: %s %s[/b][/font_size][/color][/center]" % [settings_manager.mastery_symbol(current_case_id),settings_manager.mastery_label(current_case_id)]
+		if improved_mastery:
+			overlay_body.text += "\n[color=#2c8cff]NEW BEST MASTERY EARNED[/color]"
 		if rp_delta > 0:
 			overlay_body.text += "\n\n[color=#2c8cff][b]+%d REPUTATION POINTS[/b][/color]" % rp_delta
 		if newly_completed and after_rank != before_rank:
