@@ -812,11 +812,13 @@ func _show_case_select() -> void:
 	body.add_child(_button("BACK",func(): _show_main_menu(),false))
 	_build_home_nav("CASES")
 
+
 func _case_card(data: Dictionary,index: int) -> Control:
 	var case_id := str(data.get("id",""))
+	var unlocked := _is_case_unlocked(case_id)
 	var card := PanelContainer.new()
 	card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	card.add_theme_stylebox_override("panel",_panel_style(C_PANEL,16,Color("#174b78"),2,14))
+	card.add_theme_stylebox_override("panel",_panel_style(Color("#07101b") if not unlocked else C_PANEL,16,Color("#33404d") if not unlocked else Color("#174b78"),2,14))
 
 	var stack := VBoxContainer.new()
 	stack.add_theme_constant_override("separation",10)
@@ -835,17 +837,18 @@ func _case_card(data: Dictionary,index: int) -> Control:
 	thumb.custom_minimum_size = Vector2(116,92)
 	thumb.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	thumb.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	thumb.modulate = Color(0.42,0.46,0.52,0.72) if not unlocked else Color.WHITE
 	top.add_child(thumb)
 
 	var badge := PanelContainer.new()
 	badge.custom_minimum_size = Vector2(78,92)
-	badge.add_theme_stylebox_override("panel",_panel_style(Color("#122943"),12,C_GOLD,2,8))
+	badge.add_theme_stylebox_override("panel",_panel_style(Color("#101720") if not unlocked else Color("#122943"),12,Color("#66717d") if not unlocked else C_GOLD,2,8))
 	var num := Label.new()
-	num.text = "%02d" % index
+	num.text = "🔒" if not unlocked else "%02d" % index
 	num.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	num.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	num.add_theme_font_size_override("font_size",_fs(30))
-	num.add_theme_color_override("font_color",C_GOLD)
+	num.add_theme_font_size_override("font_size",_fs(28 if not unlocked else 30))
+	num.add_theme_color_override("font_color",Color("#9aa5b1") if not unlocked else C_GOLD)
 	badge.add_child(num)
 	top.add_child(badge)
 
@@ -858,23 +861,27 @@ func _case_card(data: Dictionary,index: int) -> Control:
 	t.text = str(data.get("title","Untitled Case"))
 	t.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	t.add_theme_font_size_override("font_size",_fs(24))
-	t.add_theme_color_override("font_color",C_TEXT)
+	t.add_theme_color_override("font_color",Color("#8f9aa6") if not unlocked else C_TEXT)
 	head.add_child(t)
 
 	var case_type := Label.new()
 	case_type.text = str(data.get("case_type","INVESTIGATION")).to_upper()
 	case_type.add_theme_font_size_override("font_size",_fs(14))
-	case_type.add_theme_color_override("font_color",C_GOLD)
+	case_type.add_theme_color_override("font_color",Color("#747f8a") if not unlocked else C_GOLD)
 	head.add_child(case_type)
 
 	var state_text := Label.new()
-	state_text.text = "CONTINUE INVESTIGATION" if save_manager.has_save(case_id) else "NEW INVESTIGATION"
+	if unlocked:
+		state_text.text = "CONTINUE INVESTIGATION" if save_manager.has_save(case_id) else "NEW INVESTIGATION"
+		state_text.add_theme_color_override("font_color",C_RED if save_manager.has_save(case_id) else C_GOLD)
+	else:
+		state_text.text = "LOCKED • SOLVE CASE %02d FIRST" % (index - 1)
+		state_text.add_theme_color_override("font_color",Color("#9aa5b1"))
 	state_text.add_theme_font_size_override("font_size",_fs(15))
-	state_text.add_theme_color_override("font_color",C_RED if save_manager.has_save(case_id) else C_GOLD)
 	head.add_child(state_text)
 
 	var d := Label.new()
-	d.text = str(data.get("subtitle",""))
+	d.text = str(data.get("subtitle","")) if unlocked else "This case remains sealed until the previous investigation is solved with the true ending."
 	d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	d.add_theme_font_size_override("font_size",_fs(17))
 	d.add_theme_color_override("font_color",C_MUTED)
@@ -889,20 +896,47 @@ func _case_card(data: Dictionary,index: int) -> Control:
 	stack.add_child(team_line)
 
 	var cid: String = case_id
-	var open := _button("OPEN CASE  →",func(): _open_case(cid),true)
+	var open_text := "🔒 LOCKED" if not unlocked else "OPEN CASE  →"
+	var open := _button(open_text,func(): _open_case(cid),unlocked)
 	open.custom_minimum_size = Vector2(0,64)
 	open.add_theme_font_size_override("font_size",_fs(19))
 	stack.add_child(open)
 	return card
 
+func _case_index(case_id: String) -> int:
+	for i in range(case_catalog.size()):
+		if str(case_catalog[i].get("id","")) == case_id:
+			return i
+	return -1
+
+func _is_case_unlocked(case_id: String) -> bool:
+	var idx := _case_index(case_id)
+	if idx <= 0:
+		return idx == 0
+	var previous_id := str(case_catalog[idx - 1].get("id",""))
+	return previous_id in settings_manager.completed_cases
+
+func _show_locked_case(case_id: String) -> void:
+	var idx := _case_index(case_id)
+	var previous_title := "the previous case"
+	if idx > 0:
+		previous_title = str(case_catalog[idx - 1].get("title","the previous case"))
+	overlay_title.text = "🔒 CASE LOCKED"
+	overlay_body.text = "[center][color=#9aa5b1][font_size=28][b]THIS INVESTIGATION IS SEALED[/b][/font_size][/color][/center]\n\nSolve [color=#e6b85c][b]%s[/b][/color] with the true ending to unlock this case." % previous_title
+	_clear(overlay_actions)
+	overlay_actions.add_child(_button("BACK TO CASES",func(): _show_case_select(),true))
+	overlay.visible = true
+
 func _open_case(case_id: String) -> void:
+	if not _is_case_unlocked(case_id):
+		_show_locked_case(case_id)
+		return
 	if not _load_case(case_id):
 		return
 	if not bool(state.get("started",false)):
 		_start_new()
 	else:
 		_show_game()
-
 func _start_new() -> void:
 	save_manager.clear(current_case_id)
 	state = save_manager.load_state(current_case_id,str(case_data.get("start_location","")))
