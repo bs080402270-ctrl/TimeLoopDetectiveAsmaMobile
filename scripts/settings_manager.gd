@@ -20,6 +20,7 @@ var completed_cases: Array[String] = []
 var detective_points := 0
 var recovery_case_id := ""
 var case_variation_counts: Dictionary = {}
+var case_mastery: Dictionary = {}
 
 func _init() -> void:
 	load_settings()
@@ -98,6 +99,8 @@ func load_settings() -> void:
 	recovery_case_id = str(cfg.get_value("progression","recovery_case_id",recovery_case_id))
 	var saved_variations = cfg.get_value("progression","case_variation_counts",{})
 	case_variation_counts = saved_variations if typeof(saved_variations) == TYPE_DICTIONARY else {}
+	var saved_mastery = cfg.get_value("progression","case_mastery",{})
+	case_mastery = saved_mastery if typeof(saved_mastery) == TYPE_DICTIONARY else {}
 
 func save_settings() -> void:
 	var cfg := ConfigFile.new()
@@ -118,6 +121,7 @@ func save_settings() -> void:
 	cfg.set_value("progression","detective_points",detective_points)
 	cfg.set_value("progression","recovery_case_id",recovery_case_id)
 	cfg.set_value("progression","case_variation_counts",case_variation_counts)
+	cfg.set_value("progression","case_mastery",case_mastery)
 	cfg.save(PATH)
 
 func toggle_graphics() -> void:
@@ -333,6 +337,37 @@ func apply_case_result(kind: String, case_id: String) -> Dictionary:
 		"demoted": demoted,
 		"recovery_case_id": recovery
 	}
+
+func mastery_value(case_id: String) -> int:
+	return clampi(int(case_mastery.get(case_id,0)),0,3)
+
+func mastery_label(case_id: String) -> String:
+	match mastery_value(case_id):
+		3: return "GOLD"
+		2: return "SILVER"
+		1: return "BRONZE"
+		_: return "UNRANKED"
+
+func mastery_symbol(case_id: String) -> String:
+	match mastery_value(case_id):
+		3: return "★★★"
+		2: return "★★"
+		1: return "★"
+		_: return "—"
+
+func record_case_mastery(case_id: String,medal: int) -> bool:
+	var value := clampi(medal,0,3)
+	if value <= mastery_value(case_id):
+		return false
+	case_mastery[case_id] = value
+	save_settings()
+	return true
+
+func total_mastery_stars() -> int:
+	var total := 0
+	for value in case_mastery.values():
+		total += clampi(int(value),0,3)
+	return total
 
 func season_progress_text() -> String:
 	return "%d/10 CASES • %d LOOP FRAGMENTS" % [completed_cases.size(),season_fragments.size()]
