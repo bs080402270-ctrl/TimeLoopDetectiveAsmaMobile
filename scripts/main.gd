@@ -201,12 +201,80 @@ func _load_catalog() -> void:
 func _load_case(case_id: String) -> bool:
 	for item in case_catalog:
 		if str(item.get("id","")) == case_id:
-			case_data = item
+			case_data = item.duplicate(true)
 			current_case_id = case_id
+			_apply_temporal_variation_if_needed()
 			var start_location := str(case_data.get("start_location",""))
 			state = save_manager.load_state(case_id, start_location)
 			return true
 	return false
+
+func _apply_temporal_variation_if_needed() -> void:
+	if not settings_manager.is_recovery_case(current_case_id):
+		return
+	var variation := settings_manager.case_variation_count(current_case_id)
+	if variation <= 0:
+		return
+
+	var suspect_ids: Array = case_data.get("suspects",{}).keys()
+	if suspect_ids.size() < 2:
+		return
+	var original_culprit := str(case_data.get("culprit",""))
+	var original_index := suspect_ids.find(original_culprit)
+	if original_index < 0:
+		original_index = 0
+
+	var alternate_id := ""
+	for offset in range(1,suspect_ids.size()+1):
+		var candidate := str(suspect_ids[(original_index + variation + offset - 1) % suspect_ids.size()])
+		var candidate_data: Dictionary = case_data.get("suspects",{}).get(candidate,{})
+		var rule: Dictionary = candidate_data.get("contradiction",{})
+		if candidate != original_culprit and str(rule.get("id","")) != "" and rule.get("needs",[]).size() > 0:
+			alternate_id = candidate
+			break
+	if alternate_id == "":
+		return
+
+	var alternate: Dictionary = case_data.suspects[alternate_id]
+	var alt_rule: Dictionary = alternate.get("contradiction",{})
+	var needed: Array = alt_rule.get("needs",[]).duplicate()
+	var strong: Array = []
+	for clue in needed:
+		if str(clue) in case_data.get("clues",{}):
+			strong.append(str(clue))
+	for clue in case_data.get("strong_clues",[]):
+		if strong.size() >= 5:
+			break
+		if str(clue) not in strong:
+			strong.append(str(clue))
+
+	case_data.culprit = alternate_id
+	case_data.required_contradiction = str(alt_rule.get("id",""))
+	case_data.strong_clues = strong
+	case_data.title = str(case_data.get("title","Case")) + " • TEMPORAL VARIATION %s" % String.chr(64 + mini(26,variation + 1))
+	case_data.subtitle = "The timeline changed after your demotion. Familiar faces are present, but the old solution is no longer valid."
+	case_data.deduction_prompt = "The loop has changed. Who is responsible in this altered version of the case?"
+	case_data.truth = "%s is responsible in this temporal variation. The altered evidence path and contradiction prove that the previous solution no longer applies." % str(alternate.get("name",alternate_id))
+	case_data.partial = "You found part of the altered pattern, but the changed timeline still contains an unresolved contradiction."
+	case_data.wrong = "You relied on the previous timeline. This loop has changed, and the evidence no longer supports that accusation."
+	case_data.loop_reveals = {
+		"2":"Asma: This is not the case we solved before. Someone's route has changed. Treat every familiar detail as untrusted.",
+		"3":"Asma: The loop rewrote the suspect pattern. We need the contradiction from this timeline, not the one we remember."
+	}
+
+	# Shift the critical evidence route so replay knowledge alone is not enough.
+	var location_ids: Array = case_data.get("locations",{}).keys()
+	if location_ids.size() > 1:
+		for i in range(strong.size()):
+			var clue_id := str(strong[i])
+			if clue_id in case_data.get("clues",{}):
+				var clue: Dictionary = case_data.clues[clue_id]
+				var current_loc := str(clue.get("location",""))
+				var loc_index := location_ids.find(current_loc)
+				if loc_index < 0:
+					loc_index = 0
+				clue.location = str(location_ids[(loc_index + variation + i + 1) % location_ids.size()])
+				case_data.clues[clue_id] = clue
 
 func _build_shell() -> void:
 	background = TextureRect.new()
@@ -871,7 +939,10 @@ func _case_card(data: Dictionary,index: int) -> Control:
 	head.add_child(case_type)
 
 	var state_text := Label.new()
-	if unlocked:
+	if settings_manager.is_recovery_case(case_id):
+		state_text.text = "⚠ RECOVERY CASE • TEMPORAL VARIATION %d" % settings_manager.case_variation_count(case_id)
+		state_text.add_theme_color_override("font_color",C_RED)
+	elif unlocked:
 		state_text.text = "CONTINUE INVESTIGATION" if save_manager.has_save(case_id) else "NEW INVESTIGATION"
 		state_text.add_theme_color_override("font_color",C_RED if save_manager.has_save(case_id) else C_GOLD)
 	else:
@@ -896,7 +967,7 @@ func _case_card(data: Dictionary,index: int) -> Control:
 	stack.add_child(team_line)
 
 	var cid: String = case_id
-	var open_text := "🔒 LOCKED" if not unlocked else "OPEN CASE  →"
+	var open_text := "🔒 LOCKED" if not unlocked else ("REGAIN YOUR RANK  →" if settings_manager.is_recovery_case(case_id) else "OPEN CASE  →")
 	var open := _button(open_text,func(): _open_case(cid),unlocked)
 	open.custom_minimum_size = Vector2(0,64)
 	open.add_theme_font_size_override("font_size",_fs(19))
@@ -1790,12 +1861,18 @@ func _finish(kind: String) -> void:
 	state.ending = kind
 	_save()
 	overlay_title.text = "CASE CLOSED" if kind=="true" else "THE LOOP RESISTS"
+
+	var progression := settings_manager.apply_case_result(kind,current_case_id)
+	var rp_delta := int(progression.get("delta",0))
+	var before_rank := str(progression.get("before_rank",settings_manager.detective_career_rank()))
+	var after_rank := str(progression.get("after_rank",settings_manager.detective_career_rank()))
+	var demoted := bool(progression.get("demoted",false))
+	var recovery_id := str(progression.get("recovery_case_id",""))
+
 	if kind=="true":
 		var performance_rank := _detective_rank()
-		var old_career_rank := settings_manager.detective_career_rank()
 		var reward := settings_manager.reward_case_once(current_case_id,50)
 		var newly_completed := settings_manager.mark_case_completed(current_case_id)
-		var new_career_rank := settings_manager.detective_career_rank()
 		var case_fragment := str(case_data.get("season_fragment",""))
 		if case_fragment != "":
 			settings_manager.unlock_season_fragment(case_fragment)
@@ -1806,19 +1883,43 @@ func _finish(kind: String) -> void:
 			settings_manager.unlock_achievement("perfect_loop")
 		if current_case_id == "case_10":
 			settings_manager.unlock_achievement("season_one")
-		overlay_body.text = "[center][font_size=34][color=#e6b85c][b]TRUE ENDING[/b][/color][/font_size]\nCASE PERFORMANCE: [b]%s[/b][/center]\n\n%s" % [performance_rank,str(case_data.get("truth",""))]\n\t\tif newly_completed and new_career_rank != old_career_rank:\n\t\t\toverlay_body.text += "\n\n[center][color=#2c8cff][font_size=30][b]PROMOTION EARNED[/b][/font_size][/color]\n%s  →  [color=#e6b85c][b]%s[/b][/color][/center]" % [old_career_rank,new_career_rank]
+
+		overlay_body.text = "[center][font_size=34][color=#e6b85c][b]TRUE ENDING[/b][/color][/font_size]\nCASE PERFORMANCE: [b]%s[/b][/center]\n\n%s" % [performance_rank,str(case_data.get("truth",""))]
+		if rp_delta > 0:
+			overlay_body.text += "\n\n[color=#2c8cff][b]+%d REPUTATION POINTS[/b][/color]" % rp_delta
+		if newly_completed and after_rank != before_rank:
+			overlay_body.text += "\n\n[center][color=#2c8cff][font_size=30][b]PROMOTION EARNED[/b][/font_size][/color]\n%s  →  [color=#e6b85c][b]%s[/b][/color][/center]" % [before_rank,after_rank]
 		if reward > 0:
-			overlay_body.text += "\n\n[color=#e6b85c]+%d DETECTIVE CREDITS[/color]" % reward
+			overlay_body.text += "\n[color=#e6b85c]+%d DETECTIVE CREDITS[/color]" % reward
 		overlay_body.text += "\n[color=#2c8cff]%s[/color]\n[color=#e6b85c]%s[/color]" % [settings_manager.season_progress_text(),settings_manager.detective_rank_progress_text()]
 	elif kind=="partial":
 		overlay_body.text = "[center][color=#e6b85c][b]PARTIAL TRUTH[/b][/color][/center]\n\n"+str(case_data.get("partial","Incomplete deduction."))
+		overlay_body.text += "\n\n[color=#e32636][b]%d REPUTATION POINTS[/b][/color]" % rp_delta
 	else:
 		overlay_body.text = "[center][color=#e32636][b]WRONG ACCUSATION[/b][/color][/center]\n\n"+str(case_data.get("wrong","Wrong accusation."))
+		overlay_body.text += "\n\n[color=#e32636][b]%d REPUTATION POINTS[/b][/color]" % rp_delta
+
+	if demoted:
+		overlay_body.text += "\n\n[center][color=#e32636][font_size=30][b]DEMOTED[/b][/font_size][/color]\n%s  →  [b]%s[/b][/center]" % [before_rank,after_rank]
+		if recovery_id != "":
+			var recovery_title := recovery_id
+			for entry in case_catalog:
+				if str(entry.get("id","")) == recovery_id:
+					recovery_title = str(entry.get("title",recovery_id))
+					break
+			overlay_body.text += "\n\n[color=#9db1c7]To regain your rank, solve [b]%s[/b] again. The loop has changed: the suspect pattern and evidence route will be different.[/color]" % recovery_title
+
 	_clear(overlay_actions)
 	if kind == "true" and current_case_id == "case_10":
 		overlay_actions.add_child(_button("SEASON 2 TEASER  →",func():
 			overlay.visible = false
 			_show_season2_teaser()
+		,true))
+	if demoted and recovery_id != "":
+		var rid := recovery_id
+		overlay_actions.add_child(_button("PLAY RECOVERY CASE  →",func():
+			overlay.visible = false
+			_open_case(rid)
 		,true))
 	overlay_actions.add_child(_button("RESTART CASE",func(): _restart_case(),true))
 	overlay_actions.add_child(_button("CASE SELECT",func(): _show_case_select_from_overlay(),false))
