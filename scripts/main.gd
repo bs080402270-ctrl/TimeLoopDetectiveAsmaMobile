@@ -316,7 +316,7 @@ func _show_main_menu() -> void:
 	_set_polished_background(ART_MENU,0.46)
 	title_label.text = "TIME LOOP DETECTIVE"
 	title_label.add_theme_color_override("font_color",C_TEXT)
-	status_label.text = "SAME TIME. DIFFERENT TRUTHS. BREAK THE LOOP.  •  " + settings_manager.season_progress_text()
+	status_label.text = "SAME TIME. DIFFERENT TRUTHS. BREAK THE LOOP.  •  " + settings_manager.season_progress_text() + "  •  " + settings_manager.detective_career_rank()
 
 	var hero := PanelContainer.new()
 	hero.custom_minimum_size = Vector2(0,470)
@@ -350,7 +350,7 @@ func _show_main_menu() -> void:
 	body.add_child(hero)
 
 	var profile := Label.new()
-	profile.text = "PLAYING AS: %s  •  OUTFIT: %s  •  CREDITS: %d" % [_selected_investigator_name(), settings_manager.selected_outfit.to_upper(), settings_manager.detective_credits]
+	profile.text = "RANK: %s  •  PLAYING AS: %s  •  OUTFIT: %s  •  CREDITS: %d" % [settings_manager.detective_career_rank(), _selected_investigator_name(), settings_manager.selected_outfit.to_upper(), settings_manager.detective_credits]
 	profile.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	profile.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	profile.add_theme_font_size_override("font_size",_fs(17))
@@ -790,7 +790,7 @@ func _show_case_select() -> void:
 	_scroll_to_top()
 	_set_polished_background(ART_CASES,0.40)
 	title_label.text = "SELECT A CASE"
-	status_label.text = "Each case is a loop. Each truth changes everything."
+	status_label.text = "RANK: %s  •  Each solved case earns your next promotion." % settings_manager.detective_career_rank()
 
 	var ready := PanelContainer.new()
 	ready.add_theme_stylebox_override("panel",_panel_style(Color("#0b1828"),14,C_GOLD,2,12))
@@ -1791,9 +1791,11 @@ func _finish(kind: String) -> void:
 	_save()
 	overlay_title.text = "CASE CLOSED" if kind=="true" else "THE LOOP RESISTS"
 	if kind=="true":
-		var rank := _detective_rank()
+		var performance_rank := _detective_rank()
+		var old_career_rank := settings_manager.detective_career_rank()
 		var reward := settings_manager.reward_case_once(current_case_id,50)
-		settings_manager.mark_case_completed(current_case_id)
+		var newly_completed := settings_manager.mark_case_completed(current_case_id)
+		var new_career_rank := settings_manager.detective_career_rank()
 		var case_fragment := str(case_data.get("season_fragment",""))
 		if case_fragment != "":
 			settings_manager.unlock_season_fragment(case_fragment)
@@ -1804,10 +1806,10 @@ func _finish(kind: String) -> void:
 			settings_manager.unlock_achievement("perfect_loop")
 		if current_case_id == "case_10":
 			settings_manager.unlock_achievement("season_one")
-		overlay_body.text = "[center][font_size=34][color=#e6b85c][b]TRUE ENDING[/b][/color][/font_size]\nDETECTIVE RANK: [b]%s[/b][/center]\n\n%s" % [rank,str(case_data.get("truth",""))]
+		overlay_body.text = "[center][font_size=34][color=#e6b85c][b]TRUE ENDING[/b][/color][/font_size]\nCASE PERFORMANCE: [b]%s[/b][/center]\n\n%s" % [performance_rank,str(case_data.get("truth",""))]\n\t\tif newly_completed and new_career_rank != old_career_rank:\n\t\t\toverlay_body.text += "\n\n[center][color=#2c8cff][font_size=30][b]PROMOTION EARNED[/b][/font_size][/color]\n%s  →  [color=#e6b85c][b]%s[/b][/color][/center]" % [old_career_rank,new_career_rank]
 		if reward > 0:
 			overlay_body.text += "\n\n[color=#e6b85c]+%d DETECTIVE CREDITS[/color]" % reward
-		overlay_body.text += "\n[color=#2c8cff]%s[/color]" % settings_manager.season_progress_text()
+		overlay_body.text += "\n[color=#2c8cff]%s[/color]\n[color=#e6b85c]%s[/color]" % [settings_manager.season_progress_text(),settings_manager.detective_rank_progress_text()]
 	elif kind=="partial":
 		overlay_body.text = "[center][color=#e6b85c][b]PARTIAL TRUTH[/b][/color][/center]\n\n"+str(case_data.get("partial","Incomplete deduction."))
 	else:
