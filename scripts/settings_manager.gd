@@ -221,5 +221,48 @@ func mark_case_completed(case_id: String) -> bool:
 	save_settings()
 	return true
 
+
+func detective_career_rank() -> String:
+	var ranks := [
+		"CADET INVESTIGATOR",
+		"ROOKIE DETECTIVE",
+		"JUNIOR INVESTIGATOR",
+		"DETECTIVE",
+		"SENIOR DETECTIVE",
+		"LEAD INVESTIGATOR",
+		"SPECIAL INVESTIGATOR",
+		"ELITE DETECTIVE",
+		"MASTER INVESTIGATOR",
+		"CHIEF DETECTIVE",
+		"LEGENDARY TIME DETECTIVE"
+	]
+	var solved := clampi(completed_cases.size(),0,10)
+	return str(ranks[solved])
+
+func next_detective_career_rank() -> String:
+	var solved := clampi(completed_cases.size(),0,10)
+	if solved >= 10:
+		return "MAXIMUM RANK"
+	var ranks := [
+		"CADET INVESTIGATOR",
+		"ROOKIE DETECTIVE",
+		"JUNIOR INVESTIGATOR",
+		"DETECTIVE",
+		"SENIOR DETECTIVE",
+		"LEAD INVESTIGATOR",
+		"SPECIAL INVESTIGATOR",
+		"ELITE DETECTIVE",
+		"MASTER INVESTIGATOR",
+		"CHIEF DETECTIVE",
+		"LEGENDARY TIME DETECTIVE"
+	]
+	return str(ranks[solved + 1])
+
+func detective_rank_progress_text() -> String:
+	var solved := clampi(completed_cases.size(),0,10)
+	if solved >= 10:
+		return "%s • ALL PROMOTIONS EARNED" % detective_career_rank()
+	return "%s • NEXT: %s" % [detective_career_rank(),next_detective_career_rank()]
+
 func season_progress_text() -> String:
 	return "%d/10 CASES • %d LOOP FRAGMENTS" % [completed_cases.size(),season_fragments.size()]
