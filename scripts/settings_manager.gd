@@ -17,6 +17,9 @@ var rewarded_cases: Array[String] = []
 var achievements: Array[String] = []
 var season_fragments: Array[String] = []
 var completed_cases: Array[String] = []
+var detective_points := 0
+var recovery_case_id := ""
+var case_variation_counts: Dictionary = {}
 
 func _init() -> void:
 	load_settings()
@@ -89,6 +92,12 @@ func load_settings() -> void:
 	achievements = _safe_string_array(cfg.get_value("profile","achievements",achievements),[])
 	season_fragments = _safe_string_array(cfg.get_value("story","season_fragments",season_fragments),[])
 	completed_cases = _safe_string_array(cfg.get_value("story","completed_cases",completed_cases),[])
+	detective_points = maxi(0,_safe_int(cfg.get_value("progression","detective_points",-1),-1))
+	if detective_points < 0:
+		detective_points = completed_cases.size() * 100
+	recovery_case_id = str(cfg.get_value("progression","recovery_case_id",recovery_case_id))
+	var saved_variations = cfg.get_value("progression","case_variation_counts",{})
+	case_variation_counts = saved_variations if typeof(saved_variations) == TYPE_DICTIONARY else {}
 
 func save_settings() -> void:
 	var cfg := ConfigFile.new()
@@ -106,6 +115,9 @@ func save_settings() -> void:
 	cfg.set_value("profile","achievements",achievements)
 	cfg.set_value("story","season_fragments",season_fragments)
 	cfg.set_value("story","completed_cases",completed_cases)
+	cfg.set_value("progression","detective_points",detective_points)
+	cfg.set_value("progression","recovery_case_id",recovery_case_id)
+	cfg.set_value("progression","case_variation_counts",case_variation_counts)
 	cfg.save(PATH)
 
 func toggle_graphics() -> void:
@@ -218,51 +230,109 @@ func mark_case_completed(case_id: String) -> bool:
 	if case_id == "" or case_id in completed_cases:
 		return false
 	completed_cases.append(case_id)
+	completed_cases.sort()
+	if recovery_case_id == case_id:
+		recovery_case_id = ""
 	save_settings()
 	return true
 
+func _career_ranks() -> Array[String]:
+	return [
+		"CADET INVESTIGATOR",
+		"ROOKIE DETECTIVE",
+		"JUNIOR INVESTIGATOR",
+		"DETECTIVE",
+		"SENIOR DETECTIVE",
+		"LEAD INVESTIGATOR",
+		"SPECIAL INVESTIGATOR",
+		"ELITE DETECTIVE",
+		"MASTER INVESTIGATOR",
+		"CHIEF DETECTIVE",
+		"LEGENDARY TIME DETECTIVE"
+	]
+
+func career_level() -> int:
+	return clampi(int(floor(float(detective_points) / 100.0)),0,10)
 
 func detective_career_rank() -> String:
-	var ranks := [
-		"CADET INVESTIGATOR",
-		"ROOKIE DETECTIVE",
-		"JUNIOR INVESTIGATOR",
-		"DETECTIVE",
-		"SENIOR DETECTIVE",
-		"LEAD INVESTIGATOR",
-		"SPECIAL INVESTIGATOR",
-		"ELITE DETECTIVE",
-		"MASTER INVESTIGATOR",
-		"CHIEF DETECTIVE",
-		"LEGENDARY TIME DETECTIVE"
-	]
-	var solved := clampi(completed_cases.size(),0,10)
-	return str(ranks[solved])
+	return str(_career_ranks()[career_level()])
 
 func next_detective_career_rank() -> String:
-	var solved := clampi(completed_cases.size(),0,10)
-	if solved >= 10:
+	var level := career_level()
+	if level >= 10:
 		return "MAXIMUM RANK"
-	var ranks := [
-		"CADET INVESTIGATOR",
-		"ROOKIE DETECTIVE",
-		"JUNIOR INVESTIGATOR",
-		"DETECTIVE",
-		"SENIOR DETECTIVE",
-		"LEAD INVESTIGATOR",
-		"SPECIAL INVESTIGATOR",
-		"ELITE DETECTIVE",
-		"MASTER INVESTIGATOR",
-		"CHIEF DETECTIVE",
-		"LEGENDARY TIME DETECTIVE"
-	]
-	return str(ranks[solved + 1])
+	return str(_career_ranks()[level + 1])
 
 func detective_rank_progress_text() -> String:
-	var solved := clampi(completed_cases.size(),0,10)
-	if solved >= 10:
-		return "%s • ALL PROMOTIONS EARNED" % detective_career_rank()
-	return "%s • NEXT: %s" % [detective_career_rank(),next_detective_career_rank()]
+	var level := career_level()
+	if level >= 10:
+		return "%s • %d RP • ALL PROMOTIONS EARNED" % [detective_career_rank(),detective_points]
+	return "%s • %d RP • NEXT: %s AT %d RP" % [detective_career_rank(),detective_points,next_detective_career_rank(),(level + 1) * 100]
+
+func case_variation_count(case_id: String) -> int:
+	return maxi(0,int(case_variation_counts.get(case_id,0)))
+
+func is_recovery_case(case_id: String) -> bool:
+	return recovery_case_id != "" and recovery_case_id == case_id
+
+func _case_number(case_id: String) -> int:
+	var parts := case_id.split("_")
+	if parts.size() < 2:
+		return 0
+	return int(parts[parts.size()-1])
+
+func _highest_completed_case() -> String:
+	var best := ""
+	var best_num := 0
+	for case_id in completed_cases:
+		var n := _case_number(case_id)
+		if n > best_num:
+			best_num = n
+			best = case_id
+	return best
+
+func apply_case_result(kind: String, case_id: String) -> Dictionary:
+	var before_points := detective_points
+	var before_rank := detective_career_rank()
+	var delta := 0
+	var demoted := false
+	var recovery := recovery_case_id
+
+	match kind:
+		"true":
+			delta = 100
+		"partial":
+			delta = -25
+		_:
+			delta = -50
+
+	if kind == "true":
+		detective_points = mini(1000,detective_points + delta)
+	else:
+		var old_level := career_level()
+		detective_points = maxi(0,detective_points + delta)
+		var new_level := career_level()
+		if new_level < old_level and completed_cases.size() > 0:
+			# A single failed case can demote at most one career level.
+			detective_points = maxi(new_level * 100,detective_points)
+			var lost_case := _highest_completed_case()
+			if lost_case != "":
+				completed_cases.erase(lost_case)
+				recovery_case_id = lost_case
+				case_variation_counts[lost_case] = case_variation_count(lost_case) + 1
+				recovery = lost_case
+				demoted = true
+
+	save_settings()
+	return {
+		"delta": detective_points - before_points,
+		"before_points": before_points,
+		"after_points": detective_points,
+		"before_rank": before_rank,
+		"after_rank": detective_career_rank(),
+		"demoted": demoted,
+		"recovery_case_id": recovery
+	}
 
 func season_progress_text() -> String:
 	return "%d/10 CASES • %d LOOP FRAGMENTS" % [completed_cases.size(),season_fragments.size()]
