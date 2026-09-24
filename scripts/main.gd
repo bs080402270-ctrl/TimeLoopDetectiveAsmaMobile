@@ -1039,6 +1039,7 @@ func _field_action(beat: Dictionary) -> void:
 	overlay.visible = true
 	_spend_action(false)
 
+
 func _challenge_previous_loop(id: String) -> void:
 	var data: Dictionary = case_data.suspects.get(id,{})
 	var pressure: Dictionary = state.get("suspect_pressure",{})
@@ -1051,12 +1052,15 @@ func _challenge_previous_loop(id: String) -> void:
 			have += 1
 	if have >= maxi(1,needed.size()-1):
 		state.partner_trust = mini(100,int(state.get("partner_trust",50))+3)
-		overlay_body.text = "[color=#e6b85c][b]ASMA[/b][/color]\nYes. That is the part that changed. Push there.\n\n[color=#9db1c7][b]%s[/b][/color]\n%s" % [str(data.get("name",id)),str(data.get("pressure_line","You should not know that."))]
+		var loop_lines: Array = data.get("topic_dialogue",{}).get("loop",[])
+		var loop_response := str(data.get("pressure_line","You should not know that."))
+		if loop_lines.size() > 0:
+			loop_response = str(loop_lines[clampi(int(state.loop)-1,0,loop_lines.size()-1)])
+		overlay_body.text = "[color=#e6b85c][b]ASMA[/b][/color]\nYes. That changed from the last loop. Push only on what we can prove.\n\n[color=#9db1c7][b]%s[/b][/color]\n%s" % [str(data.get("name",id)),loop_response]
 	else:
 		state.partner_trust = maxi(0,int(state.get("partner_trust",50))-1)
-		overlay_body.text = "[color=#e6b85c][b]ASMA[/b][/color]\nNot yet. I know what you remember, but the evidence does not support that jump. Give me something concrete."
+		overlay_body.text = "[color=#e6b85c][b]ASMA[/b][/color]\nNot yet. I remember it too, but saying it now would expose what we know. Get one more piece of evidence."
 	_remember_action("challenge_" + id)
-
 func _shadow_suspect(id: String) -> void:
 	var data: Dictionary = case_data.suspects.get(id,{})
 	_apply_scene_visual("pursuit",str(data.get("pursuit_art","")),0.52)
@@ -1350,6 +1354,7 @@ func _manga_portrait_strip(id: String) -> Control:
 	row.add_child(suspect)
 	return panel
 
+
 func _manga_followup(id: String,topic: String) -> void:
 	var data: Dictionary = case_data.suspects[id]
 	var choices: Dictionary = state.get("partner_choices",{})
@@ -1357,15 +1362,25 @@ func _manga_followup(id: String,topic: String) -> void:
 	state.partner_choices = choices
 	state.partner_trust = mini(100,int(state.get("partner_trust",50))+1)
 	_remember_action("ask_" + topic + "_" + id)
-	var lines: Array = data.get("dialogue",[])
-	var base_idx := clampi(int(state.loop)-1,0,maxi(0,lines.size()-1))
-	var response := str(lines[base_idx]) if lines.size() > 0 else "I have already told you what I know."
-	if lines.size() > 1 and topic == "motive":
-		response = str(lines[(base_idx + 1) % lines.size()])
 
+	var response := _topic_response(data,topic)
 	var question := "Walk me through the exact timeline again." if topic == "timeline" else "What did you have to gain from what happened?"
-	var partner_reaction := "Good catch. Let's test that." if topic == "timeline" else "I see why you think motive matters. I am not convinced yet."
+	var partner_reaction := "Good. Keep the timing precise." if topic == "timeline" else "Motive matters, but we still need proof."
 	overlay_body.text = "[color=#e6b85c][b]ASMA[/b][/color]\n%s\n%s\n\n[color=#9db1c7][b]%s[/b][/color]\n%s" % [partner_reaction,question,str(data.get("name",id)),response]
+
+func _topic_response(data: Dictionary,topic: String) -> String:
+	var topic_map: Dictionary = data.get("topic_dialogue",{})
+	if topic_map.has(topic):
+		var topic_lines: Array = topic_map.get(topic,[])
+		if topic_lines.size() > 0:
+			return str(topic_lines[clampi(int(state.loop)-1,0,topic_lines.size()-1)])
+	var lines: Array = data.get("dialogue",[])
+	if lines.is_empty():
+		return "I have already told you what I know."
+	var idx := clampi(int(state.loop)-1,0,lines.size()-1)
+	if topic == "motive" and lines.size() > 1:
+		idx = clampi(idx + 1,0,lines.size()-1)
+	return str(lines[idx])
 
 func _press_suspect(id: String) -> void:
 	var data: Dictionary = case_data.suspects[id]
@@ -1378,19 +1393,19 @@ func _press_suspect(id: String) -> void:
 	if complete and needs.size() > 0:
 		_add_unique(state.contradictions,str(rule.get("id","")))
 		settings_manager.unlock_achievement("first_contradiction")
-		overlay_body.text = "[center][color=#e6b85c][font_size=30][b]CONTRADICTION FOUND[/b][/font_size][/color][/center]\n\n" + str(rule.get("result",""))
+		var evidence_line := str(data.get("evidence_response",data.get("pressure_line","That evidence changes the story.")))
+		overlay_body.text = "[center][color=#e6b85c][font_size=30][b]CONTRADICTION FOUND[/b][/font_size][/color][/center]\n\n[color=#e6b85c][b]ASMA[/b][/color]\nNow we have them. Keep it factual.\n\n[color=#9db1c7][b]%s[/b][/color]\n%s\n\n%s" % [str(data.get("name",id)),evidence_line,str(rule.get("result",""))]
 		_play_evidence()
 	else:
+		var missing_names: Array[String] = []
+		for clue in needs:
+			if str(clue) not in state.clues:
+				missing_names.append(str(case_data.clues.get(str(clue),{}).get("name",clue)))
 		if settings_manager.difficulty == "easy":
-			var missing: Array[String] = []
-			for clue in needs:
-				if str(clue) not in state.clues:
-					missing.append(str(case_data.clues.get(str(clue),{}).get("name",clue)))
-			overlay_body.text = "[color=#9db1c7]You need more evidence. Look for: %s[/color]" % ", ".join(missing)
+			overlay_body.text = "[color=#e6b85c][b]ASMA[/b][/color]\nNot yet. We would be revealing too much without proof.\n\n[color=#9db1c7]Find: %s[/color]" % ", ".join(missing_names)
 		else:
-			overlay_body.text = "[color=#9db1c7]You need more evidence before this story can be broken.[/color]"
+			overlay_body.text = "[color=#e6b85c][b]ASMA[/b][/color]\nNot yet. We know more than they think, but we cannot show our hand until the evidence supports it."
 	_spend_action(false)
-
 func _collect_clue(id: String) -> void:
 	if id in state.clues:
 		return
