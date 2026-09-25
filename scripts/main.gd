@@ -502,8 +502,8 @@ func _show_season_progress_map() -> void:
 	for i in range(case_catalog.size()):
 		var data: Dictionary = case_catalog[i]
 		var cid := str(data.get("id",""))
-		var solved := cid in settings_manager.completed_cases
-		var unlocked := _is_case_unlocked(cid)
+		var solved: bool = cid in settings_manager.completed_cases
+		var unlocked: bool = _is_case_unlocked(cid)
 		var line := Label.new()
 		line.text = "%02d  %s  •  %s  •  %s %s" % [i+1,str(data.get("title","Case")),"SOLVED" if solved else ("OPEN" if unlocked else "LOCKED"),settings_manager.mastery_symbol(cid),settings_manager.mastery_label(cid)]
 		line.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -568,7 +568,8 @@ func _show_case_remix() -> void:
 		var cid := str(data.get("id",""))
 		if cid in settings_manager.completed_cases:
 			var title := str(data.get("title",cid))
-			body.add_child(_button("REMIX • " + title,func(id=cid): _start_case_remix(id),false))
+			var remix_id: String = cid
+			body.add_child(_button("REMIX • " + title,func(): _start_case_remix(remix_id),false))
 	body.add_child(_button("BACK",func(): _show_main_menu(),false))
 	_build_home_nav("")
 
@@ -2033,7 +2034,7 @@ func _finish(kind: String) -> void:
 
 	if kind=="true":
 		var performance_rank := _detective_rank()
-		var daily_reward := false
+		var daily_reward: bool = false
 		if bool(state.get("daily_challenge",false)):
 			daily_reward = settings_manager.complete_daily_challenge(_today_key())
 		var reward := settings_manager.reward_case_once(current_case_id,50)
@@ -2052,7 +2053,7 @@ func _finish(kind: String) -> void:
 			settings_manager.unlock_achievement("season_one")
 			settings_manager.unlock_new_game_plus()
 		var promotion_rewards := settings_manager.claim_promotion_rewards()
-		var hidden_ending_unlocked := false
+		var hidden_ending_unlocked: bool = false
 		if mastery == 3 and state.talked.size() >= case_data.suspects.size():
 			hidden_ending_unlocked = settings_manager.unlock_hidden_ending(current_case_id)
 
