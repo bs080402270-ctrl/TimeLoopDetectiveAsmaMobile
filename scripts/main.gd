@@ -210,7 +210,7 @@ func _load_case(case_id: String) -> bool:
 	return false
 
 func _apply_temporal_variation_if_needed() -> void:
-	if not settings_manager.is_recovery_case(current_case_id):
+	if not settings_manager.is_variation_case(current_case_id):
 		return
 	var variation := settings_manager.case_variation_count(current_case_id)
 	if variation <= 0:
@@ -450,6 +450,11 @@ func _show_main_menu() -> void:
 	body.add_child(_button("CHOOSE INVESTIGATOR",func(): _show_investigator_select(),false))
 	body.add_child(_button("DETECTIVE STORE",func(): _show_store(),false))
 	body.add_child(_button("ACHIEVEMENTS",func(): _show_achievements(),false))
+	body.add_child(_button("DETECTIVE PROFILE",func(): _show_detective_profile(),false))
+	body.add_child(_button("SEASON PROGRESS MAP",func(): _show_season_progress_map(),false))
+	body.add_child(_button("DAILY CASE CHALLENGE",func(): _show_daily_challenge(),false))
+	if settings_manager.new_game_plus_unlocked:
+		body.add_child(_button("NEW GAME+ / CASE REMIX",func(): _show_case_remix(),false))
 	body.add_child(_button("INVESTIGATION TEAM",func(): _show_investigation_team(),false))
 	body.add_child(_button("CHARACTERS",func(): _show_character_gallery(),false))
 	body.add_child(_button("HOW TO PLAY",func(): _show_help(),false))
@@ -462,6 +467,115 @@ func _selected_investigator_name() -> String:
 		if str(member.get("id","")) == settings_manager.selected_investigator:
 			return str(member.get("name","Asma"))
 	return "Asma"
+
+func _show_detective_profile() -> void:
+	_clear(body)
+	_clear(nav)
+	overlay.visible = false
+	_scroll_to_top()
+	_set_polished_background(ART_SETTINGS,0.38)
+	title_label.text = "DETECTIVE PROFILE"
+	status_label.text = settings_manager.detective_rank_progress_text()
+	var info := Label.new()
+	info.text = "INVESTIGATOR: %s\nRANK: %s\nREPUTATION: %d RP\nCASES SOLVED: %d/10\nMASTERY STARS: %d/30\nSECRET ENDINGS: %d\nDAILY STREAK: %d" % [_selected_investigator_name(),settings_manager.detective_career_rank(),settings_manager.detective_points,settings_manager.completed_cases.size(),settings_manager.total_mastery_stars(),settings_manager.hidden_endings.size(),settings_manager.daily_streak]
+	info.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	info.add_theme_font_size_override("font_size",_fs(22))
+	info.add_theme_color_override("font_color",C_GOLD)
+	body.add_child(info)
+	_add_section_title("SUSPECT RELATIONSHIP MEMORY")
+	for sid in settings_manager.suspect_relationships.keys():
+		var line := Label.new()
+		line.text = "%s • %s (%d)" % [str(sid).replace("_"," ").to_upper(),settings_manager.suspect_relationship_label(str(sid)),settings_manager.suspect_relationship(str(sid))]
+		line.add_theme_color_override("font_color",C_MUTED)
+		body.add_child(line)
+	body.add_child(_button("BACK",func(): _show_main_menu(),false))
+	_build_home_nav("")
+
+func _show_season_progress_map() -> void:
+	_clear(body)
+	_clear(nav)
+	overlay.visible = false
+	_scroll_to_top()
+	_set_polished_background(ART_CASES,0.34)
+	title_label.text = "SEASON 1 PROGRESS"
+	status_label.text = "%s • %d/30 MASTERY STARS" % [settings_manager.detective_career_rank(),settings_manager.total_mastery_stars()]
+	for i in range(case_catalog.size()):
+		var data: Dictionary = case_catalog[i]
+		var cid := str(data.get("id",""))
+		var solved := cid in settings_manager.completed_cases
+		var unlocked := _is_case_unlocked(cid)
+		var line := Label.new()
+		line.text = "%02d  %s  •  %s  •  %s %s" % [i+1,str(data.get("title","Case")),"SOLVED" if solved else ("OPEN" if unlocked else "LOCKED"),settings_manager.mastery_symbol(cid),settings_manager.mastery_label(cid)]
+		line.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		line.add_theme_font_size_override("font_size",_fs(18))
+		line.add_theme_color_override("font_color",C_GOLD if solved else C_MUTED)
+		body.add_child(line)
+	body.add_child(_button("BACK",func(): _show_main_menu(),false))
+	_build_home_nav("")
+
+func _today_key() -> String:
+	return Time.get_date_string_from_system()
+
+func _daily_case_id() -> String:
+	if case_catalog.is_empty():
+		return ""
+	var seed := abs(_today_key().hash())
+	return str(case_catalog[seed % case_catalog.size()].get("id",""))
+
+func _show_daily_challenge() -> void:
+	settings_manager.refresh_daily_challenge(_today_key())
+	_clear(body)
+	_clear(nav)
+	overlay.visible = false
+	_scroll_to_top()
+	_set_polished_background(ART_CASES,0.38)
+	title_label.text = "DAILY CASE CHALLENGE"
+	var cid := _daily_case_id()
+	var title := cid
+	for item in case_catalog:
+		if str(item.get("id","")) == cid:
+			title = str(item.get("title",cid))
+			break
+	status_label.text = "Daily streak: %d • Reward: 20 RP + 25 credits" % settings_manager.daily_streak
+	var note := Label.new()
+	note.text = "%s\n\nToday's challenge uses a remixed timeline. Solve it with the true ending to claim the daily reward." % title
+	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	note.add_theme_font_size_override("font_size",_fs(21))
+	body.add_child(note)
+	if settings_manager.daily_challenge_completed:
+		body.add_child(_button("COMPLETED TODAY ✓",func(): pass,false))
+	else:
+		body.add_child(_button("START DAILY CHALLENGE  →",func(): _start_daily_challenge(cid),true))
+	body.add_child(_button("BACK",func(): _show_main_menu(),false))
+	_build_home_nav("")
+
+func _start_daily_challenge(case_id: String) -> void:
+	settings_manager.set_active_remix(case_id)
+	save_manager.clear(case_id)
+	_open_case(case_id)
+	state["daily_challenge"] = true
+	_save()
+
+func _show_case_remix() -> void:
+	_clear(body)
+	_clear(nav)
+	overlay.visible = false
+	_scroll_to_top()
+	_set_polished_background(ART_CASES,0.38)
+	title_label.text = "NEW GAME+ / CASE REMIX"
+	status_label.text = "Replay solved cases with altered suspects and evidence routes."
+	for data in case_catalog:
+		var cid := str(data.get("id",""))
+		if cid in settings_manager.completed_cases:
+			var title := str(data.get("title",cid))
+			body.add_child(_button("REMIX • " + title,func(id=cid): _start_case_remix(id),false))
+	body.add_child(_button("BACK",func(): _show_main_menu(),false))
+	_build_home_nav("")
+
+func _start_case_remix(case_id: String) -> void:
+	settings_manager.set_active_remix(case_id)
+	save_manager.clear(case_id)
+	_open_case(case_id)
 
 func _show_investigator_select() -> void:
 	_clear(body)
@@ -1467,6 +1581,7 @@ func _manga_followup(id: String,topic: String) -> void:
 	choices[id] = topic
 	state.partner_choices = choices
 	state.partner_trust = mini(100,int(state.get("partner_trust",50))+1)
+	settings_manager.adjust_suspect_relationship(id,1)
 	_remember_action("ask_" + topic + "_" + id)
 
 	var response := _topic_response(data,topic)
@@ -1497,6 +1612,7 @@ func _press_suspect(id: String) -> void:
 		if str(clue) not in state.clues:
 			complete = false
 	if complete and needs.size() > 0:
+		settings_manager.adjust_suspect_relationship(id,-2)
 		_add_unique(state.contradictions,str(rule.get("id","")))
 		settings_manager.unlock_achievement("first_contradiction")
 		var evidence_line := str(data.get("evidence_response",data.get("pressure_line","That evidence changes the story.")))
@@ -1917,6 +2033,9 @@ func _finish(kind: String) -> void:
 
 	if kind=="true":
 		var performance_rank := _detective_rank()
+		var daily_reward := false
+		if bool(state.get("daily_challenge",false)):
+			daily_reward = settings_manager.complete_daily_challenge(_today_key())
 		var reward := settings_manager.reward_case_once(current_case_id,50)
 		var newly_completed := settings_manager.mark_case_completed(current_case_id)
 		var mastery := _calculate_case_mastery()
@@ -1931,6 +2050,11 @@ func _finish(kind: String) -> void:
 			settings_manager.unlock_achievement("perfect_loop")
 		if current_case_id == "case_10":
 			settings_manager.unlock_achievement("season_one")
+			settings_manager.unlock_new_game_plus()
+		var promotion_rewards := settings_manager.claim_promotion_rewards()
+		var hidden_ending_unlocked := false
+		if mastery == 3 and state.talked.size() >= case_data.suspects.size():
+			hidden_ending_unlocked = settings_manager.unlock_hidden_ending(current_case_id)
 
 		overlay_body.text = "[center][font_size=34][color=#e6b85c][b]TRUE ENDING[/b][/color][/font_size]\nCASE PERFORMANCE: [b]%s[/b][/center]\n\n%s" % [performance_rank,str(case_data.get("truth",""))]
 		overlay_body.text += "\n\n[center][color=#e6b85c][font_size=28][b]CASE MASTERY: %s %s[/b][/font_size][/color][/center]" % [settings_manager.mastery_symbol(current_case_id),settings_manager.mastery_label(current_case_id)]
@@ -1942,7 +2066,15 @@ func _finish(kind: String) -> void:
 			overlay_body.text += "\n\n[center][color=#2c8cff][font_size=30][b]PROMOTION EARNED[/b][/font_size][/color]\n%s  →  [color=#e6b85c][b]%s[/b][/color][/center]" % [before_rank,after_rank]
 		if reward > 0:
 			overlay_body.text += "\n[color=#e6b85c]+%d DETECTIVE CREDITS[/color]" % reward
+		if promotion_rewards.size() > 0:
+			overlay_body.text += "\n[color=#2c8cff]PROMOTION REWARD UNLOCKED: %s[/color]" % ", ".join(promotion_rewards)
+		if hidden_ending_unlocked:
+			overlay_body.text += "\n\n[center][color=#8fd3ff][b]SECRET EPILOGUE UNLOCKED[/b][/color]\nYou questioned everyone, found the full evidence chain, and broke the loop cleanly.[/center]"
+		if daily_reward:
+			overlay_body.text += "\n[color=#2c8cff][b]DAILY CHALLENGE COMPLETE • +20 RP • +25 CREDITS[/b][/color]"
 		overlay_body.text += "\n[color=#2c8cff]%s[/color]\n[color=#e6b85c]%s[/color]" % [settings_manager.season_progress_text(),settings_manager.detective_rank_progress_text()]
+		if settings_manager.active_remix_case_id == current_case_id:
+			settings_manager.clear_active_remix()
 	elif kind=="partial":
 		overlay_body.text = "[center][color=#e6b85c][b]PARTIAL TRUTH[/b][/color][/center]\n\n"+str(case_data.get("partial","Incomplete deduction."))
 		overlay_body.text += "\n\n[color=#e32636][b]%d REPUTATION POINTS[/b][/color]" % rp_delta
