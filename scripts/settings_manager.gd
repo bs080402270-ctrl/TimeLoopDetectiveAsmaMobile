@@ -21,6 +21,14 @@ var detective_points := 0
 var recovery_case_id := ""
 var case_variation_counts: Dictionary = {}
 var case_mastery: Dictionary = {}
+var suspect_relationships: Dictionary = {}
+var hidden_endings: Array[String] = []
+var active_remix_case_id := ""
+var new_game_plus_unlocked := false
+var daily_challenge_date := ""
+var daily_challenge_completed := false
+var daily_streak := 0
+var promotion_rewards_claimed: Array[String] = []
 
 func _init() -> void:
 	load_settings()
@@ -101,6 +109,15 @@ func load_settings() -> void:
 	case_variation_counts = saved_variations if typeof(saved_variations) == TYPE_DICTIONARY else {}
 	var saved_mastery = cfg.get_value("progression","case_mastery",{})
 	case_mastery = saved_mastery if typeof(saved_mastery) == TYPE_DICTIONARY else {}
+	var saved_relationships = cfg.get_value("progression","suspect_relationships",{})
+	suspect_relationships = saved_relationships if typeof(saved_relationships) == TYPE_DICTIONARY else {}
+	hidden_endings = _safe_string_array(cfg.get_value("progression","hidden_endings",hidden_endings),[])
+	active_remix_case_id = str(cfg.get_value("progression","active_remix_case_id",active_remix_case_id))
+	new_game_plus_unlocked = _safe_bool(cfg.get_value("progression","new_game_plus_unlocked",new_game_plus_unlocked),new_game_plus_unlocked)
+	daily_challenge_date = str(cfg.get_value("daily","challenge_date",daily_challenge_date))
+	daily_challenge_completed = _safe_bool(cfg.get_value("daily","challenge_completed",daily_challenge_completed),daily_challenge_completed)
+	daily_streak = maxi(0,_safe_int(cfg.get_value("daily","streak",daily_streak),daily_streak))
+	promotion_rewards_claimed = _safe_string_array(cfg.get_value("progression","promotion_rewards_claimed",promotion_rewards_claimed),[])
 
 func save_settings() -> void:
 	var cfg := ConfigFile.new()
@@ -122,6 +139,14 @@ func save_settings() -> void:
 	cfg.set_value("progression","recovery_case_id",recovery_case_id)
 	cfg.set_value("progression","case_variation_counts",case_variation_counts)
 	cfg.set_value("progression","case_mastery",case_mastery)
+	cfg.set_value("progression","suspect_relationships",suspect_relationships)
+	cfg.set_value("progression","hidden_endings",hidden_endings)
+	cfg.set_value("progression","active_remix_case_id",active_remix_case_id)
+	cfg.set_value("progression","new_game_plus_unlocked",new_game_plus_unlocked)
+	cfg.set_value("progression","promotion_rewards_claimed",promotion_rewards_claimed)
+	cfg.set_value("daily","challenge_date",daily_challenge_date)
+	cfg.set_value("daily","challenge_completed",daily_challenge_completed)
+	cfg.set_value("daily","streak",daily_streak)
 	cfg.save(PATH)
 
 func toggle_graphics() -> void:
@@ -368,6 +393,93 @@ func total_mastery_stars() -> int:
 	for value in case_mastery.values():
 		total += clampi(int(value),0,3)
 	return total
+
+func suspect_relationship(id: String) -> int:
+	return clampi(int(suspect_relationships.get(id,0)),-100,100)
+
+func adjust_suspect_relationship(id: String,delta: int) -> int:
+	var value := clampi(suspect_relationship(id) + delta,-100,100)
+	suspect_relationships[id] = value
+	save_settings()
+	return value
+
+func suspect_relationship_label(id: String) -> String:
+	var value := suspect_relationship(id)
+	if value >= 50: return "TRUSTING"
+	if value >= 15: return "COOPERATIVE"
+	if value <= -50: return "HOSTILE"
+	if value <= -15: return "GUARDED"
+	return "NEUTRAL"
+
+func unlock_hidden_ending(case_id: String) -> bool:
+	if case_id == "" or case_id in hidden_endings:
+		return false
+	hidden_endings.append(case_id)
+	save_settings()
+	return true
+
+func set_active_remix(case_id: String) -> void:
+	active_remix_case_id = case_id
+	if case_id != "":
+		case_variation_counts[case_id] = case_variation_count(case_id) + 1
+	save_settings()
+
+func clear_active_remix() -> void:
+	active_remix_case_id = ""
+	save_settings()
+
+func is_variation_case(case_id: String) -> bool:
+	return is_recovery_case(case_id) or active_remix_case_id == case_id
+
+func unlock_new_game_plus() -> void:
+	new_game_plus_unlocked = true
+	save_settings()
+
+func refresh_daily_challenge(today: String) -> void:
+	if daily_challenge_date == today:
+		return
+	daily_challenge_date = today
+	daily_challenge_completed = false
+	save_settings()
+
+func complete_daily_challenge(today: String) -> bool:
+	refresh_daily_challenge(today)
+	if daily_challenge_completed:
+		return false
+	daily_challenge_completed = true
+	daily_streak += 1
+	detective_credits += 25
+	detective_points = mini(1000,detective_points + 20)
+	save_settings()
+	return true
+
+func claim_promotion_rewards() -> Array[String]:
+	var rewards: Array[String] = []
+	var level := career_level()
+	var unlocks := {
+		2:"outfit:noir",
+		4:"gear:flashlight",
+		6:"outfit:field",
+		8:"gear:vest",
+		9:"outfit:formal",
+		10:"gear:sidearm"
+	}
+	for threshold in unlocks.keys():
+		if level < int(threshold):
+			continue
+		var token := str(unlocks[threshold])
+		if token in promotion_rewards_claimed:
+			continue
+		promotion_rewards_claimed.append(token)
+		var parts := token.split(":")
+		if parts.size() == 2 and parts[0] == "outfit" and parts[1] not in unlocked_outfits:
+			unlocked_outfits.append(parts[1])
+		if parts.size() == 2 and parts[0] == "gear" and parts[1] not in unlocked_gear:
+			unlocked_gear.append(parts[1])
+		rewards.append(token)
+	if rewards.size() > 0:
+		save_settings()
+	return rewards
 
 func season_progress_text() -> String:
 	return "%d/10 CASES • %d LOOP FRAGMENTS" % [completed_cases.size(),season_fragments.size()]
