@@ -519,7 +519,7 @@ func _today_key() -> String:
 func _daily_case_id() -> String:
 	if case_catalog.is_empty():
 		return ""
-	var seed := abs(_today_key().hash())
+	var seed: int = int(abs(_today_key().hash()))
 	return str(case_catalog[seed % case_catalog.size()].get("id",""))
 
 func _show_daily_challenge() -> void:
