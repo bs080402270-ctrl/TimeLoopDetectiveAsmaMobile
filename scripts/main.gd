@@ -1877,9 +1877,9 @@ func _show_evidence_board() -> void:
 	text += "[color=#e6b85c][b]SUSPECT STATUS[/b][/color]\n"
 	for suspect_id in case_data.suspects.keys():
 		var suspect: Dictionary = case_data.suspects[suspect_id]
-		var interviewed := str(suspect_id) in state.talked
+		var interviewed: bool = str(suspect_id) in state.talked
 		var contradiction_id := str(suspect.get("contradiction",{}).get("id",""))
-		var broken := contradiction_id != "" and contradiction_id in state.contradictions
+		var broken: bool = contradiction_id != "" and contradiction_id in state.contradictions
 		var marker := "✓" if interviewed else "○"
 		var status := "CONTRADICTION EXPOSED" if broken else ("INTERVIEWED" if interviewed else "NOT INTERVIEWED")
 		text += "%s %s — [color=%s]%s[/color]\n" % [marker,str(suspect.get("name",suspect_id)),"#e32636" if broken else "#9db1c7",status]
